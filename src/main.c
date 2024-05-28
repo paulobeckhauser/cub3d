@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../incl/cub3d.h"
+#include "../mlx_linux/mlx.h"
 
 int main(int argc, char **argv)
 {
