@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/cub3d.h"
-#include "../mlx_linux/mlx.h"
+#include "../incl/controls.h"
+#include "../incl/standard_libs.h"
+#include "../incl/textures.h"
 
 int main(int argc, char **argv)
 {
@@ -31,6 +32,7 @@ int main(int argc, char **argv)
         perror("mlx window");
         return (free(mlx.mlx_ptr), 1);
     }
+    init_hooks(&mlx);
     mlx_loop(mlx.mlx_ptr);
     return (0);
 }

@@ -8,7 +8,7 @@ SRC_DIR = src
 INCLUDE_DIR = incl
 OBJ_DIR = obj
 MLX_DIR = mlx_linux
-SRC = main.c
+SRC = main.c controls/key_bindings.c controls/key_actions.c controls/hooks.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
 all: $(NAME)
@@ -17,6 +17,7 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(MLX_FLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	mkdir -p $(@D)
 	$(CC) $(W_FLAGS) -I$(INCLUDE_DIR) -I$(MLX_DIR) -c $< -o $@
 
 $(OBJ_DIR):
