@@ -1,8 +1,7 @@
-#ifndef CUB3D_H
-#define CUB3D_H
+#ifndef TEXTURES_H
+#define TEXTURES_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "../mlx_linux/mlx.h"
 
 typedef struct s_mlx
 {
