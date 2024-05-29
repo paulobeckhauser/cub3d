@@ -8,7 +8,7 @@ SRC_DIR = src
 INCLUDE_DIR = incl
 OBJ_DIR = obj
 MLX_DIR = mlx_linux
-SRC = main.c
+SRC = main.c parser.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
 all: $(NAME)

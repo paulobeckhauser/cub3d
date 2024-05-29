@@ -10,4 +10,7 @@ typedef struct s_mlx
     void    *win_ptr;
 }   t_mlx;
 
+
+int parser(void);
+
 #endif
