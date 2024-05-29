@@ -13,26 +13,37 @@
 #include "../incl/controls.h"
 #include "../incl/standard_libs.h"
 #include "../incl/textures.h"
+#include "../incl/raycaster_test.h"
+#include "../incl/structs.h"
 
 int main(int argc, char **argv)
 {
-    t_mlx mlx;
+    t_line      lines[10];
+    t_game      game;
 
-    (void)argc;
-    (void)argv;
-    mlx.mlx_ptr = mlx_init();
-    if (!mlx.mlx_ptr)
+    game.mlx_ptr = mlx_init();
+    if (!game.mlx_ptr)
     {
         perror("mlx");
         return (1);
     }
-    mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, 1000, 800, "cub3d");
-    if (!mlx.win_ptr)
+    game.win_ptr = mlx_new_window(game.mlx_ptr, 639, 639, "cub3d");
+    if (!game.win_ptr)
     {
         perror("mlx window");
-        return (free(mlx.mlx_ptr), 1);
+        return (free(game.mlx_ptr), 1);
     }
-    init_hooks(&mlx);
-    mlx_loop(mlx.mlx_ptr);
+    game.map_line = lines;
+    init_test_map(&game);
+    game.img_x = 0;
+    game.img_y = 0;
+    init_hooks(&game);
+    load_images(&game);
+    game.player_marked = 0;
+    game.player_angle = 0;
+    draw_map(&game);
+    (void)argc;
+    (void)argv;
+    mlx_loop(game.mlx_ptr);
     return (0);
 }

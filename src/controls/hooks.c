@@ -12,8 +12,8 @@
 
 #include "../../incl/controls.h"
 
-void	init_hooks(t_mlx *mlx)
+void	init_hooks(t_game *game)
 {
-    mlx_hook(mlx->win_ptr, 02, 1L<<0, keypress, mlx);
-    mlx_hook(mlx->win_ptr, 17, 0, close_game, mlx);
+    mlx_hook(game->win_ptr, 02, 1L<<0, keypress, game);
+    mlx_hook(game->win_ptr, 17, 0, close_game, game);
 }

@@ -3,5 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #endif //STANDARD_LIBS_H

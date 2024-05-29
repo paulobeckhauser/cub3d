@@ -2,31 +2,37 @@
 
 NAME = cub3d
 CC = gcc
-W_FLAGS = -Wall -Wextra -Werror
+W_FLAGS = -Wall -Wextra -Werror -g
 MLX_FLAGS = -Lmlx_linux -lmlx -Imlx_linux -lXext -lX11 -lm -lz
+LIBFT_FLAGS = -L./libs/libft -lft
 SRC_DIR = src
 INCLUDE_DIR = incl
 OBJ_DIR = obj
 MLX_DIR = mlx_linux
-SRC = main.c controls/key_bindings.c controls/key_actions.c controls/hooks.c
+SRC = main.c controls/key_bindings.c controls/key_actions.c controls/hooks.c raycaster/raycaster.c \
+		raycaster/init_test_map.c raycaster/draw_textures.c raycaster/load_images.c hex_color.c ft_free.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
+LIBFT_DIR = libs/libft
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(MLX_FLAGS) -o $(NAME)
+	@make -s -C $(LIBFT_DIR)
+	@$(CC) $(OBJ) $(W_FLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	mkdir -p $(@D)
-	$(CC) $(W_FLAGS) -I$(INCLUDE_DIR) -I$(MLX_DIR) -c $< -o $@
+	@$(CC) $(W_FLAGS) -I$(INCLUDE_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -rf $(OBJ_DIR)
+	@make -s clean -C ./$(LIBFT_DIR)
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	@make -s fclean -C ./$(LIBFT_DIR)
+	@rm -f $(NAME)
 
 re: fclean all

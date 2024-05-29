@@ -1,10 +1,11 @@
 #ifndef CONTROLS_H
 #define CONTROLS_H
 
+#include "structs.h"
 #include "textures.h"
 
-int	    close_game(const t_mlx *mlx);
-void	init_hooks(t_mlx *mlx);
-int    	keypress(int keysymbol, const t_mlx *mlx);
+int	    close_game(t_game *game);
+void	init_hooks(t_game *game);
+int    	keypress(int keysymbol, t_game *game);
 
 #endif //CONTROLS_H

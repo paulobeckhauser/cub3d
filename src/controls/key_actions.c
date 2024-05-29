@@ -12,10 +12,11 @@
 
 #include "../../incl/controls.h"
 #include "../../incl/standard_libs.h"
+#include "../../incl/structs.h"
 
-int	close_game(const t_mlx *mlx)
+int	close_game(t_game *game)
 {
-    mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
-    free(mlx->mlx_ptr);
+    mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+    free(game->mlx_ptr);
     exit(0);
 }
