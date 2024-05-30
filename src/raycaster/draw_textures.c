@@ -32,9 +32,7 @@ void	draw_map(t_game *game)
 		{
 
 			if (game->map_line->sprites[j] == '0')
-			{
 				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, game->map_x, game->map_y);
-			}
 			else if (game->map_line->sprites[j] == '1')
 				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_wall, game->map_x, game->map_y);
 			else if (game->map_line->sprites[j] == 'N')
@@ -48,7 +46,6 @@ void	draw_map(t_game *game)
 					game->player_y = game->map_y;
 					game->ray_x = game->player_x + 8;
 					game->ray_y = game->player_y + 8;
-					draw_ray(game);
 				}
 			}
 			game->map_x += 64;
@@ -58,14 +55,36 @@ void	draw_map(t_game *game)
 		game->map_line = game->map_line->next;
 	}
 	game->map_line = map_line_start;
+	draw_ray(game);
 }
 
 void	draw_ray(t_game *game)
 {
-	while (game->ray_y > game->player_y - 100)
+	t_line	*line_start;
+
+	line_start = game->map_line;
+	while (game->ray_y > 0)
 	{
 		mlx_pixel_put(game->mlx_ptr, game->win_ptr, game->ray_x, game->ray_y, rgb_to_hex(255, 0, 0));
 		--game->ray_y;
+		if ((int)game->ray_y % 64 == 0)
+		{
+			printf("ray_x: %f\n", game->ray_x);
+			printf("ray_y: %f\n", game->ray_y);
+			int sprites_idx = (int)game->ray_x / 64;
+			int map_line_idx = (int)game->ray_y / 64 - 1;
+			printf("sprites idx: %i\n", sprites_idx);
+			printf("map line idx: %i\n", map_line_idx);
+			while (game->map_line && game->map_line->idx != map_line_idx)
+				game->map_line = game->map_line->next;
+			printf("element: %c\n", game->map_line->sprites[sprites_idx]);
+			if (game->map_line->sprites[sprites_idx] == '1')
+			{
+				printf("return\n");
+				return;
+			}
+			game->map_line = line_start;
+		}
 	}
 }
 

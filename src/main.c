@@ -27,7 +27,7 @@ int main(int argc, char **argv)
         perror("mlx");
         return (1);
     }
-    game.win_ptr = mlx_new_window(game.mlx_ptr, 639, 639, "cub3d");
+    game.win_ptr = mlx_new_window(game.mlx_ptr, 640, 640, "cub3d");
     if (!game.win_ptr)
     {
         perror("mlx window");

@@ -19,10 +19,18 @@ void init_test_map(t_game *game)
 	while (i < 10)
 	{
 		game->map_line[i].idx = i;
-		if (i == 4)
-			game->map_line[i].sprites = "1000N00001";
-		else if (i == 0 || i == 9)
+		if (i == 0 || i == 9)
 			game->map_line[i].sprites = "1111111111";
+		else if (i == 1)
+			game->map_line[i].sprites = "1000010001";
+		else if (i == 2)
+			game->map_line[i].sprites = "1000000011";
+		else if (i == 3)
+			game->map_line[i].sprites = "1001001001";
+		else if (i == 7)
+			game->map_line[i].sprites = "10000N0001";
+		else if (i == 8)
+			game->map_line[i].sprites = "1001000101";
 		else
 			game->map_line[i].sprites = "1000000001";
 		game->map_line[i].len = 10;
