@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     init_hooks(&game);
     load_images(&game);
     game.player_marked = 0;
-    game.player_angle = 0;
+    game.ray_angle = 0;
     draw_map(&game);
     (void)argc;
     (void)argv;

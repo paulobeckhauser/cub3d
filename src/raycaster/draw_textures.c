@@ -32,20 +32,21 @@ void	draw_map(t_game *game)
 		{
 
 			if (game->map_line->sprites[j] == '0')
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, game->map_x, game->map_y);
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, (int)game->map_x, (int)game->map_y);
 			else if (game->map_line->sprites[j] == '1')
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_wall, game->map_x, game->map_y);
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_wall, (int)game->map_x, (int)game->map_y);
 			else if (game->map_line->sprites[j] == 'N')
 			{
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, game->map_x, game->map_y);
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, (int)game->map_x, (int)game->map_y);
 				if (!game->player_marked)
 				{
-					mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_player, game->map_x, game->map_y);
+					mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_player, (int)game->map_x, (int)game->map_y);
 					game->player_marked = 1;
 					game->player_x = game->map_x;
 					game->player_y = game->map_y;
 					game->ray_x = game->player_x + 8;
-					game->ray_y = game->player_y + 8;
+					game->ray_y = game->player_y - 92;
+					mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)game->ray_x, (int)game->ray_y, rgb_to_hex(255, 0, 0));
 				}
 			}
 			game->map_x += 64;
@@ -55,7 +56,7 @@ void	draw_map(t_game *game)
 		game->map_line = game->map_line->next;
 	}
 	game->map_line = map_line_start;
-	draw_ray(game);
+	// draw_ray(game);
 }
 
 void	draw_ray(t_game *game)

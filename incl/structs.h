@@ -28,7 +28,7 @@ typedef struct s_game
 	int		player_marked;
 	double	ray_x;
 	double	ray_y;
-	double	player_angle;
+	double	ray_angle;
 }	t_game;
 
 #endif //STRUCTS_H
