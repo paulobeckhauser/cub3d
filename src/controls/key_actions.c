@@ -20,3 +20,17 @@ int	close_game(t_game *game)
     free(game->mlx_ptr);
     exit(0);
 }
+
+void    change_angle_left(t_game *game)
+{
+    game->ray_angle -= 10;
+    if (game->ray_angle <= 0)
+        game->ray_angle += 360;
+}
+
+void    change_angle_right(t_game *game)
+{
+    game->ray_angle += 10;
+    if (game->ray_angle >= 360)
+        game->ray_angle -= 360;
+}

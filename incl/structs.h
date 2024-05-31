@@ -31,4 +31,13 @@ typedef struct s_game
 	double	ray_angle;
 }	t_game;
 
+typedef struct s_ray_utils
+{
+	double	radians;
+	double	shifted_x;
+	double	shifted_y;
+	double	new_x;
+	double	new_y;
+}	t_ray_utils;
+
 #endif //STRUCTS_H

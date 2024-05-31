@@ -44,9 +44,6 @@ void	draw_map(t_game *game)
 					game->player_marked = 1;
 					game->player_x = game->map_x;
 					game->player_y = game->map_y;
-					game->ray_x = game->player_x + 8;
-					game->ray_y = game->player_y - 92;
-					mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)game->ray_x, (int)game->ray_y, rgb_to_hex(255, 0, 0));
 				}
 			}
 			game->map_x += 64;
