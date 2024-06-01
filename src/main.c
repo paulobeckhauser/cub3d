@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:01:21 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 17:55:51 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:04:02 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,7 @@ int main(int argc, char **argv)
     (void)argc;
     (void)argv;
 
-
-    char *test;
-
-    test = "aaaaaa F 220,100,0";
-
-
-    checker_map(test);
-
-    // parser();
+    parser();
 
     
     // mlx.mlx_ptr = mlx_init();

@@ -20,7 +20,8 @@ typedef struct s_mlx
 }   t_mlx;
 
 
-typedef struct	s_image {
+typedef struct	s_image
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -48,8 +49,10 @@ typedef struct s_data
     // RGB color for flor and ceiling
     // char *floor_color_hex; 
     // char *ceiling_color;
-    int floor_color; 
+    int floor_color;
+    bool floor_color_exist;
     int ceiling_color;
+    bool ceiling_color_exist;
 
 	bool map_error;
 
@@ -61,8 +64,8 @@ void	free_2d_array(char **array);
 int		rgb_to_hex(int red, int green, int blue);
 int		store_hex_color(char *line);
 
-int checker_map(char *str);
-
-bool floor_line_exist(char *str, char digit);
+// bool checker_map(char *str);
+// bool checker_map(char *str, char digit);
+bool    checker_surfaces_colors(char *str, char digit);
 
 #endif

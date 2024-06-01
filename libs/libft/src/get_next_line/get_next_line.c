@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 12:00:01 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/01/20 15:23:52 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:02:05 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ char	*update_stash(char *line)
 	ssize_t	i;
 
 	i = 0;
+	stash = NULL;
 	while (line[i] != '\n' && line[i] != '\0')
-	{
 		i++;
-	}
 	if (line[i] == '\0' || line[i + 1] == '\0')
 		return (NULL);
 	stash = ft_substr(line, i + 1, ft_strlen(line) - i);
