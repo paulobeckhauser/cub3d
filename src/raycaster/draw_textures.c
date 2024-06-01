@@ -44,6 +44,8 @@ void	draw_map(t_game *game)
 					game->player_marked = 1;
 					game->player_x = game->map_x;
 					game->player_y = game->map_y;
+					game->ray_x = game->player_x + 8;
+					game->ray_y = game->player_y - 92;
 				}
 			}
 			game->map_x += 64;
@@ -53,51 +55,38 @@ void	draw_map(t_game *game)
 		game->map_line = game->map_line->next;
 	}
 	game->map_line = map_line_start;
-	// draw_ray(game);
+	draw_ray(game);
 }
+
+double  calc_slope(t_game *game)
+{
+	return (game->ray_y - game->player_y) / (game->ray_y - game->player_y);
+}
+
+double  calc_y_intercept(t_game *game)
+{
+	return (game->player_y - )
+}
+
+// calculate y for each x using y = mx + b,
+// m - the slope of the line m = (y2 - y1) / (x2 -x1),
+// b - y-intercept b = y1 - m * x1
 
 void	draw_ray(t_game *game)
 {
-	t_line	*line_start;
-
-	line_start = game->map_line;
-	while (game->ray_y > 0)
+	double  x_iterator;
+	double  y_iterator;
+	double  slope;
+	double  y_intercept;
+	
+	x_iterator = game->player_x;
+	y_iterator = game->player_y;
+	slope = calc_slope(game);
+	y_intercept = calc_y_intercept(game);
+	while (x_iterator <= game->player_x && y_iterator <= game->player_y)
 	{
-		mlx_pixel_put(game->mlx_ptr, game->win_ptr, game->ray_x, game->ray_y, rgb_to_hex(255, 0, 0));
-		--game->ray_y;
-		if ((int)game->ray_y % 64 == 0)
-		{
-			printf("ray_x: %f\n", game->ray_x);
-			printf("ray_y: %f\n", game->ray_y);
-			int sprites_idx = (int)game->ray_x / 64;
-			int map_line_idx = (int)game->ray_y / 64 - 1;
-			printf("sprites idx: %i\n", sprites_idx);
-			printf("map line idx: %i\n", map_line_idx);
-			while (game->map_line && game->map_line->idx != map_line_idx)
-				game->map_line = game->map_line->next;
-			printf("element: %c\n", game->map_line->sprites[sprites_idx]);
-			if (game->map_line->sprites[sprites_idx] == '1')
-			{
-				printf("return\n");
-				return;
-			}
-			game->map_line = line_start;
-		}
+		x_iterator += 1;
+		y_iterator = slope * x_iterator + y_intercept;
+		mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)x_iterator, (int)y_iterator, rgb_to_hex(255, 0, 0));
 	}
 }
-
-// void	draw_ray(t_game *game)
-// {
-// 	t_image image;
-// 	image.img = mlx_new_image(game->mlx_ptr, 639, 639);
-// 	image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel, &image.line_length, &image.endian);
-// 	game->ray_x = game->player_x + 8;
-// 	game->ray_y = game->player_y + 8;
-// 	while (game->ray_y < game->player_y + 100)
-// 	{
-// 		*(int*)(image.addr + (((int)game->ray_x + (int)game->ray_y * 639) * 4)) = rgb_to_hex(255, 0, 0);
-// 		++game->ray_y;
-// 	}
-// 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, image.img, 0, 0);
-// 	mlx_destroy_image(game->mlx_ptr, image.img);
-// }

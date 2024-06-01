@@ -9,5 +9,7 @@ void    change_angle_right(t_game *game);
 int	    close_game(t_game *game);
 void	init_hooks(t_game *game);
 int    	keypress(int keysymbol, t_game *game);
+void    rotate_player_left(t_game *game);
+void    rotate_player_right(t_game *game);
 
 #endif //CONTROLS_H

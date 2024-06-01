@@ -23,15 +23,13 @@ int	keypress(int keysymbol, t_game *game)
         close_game(game);
     else if (keysymbol == A)
 	{
-		change_angle_left(game);
-		calculate_new_ray_x_y(game);
-		return (0);
+        rotate_player_left(game);
+//		return (0);
 	}
     else if (keysymbol == D)
 	{
-		change_angle_right(game);
-		calculate_new_ray_x_y(game);
-		return (0);
+		rotate_player_right(game);
+//		return (0);
 	}
 	else if (keysymbol == W)
 		game->player_y += 1;

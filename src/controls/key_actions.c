@@ -11,14 +11,26 @@
 /* ************************************************************************** */
 
 #include "../../incl/controls.h"
+#include "../../incl/raycaster_test.h"
 #include "../../incl/standard_libs.h"
-#include "../../incl/structs.h"
 
 int	close_game(t_game *game)
 {
     mlx_destroy_window(game->mlx_ptr, game->win_ptr);
     free(game->mlx_ptr);
     exit(0);
+}
+
+void    rotate_player_left(t_game *game)
+{
+    change_angle_left(game);
+    calculate_new_ray_x_y(game);
+}
+
+void    rotate_player_right(t_game *game)
+{
+    change_angle_right(game);
+    calculate_new_ray_x_y(game);
 }
 
 void    change_angle_left(t_game *game)
