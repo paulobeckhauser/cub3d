@@ -46,9 +46,6 @@ typedef struct s_data
 
     
 
-    // RGB color for flor and ceiling
-    // char *floor_color_hex; 
-    // char *ceiling_color;
     int floor_color;
     bool floor_color_exist;
     int ceiling_color;
@@ -58,6 +55,9 @@ typedef struct s_data
 
 } t_data;
 
+void    init_vars(t_data *data);
+
+
 
 int		parser(void);
 void	free_2d_array(char **array);
@@ -66,6 +66,17 @@ int		store_hex_color(char *line);
 
 // bool checker_map(char *str);
 // bool checker_map(char *str, char digit);
+
+// CHECKER
+char    *trim_rgb_input(char *str, char digit);
+bool    color_input_exist(char *str, char digit);
+int     size_array(char **array);
+bool    rgb_correct_format(char *str, char digit);
 bool    checker_surfaces_colors(char *str, char digit);
+
+bool    store_surfaces_colors(char *line, t_data *data);
+bool    store_texture_images(char *line, t_data *data);
+
+bool check_input_exist(t_data *data);
 
 #endif

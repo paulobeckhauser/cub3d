@@ -11,11 +11,23 @@ OBJ_DIR = obj
 MLX_DIR = mlx_linux
 LIBFT_DIR = libs/libft
 
+
+# CHECKER_DIR := $(SRC_DIR)/checker/
+
+# CHECKER_SRC := $(CHECKER_DIR)check_surface.c \
+
 SRC := 			main.c \
 				parser.c \
 				ft_free.c \
 				hex_color.c \
-				checker.c
+				init_vars.c \
+				check_surface.c \
+				checker_utils.c \
+				store_input.c \
+
+
+
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
