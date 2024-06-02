@@ -80,9 +80,11 @@ bool    checker_surfaces_colors(char *str, char digit);
 
 bool    store_surfaces_colors(char *line, t_data *data);
 bool    store_texture_images(char *line, t_data *data);
-bool store_map(t_data *data);
+bool    store_map(t_data *data);
 
 bool    check_input_exist(t_data *data);
 bool    count_lines_map(t_data *data);
+
+int free_variables_error(t_data *data);
 
 #endif

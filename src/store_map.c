@@ -56,11 +56,12 @@ bool store_map(t_data *data)
             free(line);
             break;
         }
-        printf("%s", line);
+        // printf("%s", line);
         data->map[i] = ft_strdup(line);
         free(line);
         i++;
     }
-    printf("\n");
+    data->map[i] = NULL;
+    // printf("\n");
     return (true);
 }

@@ -25,6 +25,7 @@ SRC := 			main.c \
 				checker_utils.c \
 				store_input.c \
 				store_map.c \
+				free_variables_error.c \
 
 
 

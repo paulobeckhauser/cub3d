@@ -6,13 +6,15 @@
 bool store_surfaces_colors(char *line, t_data *data)
 {
     int i;
+    // printf("here\n");
+    // printf("%s\n", line);
 
     i = 0;
-
     while (line[i] == ' ')
         i++;
     if (line[i] == 'F')
     {
+        // printf("here 2\n");
         if (!checker_surfaces_colors(line, 'F'))
         {
             free(line);
