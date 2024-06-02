@@ -24,6 +24,7 @@ SRC := 			main.c \
 				check_surface.c \
 				checker_utils.c \
 				store_input.c \
+				store_map.c \
 
 
 

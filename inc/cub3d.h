@@ -44,12 +44,16 @@ typedef struct s_data
     char *west_texture;
     char *east_texture;
 
+    int number_lines_map;
+
     
 
     int floor_color;
     bool floor_color_exist;
     int ceiling_color;
     bool ceiling_color_exist;
+
+    char **map;
 
 	bool map_error;
 
@@ -76,7 +80,9 @@ bool    checker_surfaces_colors(char *str, char digit);
 
 bool    store_surfaces_colors(char *line, t_data *data);
 bool    store_texture_images(char *line, t_data *data);
+bool store_map(t_data *data);
 
-bool check_input_exist(t_data *data);
+bool    check_input_exist(t_data *data);
+bool    count_lines_map(t_data *data);
 
 #endif
