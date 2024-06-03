@@ -70,6 +70,22 @@ void	draw_player(const t_game *game)
 		mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)game->player_x, y_iterator++, rgb_to_hex(0, 255, 0));
 }
 
+void draw_collision(const t_game *game, double ray_x, double ray_y)
+{
+	int x_start = (int)ray_x - 2;
+	int y_start = (int)ray_y - 2;
+	int x_end = x_start + 4;
+	int y_end = y_start + 4;
+
+	for (int x = x_start; x <= x_end; x++)
+	{
+		for (int y = y_start; y <= y_end; y++)
+		{
+			mlx_pixel_put(game->mlx_ptr, game->win_ptr, x, y, rgb_to_hex(255, 255, 0));
+		}
+	}
+}
+
 void draw_ray(t_game *game)
 {
 	double	dir_x;
@@ -92,7 +108,8 @@ void draw_ray(t_game *game)
 	{
 		if ((int)x_iterator % 64 == 0 || (int)y_iterator % 64 == 0)
 		{
-			printf("hi\n");
+			draw_collision(game, x_iterator, y_iterator);
+
 		}
 		mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)x_iterator, (int)y_iterator, rgb_to_hex(255, 0, 0));
 		x_iterator += dir_x * speed;

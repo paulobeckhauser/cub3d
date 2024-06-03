@@ -29,13 +29,13 @@ int	keypress(int keysymbol, t_game *game)
 	{
 		rotate_player_right(game);
 	}
-	else if (keysymbol == W)
-	{
-		move_player(game);
-	}
 	else if (keysymbol == S)
 	{
-		move_player(game);
+		move_player_forward(game);
+	}
+	else if (keysymbol == W)
+	{
+		move_player_backward(game);
 	}
 	draw_map(game);
     return (0);
