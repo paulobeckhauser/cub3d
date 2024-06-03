@@ -25,18 +25,26 @@ int parser(void)
         return(free_variables_error(&data));
 
 
-
-
-
     check_map_content_last_element(&data);
 
-    if (data.map_error == true)
-    {
-        printf("The map has an error\n");
+    // printf("The current element position is: %d\n", data.element_position);
+    // store_map_element(&data);
+
+
+
+
+
+
+
+
+
+    // if (data.map_error == true)
+    // {
+    //     printf("The map has an error\n");
 
         
-        return (1);
-    }
+    //     return (1);
+    // }
 
 
     

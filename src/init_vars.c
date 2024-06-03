@@ -12,5 +12,6 @@ void init_vars(t_data *data)
     data->floor_color_exist = false;
     data->ceiling_color_exist = false;
     data->map_message = NULL;
+    data->element_position = 0;
     
 }

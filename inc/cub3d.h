@@ -32,6 +32,20 @@ typedef struct	s_image
 
 
 
+typedef struct s_coord
+{
+    float x;
+    float y;
+}   t_coord;
+
+
+typedef struct s_map
+{
+    t_coord         coord;
+    struct s_map   *next;
+
+}   t_map;
+
 
 
 
@@ -54,9 +68,12 @@ typedef struct s_data
     int ceiling_color;
     bool ceiling_color_exist;
 
+    
+
 
 	bool map_error;
     char *map_message;
+    int element_position;
 
 } t_data;
 
@@ -89,6 +106,8 @@ bool    count_lines_map(t_data *data);
 int     free_variables_error(t_data *data);
 
 void check_map_content_last_element(t_data *data);
+
+bool store_map_element(t_data *data);
 
 
 #endif

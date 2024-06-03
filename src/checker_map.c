@@ -4,14 +4,14 @@
 
 void check_map_content_last_element(t_data *data)
 {
-    int i;
-    // int j;
+    // int i;
+    // // int j;
     
-    i = data->number_lines_map - 1;
+    // i = data->number_lines_map - 1;
 
-    while (i >= 0)
-    {
-        printf("%s\n", data->cub_file[i]);
+    // while (i >= 0)
+    // {
+    //     printf("%s\n", data->cub_file[i]);
 
         // j = 0;
 
@@ -34,7 +34,20 @@ void check_map_content_last_element(t_data *data)
         
 
 
-        i--;
-    }
+    //     i--;
+    // }
     // return (true);
+
+
+    int i;
+
+    i = 0;
+
+    while(data->cub_file[i])
+    {
+
+        printf("%s\n", data->cub_file[i]);
+        i++;
+    }
+
 }

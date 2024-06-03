@@ -27,6 +27,7 @@ SRC := 			main.c \
 				cub_file.c \
 				free_variables_error.c \
 				checker_map.c \
+				store_map.c \
 
 
 
