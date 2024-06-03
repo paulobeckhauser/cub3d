@@ -31,7 +31,12 @@ int parser(void)
     check_map_content_last_element(&data);
 
     if (data.map_error == true)
+    {
         printf("The map has an error\n");
+
+        
+        return (1);
+    }
 
 
     
