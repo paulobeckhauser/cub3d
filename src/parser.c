@@ -8,14 +8,14 @@ int parser(void)
     init_vars(&data);
 
 
-    if (!store_map(&data))
+    if (!store_cub_file(&data))
         return(free_variables_error(&data));
 
 
     int i = 0;
-    while (data.map[i])
+    while (data.cub_file[i])
     {
-        if (!store_surfaces_colors(data.map[i], &data) || !store_texture_images(data.map[i], &data))
+        if (!store_surfaces_colors(data.cub_file[i], &data) || !store_texture_images(data.cub_file[i], &data))
             return(free_variables_error(&data));
         i++;
     }
@@ -25,8 +25,13 @@ int parser(void)
         return(free_variables_error(&data));
 
 
-    
-    // check_map_last_element
+
+
+
+    check_map_content_last_element(&data);
+
+    if (data.map_error == true)
+        printf("The map has an error\n");
 
 
     

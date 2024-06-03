@@ -2,7 +2,7 @@
 
 void init_vars(t_data *data)
 {
-    data->map = NULL;
+    data->cub_file = NULL;
     data->north_texture = NULL;
     data->south_texture = NULL;
     data->west_texture = NULL;
@@ -11,5 +11,6 @@ void init_vars(t_data *data)
     data->map_error = false;
     data->floor_color_exist = false;
     data->ceiling_color_exist = false;
+    data->map_message = NULL;
     
 }

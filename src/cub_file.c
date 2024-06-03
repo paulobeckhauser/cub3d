@@ -30,7 +30,7 @@ bool count_lines_map(t_data *data)
 }
 
 
-bool store_map(t_data *data)
+bool store_cub_file(t_data *data)
 {
     int fd;
     int i;
@@ -39,8 +39,8 @@ bool store_map(t_data *data)
     if (!count_lines_map(data))
         return(false);
 
-    data->map = malloc(data->number_lines_map * sizeof(char *));
-    if (!data->map)
+    data->cub_file = malloc(data->number_lines_map * sizeof(char *));
+    if (!data->cub_file)
     {
         ft_putstr_fd("Memory allocation error\n", 2);
         return (1);
@@ -56,12 +56,10 @@ bool store_map(t_data *data)
             free(line);
             break;
         }
-        // printf("%s", line);
-        data->map[i] = ft_strdup(line);
+        data->cub_file[i] = ft_strdup(line);
         free(line);
         i++;
     }
-    data->map[i] = NULL;
-    // printf("\n");
+    data->cub_file[i] = NULL;
     return (true);
 }
