@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
 #include "../../incl/cub3d.h"
-#include "../../incl/raycaster_test.h"
-#include "../../incl/structs.h"
 #include "../../libs/mlx_linux/mlx.h"
+#include "../../incl/raycaster_test.h"
+#include "../../incl/standard_libs.h"
+#include "../../incl/structs.h"
 
 void	draw_map(t_game *game)
 {
@@ -40,12 +39,11 @@ void	draw_map(t_game *game)
 				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, (int)game->map_x, (int)game->map_y);
 				if (!game->player_marked)
 				{
-					mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_player, (int)game->map_x, (int)game->map_y);
 					game->player_marked = 1;
-					game->player_x = game->map_x;
-					game->player_y = game->map_y;
-					game->ray_x = game->player_x + 8;
-					game->ray_y = game->player_y - 92;
+					game->player_x = game->map_x + 32;
+					game->player_y = game->map_y + 32;
+					game->ray_x = game->player_x;
+					game->ray_y = -640;
 				}
 			}
 			game->map_x += 64;
@@ -55,38 +53,49 @@ void	draw_map(t_game *game)
 		game->map_line = game->map_line->next;
 	}
 	game->map_line = map_line_start;
+	draw_player(game);
 	draw_ray(game);
 }
 
-double  calc_slope(t_game *game)
+void	draw_player(const t_game *game)
 {
-	return (game->ray_y - game->player_y) / (game->ray_y - game->player_y);
+	int	x_iterator;
+	int	y_iterator;
+
+	x_iterator = (int)game->player_x - 10;
+	y_iterator = (int)game->player_y - 10;
+	while (x_iterator < game->player_x + 10)
+		mlx_pixel_put(game->mlx_ptr, game->win_ptr, x_iterator++, (int)game->player_y, rgb_to_hex(0, 255, 0));
+	while (y_iterator < game->player_y + 10)
+		mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)game->player_x, y_iterator++, rgb_to_hex(0, 255, 0));
 }
 
-double  calc_y_intercept(t_game *game)
+void draw_ray(t_game *game)
 {
-	return (game->player_y - )
-}
+	double	dir_x;
+	double	dir_y;
+	double	len;
+	double	x_iterator;
+	double	y_iterator;
+	double	speed;
 
-// calculate y for each x using y = mx + b,
-// m - the slope of the line m = (y2 - y1) / (x2 -x1),
-// b - y-intercept b = y1 - m * x1
-
-void	draw_ray(t_game *game)
-{
-	double  x_iterator;
-	double  y_iterator;
-	double  slope;
-	double  y_intercept;
-	
+	dir_x = game->ray_x - game->player_x;
+	dir_y = game->ray_y - game->player_y;
+	len = sqrt(dir_x * dir_x + dir_y * dir_y);
+	dir_x /= len;
+	dir_y /= len;
 	x_iterator = game->player_x;
 	y_iterator = game->player_y;
-	slope = calc_slope(game);
-	y_intercept = calc_y_intercept(game);
-	while (x_iterator <= game->player_x && y_iterator <= game->player_y)
+	speed = 1;
+	while (((dir_x >= 0 && x_iterator <= game->ray_x) || (dir_x < 0 && x_iterator >= game->ray_x))
+			&& ((dir_y >= 0 && y_iterator <= game->ray_y) || (dir_y < 0 && y_iterator >= game->ray_y)))
 	{
-		x_iterator += 1;
-		y_iterator = slope * x_iterator + y_intercept;
+		if ((int)x_iterator % 64 == 0 || (int)y_iterator % 64 == 0)
+		{
+			printf("hi\n");
+		}
 		mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)x_iterator, (int)y_iterator, rgb_to_hex(255, 0, 0));
+		x_iterator += dir_x * speed;
+		y_iterator += dir_y * speed;
 	}
 }

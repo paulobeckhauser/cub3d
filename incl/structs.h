@@ -25,6 +25,8 @@ typedef struct s_game
 	double	map_y;
 	double	player_x;
 	double	player_y;
+	double	player_x_new;
+	double	player_y_new;
 	int		player_marked;
 	double	ray_x;
 	double	ray_y;
