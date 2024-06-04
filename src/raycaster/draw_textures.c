@@ -11,50 +11,34 @@
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
-#include "../../libs/mlx_linux/mlx.h"
-#include "../../incl/raycaster_test.h"
-#include "../../incl/standard_libs.h"
-#include "../../incl/structs.h"
+#include "../../incl/raycaster.h"
 
 void	draw_map(t_game *game)
 {
-	t_line *map_line_start;
-	int	j;
+	int	x;
+	int	y;
 	game->map_x = 0;
 	game->map_y = 0;
-	map_line_start = game->map_line;
-	while (game->map_line)
+	y = 0;
+	while (game->map[y])
 	{
-		j = 0;
+		x = 0;
 		game->map_x = 0;
-		while (j < game->map_line->len)
+		while (game->map[y][x])
 		{
-
-			if (game->map_line->sprites[j] == '0')
+			if (game->map[y][x] == '0' || game->map[y][x] == 'N')
 				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, (int)game->map_x, (int)game->map_y);
-			else if (game->map_line->sprites[j] == '1')
+			else if (game->map[y][x] == '1')
 				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_wall, (int)game->map_x, (int)game->map_y);
-			else if (game->map_line->sprites[j] == 'N')
-			{
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->txt_floor, (int)game->map_x, (int)game->map_y);
-				if (!game->player_marked)
-				{
-					game->player_marked = 1;
-					game->player_x = game->map_x + 32;
-					game->player_y = game->map_y + 32;
-					game->ray_x = game->player_x;
-					game->ray_y = -640;
-				}
-			}
 			game->map_x += 64;
-			j++;
+			x++;
 		}
 		game->map_y += 64;
-		game->map_line = game->map_line->next;
+		++y;
 	}
-	game->map_line = map_line_start;
 	draw_player(game);
-	draw_ray(game);
+	// draw_ray(game);
+	cast_rays(game);
 }
 
 void	draw_player(const t_game *game)
@@ -94,22 +78,33 @@ void draw_ray(t_game *game)
 	double	x_iterator;
 	double	y_iterator;
 	double	speed;
+	int		colis_x;
+	int		colis_y;
 
-	dir_x = game->ray_x - game->player_x;
-	dir_y = game->ray_y - game->player_y;
+	dir_x = game->ray_new_x - game->player_x;
+	dir_y = game->ray_new_y - game->player_y;
 	len = sqrt(dir_x * dir_x + dir_y * dir_y);
 	dir_x /= len;
 	dir_y /= len;
 	x_iterator = game->player_x;
 	y_iterator = game->player_y;
 	speed = 1;
-	while (((dir_x >= 0 && x_iterator <= game->ray_x) || (dir_x < 0 && x_iterator >= game->ray_x))
-			&& ((dir_y >= 0 && y_iterator <= game->ray_y) || (dir_y < 0 && y_iterator >= game->ray_y)))
+	while (((dir_x >= 0 && x_iterator <= game->ray_new_x) || (dir_x < 0 && x_iterator >= game->ray_new_x))
+			&& ((dir_y >= 0 && y_iterator <= game->ray_new_y) || (dir_y < 0 && y_iterator >= game->ray_new_y)))
 	{
 		if ((int)x_iterator % 64 == 0 || (int)y_iterator % 64 == 0)
 		{
 			draw_collision(game, x_iterator, y_iterator);
-
+			if (dir_x > 0)
+				colis_x = (int)x_iterator / 64;
+			else
+				colis_x = (int)(x_iterator - 1) / 64;
+			if (dir_y > 0)
+				colis_y = (int)y_iterator / 64;
+			else
+				colis_y = (int)(y_iterator - 1) / 64;
+			if (game->map[colis_y][colis_x] == '1')
+				return ;
 		}
 		mlx_pixel_put(game->mlx_ptr, game->win_ptr, (int)x_iterator, (int)y_iterator, rgb_to_hex(255, 0, 0));
 		x_iterator += dir_x * speed;

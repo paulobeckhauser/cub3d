@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/structs.h"
-#include "../../incl/textures.h"
-#include "../../incl/defines.h"
+#include "../../incl/raycaster.h"
 
 void load_images(t_game *game)
 {

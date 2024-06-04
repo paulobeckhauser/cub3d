@@ -10,15 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/controls.h"
-#include "../incl/standard_libs.h"
-#include "../incl/textures.h"
-#include "../incl/raycaster_test.h"
-#include "../incl/structs.h"
+#include "../incl/raycaster.h"
 
 int main(int argc, char **argv)
 {
-    t_line      lines[10];
     t_game      game;
 
     game.mlx_ptr = mlx_init();
@@ -33,17 +28,19 @@ int main(int argc, char **argv)
         perror("mlx window");
         return (free(game.mlx_ptr), 1);
     }
-    game.map_line = lines;
-    init_test_map(&game);
+    game.map = init_test_map();
     game.img_x = 0;
     game.img_y = 0;
     init_hooks(&game);
     load_images(&game);
     game.player_marked = 0;
-    game.ray_angle = 0;
+    game.ray_angle = 270;
+    mark_player(&game);
+    mark_main_ray((&game));
     draw_map(&game);
     (void)argc;
     (void)argv;
     mlx_loop(game.mlx_ptr);
+    free(game.map);
     return (0);
 }

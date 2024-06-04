@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/controls.h"
-#include "../../incl/raycaster_test.h"
-#include "../../incl/standard_libs.h"
+#include "../../incl/raycaster.h"
 
 int	close_game(t_game *game)
 {
@@ -25,6 +23,8 @@ void    rotate_player_left(t_game *game)
 {
     change_angle_left(game);
     calc_new_ray_x_y(game);
+    game->ray_x = game->ray_new_x;
+    game->ray_y = game->ray_new_y;
     draw_map(game);
 }
 
@@ -32,6 +32,8 @@ void    rotate_player_right(t_game *game)
 {
     change_angle_right(game);
     calc_new_ray_x_y(game);
+    game->ray_x = game->ray_new_x;
+    game->ray_y = game->ray_new_y;
     draw_map(game);
 }
 
@@ -50,47 +52,41 @@ void    change_angle_right(t_game *game)
 }
 
 // Need to move player and also the ray so it doesn't lose it's length.
-// First calculate direction (x,y) and then length of the path
+// First calculate direction (x,y) based on the ray angle
 // Can modify speed by multiplying directions
 
 void move_player_forward(t_game *game)
 {
     double  dir_x;
     double  dir_y;
-    double  length;
     double  speed;
 
-    dir_x = game->ray_x - game->player_x;
-    dir_y = game->ray_y - game->player_y;
-    length = sqrt(dir_x * dir_x + dir_y * dir_y);
+    dir_x = cos(to_radians(game->ray_angle));
+    dir_y = sin(to_radians(game->ray_angle));
     speed = 5;
-    dir_x /= length;
-    dir_y /= length;
     game->player_x += dir_x * speed;
     game->player_y += dir_y * speed;
     game->ray_x += dir_x * speed;
     game->ray_y += dir_y * speed;
+    draw_map(game);
 }
 
 // Need to move player and also the ray so it doesn't lose it's length.
-// First calculate direction (x,y) and then length of the path
+// First calculate direction (x,y) based on the ray angle
 // Can modify speed by multiplying directions
 
 void move_player_backward(t_game *game)
 {
     double  dir_x;
     double  dir_y;
-    double  length;
     double  speed;
 
-    dir_x = game->ray_x - game->player_x;
-    dir_y = game->ray_y - game->player_y;
-    length = sqrt(dir_x * dir_x + dir_y * dir_y);
+    dir_x = cos(to_radians(game->ray_angle));
+    dir_y = sin(to_radians(game->ray_angle));
     speed = 5;
-    dir_x /= length;
-    dir_y /= length;
     game->player_x -= dir_x * speed;
     game->player_y -= dir_y * speed;
     game->ray_x -= dir_x * speed;
     game->ray_y -= dir_y * speed;
+    draw_map(game);
 }

@@ -10,46 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster_test.h"
-#include "../../incl/standard_libs.h"
+#include "../../incl/raycaster.h"
+#include "../../incl/cub3d.h"
 
-void init_test_map(t_game *game)
+char	**init_test_map(void)
 {
-	int i = 0;
-	while (i < 10)
+	char	**map;
+
+	map = ft_calloc(10, 10);
+	if (map == NULL)
 	{
-		game->map_line[i].idx = i;
-		if (i == 0 || i == 9)
-			game->map_line[i].sprites = "1111111111";
-		else if (i == 1)
-			game->map_line[i].sprites = "1000010001";
-		else if (i == 2)
-			game->map_line[i].sprites = "1000000011";
-		else if (i == 3)
-			game->map_line[i].sprites = "1001001001";
-		else if (i == 7)
-			game->map_line[i].sprites = "10000N0001";
-		else if (i == 8)
-			game->map_line[i].sprites = "1001000101";
-		else
-			game->map_line[i].sprites = "1000000001";
-		game->map_line[i].len = 10;
-		if (i == 0)
-		{
-			game->map_line[i].prev = NULL;
-			game->map_line[i].next = &game->map_line[i + 1];
-		}
-		else if (i == 9)
-		{
-			game->map_line[i].prev = &game->map_line[i - 1];
-			game->map_line[i].next = NULL;
-		}
-		else
-		{
-			game->map_line[i].prev = &game->map_line[i - 1];
-			game->map_line[i].next = &game->map_line[i + 1];
-		}
-		++i;
+		perror("calloc");
+		exit(1);
 	}
-	game->map_line_count = 10;
+	map[0] = "1111111111";
+	map[1] = "1000010001";
+	map[2] = "1000000011";
+	map[3] = "1001001001";
+	map[4] = "1000000001";
+	map[5] = "1000000001";
+	map[6] = "1000000001";
+	map[7] = "10000N0001";
+	map[8] = "1001000101";
+	map[9] = "1111111111";
+	return (map);
 }

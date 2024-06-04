@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/controls.h"
+#include "../../incl/raycaster.h"
 
 void	init_hooks(t_game *game)
 {
