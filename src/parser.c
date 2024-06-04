@@ -25,7 +25,14 @@ int parser(void)
         return(free_variables_error(&data));
 
 
+
+
     check_map_content_last_element(&data);
+
+
+
+    //store_map
+
 
     // printf("The current element position is: %d\n", data.element_position);
     // store_map_element(&data);
@@ -33,7 +40,23 @@ int parser(void)
 
 
 
+    store_map_element(&data);
 
+
+
+
+
+
+
+    // int i; 
+
+    // i = 0;
+
+    // while(data.map_element[i])
+    // {
+    //     printf("%s\n", data.map_element[i]);
+    //     i++;
+    // }
 
 
 

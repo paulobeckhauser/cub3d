@@ -39,15 +39,26 @@ void check_map_content_last_element(t_data *data)
     // return (true);
 
 
+    // int i;
+
+    // i = 0;
+
+    // while(data->cub_file[i])
+    // {
+
+    //     printf("%s\n", data->cub_file[i]);
+    //     i++;
+    // }
+
+
     int i;
 
-    i = 0;
+    i = data->number_lines_map_element;
 
-    while(data->cub_file[i])
-    {
+    // while ()
 
-        printf("%s\n", data->cub_file[i]);
-        i++;
-    }
+
+
+
 
 }

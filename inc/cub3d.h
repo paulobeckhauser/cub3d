@@ -69,6 +69,9 @@ typedef struct s_data
     bool ceiling_color_exist;
 
     
+    char **map_element;
+
+    int number_lines_map_element;
 
 
 	bool map_error;
@@ -105,7 +108,10 @@ bool    count_lines_map(t_data *data);
 
 int     free_variables_error(t_data *data);
 
-void check_map_content_last_element(t_data *data);
+void    check_map_content_last_element(t_data *data);
+
+bool size_map_element(t_data *data);
+bool    check_empty_line(char *str);
 
 bool store_map_element(t_data *data);
 

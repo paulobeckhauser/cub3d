@@ -13,5 +13,9 @@ void init_vars(t_data *data)
     data->ceiling_color_exist = false;
     data->map_message = NULL;
     data->element_position = 0;
+    data->number_lines_map_element = 0;
+    data->map_element = NULL;
+
+    
     
 }
