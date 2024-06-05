@@ -6,6 +6,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// screen
+#define SCREEN_WIDTH 2560.0
+#define SCREEN_HEIGHT 1440.0
+#define DRAWING_SCALE (SCREEN_HEIGHT * 300.0)
+
+// directions
+#define NORTH 1
+#define EAST 2
+#define SOUTH 3
+#define WEST 4
+
+// images
+#define BACKGROUND "./textures/background.xpm"
+
 // keys
 #define ESC 65307
 #define W 119
@@ -13,40 +27,28 @@
 #define A 97
 #define D 100
 
-// textures
-#define FLOOR "./textures/floor.xpm"
-#define PLAYER "./textures/player.xpm"
-#define WALL "./textures/wall.xpm"
-
-// typedef struct s_line
-// {
-// 	int             idx;
-// 	char            *sprites;
-// 	int             len;
-// 	struct s_line    *prev;
-// 	struct s_line    *next;
-// }   t_line;
-
 typedef struct s_game
 {
 	void    *mlx_ptr;
 	void    *win_ptr;
-	int		img_x;
-	int		img_y;
-	void    *txt_floor;
-	void    *txt_player;
-	void    *txt_wall;
+	double  square_width;
+	double  square_height;
 	char	**map;
 	double	map_x;
 	double	map_y;
 	double	player_x;
 	double	player_y;
-	int		player_marked;
-	double	ray_x;
-	double	ray_y;
+	double	ray_main_x;
+	double	ray_main_y;
 	double	ray_new_x;
 	double	ray_new_y;
 	double	ray_angle;
+	double  dists[(int)SCREEN_WIDTH];
+	int     dist_idx;
+	int     direction;
+	void    *background;
+	int     img_x;
+	int     img_y;
 }	t_game;
 
 typedef struct s_ray_utils
@@ -60,12 +62,11 @@ typedef struct s_ray_utils
 
 void	cast_rays(t_game *game);
 void	calc_new_ray_x_y(t_game *game);
-void	draw_collision(const t_game *game, double x_iterator, double y_iterator);
 void	draw_map(t_game *game);
-void	draw_player(const t_game *game);
+void    draw_wall_line(t_game *game);
 void	draw_ray(t_game *game);
 char	**init_test_map(void);
-void	load_images(t_game *textures);
+void    load_images(t_game *game);
 void	mark_player(t_game *game);
 void	mark_main_ray(t_game *game);
 void	move_player_backward(t_game *game);

@@ -5,13 +5,14 @@
 # include "../libs/libft/inc/get_next_line.h"
 # include "../libs/libft/inc/libft.h"
 
-
 # include "../libs/mlx_linux/mlx.h"
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h> // open file function
 # include <stdbool.h>
+
+# include "raycaster.h"
 
 typedef struct	s_image {
 	void	*img;
@@ -40,6 +41,8 @@ typedef struct s_data
 void	free_2d_array(char **array);
 int		rgb_to_hex(int red, int green, int blue);
 int		store_hex_color(char *line);
+
+void     init_game(t_game *game);
 
 int checker_map(char *str);
 

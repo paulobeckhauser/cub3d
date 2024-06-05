@@ -9,7 +9,7 @@ SRC_DIR = src
 INCLUDE_DIR = incl
 OBJ_DIR = obj
 MLX_DIR = mlx_linux
-SRC = main.c controls/key_bindings.c controls/key_actions.c controls/hooks.c raycaster/raycaster.c \
+SRC = main.c init_game.c controls/key_bindings.c controls/key_actions.c controls/hooks.c raycaster/raycaster.c \
 		raycaster/init_test_map.c raycaster/draw_textures.c raycaster/load_images.c hex_color.c ft_free.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 LIBFT_DIR = libs/libft

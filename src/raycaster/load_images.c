@@ -14,7 +14,5 @@
 
 void load_images(t_game *game)
 {
-	game->txt_floor = mlx_xpm_file_to_image(game->mlx_ptr, FLOOR, &game->img_x, &game->img_y);
-	game->txt_player = mlx_xpm_file_to_image(game->mlx_ptr, PLAYER, &game->img_x, &game->img_y);
-	game->txt_wall = mlx_xpm_file_to_image(game->mlx_ptr, WALL, &game->img_x, &game->img_y);
+	game->background = mlx_xpm_file_to_image(game->mlx_ptr, BACKGROUND, &game->img_x, &game->img_y);
 }
