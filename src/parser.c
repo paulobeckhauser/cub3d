@@ -27,8 +27,18 @@ int parser(void)
 
 
 
-    check_map_content_last_element(&data);
 
+    // printf("%d\n", data.number_lines_map);
+
+    if (!check_map_content_last_element(&data))
+    {
+        ft_putstr_fd("Map element not in the correct position\n", 2);
+        return (1);
+    }
+    store_map_element(&data);
+
+
+    // printf("%d\n", data.line_start_map_position);
 
 
     //store_map
@@ -40,7 +50,6 @@ int parser(void)
 
 
 
-    store_map_element(&data);
 
 
 

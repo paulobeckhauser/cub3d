@@ -77,6 +77,9 @@ typedef struct s_data
 	bool map_error;
     char *map_message;
     int element_position;
+    int line_start_map_position;
+
+    bool map_correct_position;
 
 } t_data;
 
@@ -108,12 +111,15 @@ bool    count_lines_map(t_data *data);
 
 int     free_variables_error(t_data *data);
 
-void    check_map_content_last_element(t_data *data);
+bool check_map_content_last_element(t_data *data);
 
 bool size_map_element(t_data *data);
 bool    check_empty_line(char *str);
+bool check_map_element(char *str);
 
 bool store_map_element(t_data *data);
+
+
 
 
 #endif
