@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:01:21 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/06/01 17:04:02 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:03:14 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,19 @@ int main(int argc, char **argv)
 
     // t_image img;
     
-    (void)argc;
-    (void)argv;
+    // (void)argv;
+    // (void)argc;
 
-    parser();
+    if (argc == 2)
+        return (parser(argv[1]));
+    // parser("maps/example_.cub");
+    
+    else
+    {
+        ft_putstr_fd("Incorrect number of arguments\n", 2);
+        return (1);
+    }
+
 
     
     // mlx.mlx_ptr = mlx_init();
@@ -128,5 +137,5 @@ int main(int argc, char **argv)
     // mlx_put_image_to_window(mlx.mlx_ptr, mlx.win_ptr, img.img, 0, 0);
     
     // mlx_loop(mlx.mlx_ptr);
-    return (0);
+    // return (0);
 }

@@ -15,7 +15,7 @@ bool store_surfaces_colors(char *line, t_data *data)
     if (line[i] == 'F')
     {
         // printf("here 2\n");
-        if (!checker_surfaces_colors(line, 'F'))
+        if (!checker_surfaces_colors(data, line, 'F'))
         {
             free(line);
             return(false);
@@ -27,7 +27,7 @@ bool store_surfaces_colors(char *line, t_data *data)
     
     else if (line[i] == 'C')
     {
-        if (!checker_surfaces_colors(line, 'C'))
+        if (!checker_surfaces_colors(data, line, 'C'))
         {
             free(line);
             return(false);

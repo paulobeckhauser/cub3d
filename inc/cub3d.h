@@ -13,6 +13,9 @@
 # include <fcntl.h> // open file function
 # include <stdbool.h>
 
+# include <errno.h>
+# include <string.h>
+
 typedef struct s_mlx
 {
     void    *mlx_ptr;
@@ -75,7 +78,7 @@ typedef struct s_data
 
 
 	bool map_error;
-    char *map_message;
+    char *map_error_message;
     int element_position;
     int line_start_map_position;
 
@@ -87,7 +90,7 @@ void    init_vars(t_data *data);
 
 
 
-int		parser(void);
+int parser(char *str);
 void	free_2d_array(char **array);
 int		rgb_to_hex(int red, int green, int blue);
 int		store_hex_color(char *line);
@@ -100,16 +103,19 @@ char    *trim_rgb_input(char *str, char digit);
 bool    color_input_exist(char *str, char digit);
 int     size_array(char **array);
 bool    rgb_correct_format(char *str, char digit);
-bool    checker_surfaces_colors(char *str, char digit);
+// bool    checker_surfaces_colors(char *str, char digit);
+bool checker_surfaces_colors(t_data *data, char *str, char digit);
 
 bool    store_surfaces_colors(char *line, t_data *data);
 bool    store_texture_images(char *line, t_data *data);
-bool    store_cub_file(t_data *data);
+bool store_cub_file(t_data *data, char *str);
 
-bool    check_input_exist(t_data *data);
+// bool    check_input_exist(t_data *data);
+bool check_input_floor_texture_exist(t_data *data);
 bool    count_lines_map(t_data *data);
 
-int     free_variables_error(t_data *data);
+// int     free_variables_error(t_data *data);
+int free_variables_error(t_data *data);
 
 bool check_map_content_last_element(t_data *data);
 
@@ -119,6 +125,9 @@ bool check_map_element(char *str);
 
 bool store_map_element(t_data *data);
 
+
+bool check_walls_in_edges(t_data *data);
+void replace_error_message(t_data *data, char *str);
 
 
 

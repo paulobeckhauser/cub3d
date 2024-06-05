@@ -30,7 +30,7 @@ bool count_lines_map(t_data *data)
 }
 
 
-bool store_cub_file(t_data *data)
+bool store_cub_file(t_data *data, char *str)
 {
     int fd;
     int i;
@@ -46,7 +46,13 @@ bool store_cub_file(t_data *data)
         return (1);
     }
 
-    fd = open("maps/example_2.cub", O_RDONLY);
+    fd = open(str, O_RDONLY);
+    if (fd == -1)
+    {
+        replace_error_message(data, strerror(errno));
+        return(free_variables_error(data));
+    }
+
     i = 0;
     while (1)
     {

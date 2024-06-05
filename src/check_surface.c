@@ -92,19 +92,19 @@ bool rgb_correct_format(char *str, char digit)
 
 
 
-bool checker_surfaces_colors(char *str, char digit)
+bool checker_surfaces_colors(t_data *data, char *str, char digit)
 {
 
     if (!color_input_exist(str, digit))
     {
         ft_putstr_fd("Error\n", 2);
         ft_putstr_fd("Input for surfaces color(floor or ceiling) does not exist or is in wrong format\n", 2);
+
         return(false);
     }
     if (!rgb_correct_format(str, digit))
     {
-        ft_putstr_fd("Error\n", 2);
-        ft_putstr_fd("RGB input for surfaces color(floor or ceiling) is incorrect\n", 2);
+        replace_error_message(data, "RGB input for surfaces color(floor or ceiling) is incorrect");
         return (false);
     }
     return (true);
