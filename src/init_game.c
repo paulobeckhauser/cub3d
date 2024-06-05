@@ -27,8 +27,8 @@ void    init_game(t_game *game)
 		perror("mlx window");
 		exit(EXIT_FAILURE);
 	}
-	game->square_width = SCREEN_WIDTH / 10.0;
-	game->square_height = SCREEN_HEIGHT / 10.0;
+	game->square_width = SCREEN_WIDTH / 10.0f;
+	game->square_height = SCREEN_HEIGHT / 10.0f;
 	game->map_x = 0;
 	game->map_y = 0;
 	game->map = init_test_map();

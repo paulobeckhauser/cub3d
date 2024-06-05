@@ -5,11 +5,13 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // screen
-#define SCREEN_WIDTH 2560.0
-#define SCREEN_HEIGHT 1440.0
-#define DRAWING_SCALE (SCREEN_HEIGHT * 300.0)
+#define SCREEN_WIDTH 2560.0f
+#define SCREEN_HEIGHT 1440.0f
+#define DRAWING_SCALE (SCREEN_HEIGHT * 300.0f)
+#define FIELD_OF_VIEW 60.0f
 
 // directions
 #define NORTH 1
@@ -31,19 +33,19 @@ typedef struct s_game
 {
 	void    *mlx_ptr;
 	void    *win_ptr;
-	double  square_width;
-	double  square_height;
+	float   square_width;
+	float   square_height;
 	char	**map;
-	double	map_x;
-	double	map_y;
-	double	player_x;
-	double	player_y;
-	double	ray_main_x;
-	double	ray_main_y;
-	double	ray_new_x;
-	double	ray_new_y;
-	double	ray_angle;
-	double  dists[(int)SCREEN_WIDTH];
+	float	map_x;
+	float	map_y;
+	float	player_x;
+	float	player_y;
+	float	ray_main_x;
+	float	ray_main_y;
+	float	ray_new_x;
+	float	ray_new_y;
+	float	ray_angle;
+	float   dists[(int)SCREEN_WIDTH];
 	int     dist_idx;
 	int     direction;
 	void    *background;
@@ -51,35 +53,63 @@ typedef struct s_game
 	int     img_y;
 }	t_game;
 
+typedef struct	s_image {
+	void	*img;
+	int     *data;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int     created;
+}				t_image;
+
 typedef struct s_ray_utils
 {
-	double	radians;
-	double	shifted_x;
-	double	shifted_y;
-	double	new_x;
-	double	new_y;
+	float	radians;
+	float	shifted_x;
+	float	shifted_y;
+	float	new_x;
+	float	new_y;
 }	t_ray_utils;
 
-void	cast_rays(t_game *game);
+typedef struct  s_raycaster
+{
+	float	dir_x;
+	float	dir_y;
+	float	len;
+	float	x_iterator;
+	float	y_iterator;
+	float	speed;
+	float   colis_x;
+	float   colis_y;
+}   t_raycaster;
+
+void	raycaster(t_game *game, t_image *image);
 void	calc_new_ray_x_y(t_game *game);
-void	draw_map(t_game *game);
-void    draw_wall_line(t_game *game);
-void	draw_ray(t_game *game);
+void	draw_map(t_game *game, t_image *image);
+void    draw_wall_line(t_game *game, t_image *image);
+void	cast_ray(t_game *game);
 char	**init_test_map(void);
-void    load_images(t_game *game);
+void    load_images_from_dir(t_game *game);
 void	mark_player(t_game *game);
 void	mark_main_ray(t_game *game);
-void	move_player_backward(t_game *game);
-void    move_player_forward(t_game *game);
-double	to_radians(double degrees);
+void	move_player_backward(t_game *game, t_image *image);
+void    move_player_forward(t_game *game, t_image *image);
+float	to_radians(float degrees);
+void    calc_directions(t_raycaster *raycaster, t_game *game);
+bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
+void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
+bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game);
+void    set_ray_direction(t_raycaster *raycaster, t_game *game);
+void    calc_ray_distance(t_raycaster *raycaster, t_game *game);
 
 // key_actions.c
 void    change_angle_left(t_game *game);
 void    change_angle_right(t_game *game);
 int	    close_game(t_game *game);
 void	init_hooks(t_game *game);
-int    	keypress(int keysymbol, t_game *game);
-void    rotate_player_left(t_game *game);
-void    rotate_player_right(t_game *game);
+int    	keypress(int keysymbol, t_game *game, t_image *image);
+void    rotate_player_left(t_game *game, t_image *image);
+void    rotate_player_right(t_game *game, t_image *image);
+
 
 #endif //RAYCASTER_TEST_H
