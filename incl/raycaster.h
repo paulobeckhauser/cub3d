@@ -87,7 +87,7 @@ void	raycaster(t_game *game, t_image *image);
 void	calc_new_ray_x_y(t_game *game);
 void	draw_map(t_game *game, t_image *image);
 void    draw_wall_line(t_game *game, t_image *image);
-void	cast_ray(t_game *game);
+void	cast_ray(t_game *game, float ray_angle);
 char	**init_test_map(void);
 void    load_images_from_dir(t_game *game);
 void	mark_player(t_game *game);
@@ -100,7 +100,7 @@ bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
 bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game);
-void    calc_ray_distance(t_raycaster *raycaster, t_game *game);
+void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle);
 
 // key_actions.c
 void    change_angle_left(t_game *game);

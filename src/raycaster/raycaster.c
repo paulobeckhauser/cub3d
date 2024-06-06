@@ -30,14 +30,14 @@ void	raycaster(t_game *game, t_image *image)
 		dir_y = sin(angle_iter);
 		game->ray_new_x = game->player_x + dir_x * 2 * SCREEN_WIDTH;
 		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_HEIGHT;
-		cast_ray(game);
+		cast_ray(game, angle_iter);
 		draw_wall_line(game, image);
 		angle_iter += angle_incr_radians;
 		++game->dist_idx;
 	}
 }
 
-void    cast_ray(t_game *game)
+void    cast_ray(t_game *game, float ray_angle)
 {
 	t_raycaster raycaster;
 	
@@ -56,7 +56,7 @@ void    cast_ray(t_game *game)
 			if (is_collision_point_a_wall(&raycaster, game))
 			{
 				set_ray_direction(&raycaster, game);
-				calc_ray_distance(&raycaster, game);
+				calc_ray_distance(&raycaster, game, ray_angle);
 				return ;
 			}
 		}

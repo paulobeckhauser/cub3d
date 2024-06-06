@@ -71,29 +71,3 @@ void    draw_wall_line(t_game *game, t_image *image)
 			image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(0, 0, 255);
 	}
 }
-
-//void    draw_wall_line(t_game *game)
-//{
-//	int line_height;
-//	int y_iterator;
-//	int y_end;
-//
-//	line_height = (int)(DRAWING_SCALE / (game->dists[game->dist_idx] + 1));
-//	y_iterator = (int)SCREEN_HEIGHT / 2 - line_height / 2;
-//	if (y_iterator < 0)
-//		y_iterator = 0;
-//	y_end = (int)SCREEN_HEIGHT / 2 + line_height / 2;
-//	if (y_end > SCREEN_HEIGHT)
-//		y_end = SCREEN_HEIGHT;
-//	while (y_iterator <= y_end)
-//	{
-//		if (game->direction == NORTH)
-//			mlx_pixel_put(game->mlx_ptr, game->win_ptr, game->dist_idx, (int)y_iterator++, rgb_to_hex(165, 42, 42));
-//		else if (game->direction == SOUTH)
-//			mlx_pixel_put(game->mlx_ptr, game->win_ptr, game->dist_idx, (int)y_iterator++, rgb_to_hex(255, 255, 0));
-//		else if (game->direction == WEST)
-//			mlx_pixel_put(game->mlx_ptr, game->win_ptr, game->dist_idx, (int)y_iterator++, rgb_to_hex(255, 0, 0));
-//		else if (game->direction == EAST)
-//			mlx_pixel_put(game->mlx_ptr, game->win_ptr, game->dist_idx, (int)y_iterator++, rgb_to_hex(0, 0, 255));
-//	}
-//}
