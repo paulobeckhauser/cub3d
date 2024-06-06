@@ -36,12 +36,6 @@ void	mark_player(t_game *game)
 	
 }
 
-void	mark_main_ray(t_game *game)
-{
-	game->ray_main_x = game->player_x;
-	game->ray_main_y = 2 * -game->square_height;
-}
-
 float	to_radians(float degrees)
 {
 	return (degrees * (M_PI / 180));

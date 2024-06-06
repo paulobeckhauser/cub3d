@@ -12,41 +12,48 @@
 
 #include "../../incl/cub3d.h"
 
-void	draw_map(t_game *game, t_image *image)
+void	draw_map(t_game *game)
 {
 	int x;
 	int y;
-	
-	if (image->created)
-	{
-		mlx_destroy_image(game->mlx_ptr, image->img);
-		image->img = NULL;
-	}
-	image->created = 1;
-	image->img = mlx_new_image(game->mlx_ptr, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
-	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
+
 	x = 0;
 	y = 0;
 	while (y < (int)SCREEN_HEIGHT / 2)
 	{
 		x = 0;
 		while (x < (int)SCREEN_WIDTH)
-			image->data[y * (int)SCREEN_WIDTH + x++] = rgb_to_hex(173, 216, 230);
+			game->image->data[y * (int)SCREEN_WIDTH + x++] = rgb_to_hex(173, 216, 230);
 		y++;
 	}
 	while (y < (int)SCREEN_HEIGHT)
 	{
 		x = 0;
 		while (x < (int)SCREEN_WIDTH)
-			image->data[y * (int)SCREEN_WIDTH + x++] = rgb_to_hex(0, 255, 0);
+			game->image->data[y * (int)SCREEN_WIDTH + x++] = rgb_to_hex(0, 255, 0);
 		y++;
 	}
-	raycaster(game, image);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, image->img, 0, 0);
+	raycaster(game);
+	draw_crosshair(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+}
+
+void	draw_crosshair(t_game *game)
+{
+	int	x;
+	int	y;
+
+	(void)game;
+	x = (int)(SCREEN_WIDTH / 2 - 10.0);
+	y = (int)(SCREEN_HEIGHT / 2 - 10.0);
+	while (x < (int)(SCREEN_WIDTH / 2 + 10.0))
+		game->image->data[(int)SCREEN_HEIGHT / 2 * (int)SCREEN_WIDTH + x++] = rgb_to_hex(0, 255, 0);
+	while (y < (int)(SCREEN_HEIGHT / 2 + 10.0))
+		game->image->data[y++ * (int)SCREEN_WIDTH + (int)SCREEN_WIDTH / 2] = rgb_to_hex(0, 255, 0);
 }
 
 
-void    draw_wall_line(t_game *game, t_image *image)
+void    draw_wall_line(t_game *game)
 {
 	int line_height;
 	int y_iterator;
@@ -62,12 +69,12 @@ void    draw_wall_line(t_game *game, t_image *image)
 	while (y_iterator < y_end)
 	{
 		if (game->direction == NORTH)
-			image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(165, 42, 42);
+			game->image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(165, 42, 42);
 		else if (game->direction == SOUTH)
-			image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(255, 255, 0);
+			game->image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(255, 255, 0);
 		else if (game->direction == WEST)
-			image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(255, 0, 0);
+			game->image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(255, 0, 0);
 		else if (game->direction == EAST)
-			image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(0, 0, 255);
+			game->image->data[y_iterator++ * (int)SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(0, 0, 255);
 	}
 }

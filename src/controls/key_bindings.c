@@ -12,17 +12,34 @@
 
 #include "../../incl/raycaster.h"
 
-int	keypress(const int keysymbol, t_game *game, t_image *image)
+int	keypress(const int keysymbol, t_game *game)
 {
-	if (keysymbol == ESC)
-        close_game(game);
-    else if (keysymbol == A)
-        rotate_player_left(game, image);
-    else if (keysymbol == D)
-		rotate_player_right(game, image);
-	else if (keysymbol == W)
-		move_player_forward(game, image);
-	else if (keysymbol == S)
-		move_player_backward(game, image);
-    return (0);
+	if (keysymbol == W || keysymbol == A || keysymbol == S || keysymbol == D)
+		game->keys[keysymbol] = true;
+	if (keysymbol == 65307)
+		game->keys[ESC] = true;
+	return (0);
+}
+
+int keyrelease(const int keysymbol, t_game *game)
+{
+	if (keysymbol == W || keysymbol == A || keysymbol == S || keysymbol == D || keysymbol == ESC)
+		game->keys[keysymbol] = false;
+	return (0);
+}
+
+int	loop_hook(t_game *game)
+{
+	if (game->keys[W])
+		move_player_forward(game);
+	if (game->keys[S])
+		move_player_backward(game);
+	if (game->keys[A])
+		rotate_player_left(game);
+	if (game->keys[D])
+		rotate_player_right(game);
+	if (game->keys[ESC])
+		close_game(game);
+	draw_map(game);
+	return (0);
 }

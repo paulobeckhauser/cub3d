@@ -23,16 +23,26 @@
 #define BACKGROUND "./textures/background.xpm"
 
 // keys
-#define ESC 65307
+#define ESC 53
 #define W 119
 #define S 115
 #define A 97
 #define D 100
 
+typedef struct	s_image {
+	void	*img;
+	int     *data;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int     created;
+}	t_image;
+
 typedef struct s_game
 {
 	void    *mlx_ptr;
 	void    *win_ptr;
+	t_image *image;
 	float   square_width;
 	float   square_height;
 	char	**map;
@@ -40,8 +50,6 @@ typedef struct s_game
 	float	map_y;
 	float	player_x;
 	float	player_y;
-	float	ray_main_x;
-	float	ray_main_y;
 	float	ray_new_x;
 	float	ray_new_y;
 	float	ray_angle;
@@ -51,16 +59,8 @@ typedef struct s_game
 	void    *background;
 	int     img_x;
 	int     img_y;
+	bool    keys[120];
 }	t_game;
-
-typedef struct	s_image {
-	void	*img;
-	int     *data;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int     created;
-}				t_image;
 
 typedef struct s_ray_utils
 {
@@ -83,17 +83,15 @@ typedef struct  s_raycaster
 	float   colis_y;
 }   t_raycaster;
 
-void	raycaster(t_game *game, t_image *image);
-void	calc_new_ray_x_y(t_game *game);
-void	draw_map(t_game *game, t_image *image);
-void    draw_wall_line(t_game *game, t_image *image);
+void	raycaster(t_game *game);
+void	draw_map(t_game *game);
+void	draw_crosshair(t_game *game);
+void    draw_wall_line(t_game *game);
 void	cast_ray(t_game *game, float ray_angle);
 char	**init_test_map(void);
 void    load_images_from_dir(t_game *game);
 void	mark_player(t_game *game);
-void	mark_main_ray(t_game *game);
-void	move_player_backward(t_game *game, t_image *image);
-void    move_player_forward(t_game *game, t_image *image);
+
 float	to_radians(float degrees);
 void    calc_directions(t_raycaster *raycaster, t_game *game);
 bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
@@ -107,9 +105,12 @@ void    change_angle_left(t_game *game);
 void    change_angle_right(t_game *game);
 int	    close_game(t_game *game);
 void	init_hooks(t_game *game);
-int    	keypress(int keysymbol, t_game *game, t_image *image);
-void    rotate_player_left(t_game *game, t_image *image);
-void    rotate_player_right(t_game *game, t_image *image);
-
+int    	keypress(int keysymbol, t_game *game);
+int     keyrelease(const int keysymbol, t_game *game);
+int	    loop_hook(t_game *game);
+void    rotate_player_left(t_game *game);
+void    rotate_player_right(t_game *game);
+void	move_player_backward(t_game *game);
+void    move_player_forward(t_game *game);
 
 #endif //RAYCASTER_TEST_H

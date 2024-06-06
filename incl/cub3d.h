@@ -36,7 +36,8 @@ void	free_2d_array(char **array);
 int		rgb_to_hex(int red, int green, int blue);
 int		store_hex_color(char *line);
 
-void     init_game(t_game *game);
+void    init_game(t_game *game);
+void    init_keys(t_game *game);
 
 int checker_map(char *str);
 

@@ -12,7 +12,7 @@
 
 #include "../../incl/raycaster.h"
 
-void	raycaster(t_game *game, t_image *image)
+void	raycaster(t_game *game)
 {
 	float	angle_incr_radians;
 	float	angle_iter;
@@ -31,7 +31,7 @@ void	raycaster(t_game *game, t_image *image)
 		game->ray_new_x = game->player_x + dir_x * 2 * SCREEN_WIDTH;
 		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_HEIGHT;
 		cast_ray(game, angle_iter);
-		draw_wall_line(game, image);
+		draw_wall_line(game);
 		angle_iter += angle_incr_radians;
 		++game->dist_idx;
 	}

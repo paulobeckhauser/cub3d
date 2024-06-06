@@ -33,7 +33,6 @@ void    init_game(t_game *game)
 	game->map_y = 0;
 	game->map = init_test_map();
 	mark_player(game);
-	mark_main_ray((game));
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
 	game->ray_angle = 270;
@@ -44,4 +43,14 @@ void    init_game(t_game *game)
 	game->direction = 0;
 	game->img_x = 0;
 	game->img_y = 0;
+	init_keys(game);
+}
+
+void    init_keys(t_game *game)
+{
+	int i;
+	
+	i = 0;
+	while (i < 120)
+		game->keys[i++] = false;
 }
