@@ -10,7 +10,7 @@
 // screen
 #define SCREEN_WIDTH 2560.0f
 #define SCREEN_HEIGHT 1440.0f
-#define DRAWING_SCALE (SCREEN_HEIGHT * 300.0f)
+#define DRAWING_SCALE (SCREEN_HEIGHT * 200.0f)
 #define FIELD_OF_VIEW 60.0f
 
 // vectors
