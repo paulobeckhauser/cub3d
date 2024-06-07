@@ -12,7 +12,7 @@ void replace_error_message(t_data *data, char *str)
 int free_variables_error(t_data *data)
 {
     ft_putstr_fd(RED, 2);
-    ft_putstr_fd("Error!\n", 2);
+    ft_putstr_fd("Error\n", 2);
     ft_putstr_fd(data->map_error_message, 2);
     ft_putstr_fd("\n", 2);
     ft_putstr_fd(RESET, 2);

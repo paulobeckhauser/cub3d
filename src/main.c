@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	else
 	{
         ft_putstr_fd(RED, 2);
-        ft_putstr_fd("Error!\n", 2);
+        ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd("Incorrect number of arguments\n", 2);
         ft_putstr_fd(RESET, 2);
 		return (1);
