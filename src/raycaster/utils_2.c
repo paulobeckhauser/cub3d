@@ -60,5 +60,5 @@ void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle)
 	                    * game->square_width - game->player_x, 2)
 	                + pow(raycaster->colis_y
 	                      * game->square_height - game->player_y, 2));
-	game->dists[game->dist_idx] = raw_dist * cos(ray_angle - to_radians(game->ray_angle));
+	game->dists[game->dist_idx] = raw_dist * cosf(ray_angle - to_radians(game->ray_angle));
 }

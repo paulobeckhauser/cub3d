@@ -28,10 +28,13 @@ int main(int argc, char **argv)
 {
     t_game      game;
 	t_image     image;
+	t_vectors   vectors[36];
 
     init_game(&game);
     init_image(&image, &game);
     game.image = &image;
+	game.vectors = vectors;
+	calc_dir_vectors(&game);
     load_images_from_dir(&game);
     init_hooks(&game);
     draw_map(&game);

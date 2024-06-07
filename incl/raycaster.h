@@ -13,6 +13,9 @@
 #define DRAWING_SCALE (SCREEN_HEIGHT * 300.0f)
 #define FIELD_OF_VIEW 60.0f
 
+// vectors
+#define SPEED 40
+
 // directions
 #define NORTH 1
 #define EAST 2
@@ -38,6 +41,12 @@ typedef struct	s_image {
 	int     created;
 }	t_image;
 
+typedef struct s_vectors
+{
+	float x;
+	float y;
+}   t_vectors;
+
 typedef struct s_game
 {
 	void    *mlx_ptr;
@@ -60,6 +69,8 @@ typedef struct s_game
 	int     img_x;
 	int     img_y;
 	bool    keys[120];
+	t_vectors *vectors;
+	int     vec_idx;
 }	t_game;
 
 typedef struct s_ray_utils
@@ -83,6 +94,7 @@ typedef struct  s_raycaster
 	float   colis_y;
 }   t_raycaster;
 
+void    calc_dir_vectors(t_game *game);
 void	raycaster(t_game *game);
 void	draw_map(t_game *game);
 void	draw_crosshair(t_game *game);

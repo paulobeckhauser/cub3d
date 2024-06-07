@@ -25,8 +25,8 @@ void	mark_player(t_game *game)
 		{
 			if (game->map[y][x] == 'N')
 			{
-				game->player_x = x * game->square_width + game->square_width / 2;
-				game->player_y = y * game->square_height + game->square_height / 2;
+				game->player_x = (float)x * game->square_width + game->square_width / 2;
+				game->player_y = (float)y * game->square_height + game->square_height / 2;
 				return ;
 			}
 			x++;
@@ -45,7 +45,7 @@ void    calc_directions(t_raycaster *raycaster, t_game *game)
 {
 	raycaster->dir_x = game->ray_new_x - game->player_x;
 	raycaster->dir_y = game->ray_new_y - game->player_y;
-	raycaster->len = sqrt(raycaster->dir_x * raycaster->dir_x + raycaster->dir_y * raycaster->dir_y);
+	raycaster->len = sqrtf(raycaster->dir_x * raycaster->dir_x + raycaster->dir_y * raycaster->dir_y);
 	raycaster->dir_x /= raycaster->len;
 	raycaster->dir_y /= raycaster->len;
 }

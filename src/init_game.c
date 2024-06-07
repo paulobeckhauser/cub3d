@@ -35,9 +35,9 @@ void    init_game(t_game *game)
 	mark_player(game);
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
-	game->ray_angle = 270;
+	game->ray_angle = 270.0f;
 	game->dist_idx = 0;
-	while (game->dist_idx < SCREEN_WIDTH)
+	while (game->dist_idx < (int)SCREEN_WIDTH)
 		game->dists[game->dist_idx++] = 0;
 	game->dist_idx = 0;
 	game->direction = 0;
