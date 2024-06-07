@@ -28,3 +28,25 @@ bool check_input_floor_texture_exist(t_data *data)
     }
     return (true);
 }
+
+
+bool check_extension(t_data *data, char *str)
+{
+    int i;
+    char **array;
+
+    (void)data;
+
+    array = NULL;
+    array = ft_split(str, '.');
+    i = size_array(array) - 1;
+    if(size_array(array) == 1 || ft_strcmp(array[1], "cub") != 0)
+    {
+        // printf("%s\n", str);
+        replace_error_message(data, "Map is not a '.cub' file");
+        free_2d_array(array);
+        return (false);
+    }
+    free_2d_array(array);
+    return (true);
+}

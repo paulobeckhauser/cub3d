@@ -28,6 +28,7 @@ SRC := 			main.c \
 				free_variables_error.c \
 				checker_map.c \
 				store_map.c \
+				get_map_elem_info.c \
 
 
 

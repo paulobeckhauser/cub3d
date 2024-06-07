@@ -49,7 +49,6 @@ bool size_map_element(t_data *data)
     int i;
     int j;
     unsigned long validated_chars_map;
-    // int number_lines_map_element;
 
     data->number_lines_map_element = 0;
 
@@ -81,13 +80,11 @@ bool size_map_element(t_data *data)
 
 bool store_map_element(t_data *data)
 {
-    size_map_element(data);
-    
-    // printf("NUmber of lines:%d\n", data->number_lines_map_element);
-    data->map_element = malloc((data->number_lines_map_element + 1) * sizeof(char *));
-    // if (!data->map_element)
-    //     return (false)
 
+
+    data->map_element = malloc((data->number_lines_map_element + 1) * sizeof(char *));
+
+//    printf("The number of lines is: %d\n", data->number_lines_map_element);
 
     int i;
     int j;
@@ -100,20 +97,15 @@ bool store_map_element(t_data *data)
     {
         if (check_map_element(data->cub_file[i]) && !(check_empty_line(data->cub_file[i])))
         {
+//            printf("%s", data->cub_file[i]);
             data->map_element[j] = ft_strdup(data->cub_file[i]);
             j++;
-            // printf("%s\n", data->cub_file[i]);
+//            i++;
         }
+//        else
         i++;
     }
-    data->map_element[j] = NULL;
-
-
-
-
-
-
-
+    data->map_element[j] =  NULL;
 
     return (true);
 

@@ -3,7 +3,6 @@
 
 int parser(char *str)
 {
-    
     t_data data;
     int i;
 
@@ -11,9 +10,15 @@ int parser(char *str)
     init_vars(&data);
 
 
+
+    if (!check_extension(&data, str))
+        return(free_variables_error(&data));
+
+        
     if (!store_cub_file(&data, str))
         return(free_variables_error(&data));
 
+    get_map_elem_info(&data);
 
     while (data.cub_file[i])
     {
@@ -21,21 +26,22 @@ int parser(char *str)
             return(free_variables_error(&data));
         i++;
     }
-
-
     if (!check_input_floor_texture_exist(&data))
         return(free_variables_error(&data));
 
     if (!check_map_content_last_element(&data))
         return(free_variables_error(&data));
 
+
+
+    if (!check_walls_in_edges(&data))
+        return(free_variables_error(&data));
+
+
+
+
     store_map_element(&data);
-    check_walls_in_edges(&data);
 
-
-
-
-    
 
     return (0);
 }

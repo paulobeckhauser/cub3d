@@ -5,6 +5,8 @@
 # include "../libs/libft/inc/get_next_line.h"
 # include "../libs/libft/inc/libft.h"
 
+# include "color.h"
+
 
 # include "../libs/mlx_linux/mlx.h"
 
@@ -128,7 +130,8 @@ bool store_map_element(t_data *data);
 
 bool check_walls_in_edges(t_data *data);
 void replace_error_message(t_data *data, char *str);
-
+bool check_extension(t_data *data, char *str);
+void get_map_elem_info(t_data *data);
 
 
 #endif
