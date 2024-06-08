@@ -38,8 +38,7 @@ bool store_cub_file(t_data *data, char *str)
 
     if (!count_lines_map(data))
         return(false);
-
-    data->cub_file = malloc(data->number_lines_map * sizeof(char *));
+    data->cub_file = malloc((data->number_lines_map + 1) * sizeof(char *));
     if (!data->cub_file)
     {
         ft_putstr_fd("Memory allocation error\n", 2);
@@ -52,19 +51,25 @@ bool store_cub_file(t_data *data, char *str)
         replace_error_message(data, strerror(errno));
         return(free_variables_error(data));
     }
-
+//
     i = 0;
     while (1)
     {
         line = get_next_line(fd);
+
         if (!line)
         {
+
             free(line);
             break;
         }
-        data->cub_file[i] = ft_strdup(line);
+
+        if (!check_empty_line(line))
+        {
+            data->cub_file[i] = ft_strdup(line);
+            i++;
+        }
         free(line);
-        i++;
     }
     data->cub_file[i] = NULL;
     return (true);

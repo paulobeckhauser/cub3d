@@ -1,6 +1,7 @@
 import subprocess
 import re
 
+
 # Define ANSI color codes
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"
@@ -137,6 +138,13 @@ def main():
             print(expected_output)
             print(f"{YELLOW}Got:{RESET}")
             print(result.stderr)
+
+
+def check_valgrind:
+    valgrind = 'valgrind --leak-check=full'
+    dir = '/tester_maps/'
+    cmds = ['./cub3d {dir}map1.cub', './cub3d {dir}asd']
+    for c in 
 
 
 if __name__ == "__main__":

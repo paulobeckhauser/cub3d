@@ -46,34 +46,20 @@ bool store_texture_images(char *line, t_data *data)
 
     array_textures = NULL;
     array_textures = ft_split(line, ' ');
-    if (!array_textures)
-    {
-        free(array_textures);
-        return(false);
-    }
+
+     if (!array_textures)
+     {
+         free(array_textures);
+         return(false);
+     }
     if (ft_strcmp(array_textures[0], "NO") == 0)
-    {
-        data->north_texture = ft_strdup(array_textures[1]);
-        // data->element_position++;
-    }
-
-    if (ft_strcmp(array_textures[0], "SO") == 0)
-    {
-        data->south_texture = ft_strdup(array_textures[1]);
-        // data->element_position++;
-    }
-    if (ft_strcmp(array_textures[0], "WE") == 0)
-    {
-        data->west_texture = ft_strdup(array_textures[1]);
-        // data->element_position++;
-    }
-    if (ft_strcmp(array_textures[0], "EA") == 0)
-    {
-        data->east_texture = ft_strdup(array_textures[1]);
-        // data->element_position++;
-    }
-
-    free_2d_array(array_textures);
-
+         data->north_texture = ft_strdup(array_textures[1]);
+     if (ft_strcmp(array_textures[0], "SO") == 0)
+         data->south_texture = ft_strdup(array_textures[1]);
+     if (ft_strcmp(array_textures[0], "WE") == 0)
+         data->west_texture = ft_strdup(array_textures[1]);
+     if (ft_strcmp(array_textures[0], "EA") == 0)
+         data->east_texture = ft_strdup(array_textures[1]);
+     free_2d_array(array_textures);
     return (true);
 }

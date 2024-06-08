@@ -53,6 +53,50 @@ static bool check_walls_edges_lines(t_data *data, int position)
 
 }
 
+
+
+static bool check_spaces_edges_lines(t_data *data, int position)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    while(data->cub_file[position][i])
+    {
+        if (data->cub_file[position][i] == ' ')
+        {
+            //replace_error_message(data, "Map not surrounded by walls");
+            //return (false);
+            j = position;
+            while(data->cub_file[j][i])
+            {
+                if (data->cub_file[j][i] == ' ')
+                    j++;
+                else if(data->cub_file[j][i] == '1')
+                    break;
+                else
+                {
+                    replace_error_message(data, "Map not surrounded by walls");
+                    return (false);
+                }
+            }
+            // replace_error_message(data, "Map not surrounded by walls");
+            // return (false);
+
+            // printf("There is a mistake\n");
+        }
+        i++;
+    }
+    return (true);
+}
+
+
+
+
+
+
+
 static bool check_walls_first_column(t_data *data)
 {
     int i;
@@ -64,16 +108,36 @@ static bool check_walls_first_column(t_data *data)
     last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
     while (line_map_elem <= last_line_map_elem)
     {
+        i = 0;
         if (data->cub_file[line_map_elem][i] == '0')
         {
             replace_error_message(data, "Map not surrounded by walls");
             return (false);
+        }
+        else if(data->cub_file[line_map_elem][i] == ' ')
+        {
+            while(data->cub_file[line_map_elem][i])
+            {
+                if (data->cub_file[line_map_elem][i] == ' ')
+                    i++;
+                else if(data->cub_file[line_map_elem][i] == '1')
+                    break;
+                else
+                {
+                    replace_error_message(data, "Map not surrounded by walls");
+                    return (false);
+                }
+            }
         }
         line_map_elem++;
     }
     return (true);
 
 }
+
+
+
+
 
 
 static int get_last_column_position(char *str)
@@ -104,6 +168,21 @@ static bool check_walls_last_column(t_data *data)
             replace_error_message(data, "Map not surrounded by walls");
             return (false);
         }
+        else if(data->cub_file[line_map_elem][i] == ' ')
+        {
+            while(data->cub_file[line_map_elem][i])
+            {
+                if (data->cub_file[line_map_elem][i] == ' ')
+                    i++;
+                else if(data->cub_file[line_map_elem][i] == '1')
+                    break;
+                else
+                {
+                    replace_error_message(data, "Map not surrounded by walls");
+                    return (false);
+                }
+            }
+        }
         line_map_elem++;
     }
     return (true);
@@ -121,6 +200,10 @@ bool check_walls_in_edges(t_data *data)
     int first_line_map_elem;
     int last_line_map_elem;
 
+    int i;
+
+    i = 0;
+
     line_map_elem =  data->line_start_map_position;
     first_line_map_elem = data->line_start_map_position;
     last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
@@ -130,6 +213,17 @@ bool check_walls_in_edges(t_data *data)
         {
             if (!check_walls_edges_lines(data, line_map_elem))
                 free_variables_error(data);
+
+
+
+
+            if (!check_spaces_edges_lines(data, first_line_map_elem))
+                free_variables_error(data);
+
+
+
+
+
         }
         line_map_elem++;
     }
@@ -142,5 +236,170 @@ bool check_walls_in_edges(t_data *data)
 
 
 
+
+
+
     return (true);
+}
+
+
+
+bool is_first_column(char *str, int position)
+{
+    int i;
+
+    i = 0;
+    while(str[i] == ' ')
+        i++;
+    if (i == position)
+        return(true);
+    return (false);
+}
+
+
+bool is_last_column(char *str, int position)
+{
+    int i;
+
+    i = ft_strlen(str) - 1;
+
+    while(str[i] == ' ' || str[i] == '\n')
+        i--;
+    if (i == position)
+        return(true);
+    return (false);
+}
+
+
+bool new_checker_borders(t_data *data)
+{
+
+    int i;
+    int line_map_elem;
+    int first_line_map_elem;
+    int last_line_map_elem;
+
+//    int j;
+//
+//    j= 0;
+    i = 0;
+    line_map_elem =  data->line_start_map_position;
+    first_line_map_elem = data->line_start_map_position;
+    last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
+
+//    i = line_map_elem;
+    while(data->cub_file[line_map_elem])
+    {
+
+        if (line_map_elem != first_line_map_elem
+            && line_map_elem != last_line_map_elem)
+        {
+            i = 0;
+            while(data->cub_file[line_map_elem][i])
+            {
+//                if (is_first_column(data->cub_file[line_map_elem], i))
+//                    printf("first column-> ");
+//                if (is_last_column(data->cub_file[line_map_elem], i))
+//                    printf("last column-> ");
+                if (!is_first_column(data->cub_file[line_map_elem], i) &&
+                    !is_last_column(data->cub_file[line_map_elem], i))
+                {
+                    // up
+                    if ( data->cub_file[line_map_elem - 1]
+                         && data->cub_file[line_map_elem - 1][i] == ' ' &&
+                         data->cub_file[line_map_elem][i] != '1'
+                         && data->cub_file[line_map_elem][i] != '\n'
+                         && data->cub_file[line_map_elem][i] != ' ')
+                    {
+                        replace_error_message(data, "Map not surrounded by walls");
+                        return (false);
+                    }
+
+
+                    // right
+                    if (data->cub_file[line_map_elem][i + 1]
+                        && data->cub_file[line_map_elem][i + 1] == ' ' &&
+                        data->cub_file[line_map_elem][i] != '1'
+                        && data->cub_file[line_map_elem][i] != '\n'
+                        && data->cub_file[line_map_elem][i] != ' ')
+                    {
+                        replace_error_message(data, "Map not surrounded by walls");
+                        return (false);
+                    }
+
+
+                    //left
+                    if (data->cub_file[line_map_elem][i - 1]
+                        && data->cub_file[line_map_elem][i - 1] == ' ' &&
+                        data->cub_file[line_map_elem][i] != '1'
+                        && data->cub_file[line_map_elem][i] != '\n'
+                        && data->cub_file[line_map_elem][i] != ' ')
+                    {
+                        replace_error_message(data, "Map not surrounded by walls");
+                        return (false);
+                    }
+
+
+                    //down
+                    if ( data->cub_file[line_map_elem + 1]
+                            && data->cub_file[line_map_elem + 1][i] == ' ' &&
+                            data->cub_file[line_map_elem][i] != '1'
+                            && data->cub_file[line_map_elem][i] != '\n'
+                            && data->cub_file[line_map_elem][i] != ' ')
+                        {
+                            replace_error_message(data, "Map not surrounded by walls");
+                            return (false);
+                        }
+
+
+
+
+                }
+
+                i++;
+            }
+
+        }
+
+
+
+        line_map_elem++;
+    }
+
+
+    return (true);
+
+}
+
+
+void print_returned_map(t_data *data)
+{
+    // PRINT TEXTURES;
+
+    printf("\n\033[4mThe textures are:\033[0m\n\n");
+    printf("North: %s\n", data->north_texture);
+    printf("South %s\n", data->south_texture);
+    printf("West %s\n", data->west_texture);
+    printf("East %s\n", data->east_texture);
+
+    printf("\n\n");
+
+    printf("\033[4mThe Colors are:\033[0m\n\n");
+    printf("Floor color: %d\n", data->floor_color);
+    printf("Ceiling color: %d\n", data->ceiling_color);
+
+    printf("\n\n");
+
+    printf("\033[4mTThe map element is:\033[0m\n\n");
+
+
+
+
+    int k = 0;
+
+    while (data->map_element[k])
+    {
+        printf("%s", data->map_element[k]);
+        k++;
+    }
 }

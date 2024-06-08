@@ -132,6 +132,9 @@ bool check_walls_in_edges(t_data *data);
 void replace_error_message(t_data *data, char *str);
 bool check_extension(t_data *data, char *str);
 void get_map_elem_info(t_data *data);
+bool new_checker_borders(t_data * data);
+
+void print_returned_map(t_data *data);
 
 
 #endif
