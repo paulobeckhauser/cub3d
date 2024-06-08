@@ -22,7 +22,7 @@ void    calc_dir_vectors(t_game *game)
 	game->vec_idx = 0;
 	while (game->vec_idx < 36)
 	{
-		game->vectors[game->vec_idx].x = cosf(angle_iter);
+		game->vectors[game->vec_idx].x = cosf(angle_iter) * game->screen_aspect_ratio;
 		game->vectors[game->vec_idx].y = sinf(angle_iter);
 		game->vec_idx++;
 		angle_iter += angle_incr_radians;
