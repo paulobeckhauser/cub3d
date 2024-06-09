@@ -1,13 +1,13 @@
 
 #include "../inc/cub3d.h"
 
-bool count_lines_map(t_data *data)
+bool count_lines_map(t_data *data, char *str)
 {
     int fd;
     char *line;
 
     line = NULL;
-    fd = open("maps/example_2.cub", O_RDONLY);
+    fd = open(str, O_RDONLY);
     if (fd == -1)
     {
         close(fd);
@@ -36,8 +36,11 @@ bool store_cub_file(t_data *data, char *str)
     int i;
     char *line;
 
-    if (!count_lines_map(data))
+    if (!count_lines_map(data, str))
         return(false);
+
+//    printf("The number of lines is: %d\n", data->number_lines_map);
+
     data->cub_file = malloc((data->number_lines_map + 1) * sizeof(char *));
     if (!data->cub_file)
     {
@@ -51,7 +54,7 @@ bool store_cub_file(t_data *data, char *str)
         replace_error_message(data, strerror(errno));
         return(free_variables_error(data));
     }
-//
+
     i = 0;
     while (1)
     {
@@ -63,8 +66,7 @@ bool store_cub_file(t_data *data, char *str)
             free(line);
             break;
         }
-
-        if (!check_empty_line(line))
+        if (ft_strcmp(line, "\n") != 0)
         {
             data->cub_file[i] = ft_strdup(line);
             i++;

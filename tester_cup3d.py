@@ -1,14 +1,11 @@
 import subprocess
 import re
+import glob
 
 
 # Define ANSI color codes
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"
-YELLOW = "\033[1;33m"
-BLUE = "\033[1;34m"
-MAGENTA = "\033[1;35m"
-CYAN = "\033[1;36m"
 WHITE = "\033[1;37m"
 RESET = "\033[0m"
 
@@ -50,101 +47,61 @@ def main():
 
     if not run_make("re"):
         return
-    
-    
-    test_cases = [
-        {
-            "name" : "Without Arguments",
-            "executable" : "cub3d",
-            "args": None,
-            "expected_output": 
-            (f"Error!\nIncorrect number of arguments\n")
-        },
+
+    print("\nCompiled with sucess")
 
 
-        {
-             "name" : "Not '.cub' file",
-            "executable" : "cub3d",
-            "args": ["tester_maps/not_cub_file.txt"],
-            "expected_output": 
-            (f"Error!\nMap is not a '.cub' file\n")
-        },
 
-        {
-             "name" : "Not '.cub' file",
-            "executable" : "cub3d",
-            "args": ["tester_maps/example.map"],
-            "expected_output": 
-            (f"Error!\nMap is not a '.cub' file\n")
-        },
+    test_cases_error = []
+    test_cases_correct = []
 
-        {
-            "name" : "Not existent File, but not '.cub'",
-            "executable" : "cub3d",
-            "args": ["tester_maps/not_existent"],
-            "expected_output": 
-            (f"Error!\nMap is not a '.cub' file\n")
-        },
+    map_files_errors = glob.glob('maps/errors/*')
+    map_files_correct = glob.glob('maps/correct/*')
 
-        {
-            "name" : "Not existent File",
-            "executable" : "cub3d",
-            "args": ["tester_maps/not_existent.cub"],
-            "expected_output": 
-            (f"Error!\nNo such file or directory\n")
-        },
+    for map_file_error in map_files_errors:
+        test_cases_error.append({"args": [map_file_error]})
 
-        {
-            "name" : "Not floor color line",
-            "executable" : "cub3d",
-            "args": ["tester_maps/no_floor_line.cub"],
-            "expected_output": 
-            (f"Error!\nInput for surfaces color(floor or ceiling) does not exist or is in wrong format\n")
-        },
+    for map_file_correct in map_files_correct:
+        test_cases_correct.append({"args": [map_file_correct]})
 
-        {
-            "name" : "Not ceiling color line",
-            "executable" : "cub3d",
-            "args": ["tester_maps/no_ceiling_line.cub"],
-            "expected_output": 
-            (f"Error!\nInput for surfaces color(floor or ceiling) does not exist or is in wrong format\n")
-        }
-    ]
+    print("\n\n\nTest errors maps:")
+    for i, test_case_error in enumerate(test_cases_error, start=1):
+        executable = "cub3d"
+        args = test_case_error.get("args")
+        expected_output = "Error"
 
-
-    for i, test_case in enumerate(test_cases, start=1):
-        name = test_case.get("name")
-        executable = test_case["executable"]
-        args = test_case.get("args")
-        expected_output = remove_color(test_case["expected_output"])
-
-
-        # Format arguments if present
-        if args is not None:
-            args_str = " ".join(args)  # Convert arguments list to a single string
-            name_with_args = f"{name}: ./{executable} {args_str}"  # Include arguments in the test case name
-        else:
-            name_with_args = f"{name}: ./{executable}"
-
-        print(f"\n{i}.{name_with_args}   ", end="")
         result = run_c_program(executable, args)
-    
-        if check_output(remove_color(result.stderr), expected_output):
-            print(f"{GREEN}\u2714{RESET}\n")
-            print(f"{GREEN}{remove_color(result.stderr)}{RESET}\n")
+        result_error = remove_color(result.stderr.split('\n')[0])
+        if check_output(result_error, expected_output):
+            print(f"{GREEN}\n{i}.", end="")
+            print(f"✅[OK]{RESET}")
         else:
-            print(f"\n{RED}Test Failed: Output is incorrect.{RESET}")
-            print(f"{YELLOW}Expected:{RESET}")
-            print(expected_output)
-            print(f"{YELLOW}Got:{RESET}")
-            print(result.stderr)
+            print(f"{RED}\n{i}.", end="")
+            print(f"\u274C")
+            print(f"The execution was: ./{executable} {args[0]}{RESET}")
+
+    print("\n\nTest correct maps:")
+    for i, test_case_correct in enumerate(test_cases_correct, start=1):
+        executable = "cub3d"
+        args = test_case_correct.get("args")
+        expected_output = ""
+
+        result = run_c_program(executable, args)
+        result_error = remove_color(result.stderr.split('\n')[0])
+        if check_output(result_error, expected_output):
+            print(f"{GREEN}\n{i}.", end="")
+            print(f"✅[OK]{RESET}")
+        else:
+            print(f"{RED}\n{i}.", end="")
+            print(f"\u274C")
+            print(f"The execution was: ./{executable} {args[0]}{RESET}")
 
 
-def check_valgrind:
-    valgrind = 'valgrind --leak-check=full'
-    dir = '/tester_maps/'
-    cmds = ['./cub3d {dir}map1.cub', './cub3d {dir}asd']
-    for c in 
+# def check_valgrind:
+#     valgrind = 'valgrind --leak-check=full'
+#     dir = '/tester_maps/'
+#     cmds = ['./cub3d {dir}map1.cub', './cub3d {dir}asd']
+#     for c in
 
 
 if __name__ == "__main__":

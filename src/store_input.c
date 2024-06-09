@@ -5,16 +5,17 @@
 
 bool store_surfaces_colors(char *line, t_data *data)
 {
-    int i;
-    // printf("here\n");
-    // printf("%s\n", line);
+    char **array;
 
-    i = 0;
-    while (line[i] == ' ')
-        i++;
-    if (line[i] == 'F')
+    array = ft_split(line, ' ');
+    if (!array)
     {
-        // printf("here 2\n");
+        replace_error_message(data, "Memory allocation failed");
+        return (false);
+    }
+
+    if (ft_strcmp(array[0], "F") == 0)
+    {
         if (!checker_surfaces_colors(data, line, 'F'))
         {
             free(line);
@@ -22,10 +23,8 @@ bool store_surfaces_colors(char *line, t_data *data)
         }
         data->floor_color_exist = true;
         data->floor_color = store_hex_color(line);
-        // data->element_position++;
     }
-    
-    else if (line[i] == 'C')
+    else if (ft_strcmp(array[0], "C") == 0)
     {
         if (!checker_surfaces_colors(data, line, 'C'))
         {
@@ -34,8 +33,8 @@ bool store_surfaces_colors(char *line, t_data *data)
         }
         data->ceiling_color_exist = true;
         data->ceiling_color = store_hex_color(line);
-        // data->element_position++;
     }
+    free_2d_array(array);
     return (true);
 }
 

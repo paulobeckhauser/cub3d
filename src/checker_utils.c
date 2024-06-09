@@ -13,6 +13,23 @@ int size_array(char **array)
 }
 
 
+bool check_floor_texture_format(t_data *data)
+{
+    int i;
+
+    i = 0;
+    while (data->cub_file[i])
+    {
+        if (!store_surfaces_colors(data->cub_file[i], data)
+            || !store_texture_images(data->cub_file[i], data))
+            return(false);
+//            return(free_variables_error(data));
+        i++;
+    }
+    return (true);
+}
+
+
 
 bool check_input_floor_texture_exist(t_data *data)
 {

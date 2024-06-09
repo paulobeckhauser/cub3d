@@ -17,7 +17,9 @@ bool check_empty_line(char *str)
         i++;
     }
     if (count_space_chars == ft_strlen(str))
+    {
         return (true);
+    }
     return (false);
 }
 
@@ -78,43 +80,70 @@ bool size_map_element(t_data *data)
 }
 
 
-bool store_map_element(t_data *data)
+void store_player_info(t_data *data, char *str, int i)
 {
-
-
-    data->map_element = malloc((data->number_lines_map_element + 1) * sizeof(char *));
-
-//    printf("The number of lines is: %d\n", data->number_lines_map_element);
-
-    int i;
     int j;
 
     j = 0;
 
-    i = 0;
+    while (str[j])
+    {
+        if (check_player_dir(str[j]))
+        {
+            data->player->direction = str[j];
+            data->player->x = i - 1;
+            data->player->y = j;
+        }
+        j++;
+    }
 
+
+}
+
+
+
+void replace_player_for_floor(t_data *data, int j)
+{
+    int g;
+
+    g = 0;
+    while (data->map_element[j][g])
+    {
+        if (check_player_dir(data->map_element[j][g]))
+            data->map_element[j][g] = '0';
+        g++;
+    }
+}
+
+bool store_map_element(t_data *data)
+{
+
+    int i;
+    int j;
+    int count_line;
+    int g;
+
+    data->map_element = malloc((data->number_lines_map_element + 1) * sizeof(char *));
+
+    j = 0;
+
+    i = 0;
+    g = 0;
+    count_line = 0;
     while(data->cub_file[i])
     {
+
         if (check_map_element(data->cub_file[i]) && !(check_empty_line(data->cub_file[i])))
         {
-//            printf("%s", data->cub_file[i]);
+            count_line++;
+            store_player_info(data, data->cub_file[i], count_line);
             data->map_element[j] = ft_strdup(data->cub_file[i]);
+            replace_player_for_floor(data, j);
             j++;
-//            i++;
         }
-//        else
         i++;
     }
     data->map_element[j] =  NULL;
-
     return (true);
-
-
-    
-
-
-
-
-    
 }
 

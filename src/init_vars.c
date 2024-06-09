@@ -16,9 +16,8 @@ void init_vars(t_data *data)
     data->number_lines_map_element = 0;
     data->map_element = NULL;
     data->line_start_map_position = 0;
-
     data->map_correct_position = false;
-
-    
-    
+    data->player->direction = '\0';
+    data->player->x = 0;
+    data->player->y = 0;
 }

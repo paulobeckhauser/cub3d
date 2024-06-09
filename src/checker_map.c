@@ -5,10 +5,8 @@
 bool check_map_content_last_element(t_data *data)
 {
     int i;
-    int j;
 
     i = 0;
-    j = 0;
     while(data->cub_file[i])
     {
         if (check_empty_line(data->cub_file[i]))
@@ -66,11 +64,14 @@ static bool check_spaces_edges_lines(t_data *data, int position)
     {
         if (data->cub_file[position][i] == ' ')
         {
-            //replace_error_message(data, "Map not surrounded by walls");
-            //return (false);
+//            //replace_error_message(data, "Map not surrounded by walls");
+//            //return (false);
             j = position;
             while(data->cub_file[j][i])
             {
+//                printf("%s\n", data->cub_file[j]);
+//                printf("%c\n", data->cub_file[j][i]);
+//                printf("%d\n", j);
                 if (data->cub_file[j][i] == ' ')
                     j++;
                 else if(data->cub_file[j][i] == '1')
@@ -81,13 +82,17 @@ static bool check_spaces_edges_lines(t_data *data, int position)
                     return (false);
                 }
             }
-            // replace_error_message(data, "Map not surrounded by walls");
-            // return (false);
-
-            // printf("There is a mistake\n");
+             replace_error_message(data, "Map not surrounded by walls");
+             return (false);
+//
+//            // printf("There is a mistake\n");
         }
         i++;
     }
+//    (void)check_spaces_edges_lines(data, 2);
+
+    (void)data;
+    (void)position;
     return (true);
 }
 
@@ -213,20 +218,24 @@ bool check_walls_in_edges(t_data *data)
         {
             if (!check_walls_edges_lines(data, line_map_elem))
                 free_variables_error(data);
-
-
-
-
+//
+//
+//
+//            (void)check_spaces_edges_lines(data, first_line_map_elem);
             if (!check_spaces_edges_lines(data, first_line_map_elem))
                 free_variables_error(data);
-
-
-
-
-
+//
+//
+//
+//
+//
         }
         line_map_elem++;
     }
+//    (void)check_walls_edges_lines(data, 2);
+//    (void)check_spaces_edges_lines(data, 2);
+//    (void)check_walls_first_column(data);
+//    (void)check_walls_last_column(data);
     if (!check_walls_first_column(data))
         free_variables_error(data);
     if (!check_walls_last_column(data))
@@ -390,7 +399,7 @@ void print_returned_map(t_data *data)
 
     printf("\n\n");
 
-    printf("\033[4mTThe map element is:\033[0m\n\n");
+    printf("\033[4mThe map element is:\033[0m\n\n");
 
 
 
@@ -402,4 +411,75 @@ void print_returned_map(t_data *data)
         printf("%s", data->map_element[k]);
         k++;
     }
+
+    printf("\nThe direction of the player is: %c\n", data->player->direction);
+
+    printf("The position is: (%d, %d)\n", data->player->x, data->player->y);
+}
+
+bool check_player_dir(char c)
+{
+    char *str_dir;
+    int i;
+
+    i = 0;
+
+    str_dir = "NSWE";
+
+    while(str_dir[i])
+    {
+        if (str_dir[i] == c)
+            return (true);
+        i++;
+    }
+    return(false);
+
+}
+
+
+
+bool check_player(t_data *data)
+{
+    int i;
+    int line_map_elem;
+    int first_line_map_elem;
+    int last_line_map_elem;
+    int count_player;
+
+
+    i = 0;
+    count_player = 0;
+    line_map_elem =  data->line_start_map_position;
+    first_line_map_elem = data->line_start_map_position;
+    last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
+
+//    i = 0;
+    while(line_map_elem <= last_line_map_elem)
+    {
+//        printf("%s\n", data->cub_file[line_map_elem]);
+        i = 0;
+        while(data->cub_file[line_map_elem][i])
+        {
+//            if (data->cub_file[line_map_elem][i] == 'N'
+//                || data->cub_file[line_map_elem][i] == 'S'
+//               || data->cub_file[line_map_elem][i] == 'W'
+//                  || data->cub_file[line_map_elem][i] == 'E'
+//                    )
+        if (check_player_dir(data->cub_file[line_map_elem][i]))
+                count_player++;
+            i++;
+        }
+        line_map_elem++;
+    }
+    if (count_player == 0)
+    {
+        replace_error_message(data, "No player in map element");
+        return(false);
+    }
+    else if (count_player > 1)
+    {
+        replace_error_message(data, "More than one player in map element");
+        return(false);
+    }
+    return (true);
 }
