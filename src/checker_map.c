@@ -40,7 +40,8 @@ static bool check_walls_edges_lines(t_data *data, int position)
     i = 0;
     while(data->cub_file[position][i])
     {
-        if (data->cub_file[position][i] == '0')
+        if (data->cub_file[position][i] == '0' 
+            || check_player_dir(data->cub_file[position][i]))
         {
             replace_error_message(data, "Map not surrounded by walls");
             return (false);
@@ -69,9 +70,6 @@ static bool check_spaces_edges_lines(t_data *data, int position)
             j = position;
             while(data->cub_file[j][i])
             {
-//                printf("%s\n", data->cub_file[j]);
-//                printf("%c\n", data->cub_file[j][i]);
-//                printf("%d\n", j);
                 if (data->cub_file[j][i] == ' ')
                     j++;
                 else if(data->cub_file[j][i] == '1')
@@ -114,7 +112,8 @@ static bool check_walls_first_column(t_data *data)
     while (line_map_elem <= last_line_map_elem)
     {
         i = 0;
-        if (data->cub_file[line_map_elem][i] == '0')
+        if (data->cub_file[line_map_elem][i] == '0' 
+            || check_player_dir(data->cub_file[line_map_elem][i]))
         {
             replace_error_message(data, "Map not surrounded by walls");
             return (false);
@@ -168,7 +167,8 @@ static bool check_walls_last_column(t_data *data)
     while (line_map_elem <= last_line_map_elem)
     {
         i = get_last_column_position(data->cub_file[line_map_elem]);
-        if (data->cub_file[line_map_elem][i] == '0')
+        if (data->cub_file[line_map_elem][i] == '0' 
+            || check_player_dir(data->cub_file[line_map_elem][i]))
         {
             replace_error_message(data, "Map not surrounded by walls");
             return (false);
@@ -306,10 +306,7 @@ bool new_checker_borders(t_data *data)
             i = 0;
             while(data->cub_file[line_map_elem][i])
             {
-//                if (is_first_column(data->cub_file[line_map_elem], i))
-//                    printf("first column-> ");
-//                if (is_last_column(data->cub_file[line_map_elem], i))
-//                    printf("last column-> ");
+
                 if (!is_first_column(data->cub_file[line_map_elem], i) &&
                     !is_last_column(data->cub_file[line_map_elem], i))
                 {
@@ -446,25 +443,16 @@ bool check_player(t_data *data)
     int last_line_map_elem;
     int count_player;
 
-
     i = 0;
     count_player = 0;
     line_map_elem =  data->line_start_map_position;
     first_line_map_elem = data->line_start_map_position;
     last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
-
-//    i = 0;
     while(line_map_elem <= last_line_map_elem)
     {
-//        printf("%s\n", data->cub_file[line_map_elem]);
         i = 0;
         while(data->cub_file[line_map_elem][i])
         {
-//            if (data->cub_file[line_map_elem][i] == 'N'
-//                || data->cub_file[line_map_elem][i] == 'S'
-//               || data->cub_file[line_map_elem][i] == 'W'
-//                  || data->cub_file[line_map_elem][i] == 'E'
-//                    )
         if (check_player_dir(data->cub_file[line_map_elem][i]))
                 count_player++;
             i++;
@@ -481,5 +469,6 @@ bool check_player(t_data *data)
         replace_error_message(data, "More than one player in map element");
         return(false);
     }
+
     return (true);
 }

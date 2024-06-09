@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:21:57 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/09 18:46:18 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:58:34 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ typedef struct s_data
 	char		*south_texture;
 	char		*west_texture;
 	char		*east_texture;
+	int			n_text_count;
+	int			s_text_count;
+	int			w_text_count;
+	int			e_text_count;
+	int			f_surf_count;
+	int			c_surf_count;
 	int			number_lines_map;
 	int			floor_color;
 	bool		floor_color_exist;
@@ -78,7 +84,8 @@ bool	check_map_element(char *str);
 bool	store_map_element(t_data *data);
 bool	check_walls_in_edges(t_data *data);
 void	replace_error_message(t_data *data, char *str);
-bool	check_extension(t_data *data, char *str);
+// bool	check_extension(t_data *data, char *str);
+bool check_extension(t_data *data, char *str, char *extension);
 void	get_map_elem_info(t_data *data);
 bool	new_checker_borders(t_data *data);
 void	print_returned_map(t_data *data);

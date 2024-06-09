@@ -20,4 +20,10 @@ void init_vars(t_data *data)
     data->player->direction = '\0';
     data->player->x = 0;
     data->player->y = 0;
+    data->n_text_count = 0;
+	data->s_text_count = 0;
+	data->w_text_count = 0;
+	data->e_text_count = 0;
+    data->f_surf_count = 0;
+	data->c_surf_count = 0;
 }

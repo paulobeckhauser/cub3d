@@ -73,11 +73,11 @@ def main():
         result = run_c_program(executable, args)
         result_error = remove_color(result.stderr.split('\n')[0])
         if check_output(result_error, expected_output):
-            print(f"{GREEN}\n{i}.", end="")
-            print(f"✅[OK]{RESET}")
+            print(f"{GREEN}{i}.", end="")
+            print(f"✅[OK]{RESET}", end="")
         else:
             print(f"{RED}\n{i}.", end="")
-            print(f"\u274C")
+            print(f"\u274C", end="")
             print(f"The execution was: ./{executable} {args[0]}{RESET}")
 
     print("\n\nTest correct maps:")
@@ -89,12 +89,13 @@ def main():
         result = run_c_program(executable, args)
         result_error = remove_color(result.stderr.split('\n')[0])
         if check_output(result_error, expected_output):
-            print(f"{GREEN}\n{i}.", end="")
-            print(f"✅[OK]{RESET}")
+            print(f"{GREEN}{i}.", end="")
+            print(f"✅[OK]{RESET}", end="")
         else:
             print(f"{RED}\n{i}.", end="")
-            print(f"\u274C")
+            print(f"\u274C", end="")
             print(f"The execution was: ./{executable} {args[0]}{RESET}")
+    
 
 
 # def check_valgrind:
@@ -106,6 +107,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
+    print("\n")
 

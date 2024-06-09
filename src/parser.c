@@ -8,8 +8,9 @@ int parser(char *str)
     data.player = (t_player *)malloc(sizeof(t_player));
 
     init_vars(&data);
-    if (!check_extension(&data, str))
+    if (!check_extension(&data, str, "cub"))
         return(free_variables_error(&data));
+    
     if (!store_cub_file(&data, str))
         return(free_variables_error(&data));
 
@@ -18,6 +19,8 @@ int parser(char *str)
 
     if (!check_floor_texture_format(&data))
         return(free_variables_error(&data));
+
+
      if (!check_input_floor_texture_exist(&data))
          return(free_variables_error(&data));
      if (!check_map_content_last_element(&data))
@@ -36,7 +39,7 @@ int parser(char *str)
     store_map_element(&data);
 
 
-    print_returned_map(&data);
+    // print_returned_map(&data);
 
 
     return (0);
