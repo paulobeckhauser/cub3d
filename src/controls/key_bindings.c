@@ -50,8 +50,23 @@ int keyrelease(const int keysymbol, t_game *game)
 	return (0);
 }
 
+int mouse_move(int x, int y, t_game *game)
+{
+	game->mouse_x = x;
+	(void)y;
+	return (0);
+}
+
 int	loop_hook(t_game *game)
 {
+	int dir_x;
+	
+	dir_x = game->mouse_x - game->prev_mouse_x;
+	if (dir_x < 0)
+		rotate_player_left(game);
+	else if (dir_x > 0)
+		rotate_player_right(game);
+	game->prev_mouse_x = game->mouse_x;
 	if (game->keys[W])
 		move_player_forward(game);
 	if (game->keys[S])

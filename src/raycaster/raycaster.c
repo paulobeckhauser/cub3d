@@ -44,7 +44,7 @@ void	raycaster(t_game *game)
 	dir_x = 0;
 	dir_y = 0;
 	game->dist_idx = 0;
-	while (game->dist_idx < (int)SCREEN_WIDTH)
+	while (game->dist_idx < SCREEN_WIDTH)
 	{
 		dir_x = cosf(angle_iter);
 		dir_y = sinf(angle_iter);

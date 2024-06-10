@@ -8,17 +8,19 @@
 #include <stdbool.h>
 
 // screen
-#define SCREEN_WIDTH 1600.0f
-#define SCREEN_HEIGHT 900.0f
-#define DRAWING_SCALE (SCREEN_HEIGHT * 200.0f)
+#define SCREEN_WIDTH 1600
+#define SCREEN_HEIGHT 900
+#define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 
 // images
-#define TEXTURE_SIZE 100.0f
+#define TEXTURE_SIZE 100
 #define NORTH_TEXTURE "./textures/north_texture.xpm"
 #define SOUTH_TEXTURE "./textures/south_texture.xpm"
 #define WEST_TEXTURE "./textures/west_texture.xpm"
 #define EAST_TEXTURE "./textures/east_texture.xpm"
+#define FLOOR_TEXTURE "./textures/floor.xpm"
+#define WALL_TEXTURE "./textures/wall.xpm"
 
 // vectors
 #define SPEED 40.0f
@@ -28,9 +30,6 @@
 #define EAST 2
 #define SOUTH 3
 #define WEST 4
-
-// images
-#define BACKGROUND "./textures/background.xpm"
 
 // keys
 #define ESC 0
@@ -69,7 +68,7 @@ typedef struct s_game
 	float	ray_main_angle;
 	float   ray_hit_x;
 	float   ray_hit_y;
-	float   dists[(int)SCREEN_WIDTH];
+	float   dists[SCREEN_WIDTH];
 	int     dist_idx;
 	int     direction;
 	void    *background;
@@ -82,6 +81,10 @@ typedef struct s_game
 	void    *south_texture;
 	void    *west_texture;
 	void    *east_texture;
+	void    *floor_texture;
+	void    *wall_texture;
+	int     prev_mouse_x;
+	int     mouse_x;
 }	t_game;
 
 typedef struct s_ray_utils
@@ -128,6 +131,7 @@ int	    close_game(t_game *game);
 void	init_hooks(t_game *game);
 int    	keypress(int keysymbol, t_game *game);
 int     keyrelease(const int keysymbol, t_game *game);
+int     mouse_move(int x, int y, t_game *game);
 int	    loop_hook(t_game *game);
 void    rotate_player_left(t_game *game);
 void    rotate_player_right(t_game *game);

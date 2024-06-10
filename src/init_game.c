@@ -27,7 +27,7 @@ void    init_game(t_game *game)
 		perror("mlx window");
 		exit(EXIT_FAILURE);
 	}
-	game->square_size = 100.0f;
+	game->square_size = 100;
 	game->map = init_test_map();
 	mark_player(game);
 	game->ray_new_x = 0;
@@ -36,13 +36,21 @@ void    init_game(t_game *game)
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
 	game->dist_idx = 0;
-	while (game->dist_idx < (int)SCREEN_WIDTH)
+	while (game->dist_idx < SCREEN_WIDTH)
 		game->dists[game->dist_idx++] = 0;
 	game->dist_idx = 0;
 	game->direction = 0;
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);
+	game->north_texture = NULL;
+	game->south_texture = NULL;
+	game->west_texture = NULL;
+	game->east_texture = NULL;
+	game->floor_texture = NULL;
+	game->wall_texture = NULL;
+	game->prev_mouse_x = SCREEN_WIDTH / 2;
+	game->mouse_x = 0;
 }
 
 void    init_keys(t_game *game)

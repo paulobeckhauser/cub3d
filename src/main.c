@@ -16,9 +16,9 @@
 void    init_image(t_image *image, t_game *game)
 {
 	(void)game;
-	image->img = mlx_new_image(game->mlx_ptr, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
+	image->img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	image->bits_per_pixel = 32;
-	image->line_length = (int)SCREEN_WIDTH;
+	image->line_length = SCREEN_WIDTH;
 	image->endian = 0;
 	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
 }
