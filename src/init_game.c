@@ -27,14 +27,8 @@ void    init_game(t_game *game)
 		perror("mlx window");
 		exit(EXIT_FAILURE);
 	}
-	game->square_width = SCREEN_WIDTH / 10.0f;
-	game->square_height = SCREEN_HEIGHT / 10.0f;
-	game->map_width = SCREEN_WIDTH * 10.0f;
-	game->map_height = SCREEN_HEIGHT * 10.0f;
-	game->map_aspect_ratio = game->map_width / game->map_height;
-	game->screen_aspect_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
-	game->map_x = 0;
-	game->map_y = 0;
+	game->square_width = 128.0f;
+	game->square_height = 128.0f;
 	game->map = init_test_map();
 	mark_player(game);
 	game->ray_new_x = 0;
@@ -48,10 +42,6 @@ void    init_game(t_game *game)
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);
-	game->dir_x = cosf(to_radians(game->ray_angle));
-	game->dir_y = sinf(to_radians(game->ray_angle));
-	game->plane_x = -game->dir_y;  // camera plane vector x
-	game->plane_y = game->dir_x; // camera plane vector y
 }
 
 void    init_keys(t_game *game)

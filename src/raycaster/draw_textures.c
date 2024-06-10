@@ -52,7 +52,6 @@ void	draw_crosshair(t_game *game)
 		game->image->data[y++ * (int)SCREEN_WIDTH + (int)SCREEN_WIDTH / 2] = rgb_to_hex(0, 255, 0);
 }
 
-
 void    draw_wall_line(t_game *game)
 {
 	int line_height;

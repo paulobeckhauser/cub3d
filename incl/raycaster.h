@@ -10,11 +10,11 @@
 // screen
 #define SCREEN_WIDTH 1920.0f
 #define SCREEN_HEIGHT 1080.0f
-#define DRAWING_SCALE (SCREEN_HEIGHT * 200.0f)
+#define DRAWING_SCALE (SCREEN_HEIGHT * 250.0f)
 #define FIELD_OF_VIEW 60.0f
 
 // vectors
-#define SPEED 40
+#define SPEED 40.0f
 
 // directions
 #define NORTH 1
@@ -54,13 +54,7 @@ typedef struct s_game
 	t_image *image;
 	float   square_width;
 	float   square_height;
-	float   map_width;
-	float   map_height;
-	float   map_aspect_ratio;
-	float   screen_aspect_ratio;
 	char	**map;
-	float	map_x;
-	float	map_y;
 	float	player_x;
 	float	player_y;
 	float	ray_new_x;
@@ -75,10 +69,6 @@ typedef struct s_game
 	bool    keys[120];
 	t_vectors *vectors;
 	int     vec_idx;
-	float   dir_x;
-	float   dir_y;
-	float   plane_x;
-	float   plane_y;
 }	t_game;
 
 typedef struct s_ray_utils

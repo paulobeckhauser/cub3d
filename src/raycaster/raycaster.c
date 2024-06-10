@@ -22,7 +22,7 @@ void    calc_dir_vectors(t_game *game)
 	game->vec_idx = 0;
 	while (game->vec_idx < 36)
 	{
-		game->vectors[game->vec_idx].x = cosf(angle_iter) * game->screen_aspect_ratio;
+		game->vectors[game->vec_idx].x = cosf(angle_iter);
 		game->vectors[game->vec_idx].y = sinf(angle_iter);
 		game->vec_idx++;
 		angle_iter += angle_incr_radians;
@@ -49,10 +49,15 @@ void	raycaster(t_game *game)
 		dir_x = cosf(angle_iter);
 		dir_y = sinf(angle_iter);
 		game->ray_new_x = game->player_x + dir_x * 2 * SCREEN_WIDTH;
-		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_HEIGHT;
+		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_WIDTH;
 		cast_ray(game, angle_iter);
 		draw_wall_line(game);
 		angle_iter += angle_incr_radians;
+		if (angle_iter < 0) {
+			angle_iter += 2 * M_PI;
+		} else if (angle_iter > 2 * M_PI) {
+			angle_iter -= 2 * M_PI;
+		}
 		++game->dist_idx;
 	}
 }

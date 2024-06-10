@@ -20,10 +20,6 @@ void change_angle_left(t_game *game)
 	--game->vec_idx;
 	if (game->vec_idx == -1)
 		game->vec_idx = 35;
-	game->dir_x = cos(to_radians(game->ray_angle));
-	game->dir_y = sin(to_radians(game->ray_angle));
-	game->plane_x = game->dir_y;
-	game->plane_y = -game->dir_x;
 }
 
 void change_angle_right(t_game *game)
@@ -34,10 +30,6 @@ void change_angle_right(t_game *game)
 	++game->vec_idx;
 	if (game->vec_idx == 36)
 		game->vec_idx = 0;
-	game->dir_x = cos(to_radians(game->ray_angle));
-	game->dir_y = sin(to_radians(game->ray_angle));
-	game->plane_x = game->dir_y;
-	game->plane_y = -game->dir_x;
 }
 
 //void    change_angle_left(t_game *game)
