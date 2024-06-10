@@ -83,6 +83,7 @@ void    cast_ray(t_game *game, float ray_angle)
 				set_ray_direction(&raycaster, game);
 				calc_ray_distance(&raycaster, game, ray_angle);
 				game->ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
+				game->ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 				return ;
 			}
 		}

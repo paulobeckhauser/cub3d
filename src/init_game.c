@@ -34,6 +34,7 @@ void    init_game(t_game *game)
 	game->ray_new_y = 0;
 	game->ray_main_angle = 270.0f;
 	game->ray_hit_x = 0;
+	game->ray_hit_y = 0;
 	game->dist_idx = 0;
 	while (game->dist_idx < (int)SCREEN_WIDTH)
 		game->dists[game->dist_idx++] = 0;

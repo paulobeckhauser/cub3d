@@ -16,7 +16,7 @@ void	render_map(t_game *game)
 {
 	int x;
 	int y;
-
+	
 	x = 0;
 	y = 0;
 	while (y < (int)SCREEN_HEIGHT / 2)
@@ -30,7 +30,8 @@ void	render_map(t_game *game)
 	{
 		x = 0;
 		while (x < (int)SCREEN_WIDTH)
-			game->image->data[y * (int)SCREEN_WIDTH + x++] = rgb_to_hex(0, 255, 0);
+			game->image->data[y * (int)SCREEN_WIDTH + x++]
+					= rgb_to_hex((int)(60 + (y - SCREEN_HEIGHT / 2) * 0.05), (int)(30 + (y - SCREEN_HEIGHT / 2) * 0.05), (int)(15 + (y - SCREEN_HEIGHT / 2) * 0.05));
 		y++;
 	}
 	raycaster(game);
@@ -69,7 +70,7 @@ void    render_wall_line(t_game *game)
 	int y_end;
 	int tex_x, tex_y;
 	int color;
-
+	
 	line_height = (int)(DRAWING_SCALE / (game->dists[game->dist_idx] + 1));
 	y_iterator = (int)SCREEN_HEIGHT / 2 - line_height / 2;
 	if (y_iterator < 0)
@@ -78,11 +79,14 @@ void    render_wall_line(t_game *game)
 	if (y_end > (int)SCREEN_HEIGHT)
 		y_end = (int)SCREEN_HEIGHT;
 	// Calculate tex_x based on where the ray hit the wall block
-	tex_x = (int)(game->ray_hit_x * TEXTURE_SIZE);
+	if (game->direction == NORTH || game->direction == SOUTH)
+		tex_x = (int)(game->ray_hit_x * TEXTURE_SIZE);
+	else
+		tex_x = (int)(game->ray_hit_y * TEXTURE_SIZE);
 	while (y_iterator < y_end)
 	{
 		// Calculate tex_y based on the current y_iterator value
-		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_HEIGHT) / line_height / 2;
+		tex_y = ((y_iterator * 2 - (int)SCREEN_HEIGHT + line_height) * (int)TEXTURE_SIZE) / line_height / 2;
 		if (game->direction == NORTH)
 			color = get_pixel_color(game->north_texture, tex_x, tex_y);
 		else if (game->direction == SOUTH)

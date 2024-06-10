@@ -15,6 +15,10 @@
 
 // images
 #define TEXTURE_SIZE 100.0f
+#define NORTH_TEXTURE "./textures/north_texture.xpm"
+#define SOUTH_TEXTURE "./textures/south_texture.xpm"
+#define WEST_TEXTURE "./textures/west_texture.xpm"
+#define EAST_TEXTURE "./textures/east_texture.xpm"
 
 // vectors
 #define SPEED 40.0f
@@ -64,6 +68,7 @@ typedef struct s_game
 	float	ray_new_y;
 	float	ray_main_angle;
 	float   ray_hit_x;
+	float   ray_hit_y;
 	float   dists[(int)SCREEN_WIDTH];
 	int     dist_idx;
 	int     direction;
@@ -73,6 +78,10 @@ typedef struct s_game
 	bool    keys[7];
 	t_vectors *vectors;
 	int     vec_idx;
+	void    *north_texture;
+	void    *south_texture;
+	void    *west_texture;
+	void    *east_texture;
 }	t_game;
 
 typedef struct s_ray_utils
