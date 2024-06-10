@@ -21,7 +21,6 @@ void    init_image(t_image *image, t_game *game)
 	image->line_length = (int)SCREEN_WIDTH;
 	image->endian = 0;
 	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
-	image->created = 0;
 }
 
 int main(int argc, char **argv)
@@ -37,7 +36,7 @@ int main(int argc, char **argv)
 	calc_dir_vectors(&game);
     load_images_from_dir(&game);
     init_hooks(&game);
-    draw_map(&game);
+    render_map(&game);
 	(void)argc;
 	(void)argv;
 	mlx_loop(game.mlx_ptr);

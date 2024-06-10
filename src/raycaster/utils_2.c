@@ -15,13 +15,13 @@
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game)
 {
 	if (raycaster->dir_x > 0)
-		raycaster->colis_x = raycaster->x_iterator / game->square_width;
+		raycaster->colis_x = raycaster->x_iterator / game->square_size;
 	else
-		raycaster->colis_x = (raycaster->x_iterator - 1) / game->square_width;
+		raycaster->colis_x = (raycaster->x_iterator - 1) / game->square_size;
 	if (raycaster->dir_y > 0)
-		raycaster->colis_y = raycaster->y_iterator / game->square_height;
+		raycaster->colis_y = raycaster->y_iterator / game->square_size;
 	else
-		raycaster->colis_y = (raycaster->y_iterator - 1) / game->square_height;
+		raycaster->colis_y = (raycaster->y_iterator - 1) / game->square_size;
 }
 
 bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game)
@@ -33,10 +33,10 @@ bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game)
 
 void    set_ray_direction(t_raycaster *raycaster, t_game *game)
 {
-	if ((int)raycaster->x_iterator % (int)game->square_width == 0
-		&& (int)raycaster->y_iterator % (int)game->square_height == 0)
+	if ((int)raycaster->x_iterator % (int)game->square_size == 0
+		&& (int)raycaster->y_iterator % (int)game->square_size == 0)
 		return ;
-	else if ((int)raycaster->x_iterator % (int)game->square_width == 0)
+	else if ((int)raycaster->x_iterator % (int)game->square_size == 0)
 	{
 		if (raycaster->dir_x >= 0)
 			game->direction = EAST;
@@ -57,8 +57,8 @@ void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle)
 	float raw_dist;
 	
 	raw_dist = sqrt(pow(raycaster->colis_x
-	                    * game->square_width - game->player_x, 2)
+	                    * game->square_size - game->player_x, 2)
 	                + pow(raycaster->colis_y
-	                      * game->square_height - game->player_y, 2));
-	game->dists[game->dist_idx] = raw_dist * cosf(ray_angle - to_radians(game->ray_angle));
+	                      * game->square_size - game->player_y, 2));
+	game->dists[game->dist_idx] = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
 }

@@ -18,7 +18,7 @@ void    calc_dir_vectors(t_game *game)
 	float	angle_iter;
 	
 	angle_incr_radians = to_radians(10.0f); //field of view (60 deg) divided by screen width
-	angle_iter = to_radians(game->ray_angle);
+	angle_iter = to_radians(game->ray_main_angle);
 	game->vec_idx = 0;
 	while (game->vec_idx < 36)
 	{
@@ -40,7 +40,7 @@ void	raycaster(t_game *game)
 	float	dir_y;
 
 	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH); //field of view (60 deg) divided by screen width
-	angle_iter = to_radians(game->ray_angle) - to_radians(30.0f);
+	angle_iter = to_radians(game->ray_main_angle) - to_radians(30.0f);
 	dir_x = 0;
 	dir_y = 0;
 	game->dist_idx = 0;
@@ -51,7 +51,7 @@ void	raycaster(t_game *game)
 		game->ray_new_x = game->player_x + dir_x * 2 * SCREEN_WIDTH;
 		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_WIDTH;
 		cast_ray(game, angle_iter);
-		draw_wall_line(game);
+		render_wall_line(game);
 		angle_iter += angle_incr_radians;
 		if (angle_iter < 0) {
 			angle_iter += 2 * M_PI;
@@ -82,6 +82,7 @@ void    cast_ray(t_game *game, float ray_angle)
 			{
 				set_ray_direction(&raycaster, game);
 				calc_ray_distance(&raycaster, game, ray_angle);
+				game->ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				return ;
 			}
 		}

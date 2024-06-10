@@ -25,8 +25,8 @@ void	mark_player(t_game *game)
 		{
 			if (game->map[y][x] == 'N')
 			{
-				game->player_x = (float)x * game->square_width + game->square_width / 2;
-				game->player_y = (float)y * game->square_height + game->square_height / 2;
+				game->player_x = (float)x * game->square_size + game->square_size / 2;
+				game->player_y = (float)y * game->square_size + game->square_size / 2;
 				return ;
 			}
 			x++;
@@ -52,8 +52,8 @@ void    calc_directions(t_raycaster *raycaster, t_game *game)
 
 bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game)
 {
-	if ((int)raycaster->x_iterator % (int)game->square_width == 0
-		|| (int)raycaster->y_iterator % (int)game->square_height == 0)
+	if ((int)raycaster->x_iterator % (int)game->square_size == 0
+		|| (int)raycaster->y_iterator % (int)game->square_size == 0)
 		return (true);
 	return (false);
 }
