@@ -320,8 +320,6 @@ bool new_checker_borders(t_data *data)
                         replace_error_message(data, "Map not surrounded by walls");
                         return (false);
                     }
-
-
                     // right
                     if (data->cub_file[line_map_elem][i + 1]
                         && data->cub_file[line_map_elem][i + 1] == ' ' &&
@@ -332,8 +330,6 @@ bool new_checker_borders(t_data *data)
                         replace_error_message(data, "Map not surrounded by walls");
                         return (false);
                     }
-
-
                     //left
                     if (data->cub_file[line_map_elem][i - 1]
                         && data->cub_file[line_map_elem][i - 1] == ' ' &&
@@ -344,8 +340,6 @@ bool new_checker_borders(t_data *data)
                         replace_error_message(data, "Map not surrounded by walls");
                         return (false);
                     }
-
-
                     //down
                     if ( data->cub_file[line_map_elem + 1]
                             && data->cub_file[line_map_elem + 1][i] == ' ' &&
@@ -356,25 +350,13 @@ bool new_checker_borders(t_data *data)
                             replace_error_message(data, "Map not surrounded by walls");
                             return (false);
                         }
-
-
-
-
                 }
-
                 i++;
             }
-
         }
-
-
-
         line_map_elem++;
     }
-
-
     return (true);
-
 }
 
 
@@ -391,8 +373,8 @@ void print_returned_map(t_data *data)
     printf("\n\n");
 
     printf("\033[4mThe Colors are:\033[0m\n\n");
-    printf("Floor color: %d\n", data->floor_color);
-    printf("Ceiling color: %d\n", data->ceiling_color);
+    printf("Floor color: %x\n", data->floor_color);
+    printf("Ceiling color: %x\n", data->ceiling_color);
 
     printf("\n\n");
 
@@ -469,6 +451,51 @@ bool check_player(t_data *data)
         replace_error_message(data, "More than one player in map element");
         return(false);
     }
+
+    return (true);
+}
+
+
+
+
+
+
+
+
+
+bool check_empty_line_map_element (t_data *data)
+{
+    int i;
+    int line_map_elem;
+    int first_line_map_elem;
+    int last_line_map_elem;
+    int count_player;
+
+    i = 0;
+    count_player = 0;
+    line_map_elem =  data->line_start_map_position;
+    first_line_map_elem = data->line_start_map_position;
+    last_line_map_elem = line_map_elem + data->number_lines_map_element - 1; 
+
+
+    while (line_map_elem <= last_line_map_elem)
+    {
+        // printf("%s\n", data->cub_file[line_map_elem]);
+
+        if (check_empty_line(data->cub_file[line_map_elem]))
+        {
+            replace_error_message(data, "Map element separated by line of spaces");
+            return (false);
+        }
+        line_map_elem++;
+    }
+
+
+
+
+
+
+
 
     return (true);
 }

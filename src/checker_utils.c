@@ -20,28 +20,31 @@ bool check_floor_texture_format(t_data *data)
     i = 0;
     while (data->cub_file[i])
     {
-        // printf("%s\n", data->cub_file[i]);
-        if (!store_surfaces_colors(data->cub_file[i], data)
-            || !store_texture_images(data->cub_file[i], data))
+        if (!store_surfaces_colors(data->cub_file[i], data))
             return(false);
-//            return(free_variables_error(data));
+            // printf("here");
+        // if (!store_texture_images(data->cub_file[i], data))
+        //     printf("ok");
+    //     if (!store_surfaces_colors(data->cub_file[i], data)
+    //         || !store_texture_images(data->cub_file[i], data))
+    //         return(false);
+        // printf("%s\n", data->cub_file[i]);
         i++;
     }
-    if (data->n_text_count != 1 
-			|| data->s_text_count != 1 
-		|| data->w_text_count != 1 
-		|| data->e_text_count != 1)
-	{
-		replace_error_message(data, "More than one Texture");
-		return(false);
-	}
-        if (data->f_surf_count != 1 
-			|| data->c_surf_count != 1)
-	{
-		replace_error_message(data, "More than one Surface");
-		return(false);
-	}
-    // printf("%d\n", data->e_text_count);
+    // if (data->n_text_count != 1 
+	// 		|| data->s_text_count != 1 
+	// 	|| data->w_text_count != 1 
+	// 	|| data->e_text_count != 1)
+	// {
+	// 	replace_error_message(data, "More than one Texture");
+	// 	return(false);
+	// }
+    // if (data->f_surf_count != 1 
+	// 		|| data->c_surf_count != 1)
+	// {
+	// 	replace_error_message(data, "More than one Surface");
+	// 	return(false);
+	// }
     return (true);
 }
 
@@ -71,14 +74,7 @@ bool check_extension(t_data *data, char *str, char *extension)
     array = NULL;
     array = ft_split(str, '.');
     i = size_array(array) - 1;
-    // int k = i;
 
-    // printf("%s\n", str);
-    // while (array[k])
-    // {
-    //     printf("%s\n", array[k]);
-    //     k--;
-    // }
     if(size_array(array) == 1 || ft_strcmp(array[i], extension) != 0)
     {
         replace_error_message(data, "Map is not a '.cub' file");

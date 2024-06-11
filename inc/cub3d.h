@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:21:57 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/09 19:58:34 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:50:02 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ bool	store_map_element(t_data *data);
 bool	check_walls_in_edges(t_data *data);
 void	replace_error_message(t_data *data, char *str);
 // bool	check_extension(t_data *data, char *str);
-bool check_extension(t_data *data, char *str, char *extension);
+bool 	check_extension(t_data *data, char *str, char *extension);
 void	get_map_elem_info(t_data *data);
 bool	new_checker_borders(t_data *data);
 void	print_returned_map(t_data *data);
@@ -93,5 +93,6 @@ bool	check_floor_texture_format(t_data *data);
 bool	check_player(t_data *data);
 bool 	check_player_dir(char c);
 void 	replace_player_for_floor(t_data *data, int j);
+bool 	check_empty_line_map_element (t_data *data);
 
 #endif

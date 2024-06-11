@@ -35,11 +35,13 @@ bool store_cub_file(t_data *data, char *str)
     int fd;
     int i;
     char *line;
+    int j;
+
+    j = 0;
 
     if (!count_lines_map(data, str))
         return(false);
 
-//    printf("The number of lines is: %d\n", data->number_lines_map);
 
     data->cub_file = malloc((data->number_lines_map + 1) * sizeof(char *));
     if (!data->cub_file)
@@ -66,13 +68,30 @@ bool store_cub_file(t_data *data, char *str)
             free(line);
             break;
         }
-        if (ft_strcmp(line, "\n") != 0)
+        data->cub_file[i] = malloc(ft_strlen(line) * sizeof(char));
+
+
+        //check malloc
+        j = 0;
+
+        while(line[j] && line[j] != '\n')
         {
-            data->cub_file[i] = ft_strdup(line);
-            i++;
+            data->cub_file[i][j] = line[j];
+            j++;
         }
+        data->cub_file[i][j] = '\0';
+
+
+
+        // while (line[])
+
+
+
+        // data->cub_file[i] = ft_strdup(line);
+        i++;
         free(line);
     }
     data->cub_file[i] = NULL;
+    close(fd);
     return (true);
 }
