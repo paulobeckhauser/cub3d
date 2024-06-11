@@ -49,6 +49,8 @@ void    init_game(t_game *game)
 	game->east_texture = NULL;
 	game->floor_texture = NULL;
 	game->wall_texture = NULL;
+	game->player_texture = NULL;
+	game->gun_texture = NULL;
 	game->prev_mouse_x = SCREEN_WIDTH / 2;
 	game->mouse_x = 0;
 }

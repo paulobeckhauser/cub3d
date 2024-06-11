@@ -23,7 +23,7 @@ void    rotate_player_left(t_game *game)
 {
 	game->ray_main_angle -= 10;
 	if (game->ray_main_angle <= 0)
-		game->ray_main_angle += 360;
+		game->ray_main_angle += 0;
 	--game->vec_idx;
 	if (game->vec_idx == -1)
 		game->vec_idx = 35;

@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 {
     t_game      game;
 	t_image     image;
-	t_vectors   vectors[36];
+	t_vectors   vectors[72];
 
     init_game(&game);
     init_image(&image, &game);
@@ -39,6 +39,7 @@ int main(int argc, char **argv)
     render_map(&game);
 	(void)argc;
 	(void)argv;
+	mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
 	mlx_loop(game.mlx_ptr);
 	free(game.map);
 	mlx_destroy_image(game.mlx_ptr, image.img);

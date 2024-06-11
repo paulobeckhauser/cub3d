@@ -39,23 +39,59 @@ void	render_map(t_game *game)
 	raycaster(game);
 	render_crosshair(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+	render_minimap(game);
+	render_gun(game);
 }
 
 void    render_minimap(t_game *game)
 {
 	int x;
 	int y;
-	
+
 	x = 0;
 	y = 0;
-	while (y < 100)
+	while (y < 10)
 	{
 		x = 0;
-		while (x < 100)
+		while (x < 10)
 		{
-			if (game->map[x])
-			mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_texture, x, y);
+			if (game->map[y][x] == '1')
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_texture, x * MINIMAP_SCALE, y * MINIMAP_SCALE);
+			else
+				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->floor_texture, x * MINIMAP_SCALE, y * MINIMAP_SCALE);
+			++x;
 		}
+		++y;
+	}
+	int minimap_player_x = (int)(game->player_x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
+	int minimap_player_y = (int)(game->player_y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->player_texture, minimap_player_x, minimap_player_y);
+}
+
+void	render_gun(t_game *game)
+{
+	int	x;
+	int	y;
+	int	tex_x;
+	int	tex_y;
+	int	color;
+	int	transparent_color;
+
+	transparent_color = rgb_to_hex(255, 0, 255);
+	x = SCREEN_WIDTH / 2 + 100;
+	while (x < SCREEN_WIDTH / 2 + 100 + 357)
+	{
+		y = SCREEN_HEIGHT - 357;
+		while (y < SCREEN_HEIGHT)
+		{
+			tex_x = x - (SCREEN_WIDTH / 2 + 100);
+			tex_y = y - (SCREEN_HEIGHT - 357);
+			color = get_pixel_color(game->gun_texture, tex_x, tex_y);
+			if (color != transparent_color)
+				game->image->data[y * SCREEN_WIDTH + x] = color;
+			y++;
+		}
+		x++;
 	}
 }
 
@@ -88,7 +124,8 @@ void    render_wall_line(t_game *game)
 	int line_height;
 	int y_iterator;
 	int y_end;
-	int tex_x, tex_y;
+	int tex_x;
+	int	tex_y;
 	int color;
 	
 	line_height = DRAWING_SCALE / (game->dists[game->dist_idx] + 1);
@@ -118,29 +155,3 @@ void    render_wall_line(t_game *game)
 		game->image->data[y_iterator++ * SCREEN_WIDTH + game->dist_idx] = color;
 	}
 }
-
-//void    render_wall_line(t_game *game)
-//{
-//	int line_height;
-//	int y_iterator;
-//	int y_end;
-//
-//	line_height = (int)(DRAWING_SCALE / (game->dists[game->dist_idx] + 1));
-//	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
-//	if (y_iterator < 0)
-//		y_iterator = 0;
-//	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-//	if (y_end > SCREEN_HEIGHT)
-//		y_end = SCREEN_HEIGHT;
-//	while (y_iterator < y_end)
-//	{
-//		if (game->direction == NORTH)
-//			game->image->data[y_iterator++ * SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(165, 42, 42);
-//		else if (game->direction == SOUTH)
-//			game->image->data[y_iterator++ * SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(255, 255, 0);
-//		else if (game->direction == WEST)
-//			game->image->data[y_iterator++ * SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(255, 0, 0);
-//		else if (game->direction == EAST)
-//			game->image->data[y_iterator++ * SCREEN_WIDTH + game->dist_idx] = rgb_to_hex(0, 0, 255);
-//	}
-//}

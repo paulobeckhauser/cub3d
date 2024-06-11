@@ -60,13 +60,13 @@ int mouse_move(int x, int y, t_game *game)
 int	loop_hook(t_game *game)
 {
 	int dir_x;
-	
-	dir_x = game->mouse_x - game->prev_mouse_x;
+
+	dir_x = game->mouse_x - SCREEN_WIDTH / 2;
 	if (dir_x < 0)
 		rotate_player_left(game);
 	else if (dir_x > 0)
 		rotate_player_right(game);
-	game->prev_mouse_x = game->mouse_x;
+	mlx_mouse_move(game->mlx_ptr, game->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	if (game->keys[W])
 		move_player_forward(game);
 	if (game->keys[S])

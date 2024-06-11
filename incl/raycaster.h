@@ -12,15 +12,18 @@
 #define SCREEN_HEIGHT 900
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
+#define MINIMAP_SCALE 20
 
 // images
-#define TEXTURE_SIZE 100
+#define TEXTURE_SIZE 500
 #define NORTH_TEXTURE "./textures/north_texture.xpm"
 #define SOUTH_TEXTURE "./textures/south_texture.xpm"
 #define WEST_TEXTURE "./textures/west_texture.xpm"
 #define EAST_TEXTURE "./textures/east_texture.xpm"
-#define FLOOR_TEXTURE "./textures/floor.xpm"
-#define WALL_TEXTURE "./textures/wall.xpm"
+#define FLOOR_TEXTURE "./textures/floor_texture.xpm"
+#define WALL_TEXTURE "./textures/wall_texture.xpm"
+#define PLAYER_TEXTURE "./textures/player_ln_texture.xpm"
+#define	GUN_TEXTURE "./textures/desert_eagle_texture.xpm"
 
 // vectors
 #define SPEED 40.0f
@@ -83,6 +86,8 @@ typedef struct s_game
 	void    *east_texture;
 	void    *floor_texture;
 	void    *wall_texture;
+	void	*player_texture;
+	void	*gun_texture;
 	int     prev_mouse_x;
 	int     mouse_x;
 }	t_game;
@@ -111,6 +116,8 @@ typedef struct  s_raycaster
 void    calc_dir_vectors(t_game *game);
 void	raycaster(t_game *game);
 void	render_map(t_game *game);
+void    render_minimap(t_game *game);
+void	render_gun(t_game *game);
 void	render_crosshair(t_game *game);
 void    render_wall_line(t_game *game);
 void	cast_ray(t_game *game, float ray_angle);
@@ -125,7 +132,7 @@ void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
 bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game);
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle);
-
+int		get_pixel_color(void *img_ptr, int x, int y);
 // key_actions.c
 int	    close_game(t_game *game);
 void	init_hooks(t_game *game);
