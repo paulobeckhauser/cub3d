@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:01:21 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/06/11 21:22:04 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:54:54 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,6 @@
 
 int	main(int argc, char **argv)
 {
-	// (void)argc;
-	// (void)argv;
-
-
-	// int fd;
-	// char *line;
-
-	// fd = open("maps/correct/square_map.cub", O_RDONLY);
-	// if (fd == -1)
-	// 	printf("not possible to open the map\n");
-
-	// while(true)
-	// {
-	// 	line = get_next_line(fd);
-	// 	if (!line)
-	// 		break;
-			
-	// 	printf("%s", line);
-
-	// 	printf("  ->  %lu", ft_strlen(line));
-	// 	printf("\n\n\n");
-	// 	free(line);
-		
-	// }
-
 	if (argc == 2)
 		return (parser(argv[1]));
 	else

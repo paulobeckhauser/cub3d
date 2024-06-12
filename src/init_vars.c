@@ -24,6 +24,6 @@ void init_vars(t_data *data)
 	data->s_text_count = 0;
 	data->w_text_count = 0;
 	data->e_text_count = 0;
-    data->f_surf_count = 0;
-	data->c_surf_count = 0;
+    data->floor_color_count = 0;
+	data->ceiling_color_count = 0;
 }

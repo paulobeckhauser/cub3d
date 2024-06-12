@@ -20,8 +20,8 @@ bool check_floor_texture_format(t_data *data)
     i = 0;
     while (data->cub_file[i])
     {
-        if (!store_surfaces_colors(data->cub_file[i], data))
-            return(false);
+        // if (!store_surfaces_colors(data->cub_file[i], data))
+        //     return(false);
             // printf("here");
         // if (!store_texture_images(data->cub_file[i], data))
         //     printf("ok");

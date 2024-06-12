@@ -1,81 +1,111 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hex_color.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 16:24:26 by pabeckha          #+#    #+#             */
+/*   Updated: 2024/06/12 17:24:47 by pabeckha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int rgb_to_hex(int red, int green, int blue)
+int	rgb_to_hex(int red, int green, int blue)
 {
-    int hex;
+	int	hex;
 
-    hex = (red << 16) | (green << 8) | blue;
-    hex =  (hex & 0xFFFFFF) | 0x00 << 24;
-    return (hex);
+	hex = (red << 16) | (green << 8) | blue;
+	hex = (hex & 0xFFFFFF) | 0x00 << 24;
+	return (hex);
 }
 
-// colors( red, green, blue)
-
-int store_hex_color(char *line)
+bool	store_hex_color(char *str, t_data *data, char surf)
 {
-    char **color_values;
-    char **rgb_values;
-    int red;
-    int green;
-    int blue;
+	char	**array;
+	int		red;
+	int		green;
+	int		blue;
 
-    red = 0;
-    green = 0;
-    blue = 0;
-    color_values = NULL;
-    rgb_values = NULL;
-    color_values = ft_split(line, ' ');
+	array = ft_split(str, ',');
+	if (!array)
+	{
+		replace_error_message(data, "Memory allocation failed");
+		return (false);
+	}
 
-    // printf("%s\n", line);
+	red = 0;
+	green = 0;
+	blue = 0;
+	
+	if (!array[0] || !array[1] || !array[2])
+	{
+		replace_error_message(data, "RGB in wrong format");
+		return(false);
+	}
 
-    // int *color;
+	
 
-    // color = malloc(3 * (sizeof(int)));
+	if (ft_strcmp(array[0], "0") == 0)
+		red = 0;
+	else
+	{
+		red = ft_atoi(array[0]);
+		if (red <= 0 || red > 255)
+		{
+			replace_error_message(data, "RGB in wrong format");
+			return(false);
+		}	
+	}
+			
+	if (ft_strcmp(array[1], "0") == 0)
+		green = 0;
+	else
+	{
+		green = ft_atoi(array[1]);
+		if (green <= 0 || green > 255)
+		{
+			replace_error_message(data, "RGB in wrong format");
+			return(false);
+		}	
+	}
+	if (ft_strcmp(array[2], "0") == 0)
+		blue = 0;
+	else
+	{
+		blue = ft_atoi(array[2]);
+		if (blue <= 0 || blue > 255)
+		{
+			replace_error_message(data, "RGB in wrong format");
+			return(false);
+		}
 
+	}
+	
+	if (surf == 'F')
+		data->floor_color = rgb_to_hex(red, green, blue);
+	else if (surf == 'C')
+		data->ceiling_color = rgb_to_hex(red, green, blue);
+	else
+		return (false);
+	free_2d_array(array);
+	return (true);
+}
 
+bool	clean_store_hex_color(t_data *data, int i, char surf)
+{
+	char	*cleaned_string;
 
-
-
-
-
-    // int k;
-
-    // k = 0;
-    // while (color_values[k])
-    // {
-    //     // printf("%s\n", color_values[k]);
-    //     // color[k] = ft_atoi(ft_strtrim(color_values[k], ","));
-    //     printf("%s\n", ft_strtrim(color_values[k], ","));
-
-    //     // printf("%d\n\n", k);
-    //     k++;
-    // }
-
-
-    red = ft_atoi(ft_strtrim(color_values[1], ","));
-    green = ft_atoi(ft_strtrim(color_values[2], ","));
-    blue = ft_atoi(ft_strtrim(color_values[3], ","));
-
-
-    printf("%d\n", red);
-    printf("%d\n", red);
-    
-
-
-
-
-    // int m; 
-
-    // m = 0;
-    // while (color[m])
-    // {
-    //     printf("%d\n", color[m]);
-    //     m++;
-    // }
-    // rgb_values = ft_split(color_values[1], ',');
-    // free_2d_array(color_values);
-
-    // free_2d_array(rgb_values);
-    return(rgb_to_hex(red, green, blue));
+	cleaned_string = NULL;
+	cleaned_string = clean_str_color(data, i, surf);
+	if (!cleaned_string)
+		return (false);
+	if (!store_hex_color(cleaned_string, data, surf))
+		return (false);
+	if (surf == 'F')
+		data->floor_color_count++;
+	else if (surf == 'C')
+		data->ceiling_color_count++;
+	return (true);
 }

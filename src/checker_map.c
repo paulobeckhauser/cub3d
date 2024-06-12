@@ -373,27 +373,27 @@ void print_returned_map(t_data *data)
     printf("\n\n");
 
     printf("\033[4mThe Colors are:\033[0m\n\n");
-    printf("Floor color: %x\n", data->floor_color);
-    printf("Ceiling color: %x\n", data->ceiling_color);
+    printf("Floor color: %X\n", data->floor_color);
+    printf("Ceiling color: %X\n", data->ceiling_color);
 
     printf("\n\n");
 
-    printf("\033[4mThe map element is:\033[0m\n\n");
+//     printf("\033[4mThe map element is:\033[0m\n\n");
 
 
 
 
-    int k = 0;
+//     int k = 0;
 
-    while (data->map_element[k])
-    {
-        printf("%s", data->map_element[k]);
-        k++;
-    }
+//     while (data->map_element[k])
+//     {
+//         printf("%s", data->map_element[k]);
+//         k++;
+//     }
 
-    printf("\nThe direction of the player is: %c\n", data->player->direction);
+//     printf("\nThe direction of the player is: %c\n", data->player->direction);
 
-    printf("The position is: (%d, %d)\n", data->player->x, data->player->y);
+//     printf("The position is: (%d, %d)\n", data->player->x, data->player->y);
 }
 
 bool check_player_dir(char c)

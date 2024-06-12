@@ -115,35 +115,35 @@ void replace_player_for_floor(t_data *data, int j)
     }
 }
 
-bool store_map_element(t_data *data)
-{
+// bool store_map_element(t_data *data)
+// {
 
-    int i;
-    int j;
-    int count_line;
-    int g;
+//     int i;
+//     int j;
+//     int count_line;
+//     int g;
 
-    data->map_element = malloc((data->number_lines_map_element + 1) * sizeof(char *));
+//     data->map_element = malloc((data->number_lines_map_element + 1) * sizeof(char *));
 
-    j = 0;
+//     j = 0;
 
-    i = 0;
-    g = 0;
-    count_line = 0;
-    while(data->cub_file[i])
-    {
+//     i = 0;
+//     g = 0;
+//     count_line = 0;
+//     while(data->cub_file[i])
+//     {
 
-        if (check_map_element(data->cub_file[i]) && !(check_empty_line(data->cub_file[i])))
-        {
-            count_line++;
-            store_player_info(data, data->cub_file[i], count_line);
-            data->map_element[j] = ft_strdup(data->cub_file[i]);
-            replace_player_for_floor(data, j);
-            j++;
-        }
-        i++;
-    }
-    data->map_element[j] =  NULL;
-    return (true);
-}
+//         if (check_map_element(data->cub_file[i]) && !(check_empty_line(data->cub_file[i])))
+//         {
+//             count_line++;
+//             store_player_info(data, data->cub_file[i], count_line);
+//             data->map_element[j] = ft_strdup(data->cub_file[i]);
+//             replace_player_for_floor(data, j);
+//             j++;
+//         }
+//         i++;
+//     }
+//     data->map_element[j] =  NULL;
+//     return (true);
+// }
 

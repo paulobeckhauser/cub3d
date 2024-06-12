@@ -8,33 +8,62 @@ int parser(char *str)
     data.player = (t_player *)malloc(sizeof(t_player));
 
     init_vars(&data);
-    if (!check_extension(&data, str, "cub"))
+    // if (!check_extension(&data, str, "cub"))
+    //     return(free_variables_error(&data));
+
+
+
+    // if (!store_cub_file(&data, str))
+    //     return(free_variables_error(&data));
+
+
+    // if (!store_surface_colors(&data))
+    //     return(free_variables_error(&data));
+
+    // if (!store_textures(&data))
+    //     return(free_variables_error(&data));
+
+
+    if (!check_extension(&data, str, "cub") 
+        || !store_cub_file(&data, str)
+            || !store_surface_colors(&data) 
+            || !store_textures(&data))
         return(free_variables_error(&data));
-    
-    if (!store_cub_file(&data, str))
+
+
+    if (!store_map(&data))
         return(free_variables_error(&data));
 
 
+    //TO-DO
+    // 13/06 -> Continue store map
+
+    // if (!store_map_element(&data))
+    //     return(free_variables_error(&data));
 
 
-    
-
-    
 
 
-    // int k;
-    // k = 0;
-    // while(data.cub_file[k])
-    // {
-    //     printf("%s\n", data.cub_file[k]);
-    //     k++;
-    // }
-
-    get_map_elem_info(&data);
+    // if (!store_textures(&data) || 
 
 
-    if (!check_floor_texture_format(&data))
-        return(free_variables_error(&data));
+
+
+
+
+
+
+
+
+    // get_map_elem_info(&data);
+
+
+    // if (!check_textures(&data))
+    //     return(free_variables_error(&data));
+
+
+    // if (!check_floor_texture_format(&data))
+    //     return(free_variables_error(&data));
 
 
     //  if (!check_input_floor_texture_exist(&data))

@@ -1,6 +1,8 @@
-.PHONY: all clean fclean re
+
 
 NAME = cub3d
+
+
 CC = cc
 W_FLAGS = -Wall -Wextra -Werror #-fsanitize=address
 MLX_FLAGS = -Lmlx_linux -lmlx -Imlx_linux -lXext -lX11 -lm -lz
@@ -29,9 +31,15 @@ SRC := 			main.c \
 				checker_map.c \
 				store_map.c \
 				get_map_elem_info.c \
+				surfaces.c \
+				textures.c \
+				surfaces_colors.c \
+				map.c \
 
 
 
+# Creation of Object Files for each Source File
+# OBJ				:= $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
 
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
@@ -57,3 +65,5 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
