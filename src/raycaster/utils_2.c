@@ -31,6 +31,16 @@ bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game)
 	return (false);
 }
 
+bool    is_collision_point_a_door(t_raycaster *raycaster, t_game *game)
+{
+	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2')
+	{
+		game->hit_door = true;
+		return (true);
+	}
+	return (false);
+}
+
 void    set_ray_direction(t_raycaster *raycaster, t_game *game)
 {
 	if ((int)raycaster->x_iterator % (int)game->square_size == 0

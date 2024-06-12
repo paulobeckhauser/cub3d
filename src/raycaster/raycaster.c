@@ -86,6 +86,10 @@ void    cast_ray(t_game *game, float ray_angle)
 				game->ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 				return ;
 			}
+//			else if (is_collision_point_a_door(&raycaster, game))
+//			{
+//
+//			}
 		}
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;
 		raycaster.y_iterator += raycaster.dir_y * raycaster.speed;

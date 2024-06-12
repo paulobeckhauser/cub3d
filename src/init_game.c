@@ -51,6 +51,8 @@ void    init_game(t_game *game)
 	game->wall_texture = NULL;
 	game->player_texture = NULL;
 	game->gun_texture = NULL;
+	game->door_closed_texture = NULL;
+	game->hit_door = false;
 	game->prev_mouse_x = SCREEN_WIDTH / 2;
 	game->mouse_x = 0;
 }

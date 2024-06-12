@@ -22,4 +22,5 @@ void load_images_from_dir(t_game *game)
 	game->wall_texture = mlx_xpm_file_to_image(game->mlx_ptr, WALL_TEXTURE, &game->img_x, &game->img_y);
 	game->player_texture = mlx_xpm_file_to_image(game->mlx_ptr, PLAYER_TEXTURE, &game->img_x, &game->img_y);
 	game->gun_texture = mlx_xpm_file_to_image(game->mlx_ptr, GUN_TEXTURE, &game->img_x, &game->img_y);
+	game->hit_door = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_CLOSED_TEXTURE, &game->img_x, &game->img_y);
 }

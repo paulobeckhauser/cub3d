@@ -40,32 +40,66 @@ void	render_map(t_game *game)
 	render_crosshair(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
 	render_minimap(game);
+	render_minimap_player(game);
 	render_gun(game);
 }
 
 void    render_minimap(t_game *game)
 {
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
-	while (y < 10)
+	int map_x;
+	int map_y;
+	int tex_x;
+	int tex_y;
+	int color;
+	
+	map_y = 0;
+	while (map_y < 10)
 	{
-		x = 0;
-		while (x < 10)
+		map_x = 0;
+		while (map_x < 10)
 		{
-			if (game->map[y][x] == '1')
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_texture, x * MINIMAP_SCALE, y * MINIMAP_SCALE);
-			else
-				mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->floor_texture, x * MINIMAP_SCALE, y * MINIMAP_SCALE);
-			++x;
+			tex_y = 0;
+			while (tex_y < MINIMAP_SCALE)
+			{
+				tex_x = 0;
+				while (tex_x < MINIMAP_SCALE)
+				{
+					if (game->map[map_y][map_x] == '1')
+						color = get_pixel_color(game->wall_texture, tex_x, tex_y);
+					else
+						color = get_pixel_color(game->floor_texture, tex_x, tex_y);
+					game->image->data[(map_y * MINIMAP_SCALE + tex_y) * SCREEN_WIDTH + (map_x * MINIMAP_SCALE + tex_x)] = color;
+					tex_x++;
+				}
+				tex_y++;
+			}
+			map_x++;
 		}
-		++y;
+		map_y++;
 	}
+}
+
+void    render_minimap_player(t_game *game)
+{
+	int tex_x;
+	int tex_y;
+	int color;
+	
 	int minimap_player_x = (int)(game->player_x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
 	int minimap_player_y = (int)(game->player_y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->player_texture, minimap_player_x, minimap_player_y);
+	
+	tex_y = 0;
+	while (tex_y < MINIMAP_SCALE)
+	{
+		tex_x = 0;
+		while (tex_x < MINIMAP_SCALE)
+		{
+			color = get_pixel_color(game->player_texture, tex_x, tex_y);
+			game->image->data[(minimap_player_y + tex_y) * SCREEN_WIDTH + (minimap_player_x + tex_x)] = color;
+			tex_x++;
+		}
+		tex_y++;
+	}
 }
 
 void	render_gun(t_game *game)
@@ -144,6 +178,11 @@ void    render_wall_line(t_game *game)
 	{
 		// Calculate tex_y based on the current y_iterator value
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
+//		if (game->hit_door)
+//		{
+//			color = get_pixel_color(game->west_texture, tex_x, tex_y);
+//			game->hit_door = false;
+//		}
 		if (game->direction == NORTH)
 			color = get_pixel_color(game->north_texture, tex_x, tex_y);
 		else if (game->direction == SOUTH)

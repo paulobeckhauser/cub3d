@@ -24,6 +24,7 @@
 #define WALL_TEXTURE "./textures/wall_texture.xpm"
 #define PLAYER_TEXTURE "./textures/player_ln_texture.xpm"
 #define	GUN_TEXTURE "./textures/desert_eagle_texture.xpm"
+#define DOOR_CLOSED_TEXTURE "./textures/door_closed_texture.xpm"
 
 // vectors
 #define SPEED 40.0f
@@ -88,6 +89,8 @@ typedef struct s_game
 	void    *wall_texture;
 	void	*player_texture;
 	void	*gun_texture;
+	void    *door_closed_texture;
+	bool    hit_door;
 	int     prev_mouse_x;
 	int     mouse_x;
 }	t_game;
@@ -117,6 +120,7 @@ void    calc_dir_vectors(t_game *game);
 void	raycaster(t_game *game);
 void	render_map(t_game *game);
 void    render_minimap(t_game *game);
+void    render_minimap_player(t_game *game);
 void	render_gun(t_game *game);
 void	render_crosshair(t_game *game);
 void    render_wall_line(t_game *game);
@@ -130,6 +134,7 @@ void    calc_directions(t_raycaster *raycaster, t_game *game);
 bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
 bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game);
+bool    is_collision_point_a_door(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game);
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle);
 int		get_pixel_color(void *img_ptr, int x, int y);
