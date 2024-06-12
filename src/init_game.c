@@ -32,7 +32,7 @@ void    init_game(t_game *game)
 	mark_player(game);
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
-	game->ray_main_angle = 270.0f;
+	game->ray_main_angle = 290.0f;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
 	game->dist_idx = 0;

@@ -27,7 +27,10 @@ void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game)
 bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game)
 {
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '1')
+	{
+		game->hit_door = false;
 		return (true);
+	}
 	return (false);
 }
 

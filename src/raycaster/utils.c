@@ -57,3 +57,13 @@ bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game)
 		return (true);
 	return (false);
 }
+
+int get_pixel_color(void *img_ptr, int x, int y)
+{
+	char    *data;
+	int     bits_per_pixel;
+	int     size_line;
+	int     endian;
+	data = mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, &endian);
+	return (*(int *)(data + ((x + y * size_line / 4) * bits_per_pixel / 8)));
+}

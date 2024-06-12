@@ -16,10 +16,10 @@
 
 // images
 #define TEXTURE_SIZE 500
-#define NORTH_TEXTURE "./textures/north_texture.xpm"
-#define SOUTH_TEXTURE "./textures/south_texture.xpm"
-#define WEST_TEXTURE "./textures/west_texture.xpm"
-#define EAST_TEXTURE "./textures/east_texture.xpm"
+#define NORTH_TEXTURE "./textures/wall_default_texture.xpm"
+#define SOUTH_TEXTURE "./textures/wall_default_texture.xpm"
+#define WEST_TEXTURE "./textures/wall_default_texture.xpm"
+#define EAST_TEXTURE "./textures/wall_default_texture.xpm"
 #define FLOOR_TEXTURE "./textures/floor_texture.xpm"
 #define WALL_TEXTURE "./textures/wall_texture.xpm"
 #define PLAYER_TEXTURE "./textures/player_ln_texture.xpm"

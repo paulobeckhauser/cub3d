@@ -23,7 +23,7 @@ void	render_map(t_game *game)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++] = rgb_to_hex(173, 216, 230);
+			game->image->data[y * SCREEN_WIDTH + x++] = rgb_to_hex(50, 50, 170); // Very dark blue
 		y++;
 	}
 	while (y < SCREEN_HEIGHT)
@@ -31,9 +31,9 @@ void	render_map(t_game *game)
 		x = 0;
 		while (x < SCREEN_WIDTH)
 			game->image->data[y * SCREEN_WIDTH + x++]
-					= rgb_to_hex((int)(60 + (y - SCREEN_HEIGHT / 2) * 0.05),
-								 (int)(30 + (y - SCREEN_HEIGHT / 2) * 0.05),
-								 (int)(15 + (y - SCREEN_HEIGHT / 2) * 0.05));
+					= rgb_to_hex((int)(20 + (y - SCREEN_HEIGHT / 2) * 0.01), // Dark gradient from blue to violet
+					             (int)(10 + (y - SCREEN_HEIGHT / 2) * 0.01),
+					             (int)(40 + (y - SCREEN_HEIGHT / 2) * 0.01));
 		y++;
 	}
 	raycaster(game);
@@ -143,16 +143,6 @@ void	render_crosshair(t_game *game)
 		game->image->data[y++ * SCREEN_WIDTH + SCREEN_WIDTH / 2] = rgb_to_hex(0, 255, 0);
 }
 
-int get_pixel_color(void *img_ptr, int x, int y)
-{
-	char    *data;
-	int     bits_per_pixel;
-	int     size_line;
-	int     endian;
-	data = mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, &endian);
-	return (*(int *)(data + ((x + y * size_line / 4) * bits_per_pixel / 8)));
-}
-
 void    render_wall_line(t_game *game)
 {
 	int line_height;
@@ -178,12 +168,9 @@ void    render_wall_line(t_game *game)
 	{
 		// Calculate tex_y based on the current y_iterator value
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-//		if (game->hit_door)
-//		{
-//			color = get_pixel_color(game->west_texture, tex_x, tex_y);
-//			game->hit_door = false;
-//		}
-		if (game->direction == NORTH)
+		if (game->hit_door)
+			color = get_pixel_color(game->door_closed_texture, tex_x, tex_y);
+		else if (game->direction == NORTH)
 			color = get_pixel_color(game->north_texture, tex_x, tex_y);
 		else if (game->direction == SOUTH)
 			color = get_pixel_color(game->south_texture, tex_x, tex_y);
