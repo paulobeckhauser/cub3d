@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:16:09 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/13 17:41:15 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:49:44 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,29 +111,50 @@ bool store_map_element(t_data *data)
     return (true);
 }
 
-bool store_map(t_data *data)
+
+bool check_map_element_format(t_data *data)
 {
-    // int i;
-
-    
-    store_first_line_map_element(data);
-    store_last_line_map_element(data);
-
-    if (!store_map_element(data))
-    {
-        return (false);
-    }
-
-    
-
     int i;
+    int j;
 
-    i = 0;
-    while(data->map_element[i])
+    j = 0;
+    i = data->line_end_map_position + 1;
+    while (data->cub_file[i])
     {
-        printf("%s\n", data->map_element[i]);
+        printf("%s\n", data->cub_file[i]);
+        j = 0;
+        while (data->cub_file[i][j])
+        {
+            if (data->cub_file[i][j] != ' ')
+            
+            j++;
+        }
         i++;
     }
+
+    
+
+    
+
+
+    
+    return (true);
+}
+
+bool store_map(t_data *data)
+{
+   
+    store_first_line_map_element(data);
+    store_last_line_map_element(data);
+    if (!store_map_element(data))
+        return (false);
+
+    check_map_element_format(data);
+
+
+    
+
+    
 
     return (true); 
 }
