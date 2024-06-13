@@ -205,9 +205,9 @@ bool check_walls_in_edges(t_data *data)
     int first_line_map_elem;
     int last_line_map_elem;
 
-    int i;
+    // int i;
 
-    i = 0;
+    // i = 0;
 
     line_map_elem =  data->line_start_map_position;
     first_line_map_elem = data->line_start_map_position;
@@ -421,14 +421,14 @@ bool check_player(t_data *data)
 {
     int i;
     int line_map_elem;
-    int first_line_map_elem;
+    // int first_line_map_elem;
     int last_line_map_elem;
     int count_player;
 
     i = 0;
     count_player = 0;
     line_map_elem =  data->line_start_map_position;
-    first_line_map_elem = data->line_start_map_position;
+    // first_line_map_elem = data->line_start_map_position;
     last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
     while(line_map_elem <= last_line_map_elem)
     {
@@ -465,16 +465,16 @@ bool check_player(t_data *data)
 
 bool check_empty_line_map_element (t_data *data)
 {
-    int i;
+    // int i;
     int line_map_elem;
-    int first_line_map_elem;
+    // int first_line_map_elem;
     int last_line_map_elem;
-    int count_player;
+    // int count_player;
 
-    i = 0;
-    count_player = 0;
+    // i = 0;
+    // count_player = 0;
     line_map_elem =  data->line_start_map_position;
-    first_line_map_elem = data->line_start_map_position;
+    // first_line_map_elem = data->line_start_map_position;
     last_line_map_elem = line_map_elem + data->number_lines_map_element - 1; 
 
 
