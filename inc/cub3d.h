@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:21:57 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/12 18:56:49 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:06:02 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ bool floor_ceiling_lines(char **array, t_data *data, int i);
 bool store_textures(t_data *data);
 bool check_xpm_extension(t_data *data, char *str);
 bool store_map(t_data *data);
+bool check_if_map_element(char *str);
 
 #endif

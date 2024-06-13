@@ -6,43 +6,54 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:16:09 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/12 18:57:08 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:42:53 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
 
-void position_start_map_element(t_data *data)
+bool check_if_map_element(char *str)
 {
     int i;
-    int j;
-    size_t count_map_line;
+    
+    i = 0;
+    while(str[i])
+    {
+        if (str[i] == '1' || str[i] == '0' || str[i] == ' '
+        || str[i] == 'N' || str[i] == 'S' || str[i] == 'W'
+            || str[i] == 'E')
+            i++;
+        else
+            return (false);
+    }
+    return (true);
+}
+
+bool check_if_empty_line(char *str)
+{
+    int i;
 
     i = 0;
-    j = 0;
-    count_map_line = 0;
+    while(str[i])
+    {
+        if (str[i] == ' ')
+            i++;
+        else
+            return (false);
+    }
+    return (true);
+}
+
+
+void store_first_line_map_element(t_data *data)
+{
+    int i;
+
+    i = 0;
     while(data->cub_file[i])
     {
-        j = 0;
-        count_map_line = 0;
-        while (data->cub_file[i][j])
-        {
-            while (data->cub_file[i][j] == ' ')
-            {
-    
-                j++;
-            }
-
-            if (data->cub_file[i][j] == '1' || data->cub_file[i][j] == '0'
-                || data->cub_file[i][j] == ' ' || data->cub_file[i][j] == 'N'
-                || data->cub_file[i][j] == 'S' || data->cub_file[i][j] == 'W'
-                || data->cub_file[i][j] == 'E')
-                count_map_line++;
-            j++;  
-        }
-        if (count_map_line == ft_strlen(data->cub_file[i]) 
-            && ft_strcmp(data->cub_file[i], "") != 0)
+        if (check_if_map_element(data->cub_file[i]) && !check_if_empty_line(data->cub_file[i]))
         {
             data->line_start_map_position = i;
             break;
@@ -51,42 +62,76 @@ void position_start_map_element(t_data *data)
     }
 }
 
-// void position_end_map_element(t_data *data)
-// {
-    
-// }
-
-
-// bool check_empty_line_map(t_data *data)
-// {
-//     int i;
-
-//     i = data->line_start_map_position;
-
-//     while(data->cub_file[i])
-//     {
-//         if (ft_strcmp(data->cub_file[i], "") == 0)
-//         {
-//             replace_error_message(data, "Map has empty lines");
-//         }
-//         i++;
-//     }
-//     return (true);
-// }
-
-bool store_map(t_data *data)
+void store_last_line_map_element(t_data *data)
 {
-    position_start_map_element(data);
-
-
-
     int i;
 
     i = data->line_start_map_position;
-
     while(data->cub_file[i])
     {
-        printf("%s\n", data->cub_file[i]);
+        if (check_if_empty_line(data->cub_file[i]))
+        {
+            data->line_end_map_position = i - 1;
+            break;
+        }
+        i++;
+        
+    }
+    
+}
+
+bool store_map_element(t_data *data)
+{
+
+    int lines_map;
+    int i;
+    int j;
+    
+    i = data->line_start_map_position;
+    lines_map = data->line_end_map_position - data->line_start_map_position + 1;
+    data->map_element = malloc((lines_map + 1) * sizeof(char *));
+    if (!data->map_element)
+    {
+        replace_error_message(data, "Memory allocation failed");
+        return (false);
+    }
+
+    j = 0;
+
+    while (i <= data->line_end_map_position)
+    {
+        data->map_element[j] = ft_strdup(data->cub_file[i]);
+        i++;
+        j++;
+    }
+    data->map_element[j] = NULL;
+
+
+
+    return (true);
+}
+
+bool store_map(t_data *data)
+{
+    // int i;
+
+    
+    store_first_line_map_element(data);
+    store_last_line_map_element(data);
+
+    if (!store_map_element(data))
+    {
+        return (false);
+    }
+
+    
+
+    int i;
+
+    i = 0;
+    while(data->map_element[i])
+    {
+        printf("%s\n", data->map_element[i]);
         i++;
     }
 

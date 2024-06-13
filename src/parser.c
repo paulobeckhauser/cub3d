@@ -8,21 +8,6 @@ int parser(char *str)
     data.player = (t_player *)malloc(sizeof(t_player));
 
     init_vars(&data);
-    // if (!check_extension(&data, str, "cub"))
-    //     return(free_variables_error(&data));
-
-
-
-    // if (!store_cub_file(&data, str))
-    //     return(free_variables_error(&data));
-
-
-    // if (!store_surface_colors(&data))
-    //     return(free_variables_error(&data));
-
-    // if (!store_textures(&data))
-    //     return(free_variables_error(&data));
-
 
     if (!check_extension(&data, str, "cub") 
         || !store_cub_file(&data, str)
