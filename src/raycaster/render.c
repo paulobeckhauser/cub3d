@@ -181,36 +181,3 @@ void    render_wall_line(t_game *game)
 		y_iterator++;
 	}
 }
-
-void	render_open_door(t_game *game)
-{
-	int line_height;
-	int y_iterator;
-	int y_end;
-	int tex_x;
-	int	tex_y;
-	int color;
-
-	line_height = DRAWING_SCALE / (game->closer_dists[game->dist_idx] + 1);
-	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
-	if (y_iterator < 0)
-		y_iterator = 0;
-	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-	if (y_end > SCREEN_HEIGHT)
-		y_end = SCREEN_HEIGHT;
-	// Calculate tex_x based on where the ray hit the wall block
-	if (game->direction == NORTH || game->direction == SOUTH)
-		tex_x = (int)(game->ray_open_door_hit_x * TEXTURE_SIZE);
-	else
-		tex_x = (int)(game->ray_open_door_hit_y * TEXTURE_SIZE);
-	while (y_iterator < y_end)
-	{
-		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		color = get_pixel_color(game->door_opened_texture, tex_x, tex_y);
-		if (color != rgb_to_hex(255, 0, 255))
-		{
-			game->image->data[y_iterator++ * SCREEN_WIDTH + game->dist_idx] = color;
-		}
-	}
-	game->closer_dists[game->dist_idx] = 0;
-}

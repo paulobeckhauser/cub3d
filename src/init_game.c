@@ -45,6 +45,7 @@ void    init_game(t_game *game)
 	}
 	game->dist_idx = 0;
 	game->direction = 0;
+	game->closer_direction = 0;
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);

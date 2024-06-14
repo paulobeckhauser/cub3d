@@ -79,6 +79,7 @@ typedef struct s_game
 	float	closer_dists[SCREEN_WIDTH];
 	int     dist_idx;
 	int     direction;
+	int     closer_direction;
 	void    *background;
 	int     img_x;
 	int     img_y;
@@ -158,10 +159,9 @@ void    move_player_forward(t_game *game);
 void    move_player_left(t_game *game);
 void    move_player_right(t_game *game);
 
-void	render_open_door(t_game *game);
 bool    is_collision_point_a_opened_door(t_raycaster *raycaster, t_game *game);
 void    calc_ray_distance_opened_door(t_raycaster *raycaster, t_game *game, float ray_angle);
-void    cast_ray_2(t_game *game, float ray_angle);
-void    render_wall_line_2(t_game *game);
+void    render_closer_wall_line(t_game *game);
+void    set_closer_ray_direction(t_raycaster *raycaster, t_game *game);
 
 #endif //RAYCASTER_TEST_H

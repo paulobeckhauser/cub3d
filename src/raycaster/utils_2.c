@@ -29,7 +29,7 @@ bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game)
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '1')
 	{
 		game->hit_closed_door = false;
-		game->hit_opened_door = false;
+//		game->hit_opened_door = false;
 		return (true);
 	}
 	return (false);
@@ -75,6 +75,27 @@ void    set_ray_direction(t_raycaster *raycaster, t_game *game)
 			game->direction = SOUTH;
 		else
 			game->direction = NORTH;
+	}
+}
+
+void    set_closer_ray_direction(t_raycaster *raycaster, t_game *game)
+{
+	if ((int)raycaster->x_iterator % (int)game->square_size == 0
+	    && (int)raycaster->y_iterator % (int)game->square_size == 0)
+		return ;
+	else if ((int)raycaster->x_iterator % (int)game->square_size == 0)
+	{
+		if (raycaster->dir_x >= 0)
+			game->closer_direction = EAST;
+		else
+			game->closer_direction = WEST;
+	}
+	else
+	{
+		if (raycaster->dir_y >= 0)
+			game->closer_direction = SOUTH;
+		else
+			game->closer_direction = NORTH;
 	}
 }
 
