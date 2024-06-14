@@ -35,9 +35,14 @@ void    init_game(t_game *game)
 	game->ray_main_angle = 290.0f;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
+	game->ray_open_door_hit_x = 0;
+	game->ray_open_door_hit_y = 0;
 	game->dist_idx = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
-		game->dists[game->dist_idx++] = 0;
+	{
+		game->dists[game->dist_idx] = 0;
+		game->closer_dists[game->dist_idx++] = 0;
+	}
 	game->dist_idx = 0;
 	game->direction = 0;
 	game->img_x = 0;
@@ -52,7 +57,9 @@ void    init_game(t_game *game)
 	game->player_texture = NULL;
 	game->gun_texture = NULL;
 	game->door_closed_texture = NULL;
-	game->hit_door = false;
+	game->door_opened_texture = NULL;
+	game->hit_closed_door = false;
+	game->hit_opened_door = false;
 	game->prev_mouse_x = SCREEN_WIDTH / 2;
 	game->mouse_x = 0;
 }

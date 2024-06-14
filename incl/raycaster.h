@@ -25,6 +25,7 @@
 #define PLAYER_TEXTURE "./textures/player_ln_texture.xpm"
 #define	GUN_TEXTURE "./textures/desert_eagle_texture.xpm"
 #define DOOR_CLOSED_TEXTURE "./textures/door_closed_texture.xpm"
+#define DOOR_OPENED_TEXTURE "./textures/door_opened_texture.xpm"
 
 // vectors
 #define SPEED 40.0f
@@ -72,7 +73,10 @@ typedef struct s_game
 	float	ray_main_angle;
 	float   ray_hit_x;
 	float   ray_hit_y;
+	float	ray_open_door_hit_x;
+	float	ray_open_door_hit_y;
 	float   dists[SCREEN_WIDTH];
+	float	closer_dists[SCREEN_WIDTH];
 	int     dist_idx;
 	int     direction;
 	void    *background;
@@ -90,7 +94,9 @@ typedef struct s_game
 	void	*player_texture;
 	void	*gun_texture;
 	void    *door_closed_texture;
-	bool    hit_door;
+	void	*door_opened_texture;
+	bool    hit_closed_door;
+	bool	hit_opened_door;
 	int     prev_mouse_x;
 	int     mouse_x;
 }	t_game;
@@ -134,7 +140,7 @@ void    calc_directions(t_raycaster *raycaster, t_game *game);
 bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
 bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game);
-bool    is_collision_point_a_door(t_raycaster *raycaster, t_game *game);
+bool    is_collision_point_a_closed_door(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game);
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle);
 int		get_pixel_color(void *img_ptr, int x, int y);
@@ -151,5 +157,11 @@ void	move_player_backward(t_game *game);
 void    move_player_forward(t_game *game);
 void    move_player_left(t_game *game);
 void    move_player_right(t_game *game);
+
+void	render_open_door(t_game *game);
+bool    is_collision_point_a_opened_door(t_raycaster *raycaster, t_game *game);
+void    calc_ray_distance_opened_door(t_raycaster *raycaster, t_game *game, float ray_angle);
+void    cast_ray_2(t_game *game, float ray_angle);
+void    render_wall_line_2(t_game *game);
 
 #endif //RAYCASTER_TEST_H

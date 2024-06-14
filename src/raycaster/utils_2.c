@@ -28,18 +28,31 @@ bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game)
 {
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '1')
 	{
-		game->hit_door = false;
+		game->hit_closed_door = false;
+		game->hit_opened_door = false;
 		return (true);
 	}
 	return (false);
 }
 
-bool    is_collision_point_a_door(t_raycaster *raycaster, t_game *game)
+bool    is_collision_point_a_closed_door(t_raycaster *raycaster, t_game *game)
 {
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2')
 	{
-		game->hit_door = true;
+		game->hit_closed_door = true;
+		game->hit_opened_door = false;
 		return (true);
+	}
+	return (false);
+}
+
+bool    is_collision_point_a_opened_door(t_raycaster *raycaster, t_game *game)
+{
+	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3')
+	{
+		game->hit_opened_door = true;
+		game->hit_closed_door = false;
+			return (true);
 	}
 	return (false);
 }
@@ -74,4 +87,15 @@ void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle)
 	                + pow(raycaster->colis_y
 	                      * game->square_size - game->player_y, 2));
 	game->dists[game->dist_idx] = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
+}
+
+void    calc_ray_distance_opened_door(t_raycaster *raycaster, t_game *game, float ray_angle)
+{
+	float raw_dist;
+
+	raw_dist = sqrt(pow(raycaster->colis_x
+						* game->square_size - game->player_x, 2)
+					+ pow(raycaster->colis_y
+						  * game->square_size - game->player_y, 2));
+	game->closer_dists[game->dist_idx] = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
 }
