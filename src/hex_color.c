@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:24:26 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/12 17:24:47 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:15:21 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 	int		blue;
 
 	array = ft_split(str, ',');
-	if (!array)
-	{
-		replace_error_message(data, "Memory allocation failed");
-		return (false);
-	}
+	// if (!array)
+	// {
+	// 	replace_error_message(data, "Memory allocation failed");
+	// 	return (false);
+	// }
 
 	red = 0;
 	green = 0;
