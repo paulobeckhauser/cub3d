@@ -48,8 +48,8 @@ void    move_player_forward(t_game *game)
 {
 	game->player_x += game->vectors[game->vec_idx].x * SPEED;
 	game->player_y += game->vectors[game->vec_idx].y * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1')
-	{
+	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
+	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')	{
 		game->player_x -= game->vectors[game->vec_idx].x * SPEED;
 		game->player_y -= game->vectors[game->vec_idx].y * SPEED;
 		return ;
@@ -64,8 +64,8 @@ void    move_player_backward(t_game *game)
 {
 	game->player_x -= game->vectors[game->vec_idx].x * SPEED;
 	game->player_y -= game->vectors[game->vec_idx].y * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1')
-	{
+	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
+	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')	{
 		game->player_x += game->vectors[game->vec_idx].x * SPEED;
 		game->player_y += game->vectors[game->vec_idx].y * SPEED;
 		return ;
@@ -77,7 +77,8 @@ void    move_player_left(t_game *game)
 {
 	game->player_x += game->vectors[game->vec_idx].y * SPEED;
 	game->player_y -= game->vectors[game->vec_idx].x * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1')
+	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
+	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')
 	{
 		game->player_x -= game->vectors[game->vec_idx].y * SPEED;
 		game->player_y += game->vectors[game->vec_idx].x * SPEED;
@@ -90,11 +91,44 @@ void    move_player_right(t_game *game)
 {
 	game->player_x -= game->vectors[game->vec_idx].y * SPEED;
 	game->player_y += game->vectors[game->vec_idx].x * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1')
+	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
+		|| game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')
 	{
 		game->player_x += game->vectors[game->vec_idx].y * SPEED;
 		game->player_y -= game->vectors[game->vec_idx].x * SPEED;
 		return ;
 	}
 	render_map(game);
+}
+
+void    open_close_door(t_game *game)
+{
+	int x;
+	int y;
+	
+	y = 0;
+	x = 0;
+	while (game->map[y])
+	{
+		x = 0;
+		while (game->map[y][x])
+		{
+			if (game->door_visible && game->closest_door_distance < DOOR_OPEN_DISTANCE)
+			{
+				if (game->map[y][x] == '2')
+				{
+					game->door_are_opening = true;
+					game->map[y][x] = '3';
+					return ;
+				}
+				else if (game->map[y][x] == '3')
+				{
+					game->map[y][x] = '2';
+					return ;
+				}
+			}
+			x++;
+		}
+		y++;
+	}
 }

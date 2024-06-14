@@ -12,26 +12,41 @@
 
 #include "../../incl/raycaster.h"
 #include "../../incl/cub3d.h"
+#include <string.h>
 
 char	**init_test_map(void)
 {
 	char	**map;
-
-	map = ft_calloc(10, 10);
+	int i;
+	char *map_data[] = {
+			"1111111111",
+			"1000000001",
+			"1000000001",
+			"1000000001",
+			"1111311111",
+			"1000000001",
+			"10000N0001",
+			"1000000001",
+			"1000000001",
+			"1111111111"
+	};
+	
+	map = malloc(sizeof(char*) * 10);
 	if (map == NULL)
 	{
-		perror("calloc");
+		perror("malloc");
 		exit(1);
 	}
-	map[0] = "1111111111";
-	map[1] = "1000000001";
-	map[2] = "1000000001";
-	map[3] = "1000000001";
-	map[4] = "1111131111";
-	map[5] = "1000000001";
-	map[6] = "10000N0001";
-	map[7] = "1000000001";
-	map[8] = "1000000001";
-	map[9] = "1111111111";
+	
+	for(i = 0; i < 10; i++) {
+		map[i] = malloc(sizeof(char) * 11); // 10 for characters and 1 for null terminator
+		if (map[i] == NULL)
+		{
+			perror("malloc");
+			exit(1);
+		}
+		strcpy(map[i], map_data[i]);
+	}
+	
 	return (map);
 }

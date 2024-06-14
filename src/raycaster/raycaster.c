@@ -45,6 +45,9 @@ void	raycaster(t_game *game)
 	dir_x = 0;
 	dir_y = 0;
 	game->dist_idx = 0;
+	game->door_visible = false;
+	game->prev_door_distance = INFINITY;
+	game->closest_door_distance = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
 		dir_x = cosf(angle_iter);
@@ -87,6 +90,8 @@ void    cast_ray(t_game *game, float ray_angle)
 			{
 				set_ray_direction(&raycaster, game);
 				calc_ray_distance(&raycaster, game, ray_angle);
+				if (game->hit_closed_door)
+					save_closest_door_distance(game, game->dists[game->dist_idx]);
 				game->ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 				return ;
@@ -95,6 +100,7 @@ void    cast_ray(t_game *game, float ray_angle)
 			{
 				set_closer_ray_direction(&raycaster, game);
 				calc_ray_distance_opened_door(&raycaster, game, ray_angle);
+				save_closest_door_distance(game, game->closer_dists[game->dist_idx]);
 				game->ray_open_door_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->ray_open_door_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 			}
@@ -102,35 +108,4 @@ void    cast_ray(t_game *game, float ray_angle)
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;
 		raycaster.y_iterator += raycaster.dir_y * raycaster.speed;
 	}
-}
-
-void    render_closer_wall_line(t_game *game)
-{
-	int line_height;
-	int y_iterator;
-	int y_end;
-	int tex_x;
-	int	tex_y;
-	int color;
-	
-	line_height = DRAWING_SCALE / (game->closer_dists[game->dist_idx] + 1);
-	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
-	if (y_iterator < 0)
-		y_iterator = 0;
-	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-	if (y_end > SCREEN_HEIGHT)
-		y_end = SCREEN_HEIGHT;
-	if (game->closer_direction == NORTH || game->closer_direction == SOUTH)
-		tex_x = (int)(game->ray_open_door_hit_x * TEXTURE_SIZE);
-	else
-		tex_x = (int)(game->ray_open_door_hit_y * TEXTURE_SIZE);
-	while (y_iterator < y_end)
-	{
-		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		color = get_pixel_color(game->door_opened_texture, tex_x, tex_y);
-		if (color != rgb_to_hex(255, 0, 255) && game->hit_opened_door)
-			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
-		y_iterator++;
-	}
-	game->hit_opened_door = false;
 }

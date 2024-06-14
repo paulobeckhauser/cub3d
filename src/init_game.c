@@ -61,6 +61,9 @@ void    init_game(t_game *game)
 	game->door_opened_texture = NULL;
 	game->hit_closed_door = false;
 	game->hit_opened_door = false;
+	game->door_visible = false;
+	game->door_are_opening = false;
+	game->closest_door_distance = 0;
 	game->prev_mouse_x = SCREEN_WIDTH / 2;
 	game->mouse_x = 0;
 }
@@ -70,6 +73,6 @@ void    init_keys(t_game *game)
 	int i;
 	
 	i = 0;
-	while (i < 7)
+	while (i < 8)
 		game->keys[i++] = false;
 }

@@ -6,10 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <sys/time.h>
 
 // screen
-#define SCREEN_WIDTH 1600
-#define SCREEN_HEIGHT 900
+#define SCREEN_WIDTH 1366
+#define SCREEN_HEIGHT 768
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 #define MINIMAP_SCALE 20
@@ -29,6 +30,7 @@
 
 // vectors
 #define SPEED 40.0f
+#define DOOR_OPEN_DISTANCE 170
 
 // directions
 #define NORTH 1
@@ -44,6 +46,7 @@
 #define D 4
 #define LEFT_ARROW 5
 #define RIGHT_ARROW 6
+#define E 7
 
 typedef struct	s_image {
 	void	*img;
@@ -83,7 +86,7 @@ typedef struct s_game
 	void    *background;
 	int     img_x;
 	int     img_y;
-	bool    keys[7];
+	bool    keys[8];
 	t_vectors *vectors;
 	int     vec_idx;
 	void    *north_texture;
@@ -98,6 +101,10 @@ typedef struct s_game
 	void	*door_opened_texture;
 	bool    hit_closed_door;
 	bool	hit_opened_door;
+	bool    door_visible;
+	bool    door_are_opening;
+	float   closest_door_distance;
+	float   prev_door_distance;
 	int     prev_mouse_x;
 	int     mouse_x;
 }	t_game;
@@ -163,5 +170,7 @@ bool    is_collision_point_a_opened_door(t_raycaster *raycaster, t_game *game);
 void    calc_ray_distance_opened_door(t_raycaster *raycaster, t_game *game, float ray_angle);
 void    render_closer_wall_line(t_game *game);
 void    set_closer_ray_direction(t_raycaster *raycaster, t_game *game);
+void    open_close_door(t_game *game);
+void    save_closest_door_distance(t_game *game, float dist);
 
 #endif //RAYCASTER_TEST_H
