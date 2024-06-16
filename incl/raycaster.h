@@ -30,16 +30,16 @@
 #define DOOR_FRAME_2_4 "./textures/door/door_frame_2_4.xpm"
 #define DOOR_FRAME_1_4 "./textures/door/door_frame_1_4.xpm"
 #define DOOR_FRAME_0_4 "./textures/door/door_frame_0_4.xpm"
-#define DARK_PRIEST_0_9 "./texture/enemies/dark_priest_0_9"
-#define DARK_PRIEST_1_9 "./texture/enemies/dark_priest_1_9"
-#define DARK_PRIEST_2_9 "./texture/enemies/dark_priest_2_9"
-#define DARK_PRIEST_3_9 "./texture/enemies/dark_priest_3_9"
-#define DARK_PRIEST_4_9 "./texture/enemies/dark_priest_4_9"
-#define DARK_PRIEST_5_9 "./texture/enemies/dark_priest_5_9"
-#define DARK_PRIEST_6_9 "./texture/enemies/dark_priest_6_9"
-#define DARK_PRIEST_7_9 "./texture/enemies/dark_priest_7_9"
-#define DARK_PRIEST_8_9 "./texture/enemies/dark_priest_8_9"
-#define DARK_PRIEST_9_9 "./texture/enemies/dark_priest_9_9"
+#define DARK_PRIEST_0_9 "./textures/enemies/dark_priest_0_9.xpm"
+#define DARK_PRIEST_1_9 "./textures/enemies/dark_priest_1_9.xpm"
+#define DARK_PRIEST_2_9 "./textures/enemies/dark_priest_2_9.xpm"
+#define DARK_PRIEST_3_9 "./textures/enemies/dark_priest_3_9.xpm"
+#define DARK_PRIEST_4_9 "./textures/enemies/dark_priest_4_9.xpm"
+#define DARK_PRIEST_5_9 "./textures/enemies/dark_priest_5_9.xpm"
+#define DARK_PRIEST_6_9 "./textures/enemies/dark_priest_6_9.xpm"
+#define DARK_PRIEST_7_9 "./textures/enemies/dark_priest_7_9.xpm"
+#define DARK_PRIEST_8_9 "./textures/enemies/dark_priest_8_9.xpm"
+#define DARK_PRIEST_9_9 "./textures/enemies/dark_priest_9_9.xpm"
 
 
 // vectors
@@ -119,7 +119,7 @@ typedef struct s_game
 	void	*door_texture[5];
 	void    *door_current_texture;
 	void    *dark_priest_texture[10];
-	void    *current_dark_priest_texture;
+	void    *dark_priest_current_texture;
 	long    door_animation_start_time;
 	bool    hit_closed_door;
 	bool	hit_opened_door;
@@ -130,9 +130,9 @@ typedef struct s_game
 	float   prev_door_distance;
 	float   closest_enemy_distance;
 	float   prev_enemy_distance;
-	float   enemy_hit_x;
-	float   enemy_hit_y;
-	bool    enemy_visible;
+	float   ray_enemy_hit_x;
+	float   ray_enemy_hit_y;
+	bool    hit_enemy;
 	int     mouse_x;
 }	t_game;
 
@@ -190,5 +190,7 @@ void    open_close_door(t_game *game);
 bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
 void    save_closest_distance(float dist, float *prev_dist, float *closest_dist);
+void    render_enemy_line(t_game *game);
+void set_enemy_direction(t_raycaster *raycaster, t_game *game);
 
 #endif //RAYCASTER_TEST_H

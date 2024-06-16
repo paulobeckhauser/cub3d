@@ -60,6 +60,8 @@ void	raycaster(t_game *game)
 		render_wall_line(game);
 		if (game->hit_opened_door || game->hit_closed_door)
 			render_door_line(game);
+		if (game->hit_enemy)
+			render_enemy_line(game);
 		angle_iter += angle_incr_radians;
 		if (angle_iter < 0) {
 			angle_iter += 2 * M_PI;
@@ -114,11 +116,11 @@ void    cast_ray(t_game *game, float ray_angle)
 			}
 			if (is_collision_point_enemy(&raycaster, game))
 			{
-				set_ray_direction(&raycaster, game, &game->enemy_direction);
+				set_enemy_direction(&raycaster, game);
 				calc_ray_distance(&raycaster, game, ray_angle, &game->enemy_dists[game->dist_idx]);
 				save_closest_distance(game->enemy_dists[game->dist_idx], &game->prev_enemy_distance, &game->closest_enemy_distance);
-				game->enemy_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
-				game->enemy_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
+				game->ray_enemy_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
+				game->ray_enemy_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 			}
 		}
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;

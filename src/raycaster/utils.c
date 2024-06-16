@@ -33,7 +33,6 @@ void	mark_player(t_game *game)
 		}
 		y++;
 	}
-	
 }
 
 float	to_radians(float degrees)

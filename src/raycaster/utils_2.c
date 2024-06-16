@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/raycaster.h"
+#include "../../incl/cub3d.h"
 
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game)
 {
@@ -59,7 +60,7 @@ bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
 {
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == 'E')
 	{
-		game->enemy_visible = true;
+		game->hit_enemy = true;
 		return (true);
 	}
 	return (false);
@@ -84,6 +85,23 @@ void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction)
 		else
 			*direction = NORTH;
 	}
+}
+
+void set_enemy_direction(t_raycaster *raycaster, t_game *game)
+{
+	double dx = game->player_x - raycaster->colis_x;
+	double dy = game->player_y - raycaster->colis_y;
+	double angle = atan2(dy, dx);
+	
+	// Convert the angle to degrees
+	double angle_degrees = angle * 180 / M_PI;
+	
+	// Adjust the angle to be between 0 and 360
+	if (angle_degrees < 0)
+		angle_degrees += 360;
+	
+	// Set the enemy direction based on the angle
+	game->enemy_direction = (int)round(angle_degrees / 45) % 8;
 }
 
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle, float *dist)

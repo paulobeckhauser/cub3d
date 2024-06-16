@@ -206,10 +206,69 @@ void    render_door_line(t_game *game)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
 		color = get_pixel_color(game->door_current_texture, tex_x, tex_y);
-		if (color != rgb_to_hex(255, 0, 255) && (game->hit_opened_door || game->hit_closed_door))
+		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
 	}
 	game->hit_opened_door = false;
 	game->hit_closed_door = false;
+}
+
+//void    render_enemy_line(t_game *game)
+//{
+//	int line_height;
+//	int y_iterator;
+//	int y_end;
+//	int tex_x;
+//	int	tex_y;
+//	int color;
+//
+//	line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
+//	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
+//	if (y_iterator < 0)
+//		y_iterator = 0;
+//	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
+//	if (y_end > SCREEN_HEIGHT)
+//		y_end = SCREEN_HEIGHT;
+//	if (game->enemy_direction == NORTH || game->enemy_direction == SOUTH)
+//		tex_x = (int)(game->ray_enemy_hit_x * TEXTURE_SIZE);
+//	else
+//		tex_x = (int)(game->ray_enemy_hit_y * TEXTURE_SIZE);
+//	while (y_iterator < y_end)
+//	{
+//		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
+//		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
+//		if (color != rgb_to_hex(255, 0, 255))
+//			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
+//		y_iterator++;
+//	}
+//	game->hit_enemy = false;
+//}
+
+void    render_enemy_line(t_game *game)
+{
+	int line_height;
+	int y_iterator;
+	int y_end;
+	int tex_x;
+	int	tex_y;
+	int color;
+	
+	line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
+	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
+	if (y_iterator < 0)
+		y_iterator = 0;
+	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
+	if (y_end > SCREEN_HEIGHT)
+		y_end = SCREEN_HEIGHT;
+	tex_x = (int)(game->ray_enemy_hit_x * TEXTURE_SIZE);
+	while (y_iterator < y_end)
+	{
+		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
+		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
+		if (color != rgb_to_hex(255, 0, 255))
+			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
+		y_iterator++;
+	}
+	game->hit_enemy = false;
 }

@@ -61,9 +61,9 @@ void    init_game(t_game *game)
 	game->prev_door_distance = 0;
 	game->closest_enemy_distance = INFINITY;
 	game->prev_enemy_distance = 0;
-	game->enemy_hit_x = 0;
-	game->enemy_hit_y = 0;
-	game->enemy_visible = false;
+	game->ray_enemy_hit_x = 0;
+	game->ray_enemy_hit_y = 0;
+	game->hit_enemy = false;
 	game->mouse_x = 0;
 }
 
