@@ -94,8 +94,8 @@ typedef struct s_game
 	float	ray_main_angle;
 	float   ray_hit_x;
 	float   ray_hit_y;
-	float	ray_open_door_hit_x;
-	float	ray_open_door_hit_y;
+	float	ray_door_hit_x;
+	float	ray_door_hit_y;
 	float   wall_dists[SCREEN_WIDTH];
 	float	door_dists[SCREEN_WIDTH];
 	float   enemy_dists[SCREEN_WIDTH];
@@ -128,20 +128,13 @@ typedef struct s_game
 	bool    door_are_closing;
 	float   closest_door_distance;
 	float   prev_door_distance;
+	float   closest_enemy_distance;
+	float   prev_enemy_distance;
 	float   enemy_hit_x;
 	float   enemy_hit_y;
 	bool    enemy_visible;
 	int     mouse_x;
 }	t_game;
-
-typedef struct s_ray_utils
-{
-	float	radians;
-	float	shifted_x;
-	float	shifted_y;
-	float	new_x;
-	float	new_y;
-}	t_ray_utils;
 
 typedef struct  s_raycaster
 {
@@ -174,9 +167,9 @@ bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
 bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game);
 bool    is_collision_point_closed_door(t_raycaster *raycaster, t_game *game);
-void    set_wall_ray_direction(t_raycaster *raycaster, t_game *game);
-void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle);
+void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle, float *dist);
 int		get_pixel_color(void *img_ptr, int x, int y);
+
 // key_actions.c
 int	    close_game(t_game *game);
 void	init_hooks(t_game *game);
@@ -192,12 +185,10 @@ void    move_player_left(t_game *game);
 void    move_player_right(t_game *game);
 
 bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game);
-void    calc_ray_distance_door(t_raycaster *raycaster, t_game *game, float ray_angle);
-void    render_closer_wall_line(t_game *game);
-void    set_door_ray_direction(t_raycaster *raycaster, t_game *game);
+void    render_door_line(t_game *game);
 void    open_close_door(t_game *game);
-void    save_closest_door_distance(t_game *game, float dist);
 bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
+void    save_closest_distance(float dist, float *prev_dist, float *closest_dist);
 
 #endif //RAYCASTER_TEST_H

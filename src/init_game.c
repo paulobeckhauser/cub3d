@@ -35,8 +35,8 @@ void    init_game(t_game *game)
 	game->ray_main_angle = 280.0f;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
-	game->ray_open_door_hit_x = 0;
-	game->ray_open_door_hit_y = 0;
+	game->ray_door_hit_x = 0;
+	game->ray_door_hit_y = 0;
 	game->dist_idx = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
@@ -59,6 +59,8 @@ void    init_game(t_game *game)
 	game->door_are_closing = false;
 	game->closest_door_distance = INFINITY;
 	game->prev_door_distance = 0;
+	game->closest_enemy_distance = INFINITY;
+	game->prev_enemy_distance = 0;
 	game->enemy_hit_x = 0;
 	game->enemy_hit_y = 0;
 	game->enemy_visible = false;

@@ -50,7 +50,7 @@ bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game)
 		game->door_visible = true;
 		game->hit_opened_door = true;
 		game->hit_closed_door = false;
-			return (true);
+		return (true);
 	}
 	return (false);
 }
@@ -86,76 +86,22 @@ void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction)
 	}
 }
 
-//void    set_wall_ray_direction(t_raycaster *raycaster, t_game *game)
-//{
-//	if ((int)raycaster->x_iterator % (int)game->square_size == 0
-//		&& (int)raycaster->y_iterator % (int)game->square_size == 0)
-//		return ;
-//	else if ((int)raycaster->x_iterator % (int)game->square_size == 0)
-//	{
-//		if (raycaster->dir_x >= 0)
-//			game->wall_direction = EAST;
-//		else
-//			game->wall_direction = WEST;
-//	}
-//	else
-//	{
-//		if (raycaster->dir_y >= 0)
-//			game->wall_direction = SOUTH;
-//		else
-//			game->wall_direction = NORTH;
-//	}
-//}
-//
-//void    set_door_ray_direction(t_raycaster *raycaster, t_game *game)
-//{
-//	if ((int)raycaster->x_iterator % (int)game->square_size == 0
-//	    && (int)raycaster->y_iterator % (int)game->square_size == 0)
-//		return ;
-//	else if ((int)raycaster->x_iterator % (int)game->square_size == 0)
-//	{
-//		if (raycaster->dir_x >= 0)
-//			game->door_direction = EAST;
-//		else
-//			game->door_direction = WEST;
-//	}
-//	else
-//	{
-//		if (raycaster->dir_y >= 0)
-//			game->door_direction = SOUTH;
-//		else
-//			game->door_direction = NORTH;
-//	}
-//}
-
-void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle)
+void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle, float *dist)
 {
 	float raw_dist;
 	
-	raw_dist = sqrt(pow(raycaster->colis_x
+	raw_dist = sqrtf(powf(raycaster->colis_x
 	                    * game->square_size - game->player_x, 2)
-	                + pow(raycaster->colis_y
+	                + powf(raycaster->colis_y
 	                      * game->square_size - game->player_y, 2));
-	game->wall_dists[game->dist_idx] = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
+	*dist = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
 }
 
-void    calc_ray_distance_door(t_raycaster *raycaster, t_game *game, float ray_angle)
+void    save_closest_distance(float dist, float *prev_dist, float *closest_dist)
 {
-	float raw_dist;
-
-	raw_dist = sqrt(pow(raycaster->colis_x
-						* game->square_size - game->player_x, 2)
-					+ pow(raycaster->colis_y
-						  * game->square_size - game->player_y, 2));
-	game->door_dists[game->dist_idx] = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
-}
-
-void save_closest_door_distance(t_game *game, float dist)
-{
-	
-	if (dist > 0 && dist < game->prev_door_distance)
+	if (dist > 0 && dist < *prev_dist)
 	{
-		game->closest_door_distance = dist;
-		game->prev_door_distance = dist;
+		*closest_dist = dist;
+		*prev_dist = dist;
 	}
 }

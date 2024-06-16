@@ -182,7 +182,7 @@ void    render_wall_line(t_game *game)
 	}
 }
 
-void    render_closer_wall_line(t_game *game)
+void    render_door_line(t_game *game)
 {
 	int line_height;
 	int y_iterator;
@@ -199,9 +199,9 @@ void    render_closer_wall_line(t_game *game)
 	if (y_end > SCREEN_HEIGHT)
 		y_end = SCREEN_HEIGHT;
 	if (game->door_direction == NORTH || game->door_direction == SOUTH)
-		tex_x = (int)(game->ray_open_door_hit_x * TEXTURE_SIZE);
+		tex_x = (int)(game->ray_door_hit_x * TEXTURE_SIZE);
 	else
-		tex_x = (int)(game->ray_open_door_hit_y * TEXTURE_SIZE);
+		tex_x = (int)(game->ray_door_hit_y * TEXTURE_SIZE);
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
