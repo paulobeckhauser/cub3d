@@ -56,7 +56,7 @@ void	raycaster(t_game *game)
 		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_WIDTH;
 		cast_ray(game, angle_iter);
 		render_wall_line(game);
-		if (game->hit_opened_door)
+		if (game->hit_opened_door || game->hit_closed_door)
 			render_closer_wall_line(game);
 		angle_iter += angle_incr_radians;
 		if (angle_iter < 0) {
@@ -71,39 +71,53 @@ void	raycaster(t_game *game)
 void    cast_ray(t_game *game, float ray_angle)
 {
 	t_raycaster raycaster;
-
+	
 	calc_directions(&raycaster, game);
 	raycaster.x_iterator = game->player_x;
 	raycaster.y_iterator = game->player_y;
 	raycaster.speed = 1;
 	while (((raycaster.dir_x >= 0 && raycaster.x_iterator <= game->ray_new_x)
-		|| (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))
+	        || (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))
 	       && ((raycaster.dir_y >= 0 && raycaster.y_iterator <= game->ray_new_y)
-		|| (raycaster.dir_y < 0 && raycaster.y_iterator >= game->ray_new_y)))
+	           || (raycaster.dir_y < 0 && raycaster.y_iterator >= game->ray_new_y)))
 	{
 		if (is_ray_on_square_edge(&raycaster, game))
 		{
 			calc_collision_point_x_y(&raycaster, game);
 			if (raycaster.colis_x < 0 || raycaster.colis_x >= 10 || raycaster.colis_y < 0 || raycaster.colis_y >= 10)
 				return ;
-			if (is_collision_point_a_wall(&raycaster, game) || is_collision_point_a_closed_door(&raycaster, game))
+			if (is_collision_point_wall(&raycaster, game))
 			{
-				set_ray_direction(&raycaster, game);
+				set_ray_direction(&raycaster, game, &game->wall_direction);
 				calc_ray_distance(&raycaster, game, ray_angle);
-				if (game->hit_closed_door)
-					save_closest_door_distance(game, game->dists[game->dist_idx]);
 				game->ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 				return ;
 			}
-			if (is_collision_point_a_opened_door(&raycaster, game))
+			if (is_collision_point_closed_door(&raycaster, game))
 			{
-				set_closer_ray_direction(&raycaster, game);
-				calc_ray_distance_opened_door(&raycaster, game, ray_angle);
-				save_closest_door_distance(game, game->closer_dists[game->dist_idx]);
+				set_ray_direction(&raycaster, game, &game->door_direction);
+				calc_ray_distance_door(&raycaster, game, ray_angle);
+				save_closest_door_distance(game, game->door_dists[game->dist_idx]);
 				game->ray_open_door_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->ray_open_door_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 			}
+			if (is_collision_point_opened_door(&raycaster, game))
+			{
+				set_ray_direction(&raycaster, game, &game->door_direction);
+				calc_ray_distance_door(&raycaster, game, ray_angle);
+				save_closest_door_distance(game, game->door_dists[game->dist_idx]);
+				game->ray_open_door_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
+				game->ray_open_door_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
+			}
+//			if (is_collision_point_enemy(&raycaster, game))
+//			{
+//				set_ray_direction(&raycaster, game, &game->enemy_direction);
+//				calc_ray_distance_enemy(&raycaster, game, ray_angle);
+//				save_closest_enemy_distance(game);
+//				game->enemy_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
+//				game->enemy_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
+//			}
 		}
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;
 		raycaster.y_iterator += raycaster.dir_y * raycaster.speed;

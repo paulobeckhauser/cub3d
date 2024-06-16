@@ -17,22 +17,36 @@
 
 // images
 #define TEXTURE_SIZE 500
-#define NORTH_TEXTURE "./textures/wall_default_texture.xpm"
-#define SOUTH_TEXTURE "./textures/wall_default_texture.xpm"
-#define WEST_TEXTURE "./textures/wall_default_texture.xpm"
-#define EAST_TEXTURE "./textures/wall_default_texture.xpm"
-#define FLOOR_TEXTURE "./textures/floor_texture.xpm"
-#define WALL_TEXTURE "./textures/wall_texture.xpm"
-#define PLAYER_TEXTURE "./textures/player_ln_texture.xpm"
-#define	GUN_TEXTURE "./textures/desert_eagle_texture.xpm"
-#define DOOR_CLOSED_TEXTURE "./textures/door_closed_texture.xpm"
-#define DOOR_OPENED_TEXTURE "./textures/door_opened_texture.xpm"
+#define NORTH_TEXTURE "./textures/walls/wall_default_texture.xpm"
+#define SOUTH_TEXTURE "./textures/walls/wall_default_texture.xpm"
+#define WEST_TEXTURE "./textures/walls/wall_default_texture.xpm"
+#define EAST_TEXTURE "./textures/walls/wall_default_texture.xpm"
+#define FLOOR_TEXTURE "./textures/minimap/floor_texture.xpm"
+#define WALL_TEXTURE "./textures/minimap/wall_texture.xpm"
+#define PLAYER_TEXTURE "./textures/minimap/player_ln_texture.xpm"
+#define	GUN_TEXTURE "./textures/guns/desert_eagle_texture.xpm"
+#define DOOR_FRAME_4_4 "./textures/door/door_frame_4_4.xpm"
+#define DOOR_FRAME_3_4 "./textures/door/door_frame_3_4.xpm"
+#define DOOR_FRAME_2_4 "./textures/door/door_frame_2_4.xpm"
+#define DOOR_FRAME_1_4 "./textures/door/door_frame_1_4.xpm"
+#define DOOR_FRAME_0_4 "./textures/door/door_frame_0_4.xpm"
+#define DARK_PRIEST_0_9 "./texture/enemies/dark_priest_0_9"
+#define DARK_PRIEST_1_9 "./texture/enemies/dark_priest_1_9"
+#define DARK_PRIEST_2_9 "./texture/enemies/dark_priest_2_9"
+#define DARK_PRIEST_3_9 "./texture/enemies/dark_priest_3_9"
+#define DARK_PRIEST_4_9 "./texture/enemies/dark_priest_4_9"
+#define DARK_PRIEST_5_9 "./texture/enemies/dark_priest_5_9"
+#define DARK_PRIEST_6_9 "./texture/enemies/dark_priest_6_9"
+#define DARK_PRIEST_7_9 "./texture/enemies/dark_priest_7_9"
+#define DARK_PRIEST_8_9 "./texture/enemies/dark_priest_8_9"
+#define DARK_PRIEST_9_9 "./texture/enemies/dark_priest_9_9"
+
 
 // vectors
 #define SPEED 40.0f
 #define DOOR_OPEN_DISTANCE 170
 
-// directions
+// wall_directions
 #define NORTH 1
 #define EAST 2
 #define SOUTH 3
@@ -47,6 +61,10 @@
 #define LEFT_ARROW 5
 #define RIGHT_ARROW 6
 #define E 7
+
+// animation
+#define DOOR_FRAMES 5
+#define DOOR_FRAME_DURATION 1200000
 
 typedef struct	s_image {
 	void	*img;
@@ -78,12 +96,13 @@ typedef struct s_game
 	float   ray_hit_y;
 	float	ray_open_door_hit_x;
 	float	ray_open_door_hit_y;
-	float   dists[SCREEN_WIDTH];
-	float	closer_dists[SCREEN_WIDTH];
+	float   wall_dists[SCREEN_WIDTH];
+	float	door_dists[SCREEN_WIDTH];
+	float   enemy_dists[SCREEN_WIDTH];
 	int     dist_idx;
-	int     direction;
-	int     closer_direction;
-	void    *background;
+	int     wall_direction;
+	int     door_direction;
+	int     enemy_direction;
 	int     img_x;
 	int     img_y;
 	bool    keys[8];
@@ -97,15 +116,21 @@ typedef struct s_game
 	void    *wall_texture;
 	void	*player_texture;
 	void	*gun_texture;
-	void    *door_closed_texture;
-	void	*door_opened_texture;
+	void	*door_texture[5];
+	void    *door_current_texture;
+	void    *dark_priest_texture[10];
+	void    *current_dark_priest_texture;
+	long    door_animation_start_time;
 	bool    hit_closed_door;
 	bool	hit_opened_door;
 	bool    door_visible;
 	bool    door_are_opening;
+	bool    door_are_closing;
 	float   closest_door_distance;
 	float   prev_door_distance;
-	int     prev_mouse_x;
+	float   enemy_hit_x;
+	float   enemy_hit_y;
+	bool    enemy_visible;
 	int     mouse_x;
 }	t_game;
 
@@ -147,9 +172,9 @@ float	to_radians(float degrees);
 void    calc_directions(t_raycaster *raycaster, t_game *game);
 bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
-bool    is_collision_point_a_wall(t_raycaster *raycaster, t_game *game);
-bool    is_collision_point_a_closed_door(t_raycaster *raycaster, t_game *game);
-void    set_ray_direction(t_raycaster *raycaster, t_game *game);
+bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game);
+bool    is_collision_point_closed_door(t_raycaster *raycaster, t_game *game);
+void    set_wall_ray_direction(t_raycaster *raycaster, t_game *game);
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle);
 int		get_pixel_color(void *img_ptr, int x, int y);
 // key_actions.c
@@ -166,11 +191,13 @@ void    move_player_forward(t_game *game);
 void    move_player_left(t_game *game);
 void    move_player_right(t_game *game);
 
-bool    is_collision_point_a_opened_door(t_raycaster *raycaster, t_game *game);
-void    calc_ray_distance_opened_door(t_raycaster *raycaster, t_game *game, float ray_angle);
+bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game);
+void    calc_ray_distance_door(t_raycaster *raycaster, t_game *game, float ray_angle);
 void    render_closer_wall_line(t_game *game);
-void    set_closer_ray_direction(t_raycaster *raycaster, t_game *game);
+void    set_door_ray_direction(t_raycaster *raycaster, t_game *game);
 void    open_close_door(t_game *game);
 void    save_closest_door_distance(t_game *game, float dist);
+bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
+void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
 
 #endif //RAYCASTER_TEST_H

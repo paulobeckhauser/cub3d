@@ -41,9 +41,6 @@ void    rotate_player_right(t_game *game)
     render_map(game);
 }
 
-/* Need to move player and also the ray so it doesn't lose it's length.
- First calculate direction (x,y) based on the ray angle
- Can modify speed by multiplying directions */
 void    move_player_forward(t_game *game)
 {
 	game->player_x += game->vectors[game->vec_idx].x * SPEED;
@@ -57,9 +54,6 @@ void    move_player_forward(t_game *game)
 	render_map(game);
 }
 
-/* Need to move player and also the ray so it doesn't lose it's length.
- First calculate direction (x,y) based on the ray angle
- Can modify speed by multiplying directions */
 void    move_player_backward(t_game *game)
 {
 	game->player_x -= game->vectors[game->vec_idx].x * SPEED;
@@ -108,6 +102,9 @@ void    open_close_door(t_game *game)
 	
 	y = 0;
 	x = 0;
+	struct timeval  tv;
+	gettimeofday(&tv, NULL);
+	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec; // Set the start time
 	while (game->map[y])
 	{
 		x = 0;
@@ -119,11 +116,14 @@ void    open_close_door(t_game *game)
 				{
 					game->door_are_opening = true;
 					game->map[y][x] = '3';
+					game->keys[E] = false;
 					return ;
 				}
 				else if (game->map[y][x] == '3')
 				{
+					game->door_are_closing = true;
 					game->map[y][x] = '2';
+					game->keys[E] = false;
 					return ;
 				}
 			}

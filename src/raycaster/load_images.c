@@ -22,6 +22,21 @@ void load_images_from_dir(t_game *game)
 	game->wall_texture = mlx_xpm_file_to_image(game->mlx_ptr, WALL_TEXTURE, &game->img_x, &game->img_y);
 	game->player_texture = mlx_xpm_file_to_image(game->mlx_ptr, PLAYER_TEXTURE, &game->img_x, &game->img_y);
 	game->gun_texture = mlx_xpm_file_to_image(game->mlx_ptr, GUN_TEXTURE, &game->img_x, &game->img_y);
-	game->door_closed_texture = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_CLOSED_TEXTURE, &game->img_x, &game->img_y);
-	game->door_opened_texture = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_OPENED_TEXTURE, &game->img_x, &game->img_y);
+	game->door_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_4_4, &game->img_x, &game->img_y);
+	game->door_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_3_4, &game->img_x, &game->img_y);
+	game->door_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_2_4, &game->img_x, &game->img_y);
+	game->door_texture[3] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_1_4, &game->img_x, &game->img_y);
+	game->door_texture[4] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_0_4, &game->img_x, &game->img_y);
+	game->door_current_texture = game->door_texture[0];
+	game->dark_priest_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_0_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_1_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_2_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[3] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_3_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[4] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_4_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[5] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_5_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[6] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_6_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[7] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_7_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[8] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_8_9, &game->img_x, &game->img_y);
+	game->dark_priest_texture[9] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_9_9, &game->img_x, &game->img_y);
+	game->current_dark_priest_texture = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_0_9, &game->img_x, &game->img_y);
 }

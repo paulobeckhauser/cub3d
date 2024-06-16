@@ -32,7 +32,7 @@ void    init_game(t_game *game)
 	mark_player(game);
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
-	game->ray_main_angle = 290.0f;
+	game->ray_main_angle = 280.0f;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
 	game->ray_open_door_hit_x = 0;
@@ -40,31 +40,28 @@ void    init_game(t_game *game)
 	game->dist_idx = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
-		game->dists[game->dist_idx] = 0;
-		game->closer_dists[game->dist_idx++] = 0;
+		game->wall_dists[game->dist_idx] = 0;
+		game->door_dists[game->dist_idx] = 0;
+		game->enemy_dists[game->dist_idx++] = 0;
 	}
 	game->dist_idx = 0;
-	game->direction = 0;
-	game->closer_direction = 0;
+	game->wall_direction = 0;
+	game->door_direction = 0;
+	game->enemy_direction = 0;
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);
-	game->north_texture = NULL;
-	game->south_texture = NULL;
-	game->west_texture = NULL;
-	game->east_texture = NULL;
-	game->floor_texture = NULL;
-	game->wall_texture = NULL;
-	game->player_texture = NULL;
-	game->gun_texture = NULL;
-	game->door_closed_texture = NULL;
-	game->door_opened_texture = NULL;
+	game->door_animation_start_time = 0;
 	game->hit_closed_door = false;
 	game->hit_opened_door = false;
 	game->door_visible = false;
 	game->door_are_opening = false;
-	game->closest_door_distance = 0;
-	game->prev_mouse_x = SCREEN_WIDTH / 2;
+	game->door_are_closing = false;
+	game->closest_door_distance = INFINITY;
+	game->prev_door_distance = 0;
+	game->enemy_hit_x = 0;
+	game->enemy_hit_y = 0;
+	game->enemy_visible = false;
 	game->mouse_x = 0;
 }
 

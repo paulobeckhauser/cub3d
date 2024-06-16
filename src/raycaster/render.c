@@ -150,7 +150,7 @@ void    render_wall_line(t_game *game)
 	int	tex_y;
 	int color;
 	
-	line_height = DRAWING_SCALE / (game->dists[game->dist_idx] + 1);
+	line_height = DRAWING_SCALE / (game->wall_dists[game->dist_idx] + 1);
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	if (y_iterator < 0)
 		y_iterator = 0;
@@ -158,7 +158,7 @@ void    render_wall_line(t_game *game)
 	if (y_end > SCREEN_HEIGHT)
 		y_end = SCREEN_HEIGHT;
 	// Calculate tex_x based on where the ray hit the wall block
-	if (game->direction == NORTH || game->direction == SOUTH)
+	if (game->wall_direction == NORTH || game->wall_direction == SOUTH)
 		tex_x = (int)(game->ray_hit_x * TEXTURE_SIZE);
 	else
 		tex_x = (int)(game->ray_hit_y * TEXTURE_SIZE);
@@ -166,15 +166,15 @@ void    render_wall_line(t_game *game)
 	{
 		// Calculate tex_y based on the current y_iterator value
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		if (game->hit_closed_door)
-			color = get_pixel_color(game->door_closed_texture, tex_x, tex_y);
-		else if (game->direction == NORTH)
+//		if (game->hit_closed_door)
+//			color = get_pixel_color(game->door_current_texture, tex_x, tex_y);
+		if (game->wall_direction == NORTH)
 			color = get_pixel_color(game->north_texture, tex_x, tex_y);
-		else if (game->direction == SOUTH)
+		else if (game->wall_direction == SOUTH)
 			color = get_pixel_color(game->south_texture, tex_x, tex_y);
-		else if (game->direction == WEST)
+		else if (game->wall_direction == WEST)
 			color = get_pixel_color(game->west_texture, tex_x, tex_y);
-		else if (game->direction == EAST)
+		else if (game->wall_direction == EAST)
 			color = get_pixel_color(game->east_texture, tex_x, tex_y);
 		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
@@ -191,24 +191,25 @@ void    render_closer_wall_line(t_game *game)
 	int	tex_y;
 	int color;
 	
-	line_height = DRAWING_SCALE / (game->closer_dists[game->dist_idx] + 1);
+	line_height = DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1);
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	if (y_iterator < 0)
 		y_iterator = 0;
 	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
 	if (y_end > SCREEN_HEIGHT)
 		y_end = SCREEN_HEIGHT;
-	if (game->closer_direction == NORTH || game->closer_direction == SOUTH)
+	if (game->door_direction == NORTH || game->door_direction == SOUTH)
 		tex_x = (int)(game->ray_open_door_hit_x * TEXTURE_SIZE);
 	else
 		tex_x = (int)(game->ray_open_door_hit_y * TEXTURE_SIZE);
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		color = get_pixel_color(game->door_opened_texture, tex_x, tex_y);
-		if (color != rgb_to_hex(255, 0, 255) && game->hit_opened_door)
+		color = get_pixel_color(game->door_current_texture, tex_x, tex_y);
+		if (color != rgb_to_hex(255, 0, 255) && (game->hit_opened_door || game->hit_closed_door))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
 	}
 	game->hit_opened_door = false;
+	game->hit_closed_door = false;
 }

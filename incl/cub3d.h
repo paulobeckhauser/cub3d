@@ -18,7 +18,7 @@
 
 typedef struct s_data
 {
-	// Texture for each cardinal direction
+	// Texture for each cardinal wall_direction
 	char *north_texture;
 	char *south_texture;
 	char *west_texture;
