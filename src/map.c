@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:16:09 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/14 17:42:15 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:54:40 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool check_if_empty_line(char *str)
     i = 0;
     while(str[i])
     {
-        if (str[i] == ' ')
+        if (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
             i++;
         else
             return (false);
@@ -182,24 +182,63 @@ bool check_map_element_input(t_data *data)
     
 // }
 
+bool check_empty_line_map(t_data *data)
+{
+    int i;
+
+    i = data->line_start_map_position;
+
+    while(i < data->line_end_map_position)
+    {
+        // printf("%s\n", data->cub_file[i]);
+        if (check_if_empty_line(data->cub_file[i]))
+        {
+            replace_error_message(data, "Map element in wrong format");
+            return (false);
+        }
+        i++;
+    }
+
+    // printf("%d\n", data->line_start_map_position);
+    // printf("%d\n", data->line_end_map_position);
+    return (true);
+}
+
+void print_map(t_data *data)
+{
+    int i;
+
+    i = 0;
+    while(data->map_element[i])
+    {
+        printf("%s\n", (data->map_element[i]));
+        i++;
+    }
+
+    // data->line_start_map_position
+}
+
 bool store_map(t_data *data)
 {
    
     store_first_line_map_element(data);
+
+
+
     store_last_line_map_element(data);
 
-    if (!store_map_element(data))
+    if (!store_map_element(data) || !check_map_last_element(data)
+        || !check_map_element_input(data) || !check_empty_line_map(data))
         return(false);
 
-    if (!check_map_last_element(data))
-        return (false);
 
-    if (!check_map_element_input(data))
-        return (false);
+
     
-    // if (!store_map_element(data) || !check_map_last_element(data)
-    //     || !check_map_element_input(data))
-    //     return (false);
+
+    
+    // print_map(data);
+
+
 
     return (true); 
 }
