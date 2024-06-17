@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:16:09 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/17 11:19:11 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:03:31 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,12 +218,27 @@ void print_map(t_data *data)
 bool check_wall(t_data *data)
 {
     int i;
+    int j;
 
     i = 0;
-
+    j = 0;
     while (data->map_element[i])
     {
-        printf("%s\n", data->map_element[i]);
+        j = 0;
+        while (data->map_element[i][j])
+        {
+            // first line
+            if (i == 0)
+            {
+                if (data->map_element[i][j] != 1)
+                {
+                    replace_error_message(data, "Map not surrounded by walls");
+                    return(false);
+                }
+            }
+            j++;
+            // printf("%c", data->map_element[i][j]);
+        }
         i++;
     }
 
@@ -248,7 +263,8 @@ bool store_map(t_data *data)
 
 
 
-    check_wall(data);
+    if (!check_wall(data))
+        return (false);
 
     
     // print_map(data);
