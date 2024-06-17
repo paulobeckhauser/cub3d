@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:16:09 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/17 10:54:40 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:19:11 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,6 @@ bool check_map_element_input(t_data *data)
     return (true);
 }
 
-// bool check_wall(t_data *data)
-// {
-    
-// }
 
 bool check_empty_line_map(t_data *data)
 {
@@ -218,6 +214,25 @@ void print_map(t_data *data)
     // data->line_start_map_position
 }
 
+
+bool check_wall(t_data *data)
+{
+    int i;
+
+    i = 0;
+
+    while (data->map_element[i])
+    {
+        printf("%s\n", data->map_element[i]);
+        i++;
+    }
+
+
+    
+    return (true);
+}
+
+
 bool store_map(t_data *data)
 {
    
@@ -233,7 +248,7 @@ bool store_map(t_data *data)
 
 
 
-    
+    check_wall(data);
 
     
     // print_map(data);
