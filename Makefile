@@ -20,14 +20,11 @@ LIBFT_DIR = libs/libft
 
 SRC := 			main.c \
 				parser.c \
-				ft_free.c \
 				hex_color.c \
 				init_vars.c \
 				checker_utils.c \
-				store_input.c \
 				cub_file.c \
 				free_variables_error.c \
-				store_map.c \
 				surfaces.c \
 				textures.c \
 				surfaces_colors.c \

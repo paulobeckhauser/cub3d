@@ -15,7 +15,5 @@ int parser(char *str)
             || !store_textures(&data) || !store_map(&data))
         return(free_variables_error(&data));
 
-
-
     return (0);
 }

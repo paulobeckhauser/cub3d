@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:24:26 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 16:53:05 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:53:23 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,14 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 	int		blue;
 
 	array = ft_split(str, ',');
-	// if (!array)
-	// {
-	// 	replace_error_message(data, "Memory allocation failed");
-	// 	return (false);
-	// }
-
 	red = 0;
 	green = 0;
 	blue = 0;
-	
 	if (!array[0] || !array[1] || !array[2])
 	{
 		replace_error_message(data, "RGB in wrong format");
-		return(false);
+		return (false);
 	}
-
-	
-
 	if (ft_strcmp(array[0], "0") == 0)
 		red = 0;
 	else
@@ -55,10 +45,9 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 		if (red <= 0 || red > 255)
 		{
 			replace_error_message(data, "RGB in wrong format");
-			return(false);
-		}	
+			return (false);
+		}
 	}
-			
 	if (ft_strcmp(array[1], "0") == 0)
 		green = 0;
 	else
@@ -67,8 +56,8 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 		if (green <= 0 || green > 255)
 		{
 			replace_error_message(data, "RGB in wrong format");
-			return(false);
-		}	
+			return (false);
+		}
 	}
 	if (ft_strcmp(array[2], "0") == 0)
 		blue = 0;
@@ -78,11 +67,9 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 		if (blue <= 0 || blue > 255)
 		{
 			replace_error_message(data, "RGB in wrong format");
-			return(false);
+			return (false);
 		}
-
 	}
-	
 	if (surf == 'F')
 		data->floor_color = rgb_to_hex(red, green, blue);
 	else if (surf == 'C')
