@@ -28,12 +28,12 @@ bool check_xpm_extension(t_data *data, char *str)
 
 bool check_input_texture(t_data *data)
 {  
-    if(data->n_text_count > 1)
+    if(data->text_count_n > 1)
     {
 		replace_error_message(data, "More than 1 input for North Texture");
 		return (false);
 	}
-	else if (data->n_text_count < 1)
+	else if (data->text_count_n < 1)
 	{
 		replace_error_message(data,
 			"No input for North Texture or in wrong format");
@@ -115,7 +115,7 @@ bool store_textures(t_data *data)
                     replace_error_message(data, "Texture in wrong format");
                     return (false);
                 }
-                data->n_text_count++;
+                data->text_count_n++;
                 if (!array[1])
                 {
                     replace_error_message(data, "No input for North Texture");

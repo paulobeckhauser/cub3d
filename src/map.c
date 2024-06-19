@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:54:43 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 17:15:28 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 20:44:55 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void store_first_line_map_element(t_data *data)
         if (check_if_map_element(data->cub_file[i]) 
             && !check_if_empty_line(data->cub_file[i]))
         {
-            // printf("%s\n", data->cub_file[i]);
             data->line_start_map_position = i;
-            // printf("%d\n", i);
             break;
         }
         i++;
@@ -70,22 +68,17 @@ void store_last_line_map_element(t_data *data)
     int i;
 
     i = data->line_start_map_position;
-    // printf("%d\n", i);
     while(data->cub_file[i])
     {
-        // printf("%s\n", data->cub_file[i]);
         if (check_if_empty_line(data->cub_file[i]))
         {
             data->line_end_map_position = i - 1;
-            // printf("%d\n", data->line_end_map_position);
             break;
         }
         i++;
         
     }
     data->line_end_map_position = i - 1;
-    // printf("%d\n", data->line_end_map_position);
-    
 }
 
 bool store_map_element(t_data *data)
@@ -166,7 +159,6 @@ bool check_map_element_input(t_data *data)
                 && data->cub_file[i][j] != 'W' && (data->cub_file[i][j] < 9 
                 || data->cub_file[i][j] > 13))
             {
-                // printf("The char is: %c\n", data->cub_file[i][j]);
                 replace_error_message(data, "Map element in wrong format");
                 return (false);
             }
@@ -548,7 +540,7 @@ bool check_player(t_data *data)
 {
     if (!count_player(data))
         return(false);
-	replace_player_for_floor(data);		
+    replace_player_for_floor(data);		
     return (true);
 }
 
@@ -557,21 +549,10 @@ bool store_map(t_data *data)
 {
    
     store_first_line_map_element(data);
-
-
-
     store_last_line_map_element(data);
-
     if (!store_map_element(data) || !check_map_last_element(data)
-        || !check_map_element_input(data) || !check_empty_line_map(data))
+        || !check_map_element_input(data) || !check_empty_line_map(data)
+        || !check_player(data) || !check_surround(data))
         return(false);
-
-
-    if (!check_player(data))
-        return (false);
-
-
-    if (!check_surround(data))
-        return (false);
     return (true); 
 }
