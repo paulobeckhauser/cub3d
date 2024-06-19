@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:16:09 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/17 19:03:31 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:04:46 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,29 +219,263 @@ bool check_wall(t_data *data)
 {
     int i;
     int j;
+    int col;
 
     i = 0;
     j = 0;
+    col = 0;
     while (data->map_element[i])
     {
-        j = 0;
-        while (data->map_element[i][j])
+        if (i == 0 || i == size_array(data->map_element) - 1)
         {
-            // first line
-            if (i == 0)
+            j = 0;
+            while (data->map_element[i][j])
             {
-                if (data->map_element[i][j] != 1)
+                if (data->map_element[i][j] == '1')
+                {
+                    j++;
+                    continue;
+                }
+                else if (data->map_element[i][j] == ' ' 
+                    || (data->map_element[i][j] >= 9 
+                    && data->map_element[i][j] <= 13))
+                {
+                    if (i == 0)
+                    {   
+                        col = i;
+
+                        while(data->map_element[col][j])
+                        {
+                            if (data->map_element[col][j] == '1')
+                                break;
+                            else if (data->map_element[col][j] == ' ')
+                            {
+                                col++;
+                                continue;
+                            }
+                            else
+                            {
+                                replace_error_message(data, "Map not surrounded by walls");
+                                return(false);
+                            }
+                            col++;
+                        }
+                        // while(data->map_element[i][j])
+
+                        // while()
+                    }
+                    if (i == size_array(data->map_element) - 1)
+                    {
+                        col = i;
+
+                        while(data->map_element[col][j])
+                        {
+                            if (data->map_element[col][j] == '1')
+                                break;
+                            else if (data->map_element[col][j] == ' ')
+                            {
+                                col--;
+                                continue;
+                            }
+                            else
+                            {
+                                replace_error_message(data, "Map not surrounded by walls");
+                                return(false);
+                            }
+                            col--;
+                        }
+                    }
+                    
+                }
+
+                else
                 {
                     replace_error_message(data, "Map not surrounded by walls");
                     return(false);
                 }
+                j++;
             }
-            j++;
-            // printf("%c", data->map_element[i][j]);
         }
+
+        // if (i == size_array(data->map_element) - 1)
+        // {
+        //     printf("%s\n", data->map_element[i]);
+        // }
+    
         i++;
     }
 
+
+    
+    return (true);
+}
+
+static bool flood_fill(char **map, int x, int y, char target, char new)
+{
+    size_t new_y;
+
+    bool up;
+    bool down;
+    bool right;
+    bool left;
+
+    new_y = (size_t)y;
+    if (x < 0 || x >= size_array(map) 
+        || y < 0 || new_y >= ft_strlen(map[x]))
+        return (false);
+
+    
+    if (map[x][y] == ' ')
+        return (false);
+
+    if (map[x][y] != target || map[x][y] == new)
+        return (true);
+
+    map[x][y] = new;
+
+    down = flood_fill(map, x + 1, y, target, new);
+    up = flood_fill(map, x - 1, y, target, new);
+    right = flood_fill(map, x, y + 1, target, new);
+    left = flood_fill(map, x, y - 1, target, new);
+
+    return (up && down && right && left);
+}
+
+
+
+bool check_surround(t_data *data)
+{
+    int i;
+
+    // i = 0;
+    // while(data->map_element[i])
+    // {
+    //     printf("%s\n", data->map_element[i]);
+    //     i++;
+    // }
+
+    char **map_backup;
+
+    map_backup = malloc((size_array(data->map_element)) * sizeof(char *));
+
+    i = 0;
+    while (data->map_element[i])
+    {
+        map_backup[i] = ft_strdup(data->map_element[i]);
+        i++;
+    }
+    // map_backup[i] = NULL;
+    
+
+    bool all_surrounded;
+
+    all_surrounded = true;
+
+    i = 0;
+
+    int j;
+
+    j = 0;
+
+    // while(map_backup[i])
+    // {
+    //     printf("%s\n", map_backup[i]);
+    //     // flood_fill(map_backup, i, j, '0', 'X');
+    //     i++;
+    // }
+
+    
+
+    while (map_backup[i])
+    {
+        j = 0;
+        while (map_backup[i][j])
+        {
+           if (map_backup[i][j] == '0')
+           {
+            if (!flood_fill(map_backup, i, j, '0', 'X'))
+            {
+                replace_error_message(data, "Map not surrounded");
+                all_surrounded = false;
+                
+            }
+           }
+           j++;
+        }
+        i++;
+        
+    }
+
+    
+    // while (data->map_element[i])
+    // {
+    //     j = 0;
+    //     while (data->map_element[i][j])
+    //     {
+    //        if (data->map_element[i][j] == '0')
+    //        {
+    //         if (!flood_fill(data->map_element, i, j, '0', 'X'))
+    //         {
+    //             replace_error_message(data, "Map not surrounded");
+    //             all_surrounded = false;
+                
+    //         }
+    //        }
+    //        j++;
+    //     }
+    //     i++;
+        
+    // }
+
+    // printf("\n\nMap after Flood Fill:\n");
+    // i = 0;
+    // while (data->map_element[i]) {
+    //     printf("%s\n", data->map_element[i]);
+    //     i++;
+    // }
+    free_2d_array(map_backup);
+    // Return true if all regions are surrounded by '1's or 'X's, false otherwise
+    return all_surrounded;
+
+
+    // i = 0;
+
+    // // while (i <)
+    // int j;
+
+    // j = 0;
+
+    // while(data->map_element[i])
+    // {
+    //     while(data->map_element[i][j])
+    //     {
+    //         if (data->map_element[i][j] == '0')
+    //             flood_fill(data->map_element, i, j, '0', 'X');
+    //         j++;
+    //     }
+
+    //     i++;
+    // }
+
+    
+    
+    
+    
+    // flood_fill(data->map_element, 1, 1, '0', 'X');
+
+    // printf("\n\n\n\n");
+
+    // i = 0;
+    // while(data->map_element[i])
+    // {
+    //     printf("%s\n", data->map_element[i]);
+    //     i++;
+    // }
+
+    
+
+
+    
 
     
     return (true);
@@ -262,14 +496,11 @@ bool store_map(t_data *data)
         return(false);
 
 
-
-    if (!check_wall(data))
+    if (!check_surround(data))
         return (false);
 
     
-    // print_map(data);
-
-
+    print_map(data);
 
     return (true); 
 }

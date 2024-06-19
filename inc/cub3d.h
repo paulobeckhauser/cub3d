@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:21:57 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/13 12:06:02 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:55:28 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 # include <stdbool.h>
 # include <errno.h>
 # include <string.h>
+
+
+typedef struct s_point
+{
+	int x;
+	int y;
+} t_point;
 
 typedef struct s_player
 {
@@ -54,6 +61,7 @@ typedef struct s_data
 	int			ceiling_color;
 	bool		ceiling_color_exist;
 	char		**map_element;
+	// char 		**map_element_check;
 	int			number_lines_map_element;
 	bool		map_error;
 	char		*map_error_message;
