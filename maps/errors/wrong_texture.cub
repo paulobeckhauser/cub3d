@@ -1,0 +1,11 @@
+WE             ./src/textures/Square.xpm
+F                   220,100,0
+EA      ./src/textures/Square.xpm
+                NO              ./src/textures/Square.xpm
+        SO ./src/textures/Square.xpm a
+C               225,30,0 
+
+111
+111
+111
+

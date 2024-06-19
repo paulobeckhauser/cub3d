@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 18:16:09 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 15:04:46 by pabeckha         ###   ########.fr       */
+/*   Created: 2024/06/19 16:54:43 by pabeckha          #+#    #+#             */
+/*   Updated: 2024/06/19 17:15:28 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,7 +356,7 @@ bool check_surround(t_data *data)
 
     char **map_backup;
 
-    map_backup = malloc((size_array(data->map_element)) * sizeof(char *));
+    map_backup = malloc((size_array(data->map_element) + 1) * sizeof(char *));
 
     i = 0;
     while (data->map_element[i])
@@ -364,7 +364,7 @@ bool check_surround(t_data *data)
         map_backup[i] = ft_strdup(data->map_element[i]);
         i++;
     }
-    // map_backup[i] = NULL;
+    map_backup[i] = NULL;
     
 
     bool all_surrounded;
@@ -481,6 +481,77 @@ bool check_surround(t_data *data)
     return (true);
 }
 
+static bool count_player(t_data *data)
+{
+    int i;
+    int j;
+    int count_player;
+
+    i = 0;
+    j= 0;
+    count_player = 0;
+    while (data->map_element[i])
+    {
+		// printf("%s\n", data->map_element[i]);
+		j = 0;
+		while(data->map_element[i][j])
+		{
+			if (data->map_element[i][j] == 'N'
+				|| data->map_element[i][j] == 'S'
+				|| data->map_element[i][j] == 'W'
+				|| data->map_element[i][j] == 'E')
+			{
+				count_player++;
+			}
+			j++;
+		}
+        i++;
+    }
+	if (count_player == 0)
+	{
+		replace_error_message(data, "No player in the map");
+		return (false);
+	}
+	else if(count_player > 1)
+	{
+		replace_error_message(data, "More than one player in the map");
+		return (false);
+	}
+    return (true);
+}
+
+static void replace_player_for_floor(t_data *data)
+{
+	int i;
+    int j;
+
+    i = 0;
+    j= 0;
+    while (data->map_element[i])
+    {
+       while(data->map_element[i][j])
+       {
+		if (data->map_element[i][j] == 'N'
+		|| data->map_element[i][j] == 'S'
+		|| data->map_element[i][j] == 'W'
+		|| data->map_element[i][j] == 'E')
+			data->map_element[i][j] = '0';
+        j++;
+       }
+        i++;
+    }
+}
+
+
+
+bool check_player(t_data *data)
+{
+    if (!count_player(data))
+        return(false);
+	replace_player_for_floor(data);		
+    return (true);
+}
+
 
 bool store_map(t_data *data)
 {
@@ -496,11 +567,11 @@ bool store_map(t_data *data)
         return(false);
 
 
-    if (!check_surround(data))
+    if (!check_player(data))
         return (false);
 
-    
-    print_map(data);
 
+    if (!check_surround(data))
+        return (false);
     return (true); 
 }

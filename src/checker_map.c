@@ -417,43 +417,43 @@ bool check_player_dir(char c)
 
 
 
-bool check_player(t_data *data)
-{
-    int i;
-    int line_map_elem;
-    // int first_line_map_elem;
-    int last_line_map_elem;
-    int count_player;
+// bool check_player(t_data *data)
+// {
+//     int i;
+//     int line_map_elem;
+//     // int first_line_map_elem;
+//     int last_line_map_elem;
+//     int count_player;
 
-    i = 0;
-    count_player = 0;
-    line_map_elem =  data->line_start_map_position;
-    // first_line_map_elem = data->line_start_map_position;
-    last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
-    while(line_map_elem <= last_line_map_elem)
-    {
-        i = 0;
-        while(data->cub_file[line_map_elem][i])
-        {
-        if (check_player_dir(data->cub_file[line_map_elem][i]))
-                count_player++;
-            i++;
-        }
-        line_map_elem++;
-    }
-    if (count_player == 0)
-    {
-        replace_error_message(data, "No player in map element");
-        return(false);
-    }
-    else if (count_player > 1)
-    {
-        replace_error_message(data, "More than one player in map element");
-        return(false);
-    }
+//     i = 0;
+//     count_player = 0;
+//     line_map_elem =  data->line_start_map_position;
+//     // first_line_map_elem = data->line_start_map_position;
+//     last_line_map_elem = line_map_elem + data->number_lines_map_element - 1;
+//     while(line_map_elem <= last_line_map_elem)
+//     {
+//         i = 0;
+//         while(data->cub_file[line_map_elem][i])
+//         {
+//         if (check_player_dir(data->cub_file[line_map_elem][i]))
+//                 count_player++;
+//             i++;
+//         }
+//         line_map_elem++;
+//     }
+//     if (count_player == 0)
+//     {
+//         replace_error_message(data, "No player in map element");
+//         return(false);
+//     }
+//     else if (count_player > 1)
+//     {
+//         replace_error_message(data, "More than one player in map element");
+//         return(false);
+//     }
 
-    return (true);
-}
+//     return (true);
+// }
 
 
 

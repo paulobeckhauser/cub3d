@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:21:57 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 14:55:28 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:09:08 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	print_returned_map(t_data *data);
 bool	check_floor_texture_format(t_data *data);
 bool	check_player(t_data *data);
 bool 	check_player_dir(char c);
-void 	replace_player_for_floor(t_data *data, int j);
+// void 	replace_player_for_floor(t_data *data, int j);
 bool 	check_empty_line_map_element (t_data *data);
 // bool 	check_textures(t_data *data);
 // bool 	store_textures(t_data *data);

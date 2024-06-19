@@ -102,18 +102,18 @@ void store_player_info(t_data *data, char *str, int i)
 
 
 
-void replace_player_for_floor(t_data *data, int j)
-{
-    int g;
+// void replace_player_for_floor(t_data *data, int j)
+// {
+//     int g;
 
-    g = 0;
-    while (data->map_element[j][g])
-    {
-        if (check_player_dir(data->map_element[j][g]))
-            data->map_element[j][g] = '0';
-        g++;
-    }
-}
+//     g = 0;
+//     while (data->map_element[j][g])
+//     {
+//         if (check_player_dir(data->map_element[j][g]))
+//             data->map_element[j][g] = '0';
+//         g++;
+//     }
+// }
 
 // bool store_map_element(t_data *data)
 // {
