@@ -98,10 +98,23 @@ bool store_textures(t_data *data)
 			return (false);
 		}
 
+
+        // printf("%d\n", size_array(array));
+        // if (size_array(array) != 2)
+		// {
+		// 	replace_error_message(data, "Texture in wrong format");
+		// 	return (false);
+		// }
+
         if (array[0])
         {
             if (ft_strcmp(array[0], "NO") == 0)
             {
+                if (size_array(array) != 2)
+                {
+                    replace_error_message(data, "Texture in wrong format");
+                    return (false);
+                }
                 data->n_text_count++;
                 if (!array[1])
                 {
@@ -117,6 +130,11 @@ bool store_textures(t_data *data)
             
             else if (ft_strcmp(array[0], "SO") == 0)
             {
+                if (size_array(array) != 2)
+                {
+                    replace_error_message(data, "Texture in wrong format");
+                    return (false);
+                }
                 data->s_text_count++;
 
                 if (!array[1])
@@ -133,6 +151,11 @@ bool store_textures(t_data *data)
             
             else if (ft_strcmp(array[0], "WE") == 0)
             {
+                if (size_array(array) != 2)
+                {
+                    replace_error_message(data, "Texture in wrong format");
+                    return (false);
+                }
                 data->w_text_count++;
 
                 if (!array[1])
@@ -147,6 +170,11 @@ bool store_textures(t_data *data)
             }
             else if (ft_strcmp(array[0], "EA") == 0)
             {
+                if (size_array(array) != 2)
+                {
+                    replace_error_message(data, "Texture in wrong format");
+                    return (false);
+                }
                 data->e_text_count++;
 
                 if (!array[1])
