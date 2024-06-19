@@ -39,34 +39,34 @@ bool check_input_texture(t_data *data)
 			"No input for North Texture or in wrong format");
 		return (false);
 	}
-    else if (data->s_text_count > 1)
+    else if (data->text_count_s > 1)
 	{
 		replace_error_message(data, "More than 1 input for South Texture");
 		return (false);
 	}
-    else if (data->s_text_count < 1)
+    else if (data->text_count_s < 1)
 	{
 		replace_error_message(data,
 			"No input for South Texture or in wrong format");
 		return (false);
 	}
-        else if (data->w_text_count > 1)
+        else if (data->text_count_w > 1)
 	{
 		replace_error_message(data, "More than 1 input for West Texture");
 		return (false);
 	}
-    else if (data->w_text_count < 1)
+    else if (data->text_count_w < 1)
 	{
 		replace_error_message(data,
 			"No input for West Texture or in wrong format");
 		return (false);
 	}
-    else if (data->e_text_count > 1)
+    else if (data->text_count_e > 1)
 	{
 		replace_error_message(data, "More than 1 input for East Texture");
 		return (false);
 	}
-    else if (data->e_text_count < 1)
+    else if (data->text_count_e < 1)
 	{
 		replace_error_message(data,
 			"No input for East Texture or in wrong format");
@@ -124,7 +124,7 @@ bool store_textures(t_data *data)
                 else if (!check_xpm_extension(data, array[1]))
                     return (false);
                 else
-                    data->north_texture = ft_strdup(array[1]);
+                    data->texture_north = ft_strdup(array[1]);
             }
             
             
@@ -135,7 +135,7 @@ bool store_textures(t_data *data)
                     replace_error_message(data, "Texture in wrong format");
                     return (false);
                 }
-                data->s_text_count++;
+                data->text_count_s++;
 
                 if (!array[1])
                 {
@@ -145,7 +145,7 @@ bool store_textures(t_data *data)
                 else if (!check_xpm_extension(data, array[1]))
                     return (false);
                 else
-                    data->south_texture = ft_strdup(array[1]);
+                    data->texture_south = ft_strdup(array[1]);
             }
             
             
@@ -156,7 +156,7 @@ bool store_textures(t_data *data)
                     replace_error_message(data, "Texture in wrong format");
                     return (false);
                 }
-                data->w_text_count++;
+                data->text_count_w++;
 
                 if (!array[1])
                 {
@@ -166,7 +166,7 @@ bool store_textures(t_data *data)
                 else if (!check_xpm_extension(data, array[1]))
                     return (false);
                 else
-                    data->west_texture = ft_strdup(array[1]);
+                    data->texture_west = ft_strdup(array[1]);
             }
             else if (ft_strcmp(array[0], "EA") == 0)
             {
@@ -175,7 +175,7 @@ bool store_textures(t_data *data)
                     replace_error_message(data, "Texture in wrong format");
                     return (false);
                 }
-                data->e_text_count++;
+                data->text_count_e++;
 
                 if (!array[1])
                  {
@@ -185,7 +185,7 @@ bool store_textures(t_data *data)
                 else if (!check_xpm_extension(data, array[1]))
                     return (false);
                 else
-                    data->east_texture = ft_strdup(array[1]);
+                    data->texture_east = ft_strdup(array[1]);
             }
 
         }

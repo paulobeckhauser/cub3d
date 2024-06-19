@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:21:57 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 20:48:23 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 20:59:26 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,26 @@ typedef struct s_player
 
 typedef struct s_data
 {
+	int			color_ceiling;
+	int			color_ceiling_count;
+	int			color_floor;
+	int			color_floor_count;
 	char		**cub_file;
-	char		*north_texture;
-	char		*south_texture;
-	char		*west_texture;
-	char		*east_texture;
-	int			text_count_n;
-	int			s_text_count;
-	int			w_text_count;
-	int			e_text_count;
-	int			c_surf_count;
-	int			number_lines_map;
-	int			floor_color;
-	int			ceiling_color;
-	int			ceiling_color_count;
-	int			floor_color_count;
-	char		**map_element;
-	int			number_lines_map_element;
-	char		*map_error_message;
 	int			line_start_map_position;
 	int			line_end_map_position;
+	char		**map_element;
+	char		*map_error_message;
+	int			number_lines_map;
+	int			number_lines_map_element;
 	t_player	*player;
+	int			text_count_n;
+	int			text_count_s;
+	int			text_count_w;
+	int			text_count_e;
+	char		*texture_north;
+	char		*texture_south;
+	char		*texture_west;
+	char		*texture_east;
 }				t_data;
 
 bool			check_extension(t_data *data, char *str, char *extension);

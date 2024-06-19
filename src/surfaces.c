@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:15:35 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/12 17:30:57 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 20:54:56 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 bool	check_input_surfaces(t_data *data)
 {
-	if (data->floor_color_count > 1)
+	if (data->color_floor_count > 1)
 	{
 		replace_error_message(data, "More than 1 input for floor color");
 		return (false);
 	}
-	else if (data->floor_color_count < 1)
+	else if (data->color_floor_count < 1)
 	{
 		replace_error_message(data,
 			"No input for floor color or in wrong format");
 		return (false);
 	}
-	if (data->ceiling_color_count > 1)
+	if (data->color_ceiling_count > 1)
 	{
 		replace_error_message(data, "More than 1 input for ceiling color");
 		return (false);
 	}
-	else if (data->ceiling_color_count < 1)
+	else if (data->color_ceiling_count < 1)
 	{
 		replace_error_message(data,
 			"No input for ceiling color or in wrong format");

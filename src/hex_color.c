@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:24:26 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 17:53:23 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:06:04 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 		}
 	}
 	if (surf == 'F')
-		data->floor_color = rgb_to_hex(red, green, blue);
+		data->color_floor = rgb_to_hex(red, green, blue);
 	else if (surf == 'C')
-		data->ceiling_color = rgb_to_hex(red, green, blue);
+		data->color_ceiling = rgb_to_hex(red, green, blue);
 	else
 		return (false);
 	free_2d_array(array);
@@ -87,12 +87,19 @@ bool	clean_store_hex_color(t_data *data, int i, char surf)
 	cleaned_string = NULL;
 	cleaned_string = clean_str_color(data, i, surf);
 	if (!cleaned_string)
+	{
+		free(cleaned_string);
 		return (false);
+	}
 	if (!store_hex_color(cleaned_string, data, surf))
+	{
+		free(cleaned_string);
 		return (false);
+	}
 	if (surf == 'F')
-		data->floor_color_count++;
+		data->color_floor_count++;
 	else if (surf == 'C')
-		data->ceiling_color_count++;
+		data->color_ceiling_count++;
+	free(cleaned_string);
 	return (true);
 }
