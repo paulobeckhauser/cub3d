@@ -23,12 +23,10 @@ SRC := 			main.c \
 				ft_free.c \
 				hex_color.c \
 				init_vars.c \
-				check_surface.c \
 				checker_utils.c \
 				store_input.c \
 				cub_file.c \
 				free_variables_error.c \
-				checker_map.c \
 				store_map.c \
 				surfaces.c \
 				textures.c \
