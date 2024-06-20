@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:54:43 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 20:44:55 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/20 06:48:05 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -518,18 +518,21 @@ static void replace_player_for_floor(t_data *data)
     int j;
 
     i = 0;
-    j= 0;
+    j = 0;
     while (data->map_element[i])
     {
+       j = 0;
        while(data->map_element[i][j])
        {
-		if (data->map_element[i][j] == 'N'
-		|| data->map_element[i][j] == 'S'
-		|| data->map_element[i][j] == 'W'
-		|| data->map_element[i][j] == 'E')
-			data->map_element[i][j] = '0';
+		    if (data->map_element[i][j] == 'N'
+		        || data->map_element[i][j] == 'S'
+		        || data->map_element[i][j] == 'W'
+		        || data->map_element[i][j] == 'E')
+		{
+            data->map_element[i][j] = '0';
+        }
         j++;
-       }
+        }
         i++;
     }
 }

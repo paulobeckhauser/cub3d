@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:24:26 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 21:06:04 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/20 07:08:09 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 	if (!array[0] || !array[1] || !array[2])
 	{
 		replace_error_message(data, "RGB in wrong format");
+		free_2d_array(array);
 		return (false);
 	}
 	if (ft_strcmp(array[0], "0") == 0)
@@ -45,6 +46,7 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 		if (red <= 0 || red > 255)
 		{
 			replace_error_message(data, "RGB in wrong format");
+			free_2d_array(array);
 			return (false);
 		}
 	}
@@ -56,6 +58,7 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 		if (green <= 0 || green > 255)
 		{
 			replace_error_message(data, "RGB in wrong format");
+			free_2d_array(array);
 			return (false);
 		}
 	}
@@ -67,6 +70,7 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 		if (blue <= 0 || blue > 255)
 		{
 			replace_error_message(data, "RGB in wrong format");
+			free_2d_array(array);
 			return (false);
 		}
 	}

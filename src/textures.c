@@ -22,6 +22,8 @@ bool check_xpm_extension(t_data *data, char *str)
         }
     }
 
+    free_2d_array(array);
+
     return (true);
 
 }
@@ -85,7 +87,6 @@ bool store_textures(t_data *data)
     int i;
     char **array;
 
-
     i = 0;
     array = NULL;
     while(data->cub_file[i])
@@ -97,14 +98,6 @@ bool store_textures(t_data *data)
 			replace_error_message(data, "Memory allocation failed");
 			return (false);
 		}
-
-
-        // printf("%d\n", size_array(array));
-        // if (size_array(array) != 2)
-		// {
-		// 	replace_error_message(data, "Texture in wrong format");
-		// 	return (false);
-		// }
 
         if (array[0])
         {

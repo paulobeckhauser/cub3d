@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:15:35 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/06/19 20:54:56 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/06/20 07:06:14 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,14 @@ bool	store_surface_colors(t_data *data)
 		if (!array)
 		{
 			replace_error_message(data, "Memory allocation failed");
+			free_2d_array(array);
 			return (false);
 		}
 		if (!floor_ceiling_lines(array, data, i))
+		{
+			free_2d_array(array);
 			return (false);
+		}
 		free_2d_array(array);
 		i++;
 	}

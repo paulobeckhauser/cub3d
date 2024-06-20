@@ -17,5 +17,20 @@ int parser(char *str)
             || !store_surface_colors(&data) 
             || !store_textures(&data) || !store_map(&data))
         return(free_variables_error(&data));
+
+    // free_variables_error(&data);
+
+
+
+    free(data.player);
+    free(data.texture_north);
+    free(data.texture_south);
+    free(data.texture_east);
+    free(data.texture_west);
+    free_2d_array(data.map_element);
+    free_2d_array(data.cub_file);
+
+    
+
     return (0);
 }
