@@ -214,61 +214,86 @@ void    render_door_line(t_game *game)
 	game->hit_closed_door = false;
 }
 
-//void    render_enemy_line(t_game *game)
-//{
-//	int line_height;
-//	int y_iterator;
-//	int y_end;
-//	int tex_x;
-//	int	tex_y;
-//	int color;
-//
-//	line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
-//	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
-//	if (y_iterator < 0)
-//		y_iterator = 0;
-//	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-//	if (y_end > SCREEN_HEIGHT)
-//		y_end = SCREEN_HEIGHT;
-//	if (game->enemy_direction == NORTH || game->enemy_direction == SOUTH)
-//		tex_x = (int)(game->ray_enemy_hit_x * TEXTURE_SIZE);
-//	else
-//		tex_x = (int)(game->ray_enemy_hit_y * TEXTURE_SIZE);
-//	while (y_iterator < y_end)
-//	{
-//		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-//		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
-//		if (color != rgb_to_hex(255, 0, 255))
-//			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
-//		y_iterator++;
-//	}
-//	game->hit_enemy = false;
-//}
+// void    render_enemy_line(t_game *game)
+// {
+	// int line_height;
+	// int y_iterator;
+	// int y_end;
+	// int tex_x;
+	// int	tex_y;
+	// int color;
+
+	// line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
+	// y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
+	// if (y_iterator < 0)
+		// y_iterator = 0;
+	// y_end = SCREEN_HEIGHT / 2 + line_height / 2;
+	// if (y_end > SCREEN_HEIGHT)
+		// y_end = SCREEN_HEIGHT;
+	// tex_x = game->dist_idx;
+	// while (y_iterator < y_end)
+	// {
+		// tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
+		// color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
+		// if (color != rgb_to_hex(255, 0, 255))
+			// game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
+		// y_iterator++;
+	// }
+	// game->hit_enemy = false;
+// }
+
 
 void    render_enemy_line(t_game *game)
 {
-	int line_height;
-	int y_iterator;
-	int y_end;
-	int tex_x;
+	int	x;
+	int	y;
+	int	tex_x;
 	int	tex_y;
-	int color;
-	
-	line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
-	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
-	if (y_iterator < 0)
-		y_iterator = 0;
-	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-	if (y_end > SCREEN_HEIGHT)
-		y_end = SCREEN_HEIGHT;
-	tex_x = (int)(game->ray_enemy_hit_x * TEXTURE_SIZE);
-	while (y_iterator < y_end)
-	{
-		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
-		if (color != rgb_to_hex(255, 0, 255))
-			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
-		y_iterator++;
-	}
+	int	color;
+	int	line_height;
+
 	game->hit_enemy = false;
+	line_height =  DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
+	x = game->dist_idx;
+	tex_x = x - game->dist_idx;
+	while (x < SCREEN_WIDTH && tex_x < 500)
+	{
+		y = SCREEN_HEIGHT / 2 - line_height / 2;
+		tex_y = y - (SCREEN_HEIGHT / 2 - line_height / 2);
+		while (y < SCREEN_HEIGHT && tex_y < 500)
+		{
+			tex_x = x - game->dist_idx;
+			tex_y = y - (SCREEN_HEIGHT / 2 - line_height / 2);
+			color = get_pixel_color(game->south_texture, tex_x, tex_y);
+			if (color != rgb_to_hex(255, 0, 255))
+				printf("tex_x: %i ",tex_x), printf("x: %i ",x),printf("tex_y: %i ",tex_y),printf("y: %i\n", y),game->image->data[y * SCREEN_WIDTH + x] = color;
+			y++;
+		}
+		x++;
+	}
 }
+
+// void	render_gun(t_game *game)
+// {
+	// int	x;
+	// int	y;
+	// int	tex_x;
+	// int	tex_y;
+	// int	color;
+
+	// x = SCREEN_WIDTH / 2 + 100;
+	// while (x < SCREEN_WIDTH / 2 + 100 + 357)
+	// {
+		// y = SCREEN_HEIGHT - 357;
+		// while (y < SCREEN_HEIGHT)
+		// {
+			// tex_x = x - (SCREEN_WIDTH / 2 + 100);
+			// tex_y = y - (SCREEN_HEIGHT - 357);
+			// color = get_pixel_color(game->gun_texture, tex_x, tex_y);
+			// if (color != rgb_to_hex(255, 0, 255))
+				// game->image->data[y * SCREEN_WIDTH + x] = color;
+			// y++;
+		// }
+		// x++;
+	// }
+// }

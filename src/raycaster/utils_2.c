@@ -60,11 +60,26 @@ bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
 {
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == 'E')
 	{
+		game->enemy_x = (int)raycaster->colis_x;
+		game->enemy_y = (int)raycaster->colis_y;
 		game->hit_enemy = true;
 		return (true);
 	}
 	return (false);
 }
+
+// bool is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
+// {
+// 	float enemy_x = 1; // Enemy's world coordinates
+// 	float enemy_y = 5;
+//
+// 	if (fabs(raycaster->x_iterator - enemy_x) < 0.5 && fabs(raycaster->y_iterator - enemy_y) < 0.5)
+// 	{
+// 		game->hit_enemy = true;
+// 		return true;
+// 	}
+// 	return false;
+// }
 
 void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction)
 {

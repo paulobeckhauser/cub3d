@@ -103,6 +103,8 @@ typedef struct s_game
 	int     wall_direction;
 	int     door_direction;
 	int     enemy_direction;
+	int		enemy_x;
+	int		enemy_y;
 	int     img_x;
 	int     img_y;
 	bool    keys[8];
