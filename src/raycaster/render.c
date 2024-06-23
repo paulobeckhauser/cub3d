@@ -216,84 +216,101 @@ void    render_door_line(t_game *game)
 
 // void    render_enemy_line(t_game *game)
 // {
-	// int line_height;
-	// int y_iterator;
-	// int y_end;
-	// int tex_x;
-	// int	tex_y;
-	// int color;
-
-	// line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
-	// y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
-	// if (y_iterator < 0)
-		// y_iterator = 0;
-	// y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-	// if (y_end > SCREEN_HEIGHT)
-		// y_end = SCREEN_HEIGHT;
-	// tex_x = game->dist_idx;
-	// while (y_iterator < y_end)
-	// {
-		// tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		// color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
-		// if (color != rgb_to_hex(255, 0, 255))
-			// game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
-		// y_iterator++;
-	// }
-	// game->hit_enemy = false;
+// 	int line_height;
+// 	int y_iterator;
+// 	int y_end;
+// 	int tex_x;
+// 	int	tex_y;
+// 	int color;
+//
+// 	line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
+// 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
+// 	if (y_iterator < 0)
+// 		y_iterator = 0;
+// 	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
+// 	if (y_end > SCREEN_HEIGHT)
+// 		y_end = SCREEN_HEIGHT;
+// 	tex_x = game->dist_idx;
+// 	while (y_iterator < y_end)
+// 	{
+// 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
+// 		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
+// 		if (color != rgb_to_hex(255, 0, 255))
+// 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
+// 		y_iterator++;
+// 	}
+// 	game->hit_enemy = false;
 // }
 
 
-void    render_enemy_line(t_game *game)
+void render_enemy_line(t_game *game)
 {
-	int	x;
-	int	y;
-	int	tex_x;
-	int	tex_y;
-	int	color;
-	int	line_height;
+	int x_iterator;
+	int y_iterator;
+	int tex_x;
+	int tex_y;
+	int color;
+	int line_height;
 
-	game->hit_enemy = false;
-	line_height =  DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
-	x = game->dist_idx;
-	tex_x = x - game->dist_idx;
-	while (x < SCREEN_WIDTH && tex_x < 500)
-	{
-		y = SCREEN_HEIGHT / 2 - line_height / 2;
-		tex_y = y - (SCREEN_HEIGHT / 2 - line_height / 2);
-		while (y < SCREEN_HEIGHT && tex_y < 500)
+	line_height = DRAWING_SCALE / (game->enemy_dists[game->dist_idx] + 1);
+	if (line_height > 500)
+		line_height = 500;
+	x_iterator = game->dist_idx;
+	// while (x_iterator < game->dist_idx + 500 && x_iterator < SCREEN_WIDTH)
+	// {
+		y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
+		while (y_iterator < SCREEN_HEIGHT / 2 + line_height / 2 && y_iterator < SCREEN_HEIGHT)
 		{
-			tex_x = x - game->dist_idx;
-			tex_y = y - (SCREEN_HEIGHT / 2 - line_height / 2);
-			color = get_pixel_color(game->south_texture, tex_x, tex_y);
-			if (color != rgb_to_hex(255, 0, 255))
-				printf("tex_x: %i ",tex_x), printf("x: %i ",x),printf("tex_y: %i ",tex_y),printf("y: %i\n", y),game->image->data[y * SCREEN_WIDTH + x] = color;
-			y++;
+			tex_x = game->dist_idx - x_iterator + 150;
+			if (tex_x < 0)
+				tex_x = 0;
+			if (tex_x > 500)
+				break;
+			tex_y = y_iterator - (SCREEN_HEIGHT / 2 - line_height / 2);
+			color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
+			if (color != rgb_to_hex(255, 0, 255) && game->hit_enemy)
+				printf("%i\n", game->dist_idx),game->image->data[y_iterator * SCREEN_WIDTH + x_iterator] = color;
+			y_iterator++;
 		}
-		x++;
-	}
+		x_iterator++;
+	// }
+	game->hit_enemy = false;
 }
 
-// void	render_gun(t_game *game)
-// {
-	// int	x;
-	// int	y;
-	// int	tex_x;
-	// int	tex_y;
-	// int	color;
+// try this
 
-	// x = SCREEN_WIDTH / 2 + 100;
-	// while (x < SCREEN_WIDTH / 2 + 100 + 357)
-	// {
-		// y = SCREEN_HEIGHT - 357;
-		// while (y < SCREEN_HEIGHT)
-		// {
-			// tex_x = x - (SCREEN_WIDTH / 2 + 100);
-			// tex_y = y - (SCREEN_HEIGHT - 357);
-			// color = get_pixel_color(game->gun_texture, tex_x, tex_y);
-			// if (color != rgb_to_hex(255, 0, 255))
+// void drawEnemy(t_game *game, Enemy* enemy, Player* player) {
+	// Calculate distance from the player to the enemy
+	// enemy->distance = sqrtf((enemy->x - player->x) * (enemy->x - player->x) + (enemy->y - player->y) * (enemy->y - player->y));
+
+	// Calculate enemy's angle relative to the player's viewing direction
+	// float dx = enemy->x - player->x;
+	// float dy = enemy->y - player->y;
+	// float angleToPlayer = atan2(dy, dx) - player->fov;
+
+	// Convert angle to screen position
+	// float enemyScreenX = tan(angleToPlayer) * SCREEN_WIDTH;
+
+	// Calculate scale based on distance (simple perspective)
+	// float scale = 100.0f / enemy->distance; // Arbitrary scale factor for demonstration
+
+	// Calculate the height and width of the enemy sprite on screen
+	// int enemyHeight = (int)(SCREEN_HEIGHT * scale);
+	// int enemyWidth = (int)(SCREEN_HEIGHT * scale);
+
+	// Calculate the top left position
+	// int screenX = (int)(SCREEN_WIDTH / 2 + enemyScreenX - enemyWidth / 2);
+	// int screenY = SCREEN_HEIGHT / 2 - enemyHeight / 2;
+
+	// Draw the enemy sprite using your method
+	// int x, y, tex_x, tex_y, color;
+	// for (x = screenX; x < screenX + enemyWidth; x++) {
+		// for (y = screenY; y < screenY + enemyHeight; y++) {
+			// tex_x = (x - screenX) * (500 / enemyWidth); // Assuming the enemy texture width is 500 pixels
+			// tex_y = (y - screenY) * (357 / enemyHeight); // Assuming the enemy texture height is 357 pixels
+			// color = get_pixel_color(game->enemy_texture, tex_x, tex_y); // Assuming each enemy has an 'enemy_texture'
+			// if (color != rgb_to_hex(255, 0, 255)) // Assuming magenta is the transparency color
 				// game->image->data[y * SCREEN_WIDTH + x] = color;
-			// y++;
 		// }
-		// x++;
 	// }
 // }

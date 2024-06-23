@@ -3,7 +3,7 @@
 NAME = cub3d
 CC = gcc
 W_FLAGS =  -g
-MLX_FLAGS = -Lmlx_linux -lmlx -Imlx_linux -lXext -lX11 -lm -lz
+MLX_FLAGS = -L./libs/mlx_linux -lmlx -Imlx_linux -lXext -lX11 -lm -lz
 LIBFT_FLAGS = -L./libs/libft -lft
 SRC_DIR = src
 INCLUDE_DIR = incl
