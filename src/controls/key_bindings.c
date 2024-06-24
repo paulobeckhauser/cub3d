@@ -59,6 +59,20 @@ int mouse_move(int x, int y, t_game *game)
 	return (0);
 }
 
+int mouse_press(int button, int x, int y, t_game *game)
+{
+	struct timeval  tv;
+	gettimeofday(&tv, NULL);
+	(void)x;
+	(void)y;
+	if (button == 1)
+	{
+		game->gun_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+		game->keys[MOUSE_LEFT_CLICK] = true;
+	}
+	return (0);
+}
+
 int	loop_hook(t_game *game)
 {
 	int dir_x;
@@ -85,6 +99,22 @@ int	loop_hook(t_game *game)
 		open_close_door(game);
 	if (game->keys[ESC])
 		close_game(game);
+	if (game->keys[MOUSE_LEFT_CLICK])
+	{
+		struct timeval  tv;
+		gettimeofday(&tv, NULL);
+		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+		long    elapsed_time =  current_time - game->gun_animation_start_time;
+		int gun_frame = elapsed_time / (GUN_FRAME_DURATION / GUN_FRAMES);
+		if (gun_frame < 0)
+			gun_frame = 0;
+		if (gun_frame >= GUN_FRAMES)
+		{
+			game->keys[MOUSE_LEFT_CLICK] = false;
+			gun_frame = 0;
+		}
+		game->gun_current_texture = game->gun_texture[gun_frame];
+	}
 	if (game->door_are_opening)
 	{
 		struct timeval  tv;
@@ -116,6 +146,18 @@ int	loop_hook(t_game *game)
 			door_frame = 0;
 		}
 		game->door_current_texture = game->door_texture[door_frame];
+	}
+	if (game->enemy_visible)
+	{
+		struct timeval  tv;
+		gettimeofday(&tv, NULL);
+		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+		long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1; // Ensure you have a separate start time for enemy animation
+		int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES; // Use modulo for continuous animation
+		if (enemy_frame < 0)
+			enemy_frame = 0;
+		game->dark_priest_current_texture = game->dark_priest_texture[enemy_frame];
+		game->enemy_visible = false;
 	}
 	render_map(game);
 	return (0);

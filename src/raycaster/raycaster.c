@@ -18,7 +18,7 @@ void    calc_dir_vectors(t_game *game)
 	float	angle_incr_radians;
 	float	angle_iter;
 	
-	angle_incr_radians = to_radians(10.0f); //field of view (60 deg) divided by screen width
+	angle_incr_radians = to_radians(10.0f);
 	angle_iter = to_radians(game->ray_main_angle);
 	game->vec_idx = 0;
 	while (game->vec_idx < 36)
@@ -40,7 +40,7 @@ void	raycaster(t_game *game)
 	float	dir_x;
 	float	dir_y;
 
-	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH); //field of view (60 deg) divided by screen width
+	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
 	angle_iter = to_radians(game->ray_main_angle) - to_radians(30.0f);
 	dir_x = 0;
 	dir_y = 0;
@@ -48,8 +48,12 @@ void	raycaster(t_game *game)
 	game->door_visible = false;
 	game->prev_door_distance = INFINITY;
 	game->closest_door_distance = 0;
+//	game->enemy_visible = false;
 	game->prev_enemy_distance = INFINITY;
 	game->closest_enemy_distance = 0;
+	struct timeval  tv;
+	gettimeofday(&tv, NULL);
+	game->enemy_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
 		dir_x = cosf(angle_iter);
@@ -64,12 +68,13 @@ void	raycaster(t_game *game)
 		{
 			render_enemy_line(game);
 		}
+		else
+			game->first_enemy_dist = -1;
 		angle_iter += angle_incr_radians;
-		if (angle_iter < 0) {
+		if (angle_iter < 0)
 			angle_iter += 2 * M_PI;
-		} else if (angle_iter > 2 * M_PI) {
+		else if (angle_iter > 2 * M_PI)
 			angle_iter -= 2 * M_PI;
-		}
 		++game->dist_idx;
 	}
 	game->first_enemy_dist = -1;

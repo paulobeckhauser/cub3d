@@ -9,8 +9,8 @@
 #include <sys/time.h>
 
 // screen
-#define SCREEN_WIDTH 1366
-#define SCREEN_HEIGHT 768
+#define SCREEN_WIDTH 1600
+#define SCREEN_HEIGHT 900
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 #define MINIMAP_SCALE 20
@@ -24,7 +24,11 @@
 #define FLOOR_TEXTURE "./textures/minimap/floor_texture.xpm"
 #define WALL_TEXTURE "./textures/minimap/wall_texture.xpm"
 #define PLAYER_TEXTURE "./textures/minimap/player_ln_texture.xpm"
-#define	GUN_TEXTURE "./textures/guns/desert_eagle_texture.xpm"
+#define	GUN_0_4 "./textures/guns/desert_eagle_0_4.xpm"
+#define GUN_1_4 "./textures/guns/desert_eagle_1_4.xpm"
+#define GUN_2_4 "./textures/guns/desert_eagle_2_4.xpm"
+#define GUN_3_4 "./textures/guns/desert_eagle_3_4.xpm"
+#define GUN_4_4 "./textures/guns/desert_eagle_4_4.xpm"
 #define DOOR_FRAME_4_4 "./textures/door/door_frame_4_4.xpm"
 #define DOOR_FRAME_3_4 "./textures/door/door_frame_3_4.xpm"
 #define DOOR_FRAME_2_4 "./textures/door/door_frame_2_4.xpm"
@@ -61,10 +65,15 @@
 #define LEFT_ARROW 5
 #define RIGHT_ARROW 6
 #define E 7
+#define MOUSE_LEFT_CLICK 8
 
 // animation
 #define DOOR_FRAMES 5
 #define DOOR_FRAME_DURATION 1200000
+#define ENEMY_FRAMES 10
+#define ENEMY_FRAME_DURATION 4800000
+#define GUN_FRAMES 5
+#define GUN_FRAME_DURATION 600000
 
 typedef struct	s_image {
 	void	*img;
@@ -107,7 +116,7 @@ typedef struct s_game
 	int		enemy_y;
 	int     img_x;
 	int     img_y;
-	bool    keys[8];
+	bool    keys[9];
 	t_vectors *vectors;
 	int     vec_idx;
 	void    *north_texture;
@@ -117,7 +126,8 @@ typedef struct s_game
 	void    *floor_texture;
 	void    *wall_texture;
 	void	*player_texture;
-	void	*gun_texture;
+	void	*gun_texture[5];
+	void    *gun_current_texture;
 	void	*door_texture[5];
 	void    *door_current_texture;
 	void    *dark_priest_texture[10];
@@ -130,11 +140,14 @@ typedef struct s_game
 	bool    door_are_closing;
 	float   closest_door_distance;
 	float   prev_door_distance;
+	long    enemy_animation_start_time;
+	long    gun_animation_start_time;
 	float   closest_enemy_distance;
 	float   prev_enemy_distance;
 	float   ray_enemy_hit_x;
 	float   ray_enemy_hit_y;
 	bool    hit_enemy;
+	bool    enemy_visible;
 	int     mouse_x;
 	int     first_enemy_dist;
 }	t_game;
@@ -195,5 +208,6 @@ void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
 void    save_closest_distance(float dist, float *prev_dist, float *closest_dist);
 void    render_enemy_line(t_game *game);
 void    set_enemy_direction(t_raycaster *raycaster, t_game *game);
+int     mouse_press(int button, int x, int y, t_game *game);
 
 #endif //RAYCASTER_TEST_H

@@ -21,7 +21,12 @@ void load_images_from_dir(t_game *game)
 	game->floor_texture = mlx_xpm_file_to_image(game->mlx_ptr, FLOOR_TEXTURE, &game->img_x, &game->img_y);
 	game->wall_texture = mlx_xpm_file_to_image(game->mlx_ptr, WALL_TEXTURE, &game->img_x, &game->img_y);
 	game->player_texture = mlx_xpm_file_to_image(game->mlx_ptr, PLAYER_TEXTURE, &game->img_x, &game->img_y);
-	game->gun_texture = mlx_xpm_file_to_image(game->mlx_ptr, GUN_TEXTURE, &game->img_x, &game->img_y);
+	game->gun_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr, GUN_0_4, &game->img_x, &game->img_y);
+	game->gun_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr, GUN_1_4, &game->img_x, &game->img_y);
+	game->gun_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr, GUN_2_4, &game->img_x, &game->img_y);
+	game->gun_texture[3] = mlx_xpm_file_to_image(game->mlx_ptr, GUN_3_4, &game->img_x, &game->img_y);
+	game->gun_texture[4] = mlx_xpm_file_to_image(game->mlx_ptr, GUN_4_4, &game->img_x, &game->img_y);
+	game->gun_current_texture = mlx_xpm_file_to_image(game->mlx_ptr, GUN_0_4, &game->img_x, &game->img_y);
 	game->door_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_4_4, &game->img_x, &game->img_y);
 	game->door_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_3_4, &game->img_x, &game->img_y);
 	game->door_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_2_4, &game->img_x, &game->img_y);

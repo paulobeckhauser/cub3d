@@ -110,15 +110,15 @@ void	render_gun(t_game *game)
 	int	tex_y;
 	int	color;
 
-	x = SCREEN_WIDTH / 2 + 100;
-	while (x < SCREEN_WIDTH / 2 + 100 + 357)
+	x = SCREEN_WIDTH / 2 + 150;
+	while (x < SCREEN_WIDTH / 2 + 150 + 241)
 	{
 		y = SCREEN_HEIGHT - 357;
 		while (y < SCREEN_HEIGHT)
 		{
-			tex_x = x - (SCREEN_WIDTH / 2 + 100);
+			tex_x = x - (SCREEN_WIDTH / 2 + 150);
 			tex_y = y - (SCREEN_HEIGHT - 357);
-			color = get_pixel_color(game->gun_texture, tex_x, tex_y);
+			color = get_pixel_color(game->gun_current_texture, tex_x, tex_y);
 			if (color != rgb_to_hex(255, 0, 255))
 				game->image->data[y * SCREEN_WIDTH + x] = color;
 			y++;
@@ -157,17 +157,13 @@ void    render_wall_line(t_game *game)
 	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
 	if (y_end > SCREEN_HEIGHT)
 		y_end = SCREEN_HEIGHT;
-	// Calculate tex_x based on where the ray hit the wall block
 	if (game->wall_direction == NORTH || game->wall_direction == SOUTH)
 		tex_x = (int)(game->ray_hit_x * TEXTURE_SIZE);
 	else
 		tex_x = (int)(game->ray_hit_y * TEXTURE_SIZE);
 	while (y_iterator < y_end)
 	{
-		// Calculate tex_y based on the current y_iterator value
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-//		if (game->hit_closed_door)
-//			color = get_pixel_color(game->door_current_texture, tex_x, tex_y);
 		if (game->wall_direction == NORTH)
 			color = get_pixel_color(game->north_texture, tex_x, tex_y);
 		else if (game->wall_direction == SOUTH)

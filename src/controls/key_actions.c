@@ -104,7 +104,7 @@ void    open_close_door(t_game *game)
 	x = 0;
 	struct timeval  tv;
 	gettimeofday(&tv, NULL);
-	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec; // Set the start time
+	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	while (game->map[y])
 	{
 		x = 0;
