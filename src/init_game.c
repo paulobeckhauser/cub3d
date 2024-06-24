@@ -67,6 +67,7 @@ void    init_game(t_game *game)
 	game->ray_enemy_hit_y = 0;
 	game->hit_enemy = false;
 	game->mouse_x = 0;
+	game->first_enemy_dist = -1;
 }
 
 void    init_keys(t_game *game)

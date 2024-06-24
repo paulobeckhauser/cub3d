@@ -40,7 +40,7 @@
 #define DARK_PRIEST_7_9 "./textures/enemies/dark_priest_7_9.xpm"
 #define DARK_PRIEST_8_9 "./textures/enemies/dark_priest_8_9.xpm"
 #define DARK_PRIEST_9_9 "./textures/enemies/dark_priest_9_9.xpm"
-
+#define TEST "./textures/enemies/test.xpm"
 
 // vectors
 #define SPEED 40.0f
@@ -136,6 +136,7 @@ typedef struct s_game
 	float   ray_enemy_hit_y;
 	bool    hit_enemy;
 	int     mouse_x;
+	int     first_enemy_dist;
 }	t_game;
 
 typedef struct  s_raycaster
@@ -193,6 +194,6 @@ bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
 void    save_closest_distance(float dist, float *prev_dist, float *closest_dist);
 void    render_enemy_line(t_game *game);
-void set_enemy_direction(t_raycaster *raycaster, t_game *game);
+void    set_enemy_direction(t_raycaster *raycaster, t_game *game);
 
 #endif //RAYCASTER_TEST_H

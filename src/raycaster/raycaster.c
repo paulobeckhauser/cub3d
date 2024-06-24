@@ -61,7 +61,9 @@ void	raycaster(t_game *game)
 		if (game->hit_opened_door || game->hit_closed_door)
 			render_door_line(game);
 		if (game->hit_enemy)
+		{
 			render_enemy_line(game);
+		}
 		angle_iter += angle_incr_radians;
 		if (angle_iter < 0) {
 			angle_iter += 2 * M_PI;
@@ -70,6 +72,7 @@ void	raycaster(t_game *game)
 		}
 		++game->dist_idx;
 	}
+	game->first_enemy_dist = -1;
 }
 
 void    cast_ray(t_game *game, float ray_angle)
