@@ -44,7 +44,18 @@
 #define DARK_PRIEST_7_9 "./textures/enemies/dark_priest_7_9.xpm"
 #define DARK_PRIEST_8_9 "./textures/enemies/dark_priest_8_9.xpm"
 #define DARK_PRIEST_9_9 "./textures/enemies/dark_priest_9_9.xpm"
-#define TEST "./textures/enemies/test.xpm"
+#define HP_0 "./textures/hp/0.xpm"
+#define HP_10 "./textures/hp/10.xpm"
+#define HP_20 "./textures/hp/20.xpm"
+#define HP_30 "./textures/hp/30.xpm"
+#define HP_40 "./textures/hp/40.xpm"
+#define HP_50 "./textures/hp/50.xpm"
+#define HP_60 "./textures/hp/60.xpm"
+#define HP_70 "./textures/hp/70.xpm"
+#define HP_80 "./textures/hp/80.xpm"
+#define HP_90 "./textures/hp/90.xpm"
+#define HP_100 "./textures/hp/100.xpm"
+
 
 // vectors
 #define SPEED 40.0f
@@ -108,6 +119,7 @@ typedef struct s_game
 	float   wall_dists[SCREEN_WIDTH];
 	float	door_dists[SCREEN_WIDTH];
 	float   enemy_dists[SCREEN_WIDTH];
+	bool    body_hit[SCREEN_WIDTH];
 	int     dist_idx;
 	int     wall_direction;
 	int     door_direction;
@@ -132,10 +144,13 @@ typedef struct s_game
 	void    *door_current_texture;
 	void    *dark_priest_texture[10];
 	void    *dark_priest_current_texture;
+	void    *hp_texture[11];
+	void    *hp_current_texture;
 	long    door_animation_start_time;
 	bool    hit_closed_door;
 	bool	hit_opened_door;
-	bool    door_visible;
+	bool    closed_door_visible;
+	bool    open_door_visible;
 	bool    door_are_opening;
 	bool    door_are_closing;
 	float   closest_door_distance;
@@ -209,5 +224,6 @@ void    save_closest_distance(float dist, float *prev_dist, float *closest_dist)
 void    render_enemy_line(t_game *game);
 void    set_enemy_direction(t_raycaster *raycaster, t_game *game);
 int     mouse_press(int button, int x, int y, t_game *game);
+void	render_hp(t_game *game);
 
 #endif //RAYCASTER_TEST_H

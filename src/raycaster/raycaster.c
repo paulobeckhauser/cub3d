@@ -45,15 +45,22 @@ void	raycaster(t_game *game)
 	dir_x = 0;
 	dir_y = 0;
 	game->dist_idx = 0;
-	game->door_visible = false;
+	game->closed_door_visible = false;
+	game->open_door_visible = false;
 	game->prev_door_distance = INFINITY;
 	game->closest_door_distance = 0;
-//	game->enemy_visible = false;
 	game->prev_enemy_distance = INFINITY;
 	game->closest_enemy_distance = 0;
 	struct timeval  tv;
 	gettimeofday(&tv, NULL);
 	game->enemy_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	for (int i=0; i < SCREEN_WIDTH; i++)
+	{
+		game->wall_dists[i] = 0;
+		game->door_dists[i] = 0;
+		game->enemy_dists[i] = 0;
+		game->body_hit[i] = false;
+	}
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
 		dir_x = cosf(angle_iter);

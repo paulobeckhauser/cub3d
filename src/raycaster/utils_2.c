@@ -36,7 +36,7 @@ bool    is_collision_point_closed_door(t_raycaster *raycaster, t_game *game)
 {
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2')
 	{
-		game->door_visible = true;
+		game->closed_door_visible = true;
 		game->hit_closed_door = true;
 		game->hit_opened_door = false;
 		return (true);
@@ -49,7 +49,7 @@ bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game)
 	
 	if (game->map[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3')
 	{
-		game->door_visible = true;
+		game->open_door_visible = true;
 		game->hit_opened_door = true;
 		game->hit_closed_door = false;
 		return (true);

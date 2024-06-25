@@ -110,7 +110,7 @@ void    open_close_door(t_game *game)
 		x = 0;
 		while (game->map[y][x])
 		{
-			if (game->door_visible && game->closest_door_distance < DOOR_OPEN_DISTANCE)
+			if ((game->open_door_visible || game->closed_door_visible) && game->closest_door_distance < DOOR_OPEN_DISTANCE)
 			{
 				if (game->map[y][x] == '2')
 				{

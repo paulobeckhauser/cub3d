@@ -44,4 +44,16 @@ void load_images_from_dir(t_game *game)
 	game->dark_priest_texture[8] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_8_9, &game->img_x, &game->img_y);
 	game->dark_priest_texture[9] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_9_9, &game->img_x, &game->img_y);
 	game->dark_priest_current_texture = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_0_9, &game->img_x, &game->img_y);
+	game->hp_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr, HP_0, &game->img_x, &game->img_y);
+	game->hp_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr, HP_10, &game->img_x, &game->img_y);
+	game->hp_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr, HP_20, &game->img_x, &game->img_y);
+	game->hp_texture[3] = mlx_xpm_file_to_image(game->mlx_ptr, HP_30, &game->img_x, &game->img_y);
+	game->hp_texture[4] = mlx_xpm_file_to_image(game->mlx_ptr, HP_40, &game->img_x, &game->img_y);
+	game->hp_texture[5] = mlx_xpm_file_to_image(game->mlx_ptr, HP_50, &game->img_x, &game->img_y);
+	game->hp_texture[6] = mlx_xpm_file_to_image(game->mlx_ptr, HP_60, &game->img_x, &game->img_y);
+	game->hp_texture[7] = mlx_xpm_file_to_image(game->mlx_ptr, HP_70, &game->img_x, &game->img_y);
+	game->hp_texture[8] = mlx_xpm_file_to_image(game->mlx_ptr, HP_80, &game->img_x, &game->img_y);
+	game->hp_texture[9] = mlx_xpm_file_to_image(game->mlx_ptr, HP_90, &game->img_x, &game->img_y);
+	game->hp_texture[10] = mlx_xpm_file_to_image(game->mlx_ptr, HP_100, &game->img_x, &game->img_y);
+	game->hp_current_texture = mlx_xpm_file_to_image(game->mlx_ptr, HP_100, &game->img_x, &game->img_y);
 }

@@ -114,6 +114,8 @@ int	loop_hook(t_game *game)
 			gun_frame = 0;
 		}
 		game->gun_current_texture = game->gun_texture[gun_frame];
+		if (game->body_hit[SCREEN_WIDTH / 2] == true)
+			game->map[game->enemy_y][game->enemy_x] = '0';
 	}
 	if (game->door_are_opening)
 	{
@@ -152,8 +154,8 @@ int	loop_hook(t_game *game)
 		struct timeval  tv;
 		gettimeofday(&tv, NULL);
 		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-		long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1; // Ensure you have a separate start time for enemy animation
-		int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES; // Use modulo for continuous animation
+		long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1;
+		int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES;
 		if (enemy_frame < 0)
 			enemy_frame = 0;
 		game->dark_priest_current_texture = game->dark_priest_texture[enemy_frame];

@@ -42,7 +42,8 @@ void    init_game(t_game *game)
 	{
 		game->wall_dists[game->dist_idx] = 0;
 		game->door_dists[game->dist_idx] = 0;
-		game->enemy_dists[game->dist_idx++] = 0;
+		game->enemy_dists[game->dist_idx] = 0;
+		game->body_hit[game->dist_idx++] = false;
 	}
 	game->dist_idx = 0;
 	game->wall_direction = 0;
@@ -57,7 +58,8 @@ void    init_game(t_game *game)
 	game->gun_animation_start_time = 0;
 	game->hit_closed_door = false;
 	game->hit_opened_door = false;
-	game->door_visible = false;
+	game->closed_door_visible = false;
+	game->open_door_visible = false;
 	game->door_are_opening = false;
 	game->door_are_closing = false;
 	game->closest_door_distance = INFINITY;

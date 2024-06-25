@@ -42,6 +42,7 @@ void	render_map(t_game *game)
 	render_minimap(game);
 	render_minimap_player(game);
 	render_gun(game);
+	render_hp(game);
 }
 
 void    render_minimap(t_game *game)
@@ -121,6 +122,30 @@ void	render_gun(t_game *game)
 			color = get_pixel_color(game->gun_current_texture, tex_x, tex_y);
 			if (color != rgb_to_hex(255, 0, 255))
 				game->image->data[y * SCREEN_WIDTH + x] = color;
+			y++;
+		}
+		x++;
+	}
+}
+
+void	render_hp(t_game *game)
+{
+	int	x;
+	int	y;
+	int	tex_x;
+	int	tex_y;
+	int	color;
+	
+	x = 0;
+	while (x < 120)
+	{
+		y = SCREEN_HEIGHT - 77;
+		while (y < SCREEN_HEIGHT)
+		{
+			tex_x = x;
+			tex_y = y - (SCREEN_HEIGHT - 77);
+			color = get_pixel_color(game->hp_current_texture, tex_x, tex_y);
+			game->image->data[y * SCREEN_WIDTH + x] = color;
 			y++;
 		}
 		x++;
@@ -226,7 +251,7 @@ void render_enemy_line(t_game *game)
 	if (line_height < 290) line_height = 290;
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-	tex_x = game->dist_idx - game->first_enemy_dist + 120; // Adjust the denominator as needed
+	tex_x = game->dist_idx - game->first_enemy_dist + 120;
 	if (tex_x >= TEXTURE_SIZE)
 		tex_x = TEXTURE_SIZE - 1;
 	while (y_iterator < y_end)
@@ -236,8 +261,12 @@ void render_enemy_line(t_game *game)
 		if (tex_y >= TEXTURE_SIZE)
 			tex_y = TEXTURE_SIZE - 1;
 		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
-		if (color != rgb_to_hex(255, 0, 255)) // Check for transparency color
+		if (color != rgb_to_hex(255, 0, 255) && game->enemy_dists[game->dist_idx] < game->wall_dists[game->dist_idx]
+			&& (game->open_door_visible || game->door_dists[game->dist_idx] == 0 || game->enemy_dists[game->dist_idx] < game->door_dists[game->dist_idx]))
+		{
+			game->body_hit[game->dist_idx] = true;
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
+		}
 		y_iterator++;
 	}
 	game->hit_enemy = false;
