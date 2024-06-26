@@ -114,7 +114,7 @@ int	loop_hook(t_game *game)
 			gun_frame = 0;
 		}
 		game->gun_current_texture = game->gun_texture[gun_frame];
-		if (game->body_hit[SCREEN_WIDTH / 2] == true)
+		if (gun_frame == 0 && game->body_hit[SCREEN_WIDTH / 2] == true)
 			game->map[game->enemy_y][game->enemy_x] = '0';
 	}
 	if (game->door_are_opening)
@@ -132,6 +132,7 @@ int	loop_hook(t_game *game)
 			door_frame = DOOR_FRAMES - 1;
 		}
 		game->door_current_texture = game->door_texture[door_frame];
+		
 	}
 	if (game->door_are_closing)
 	{
@@ -156,10 +157,19 @@ int	loop_hook(t_game *game)
 		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 		long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1;
 		int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES;
+		static  int i = 0;
 		if (enemy_frame < 0)
 			enemy_frame = 0;
 		game->dark_priest_current_texture = game->dark_priest_texture[enemy_frame];
 		game->enemy_visible = false;
+		if (enemy_frame == 9)
+		{
+			if (i != 10)
+				game->hp_current_texture = game->hp_texture[i];
+			render_map(game);
+			return (0);
+		}
+		
 	}
 	render_map(game);
 	return (0);
