@@ -34,6 +34,12 @@ def run_c_program(executable, args=None):
         run_command = ["./" + executable] + args
     else:
         run_command = ["./" + executable]
+
+
+    # if use_valgrind:
+    #     run_command = ["valgrind", "--leak-check=full", "--error-exitcode=1"] + run_command
+
+
     result = subprocess.run(run_command, capture_output=True, text=True)
     return result
 
@@ -41,6 +47,11 @@ def run_c_program(executable, args=None):
 def check_output(output, expected_output):
     return output == expected_output
 
+# def check_valgrind_output(valgrind_output):
+#     # Check if Valgrind detected any errors
+#     if "ERROR SUMMARY: 0 errors from 0 contexts" in valgrind_output:
+#         return True
+#     return False
 
 
 def main():
@@ -79,6 +90,14 @@ def main():
             print(f"{RED}\n{i}.", end="")
             print(f"\u274C", end="")
             print(f"The execution was: ./{executable} {args[0]}{RESET}")
+
+
+        # # Run with Valgrind
+        # valgrind_result = run_c_program(executable, args, use_valgrind=True)
+        # if check_valgrind_output(valgrind_result.stderr):
+        #     print(f" {GREEN}[Valgrind: OK]{RESET}", end="")
+        # else:
+        #     print(f" {RED}[Valgrind: Memory Leak]{RESET}", end="")
 
     print("\n\nTest correct maps:")
     for i, test_case_correct in enumerate(test_cases_correct, start=1):
