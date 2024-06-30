@@ -16,10 +16,10 @@
 
 // images
 #define TEXTURE_SIZE 500
-#define NORTH_TEXTURE "./textures/walls/wall_default_texture.xpm"
-#define SOUTH_TEXTURE "./textures/walls/wall_default_texture.xpm"
-#define WEST_TEXTURE "./textures/walls/wall_default_texture.xpm"
-#define EAST_TEXTURE "./textures/walls/wall_default_texture.xpm"
+#define NORTH_TEXTURE "./mandatory/textures/walls/wall_default_texture.xpm"
+#define SOUTH_TEXTURE "./mandatory/textures/walls/wall_default_texture.xpm"
+#define WEST_TEXTURE "./mandatory/textures/walls/wall_default_texture.xpm"
+#define EAST_TEXTURE "./mandatory/textures/walls/wall_default_texture.xpm"
 
 // vectors
 #define SPEED 40.0f

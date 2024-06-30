@@ -45,8 +45,9 @@ void    move_player_forward(t_game *game)
 {
 	game->player_x += game->vectors[game->vec_idx].x * SPEED;
 	game->player_y += game->vectors[game->vec_idx].y * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')	{
+	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
+		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
+	{
 		game->player_x -= game->vectors[game->vec_idx].x * SPEED;
 		game->player_y -= game->vectors[game->vec_idx].y * SPEED;
 		return ;
@@ -58,8 +59,9 @@ void    move_player_backward(t_game *game)
 {
 	game->player_x -= game->vectors[game->vec_idx].x * SPEED;
 	game->player_y -= game->vectors[game->vec_idx].y * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')	{
+	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
+		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
+	{
 		game->player_x += game->vectors[game->vec_idx].x * SPEED;
 		game->player_y += game->vectors[game->vec_idx].y * SPEED;
 		return ;
@@ -71,8 +73,8 @@ void    move_player_left(t_game *game)
 {
 	game->player_x += game->vectors[game->vec_idx].y * SPEED;
 	game->player_y -= game->vectors[game->vec_idx].x * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')
+	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
+		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
 	{
 		game->player_x -= game->vectors[game->vec_idx].y * SPEED;
 		game->player_y += game->vectors[game->vec_idx].x * SPEED;
@@ -85,8 +87,8 @@ void    move_player_right(t_game *game)
 {
 	game->player_x -= game->vectors[game->vec_idx].y * SPEED;
 	game->player_y += game->vectors[game->vec_idx].x * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-		|| game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')
+	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
+		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
 	{
 		game->player_x += game->vectors[game->vec_idx].y * SPEED;
 		game->player_y -= game->vectors[game->vec_idx].x * SPEED;
