@@ -66,6 +66,6 @@ int	loop_hook(t_game *game)
 		rotate_player_right(game);
 	if (game->keys[ESC])
 		close_game(game);
-	render_map(game);
+	render_game(game);
 	return (0);
 }

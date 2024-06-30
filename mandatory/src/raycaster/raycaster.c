@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../incl/raycaster.h"
-#include "../../incl/cub3d.h"
 
 void    calc_dir_vectors(t_game *game)
 {
