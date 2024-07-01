@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:15:56 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:16:07 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:29:38 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,4 @@ int	free_variables_error(t_data *data)
 	if (data->map_error_message != NULL)
 		free(data->map_error_message);
 	exit(errno);
-}
-
-void	free_2d_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	if (array)
-	{
-		while (array[i])
-		{
-			free(array[i]);
-			i++;
-		}
-		free(array);
-	}
-	array = NULL;
 }

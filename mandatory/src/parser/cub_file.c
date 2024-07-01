@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:14:25 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:14:35 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:05:16 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ bool	store_cub_file(t_data *data, char *str)
 	char	*line;
 	int		j;
 
-	// j = 0;
 	if (!count_lines_map(data, str))
 		return (false);
 	data->cub_file = malloc((data->number_lines_map + 1) * sizeof(char *));

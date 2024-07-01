@@ -12,6 +12,7 @@
 # include <fcntl.h> // open file function
 # include <stdbool.h>
 # include <errno.h>
+# include <string.h>
 
 # include "color.h"
 # include "raycaster.h"
@@ -47,12 +48,29 @@ typedef struct s_data
 	char		*texture_east;
 }				t_data;
 
-void	free_2d_array(char **array);
-int		rgb_to_hex(int red, int green, int blue);
-int		store_hex_color(char *line);
+bool			check_extension(t_data *data, char *str, char *extension);
+bool			check_if_map_element(char *str);
+bool			check_player(t_data *data);
+bool			check_xpm_extension(t_data *data, char *str);
+char			*clean_str_color(t_data *data, int i, char surf);
+bool			clean_store_hex_color(t_data *data, int i, char surf);
+bool			count_lines_map(t_data *data, char *str);
+bool			floor_ceiling_lines(char **array, t_data *data, int i);
+void			free_2d_array(char **array);
+int				free_variables_error(t_data *data);
+void			init_vars(t_data *data);
+int				parser(char *str);
+void			replace_error_message(t_data *data, char *str);
+int				rgb_to_hex(int red, int green, int blue);
+int				size_array(char **array);
+bool			store_cub_file(t_data *data, char *str);
+bool			store_hex_color(char *str, t_data *data, char surf);
+bool			store_textures(t_data *data);
+bool			store_surface_colors(t_data *data);
+bool			store_map(t_data *data);
 
-void    init_game(t_game *game);
-void    init_keys(t_game *game);
+void    		init_game(t_game *game);
+void    		init_keys(t_game *game);
 
 
 #endif
