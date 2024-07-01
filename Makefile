@@ -20,7 +20,9 @@ OBJ_DIR = $(PART)/obj
 
 SRC = main.c init_game.c controls/key_bindings.c controls/key_actions.c controls/hooks.c \
         raycaster/raycaster.c raycaster/init_test_map.c raycaster/render.c raycaster/load_images.c \
-        raycaster/utils.c raycaster/utils_2.c hex_color.c ft_free.c
+        raycaster/utils.c raycaster/utils_2.c hex_color.c ft_free.c parser/parser.c parser/checker_utils.c \
+		parser/cub_file.c parser/free_variables_error.c parser/hex_color.c parser/init_vars.c parser/map.c \
+		parser/surfaces_colors.c parser/surfaces.c parser/textures.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
