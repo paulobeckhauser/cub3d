@@ -167,6 +167,7 @@ typedef struct s_game
 	int     mouse_x;
 	int     first_enemy_dist;
 	bool	hp_frame_updated;
+	bool	player_dead;
 }	t_game;
 
 typedef struct  s_raycaster
@@ -183,7 +184,7 @@ typedef struct  s_raycaster
 
 void    calc_dir_vectors(t_game *game);
 void	raycaster(t_game *game);
-void	render_map(t_game *game);
+void	render_game(t_game *game);
 void    render_minimap(t_game *game);
 void    render_minimap_player(t_game *game);
 void	render_gun(t_game *game);

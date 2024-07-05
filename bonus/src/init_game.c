@@ -73,6 +73,7 @@ void    init_game(t_game *game)
 	game->mouse_x = 0;
 	game->first_enemy_dist = -1;
 	game->hp_frame_updated = false;
+	game->player_dead = false;
 }
 
 void    init_keys(t_game *game)

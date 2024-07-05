@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../mandatory/incl/raycaster.h"
 #include "../../incl/raycaster.h"
 
 int	keypress(const int keysymbol, t_game *game)
@@ -174,15 +173,14 @@ int	loop_hook(t_game *game)
 		}
 		if (game->hp_current_texture == game->hp_texture[0] && enemy_frame == 0)
 		{
-			render_game_over(game);
-			return (0);
+			game->player_dead = true;
+			// render_game_over(game);
+			// return (0);
 		}
 	}
-	// if (game->hp_current_texture == game->hp_texture[0])
-	// {
-		// render_game_over(game);
-		// return (0);
-	// }
-	render_game(game);
+	if (!game->player_dead)
+		render_game(game);
+	else
+		render_game_over(game);
 	return (0);
 }

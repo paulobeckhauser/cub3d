@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	calc_dir_vectors(&game);
     load_images_from_dir(&game);
     init_hooks(&game);
-    render_map(&game);
+    render_game(&game);
 	(void)argc;
 	(void)argv;
 	mlx_mouse_hide(game.mlx_ptr, game.win_ptr);

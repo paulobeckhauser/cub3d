@@ -12,7 +12,7 @@
 
 #include "../../incl/cub3d.h"
 
-void	render_map(t_game *game)
+void	render_game(t_game *game)
 {
 	int x;
 	int y;
