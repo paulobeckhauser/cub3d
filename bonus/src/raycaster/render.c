@@ -271,3 +271,24 @@ void render_enemy_line(t_game *game)
 	}
 	game->hit_enemy = false;
 }
+
+void	render_game_over(t_game *game)
+{
+	int	x;
+	int	y;
+	int	color;
+
+	x = 0;
+	while (x < SCREEN_WIDTH)
+	{
+		y = 0;
+		while (y < SCREEN_HEIGHT)
+		{
+			color = get_pixel_color(game->game_over_texture, x, y);
+			game->image->data[y * SCREEN_WIDTH + x] = color;
+			y++;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+}

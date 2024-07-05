@@ -4,19 +4,17 @@ NAME = cub3d
 CC = gcc
 W_FLAGS = -g
 
-# Adjusted to dynamically reference libs based on PART
-MLX_FLAGS = -L./$(PART)/libs/mlx_linux -lmlx -I$(PART)/mlx_linux -lXext -lX11 -lm -lz
-LIBFT_FLAGS = -L./$(PART)/libs/libft -lft
-
-# Adjusted LIBFT_DIR and MLX_DIR to dynamically reference libs based on PART
-LIBFT_DIR = $(PART)/libs/libft
-MLX_DIR = $(PART)/mlx_linux
-
 # Default to mandatory part
 PART = mandatory
 SRC_DIR = $(PART)/src
 INCLUDE_DIR = $(PART)/incl
 OBJ_DIR = $(PART)/obj
+
+MLX_FLAGS = -L./$(PART)/libs/mlx_linux -lmlx -I./$(PART)/mlx_linux -lXext -lX11 -lm -lz
+LIBFT_FLAGS = -L./$(PART)/libs/libft -lft
+
+LIBFT_DIR = $(PART)/libs/libft
+MLX_DIR = $(PART)/mlx_linux
 
 SRC = main.c init_game.c controls/key_bindings.c controls/key_actions.c controls/hooks.c \
         raycaster/raycaster.c raycaster/init_test_map.c raycaster/render.c raycaster/load_images.c \
@@ -27,26 +25,29 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 all: $(NAME)
 
 bonus:
-	$(MAKE) PART=bonus all
+	@echo "Making bonus part"
+	@$(MAKE) PART=bonus all
 
 $(NAME): $(OBJ)
+	@echo "Compiling for PART: $(PART)"
 	@make -s -C $(LIBFT_DIR)
 	@$(CC) $(OBJ) $(W_FLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "Compiling $< for PART: $(PART)"
 	@mkdir -p $(@D)
-	@$(CC) $(W_FLAGS) -I$(INCLUDE_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR) -c $< -o $@
+	@$(CC) $(W_FLAGS) -I./$(INCLUDE_DIR) -I./$(MLX_DIR) -I./$(LIBFT_DIR) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 clean:
-	@make -s clean -C $(LIBFT_DIR)
+	@echo "Cleaning..."
 	@make -s clean -C $(LIBFT_DIR)
 	@rm -rf mandatory/obj bonus/obj
 
 fclean: clean
-	@make -s fclean -C $(LIBFT_DIR)
+	@echo "Full cleaning..."
 	@make -s fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
 

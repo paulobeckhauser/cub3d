@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../../mandatory/incl/raycaster.h"
 #include "../../incl/raycaster.h"
 
 int	keypress(const int keysymbol, t_game *game)
@@ -35,7 +36,7 @@ int	keypress(const int keysymbol, t_game *game)
 
 int keyrelease(const int keysymbol, t_game *game)
 {
-	if (keysymbol == 65307)
+		if (keysymbol == 65307)
 		game->keys[ESC] = false;
 	if (keysymbol == 119)
 		game->keys[W] = false;
@@ -157,20 +158,31 @@ int	loop_hook(t_game *game)
 		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 		long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1;
 		int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES;
-		static  int i = 0;
+		static  int i = 10;
+		if (enemy_frame == 0 && game->hp_frame_updated) {
+			game->hp_frame_updated = false;
+		}
 		if (enemy_frame < 0)
 			enemy_frame = 0;
 		game->dark_priest_current_texture = game->dark_priest_texture[enemy_frame];
 		game->enemy_visible = false;
-		if (enemy_frame == 9)
+		if (enemy_frame == 9 && !game->hp_frame_updated)
 		{
-			if (i != 10)
-				game->hp_current_texture = game->hp_texture[i];
-			render_map(game);
+			if (i != 0)
+				game->hp_current_texture = game->hp_texture[--i];
+			game->hp_frame_updated = true;
+		}
+		if (game->hp_current_texture == game->hp_texture[0] && enemy_frame == 0)
+		{
+			render_game_over(game);
 			return (0);
 		}
-		
 	}
-	render_map(game);
+	// if (game->hp_current_texture == game->hp_texture[0])
+	// {
+		// render_game_over(game);
+		// return (0);
+	// }
+	render_game(game);
 	return (0);
 }

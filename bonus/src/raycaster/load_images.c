@@ -56,4 +56,5 @@ void load_images_from_dir(t_game *game)
 	game->hp_texture[9] = mlx_xpm_file_to_image(game->mlx_ptr, HP_90, &game->img_x, &game->img_y);
 	game->hp_texture[10] = mlx_xpm_file_to_image(game->mlx_ptr, HP_100, &game->img_x, &game->img_y);
 	game->hp_current_texture = mlx_xpm_file_to_image(game->mlx_ptr, HP_100, &game->img_x, &game->img_y);
+	game->game_over_texture = mlx_xpm_file_to_image(game->mlx_ptr, GAME_OVER, &game->img_x, &game->img_y);
 }

@@ -1,5 +1,5 @@
-#ifndef RAYCASTER_TEST_H
-#define RAYCASTER_TEST_H
+#ifndef RAYCASTER_H
+#define RAYCASTER_H
 
 #include "../libs/mlx_linux/mlx.h"
 #include <math.h>
@@ -55,7 +55,7 @@
 #define HP_80 "./bonus/textures/hp/80.xpm"
 #define HP_90 "./bonus/textures/hp/90.xpm"
 #define HP_100 "./bonus/textures/hp/100.xpm"
-
+#define GAME_OVER "./bonus/textures/menu/game_over.xpm"
 
 // vectors
 #define SPEED 40.0f
@@ -146,6 +146,7 @@ typedef struct s_game
 	void    *dark_priest_current_texture;
 	void    *hp_texture[11];
 	void    *hp_current_texture;
+	void	*game_over_texture;
 	long    door_animation_start_time;
 	bool    hit_closed_door;
 	bool	hit_opened_door;
@@ -165,6 +166,7 @@ typedef struct s_game
 	bool    enemy_visible;
 	int     mouse_x;
 	int     first_enemy_dist;
+	bool	hp_frame_updated;
 }	t_game;
 
 typedef struct  s_raycaster
@@ -225,5 +227,6 @@ void    render_enemy_line(t_game *game);
 void    set_enemy_direction(t_raycaster *raycaster, t_game *game);
 int     mouse_press(int button, int x, int y, t_game *game);
 void	render_hp(t_game *game);
+void	render_game_over(t_game *game);
 
-#endif //RAYCASTER_TEST_H
+#endif //RAYCASTER_H
