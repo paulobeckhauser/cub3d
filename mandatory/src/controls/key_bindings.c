@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster.h"
+#include "../../incl/cub3d.h"
 
 int	keypress(const int keysymbol, t_game *game)
 {

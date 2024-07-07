@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/raycaster.h"
 #include "../incl/cub3d.h"
 
 void    init_image(t_image *image, t_game *game)
@@ -25,30 +24,22 @@ void    init_image(t_image *image, t_game *game)
 
 int main(int argc, char **argv)
 {
-    t_game      game;
+	t_game      game;
 	t_image     image;
 	t_vectors   vectors[72];
 	t_data		data;
 
-    parser(argv[1], &data);
-
-	// int i = 0;
-	// while (data.map_element[i])
-	// {
-	// 	printf("%s\n", data.map_element[i]);
-	// 	i++;
-	// }
-	
+	parser(argv[1], &data);
 	init_game(&game, &data);
-    init_image(&image, &game);
-    game.image = &image;
+	init_image(&image, &game);
+	game.image = &image;
 	game.vectors = vectors;
+	game.data = &data;
 	calc_dir_vectors(&game);
-    load_images_from_dir(&game);
-    init_hooks(&game);
-    render_game(&game);
+	load_images_from_dir(&game);
+	init_hooks(&game);
+	render_game(&game);
 	(void)argc;
-	// (void)argv;
 	mlx_loop(game.mlx_ptr);
 	free(game.map);
 	mlx_destroy_image(game.mlx_ptr, image.img);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster.h"
+#include "../../incl/cub3d.h"
 
 int	close_game(t_game *game)
 {

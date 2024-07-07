@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/raycaster.h"
 #include "../incl/cub3d.h"
 
 void    init_game(t_game *game, t_data *data)

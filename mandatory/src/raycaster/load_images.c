@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster.h"
+#include "../../incl/cub3d.h"
 
 void load_images_from_dir(t_game *game)
 {

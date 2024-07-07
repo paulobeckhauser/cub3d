@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster.h"
 #include "../../incl/cub3d.h"
 
 void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game)

@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster.h"
 #include "../../incl/cub3d.h"
-#include <string.h>
 
 char	**init_test_map()
 {

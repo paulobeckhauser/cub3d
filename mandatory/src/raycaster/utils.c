@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster.h"
+#include "../../incl/cub3d.h"
 
 void	mark_player(t_game *game)
 {

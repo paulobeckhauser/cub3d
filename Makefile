@@ -30,8 +30,8 @@ bonus:
 	$(MAKE) PART=bonus all
 
 $(NAME): $(OBJ)
-			@make -s -C $(LIBFT_DIR)
-			@$(CC) $(OBJ) $(W_FLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) -o $(NAME)
+	@make -s -C $(LIBFT_DIR)
+	@$(CC) $(OBJ) $(W_FLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c | $(OBJ_DIR)
 					@mkdir -p $(@D)
@@ -42,11 +42,9 @@ $(OBJ_DIR):
 
 clean:
 	@make -s clean -C $(LIBFT_DIR)
-	@make -s clean -C $(LIBFT_DIR)
 	@rm -rf mandatory/obj bonus/obj
 
 fclean: clean
-	@make -s fclean -C $(LIBFT_DIR)
 	@make -s fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
 
