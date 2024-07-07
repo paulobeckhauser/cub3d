@@ -35,7 +35,7 @@ int	keypress(const int keysymbol, t_game *game)
 
 int keyrelease(const int keysymbol, t_game *game)
 {
-		if (keysymbol == 65307)
+	if (keysymbol == 65307)
 		game->keys[ESC] = false;
 	if (keysymbol == 119)
 		game->keys[W] = false;
@@ -113,7 +113,7 @@ int	loop_hook(t_game *game)
 			game->keys[MOUSE_LEFT_CLICK] = false;
 			gun_frame = 0;
 		}
-		game->gun_current_texture = game->gun_texture[gun_frame];
+		game->textures->gun_current_texture = game->textures->gun_texture[gun_frame];
 		if (gun_frame == 0 && game->body_hit[SCREEN_WIDTH / 2] == true)
 			game->map[game->enemy_y][game->enemy_x] = '0';
 	}
@@ -131,7 +131,7 @@ int	loop_hook(t_game *game)
 			game->door_are_opening = false;
 			door_frame = DOOR_FRAMES - 1;
 		}
-		game->door_current_texture = game->door_texture[door_frame];
+		game->textures->door_current_texture = game->textures->door_texture[door_frame];
 		
 	}
 	if (game->door_are_closing)
@@ -148,7 +148,7 @@ int	loop_hook(t_game *game)
 			game->door_are_closing = false;
 			door_frame = 0;
 		}
-		game->door_current_texture = game->door_texture[door_frame];
+		game->textures->door_current_texture = game->textures->door_texture[door_frame];
 	}
 	if (game->enemy_visible)
 	{
@@ -163,20 +163,16 @@ int	loop_hook(t_game *game)
 		}
 		if (enemy_frame < 0)
 			enemy_frame = 0;
-		game->dark_priest_current_texture = game->dark_priest_texture[enemy_frame];
+		game->textures->dark_priest_current_texture = game->textures->dark_priest_texture[enemy_frame];
 		game->enemy_visible = false;
 		if (enemy_frame == 9 && !game->hp_frame_updated)
 		{
 			if (i != 0)
-				game->hp_current_texture = game->hp_texture[--i];
+				game->textures->hp_current_texture = game->textures->hp_texture[--i];
 			game->hp_frame_updated = true;
 		}
-		if (game->hp_current_texture == game->hp_texture[0] && enemy_frame == 0)
-		{
+		if (game->textures->hp_current_texture == game->textures->hp_texture[0] && enemy_frame == 0)
 			game->player_dead = true;
-			// render_game_over(game);
-			// return (0);
-		}
 	}
 	if (!game->player_dead)
 		render_game(game);

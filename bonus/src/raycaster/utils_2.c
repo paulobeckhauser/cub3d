@@ -70,25 +70,12 @@ bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
 	return (false);
 }
 
-// bool is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
-// {
-// 	float enemy_x = 1; // Enemy's world coordinates
-// 	float enemy_y = 5;
-//
-// 	if (fabs(raycaster->x_iterator - enemy_x) < 0.5 && fabs(raycaster->y_iterator - enemy_y) < 0.5)
-// 	{
-// 		game->hit_enemy = true;
-// 		return true;
-// 	}
-// 	return false;
-// }
-
 void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction)
 {
 	if ((int)raycaster->x_iterator % (int)game->square_size == 0
 	    && (int)raycaster->y_iterator % (int)game->square_size == 0)
 		return ;
-	else if ((int)raycaster->x_iterator % (int)game->square_size == 0)
+	if ((int)raycaster->x_iterator % (int)game->square_size == 0)
 	{
 		if (raycaster->dir_x >= 0)
 			*direction = EAST;
@@ -104,22 +91,19 @@ void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction)
 	}
 }
 
-void set_enemy_direction(t_raycaster *raycaster, t_game *game)
-{
-	double dx = game->player_x - raycaster->colis_x;
-	double dy = game->player_y - raycaster->colis_y;
-	double angle = atan2(dy, dx);
+// void set_enemy_direction(t_raycaster *raycaster, t_game *game)
+// {
+	// double dx = game->player_x - raycaster->colis_x;
+	// double dy = game->player_y - raycaster->colis_y;
+	// double angle = atan2(dy, dx);
 	
-	// Convert the angle to degrees
-	double angle_degrees = angle * 180 / M_PI;
+	// double angle_degrees = angle * 180 / M_PI;
 	
-	// Adjust the angle to be between 0 and 360
-	if (angle_degrees < 0)
-		angle_degrees += 360;
+	// if (angle_degrees < 0)
+		// angle_degrees += 360;
 	
-	// Set the enemy direction based on the angle
-	game->enemy_direction = (int)round(angle_degrees / 45) % 8;
-}
+	// game->enemy_direction = (int)round(angle_degrees / 45) % 8;
+// }
 
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle, float *dist)
 {

@@ -21,22 +21,22 @@ int	close_game(t_game *game)
 
 void    rotate_player_left(t_game *game)
 {
-	game->ray_main_angle -= 10;
+	game->ray_main_angle -= 2;
 	if (game->ray_main_angle <= 0)
 		game->ray_main_angle += 0;
 	--game->vec_idx;
 	if (game->vec_idx == -1)
-		game->vec_idx = 35;
+		game->vec_idx = 179;
     render_game(game);
 }
 
 void    rotate_player_right(t_game *game)
 {
-	game->ray_main_angle += 10;
+	game->ray_main_angle += 2;
 	if (game->ray_main_angle >= 360)
 		game->ray_main_angle -= 360;
 	++game->vec_idx;
-	if (game->vec_idx == 36)
+	if (game->vec_idx == 180)
 		game->vec_idx = 0;
     render_game(game);
 }

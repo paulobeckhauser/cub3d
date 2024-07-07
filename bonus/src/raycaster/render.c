@@ -66,9 +66,9 @@ void    render_minimap(t_game *game)
 				while (tex_x < MINIMAP_SCALE)
 				{
 					if (game->map[map_y][map_x] == '1')
-						color = get_pixel_color(game->wall_texture, tex_x, tex_y);
+						color = get_pixel_color(game->textures->wall_texture, tex_x, tex_y);
 					else
-						color = get_pixel_color(game->floor_texture, tex_x, tex_y);
+						color = get_pixel_color(game->textures->floor_texture, tex_x, tex_y);
 					game->image->data[(map_y * MINIMAP_SCALE + tex_y) * SCREEN_WIDTH + (map_x * MINIMAP_SCALE + tex_x)] = color;
 					tex_x++;
 				}
@@ -95,7 +95,7 @@ void    render_minimap_player(t_game *game)
 		tex_x = 0;
 		while (tex_x < MINIMAP_SCALE)
 		{
-			color = get_pixel_color(game->player_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->player_texture, tex_x, tex_y);
 			game->image->data[(minimap_player_y + tex_y) * SCREEN_WIDTH + (minimap_player_x + tex_x)] = color;
 			tex_x++;
 		}
@@ -119,7 +119,7 @@ void	render_gun(t_game *game)
 		{
 			tex_x = x - (SCREEN_WIDTH / 2 + 150);
 			tex_y = y - (SCREEN_HEIGHT - 357);
-			color = get_pixel_color(game->gun_current_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->gun_current_texture, tex_x, tex_y);
 			if (color != rgb_to_hex(255, 0, 255))
 				game->image->data[y * SCREEN_WIDTH + x] = color;
 			y++;
@@ -144,7 +144,7 @@ void	render_hp(t_game *game)
 		{
 			tex_x = x;
 			tex_y = y - (SCREEN_HEIGHT - 77);
-			color = get_pixel_color(game->hp_current_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->hp_current_texture, tex_x, tex_y);
 			game->image->data[y * SCREEN_WIDTH + x] = color;
 			y++;
 		}
@@ -190,13 +190,13 @@ void    render_wall_line(t_game *game)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
 		if (game->wall_direction == NORTH)
-			color = get_pixel_color(game->north_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->north_texture, tex_x, tex_y);
 		else if (game->wall_direction == SOUTH)
-			color = get_pixel_color(game->south_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->south_texture, tex_x, tex_y);
 		else if (game->wall_direction == WEST)
-			color = get_pixel_color(game->west_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->west_texture, tex_x, tex_y);
 		else if (game->wall_direction == EAST)
-			color = get_pixel_color(game->east_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->east_texture, tex_x, tex_y);
 		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
@@ -226,7 +226,7 @@ void    render_door_line(t_game *game)
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		color = get_pixel_color(game->door_current_texture, tex_x, tex_y);
+		color = get_pixel_color(game->textures->door_current_texture, tex_x, tex_y);
 		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
@@ -260,7 +260,7 @@ void render_enemy_line(t_game *game)
 		if (tex_y < 0) tex_y = 0;
 		if (tex_y >= TEXTURE_SIZE)
 			tex_y = TEXTURE_SIZE - 1;
-		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
+		color = get_pixel_color(game->textures->dark_priest_current_texture, tex_x, tex_y);
 		if (color != rgb_to_hex(255, 0, 255) && game->enemy_dists[game->dist_idx] < game->wall_dists[game->dist_idx]
 			&& (game->open_door_visible || game->door_dists[game->dist_idx] == 0 || game->enemy_dists[game->dist_idx] < game->door_dists[game->dist_idx]))
 		{
@@ -284,7 +284,7 @@ void	render_game_over(t_game *game)
 		y = 0;
 		while (y < SCREEN_HEIGHT)
 		{
-			color = get_pixel_color(game->game_over_texture, x, y);
+			color = get_pixel_color(game->textures->game_over_texture, x, y);
 			game->image->data[y * SCREEN_WIDTH + x] = color;
 			y++;
 		}

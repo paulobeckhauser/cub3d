@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: parallels <parallels@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/05 16:27:27 by parallels         #+#    #+#             */
+/*   Updated: 2024/07/05 16:27:27 by parallels        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAYCASTER_H
 #define RAYCASTER_H
 
@@ -58,7 +70,7 @@
 #define GAME_OVER "./bonus/textures/menu/game_over.xpm"
 
 // vectors
-#define SPEED 40.0f
+#define SPEED 20.0f
 #define DOOR_OPEN_DISTANCE 170
 
 // wall_directions
@@ -86,7 +98,8 @@
 #define GUN_FRAMES 5
 #define GUN_FRAME_DURATION 600000
 
-typedef struct	s_image {
+typedef struct	s_image
+{
 	void	*img;
 	int     *data;
 	int		bits_per_pixel;
@@ -99,6 +112,32 @@ typedef struct s_vectors
 	float x;
 	float y;
 }   t_vectors;
+
+typedef struct s_enemy
+{
+	int	x;
+	int	y;
+}	t_enemy;
+
+typedef struct s_textures
+{
+	void    *north_texture;
+	void    *south_texture;
+	void    *west_texture;
+	void    *east_texture;
+	void    *floor_texture;
+	void    *wall_texture;
+	void	*player_texture;
+	void	*gun_texture[5];
+	void    *gun_current_texture;
+	void	*door_texture[5];
+	void    *door_current_texture;
+	void    *dark_priest_texture[10];
+	void    *dark_priest_current_texture;
+	void    *hp_texture[11];
+	void    *hp_current_texture;
+	void	*game_over_texture;
+}	t_textures;
 
 typedef struct s_game
 {
@@ -123,7 +162,6 @@ typedef struct s_game
 	int     dist_idx;
 	int     wall_direction;
 	int     door_direction;
-	int     enemy_direction;
 	int		enemy_x;
 	int		enemy_y;
 	int     img_x;
@@ -131,22 +169,6 @@ typedef struct s_game
 	bool    keys[9];
 	t_vectors *vectors;
 	int     vec_idx;
-	void    *north_texture;
-	void    *south_texture;
-	void    *west_texture;
-	void    *east_texture;
-	void    *floor_texture;
-	void    *wall_texture;
-	void	*player_texture;
-	void	*gun_texture[5];
-	void    *gun_current_texture;
-	void	*door_texture[5];
-	void    *door_current_texture;
-	void    *dark_priest_texture[10];
-	void    *dark_priest_current_texture;
-	void    *hp_texture[11];
-	void    *hp_current_texture;
-	void	*game_over_texture;
 	long    door_animation_start_time;
 	bool    hit_closed_door;
 	bool	hit_opened_door;
@@ -168,6 +190,7 @@ typedef struct s_game
 	int     first_enemy_dist;
 	bool	hp_frame_updated;
 	bool	player_dead;
+	t_textures	*textures;
 }	t_game;
 
 typedef struct  s_raycaster
@@ -225,7 +248,6 @@ bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
 void    save_closest_distance(float dist, float *prev_dist, float *closest_dist);
 void    render_enemy_line(t_game *game);
-void    set_enemy_direction(t_raycaster *raycaster, t_game *game);
 int     mouse_press(int button, int x, int y, t_game *game);
 void	render_hp(t_game *game);
 void	render_game_over(t_game *game);

@@ -23,16 +23,20 @@ void    init_image(t_image *image, t_game *game)
 	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
 }
 
+//int	count_enemies()
+
 int main(int argc, char **argv)
 {
     t_game      game;
+	t_textures	textures;
 	t_image     image;
-	t_vectors   vectors[72];
+	t_vectors   vectors[180];
 
     init_game(&game);
     init_image(&image, &game);
     game.image = &image;
 	game.vectors = vectors;
+	game.textures = &textures;
 	calc_dir_vectors(&game);
     load_images_from_dir(&game);
     init_hooks(&game);

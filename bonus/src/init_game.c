@@ -48,9 +48,8 @@ void    init_game(t_game *game)
 	game->dist_idx = 0;
 	game->wall_direction = 0;
 	game->door_direction = 0;
-	game->enemy_direction = 0;
-	game->enemy_x = 0;
-	game->enemy_y = 0;
+	// game->enemy_x = 0;
+	// game->enemy_y = 0;
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);

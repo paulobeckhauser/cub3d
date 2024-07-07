@@ -18,10 +18,10 @@ void    calc_dir_vectors(t_game *game)
 	float	angle_incr_radians;
 	float	angle_iter;
 	
-	angle_incr_radians = to_radians(10.0f);
+	angle_incr_radians = to_radians(2.0f);
 	angle_iter = to_radians(game->ray_main_angle);
 	game->vec_idx = 0;
-	while (game->vec_idx < 36)
+	while (game->vec_idx < 180)
 	{
 		game->vectors[game->vec_idx].x = cosf(angle_iter);
 		game->vectors[game->vec_idx].y = sinf(angle_iter);
@@ -72,9 +72,7 @@ void	raycaster(t_game *game)
 		if (game->hit_opened_door || game->hit_closed_door)
 			render_door_line(game);
 		if (game->hit_enemy)
-		{
 			render_enemy_line(game);
-		}
 		else
 			game->first_enemy_dist = -1;
 		angle_iter += angle_incr_radians;
@@ -131,7 +129,7 @@ void    cast_ray(t_game *game, float ray_angle)
 			}
 			if (is_collision_point_enemy(&raycaster, game))
 			{
-				set_enemy_direction(&raycaster, game);
+				// set_enemy_direction(&raycaster, game);
 				calc_ray_distance(&raycaster, game, ray_angle, &game->enemy_dists[game->dist_idx]);
 				save_closest_distance(game->enemy_dists[game->dist_idx], &game->prev_enemy_distance, &game->closest_enemy_distance);
 				game->ray_enemy_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
