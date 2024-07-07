@@ -1,6 +1,6 @@
 NAME = cub3d
 CC = cc
-W_FLAGS = #-Wall -Wextra -Werror #-fsanitize=address
+W_FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 # Default to mandatory part
 PART = mandatory
@@ -10,7 +10,7 @@ OBJ_DIR = $(PART)/obj
 
 # Adjusted LIBFT_DIR and MLX_DIR to dynamically reference libs based on PART
 LIBFT_DIR = $(PART)/libs/libft
-MLX_DIR = $(PART)/mlx_linux
+MLX_DIR = $(PART)/libs/mlx_linux
 
 # Adjusted to dynamically reference libs based on PART
 MLX_FLAGS = -L./$(PART)/libs/mlx_linux -lmlx -I$(PART)/mlx_linux -lXext -lX11 -lm -lz

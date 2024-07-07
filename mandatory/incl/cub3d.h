@@ -119,6 +119,10 @@ typedef struct s_game
 	int			img_x;
 	int			img_y;
 	bool		keys[7];
+	void		*north_texture;
+	void		*south_texture;
+	void		*west_texture;
+	void		*east_texture;
 	t_vectors	*vectors;
 	int			vec_idx;
 	t_data		*data;

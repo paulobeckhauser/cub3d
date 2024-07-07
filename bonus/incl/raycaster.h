@@ -56,7 +56,6 @@
 #define HP_90 "./bonus/textures/hp/90.xpm"
 #define HP_100 "./bonus/textures/hp/100.xpm"
 
-
 // vectors
 #define SPEED 40.0f
 #define DOOR_OPEN_DISTANCE 170
