@@ -8,6 +8,8 @@
 #include <stdbool.h>
 #include <sys/time.h>
 
+// #include "cub3d.h"
+
 // screen
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
@@ -100,6 +102,7 @@ void    render_wall_line(t_game *game);
 void	cast_ray(t_game *game, float ray_angle);
 char	**init_test_map(void);
 void    load_images_from_dir(t_game *game);
+// void load_images_from_dir(t_game *game, t_data *data);
 void	mark_player(t_game *game);
 
 float	to_radians(float degrees);

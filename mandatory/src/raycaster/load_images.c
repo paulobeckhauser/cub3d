@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:33:19 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 16:33:21 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:51:19 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

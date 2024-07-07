@@ -59,7 +59,8 @@ bool			floor_ceiling_lines(char **array, t_data *data, int i);
 void			free_2d_array(char **array);
 int				free_variables_error(t_data *data);
 void			init_vars(t_data *data);
-int				parser(char *str);
+// int				parser(char *str);
+int				parser(char *str, t_data *data);
 void			replace_error_message(t_data *data, char *str);
 int				rgb_to_hex(int red, int green, int blue);
 int				size_array(char **array);
@@ -69,7 +70,8 @@ bool			store_textures(t_data *data);
 bool			store_surface_colors(t_data *data);
 bool			store_map(t_data *data);
 
-void    		init_game(t_game *game);
+// void    		init_game(t_game *game);
+void    init_game(t_game *game, t_data *data);
 void    		init_keys(t_game *game);
 
 

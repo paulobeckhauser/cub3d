@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:25:26 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/06/05 12:25:27 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:33:00 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/raycaster.h"
 #include "../incl/cub3d.h"
 
-void    init_game(t_game *game)
+void    init_game(t_game *game, t_data *data)
 {
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
@@ -28,11 +28,28 @@ void    init_game(t_game *game)
 		exit(EXIT_FAILURE);
 	}
 	game->square_size = 100;
-	game->map = init_test_map();
-	mark_player(game);
+	// game->map = init_test_map();
+	game->map = data->map_element;
+	// mark_player(game);
+
+	game->player_x = data->player->x;
+	game->player_y = data->player->y;
+	
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
-	game->ray_main_angle = 280.0f;
+
+	if (data->player->direction == 'N')
+		game->ray_main_angle = 280.0f;
+
+	else if (data->player->direction == 'W')
+		game->ray_main_angle = 190.0f;
+
+	else if (data->player->direction == 'S')
+		game->ray_main_angle = 100.0f;
+	else
+		game->ray_main_angle = 10.0f;
+	
+	// game->ray_main_angle = 280.0f;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
 	game->dist_idx = 0;

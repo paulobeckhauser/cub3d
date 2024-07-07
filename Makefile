@@ -1,7 +1,6 @@
-
 NAME = cub3d
 CC = cc
-W_FLAGS = -Wall -Wextra -Werror #-fsanitize=address
+W_FLAGS = #-Wall -Wextra -Werror #-fsanitize=address
 
 # Default to mandatory part
 PART = mandatory

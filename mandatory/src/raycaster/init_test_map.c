@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_test_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:57:55 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 15:57:56 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:27:25 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../incl/cub3d.h"
 #include <string.h>
 
-char	**init_test_map(void)
+char	**init_test_map()
 {
 	char	**map;
 	int i;
