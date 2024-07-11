@@ -12,29 +12,6 @@
 
 #include "../../incl/cub3d.h"
 
-void	mark_player(t_game *game)
-{
-	int	x;
-	int	y;
-	
-	y = 0;
-	while (game->map[y])
-	{
-		x = 0;
-		while (game->map[y][x])
-		{
-			if (game->map[y][x] == 'N')
-			{
-				game->data->player->x = (float)x * game->square_size + game->square_size / 2;
-				game->data->player->y = (float)y * game->square_size + game->square_size / 2;
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
 float	to_radians(float degrees)
 {
 	return (degrees * (M_PI / 180));
@@ -42,8 +19,8 @@ float	to_radians(float degrees)
 
 void    calc_directions(t_raycaster *raycaster, t_game *game)
 {
-	raycaster->dir_x = game->ray_new_x - game->data->player->x;
-	raycaster->dir_y = game->ray_new_y - game->data->player->y;
+	raycaster->dir_x = game->ray_new_x - (float)game->data->player->x;
+	raycaster->dir_y = game->ray_new_y - (float)game->data->player->y;
 	raycaster->len = sqrtf(raycaster->dir_x * raycaster->dir_x + raycaster->dir_y * raycaster->dir_y);
 	raycaster->dir_x /= raycaster->len;
 	raycaster->dir_y /= raycaster->len;

@@ -403,6 +403,9 @@ static void	replace_player_for_floor(t_data *data)
 				|| data->map_element[i][j] == 'W'
 				|| data->map_element[i][j] == 'E')
 			{
+				data->player->x = j;
+				data->player->y = i;
+				data->player->direction = data->map_element[i][j];
 				data->map_element[i][j] = '0';
 			}
 			j++;

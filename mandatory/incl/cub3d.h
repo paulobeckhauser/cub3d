@@ -105,9 +105,6 @@ typedef struct s_game
 	void		*win_ptr;
 	t_image		*image;
 	float		square_size;
-	char		**map;
-	float		player_x;
-	float		player_y;
 	float		ray_new_x;
 	float		ray_new_y;
 	float		ray_main_angle;
@@ -136,7 +133,6 @@ void	cast_ray(t_game *game, float ray_angle);
 char	**init_test_map(void);
 void    load_images_from_dir(t_game *game);
 // void load_images_from_dir(t_game *game, t_data *data);
-void	mark_player(t_game *game);
 
 float	to_radians(float degrees);
 void    calc_directions(t_raycaster *raycaster, t_game *game);

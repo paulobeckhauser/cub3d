@@ -27,10 +27,6 @@ void    init_game(t_game *game, t_data *data)
 		exit(EXIT_FAILURE);
 	}
 	game->square_size = 100;
-	// game->map = init_test_map();
-	game->map = data->map_element;
-	// mark_player(game);
-
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
 	if (data->player->direction == 'N')
