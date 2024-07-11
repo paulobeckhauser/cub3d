@@ -43,13 +43,13 @@ void    rotate_player_right(t_game *game)
 
 void    move_player_forward(t_game *game)
 {
-	game->player_x += game->vectors[game->vec_idx].x * SPEED;
-	game->player_y += game->vectors[game->vec_idx].y * SPEED;
-	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
-		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
+	game->data->player->x += game->vectors[game->vec_idx].x * SPEED;
+	game->data->player->y += game->vectors[game->vec_idx].y * SPEED;
+	if (game->data->player->x < 0 || game->data->player->x > SCREEN_WIDTH
+		|| game->data->player->y < 0 || game->data->player->y > SCREEN_HEIGHT)
 	{
-		game->player_x -= game->vectors[game->vec_idx].x * SPEED;
-		game->player_y -= game->vectors[game->vec_idx].y * SPEED;
+		game->data->player->x -= game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->y -= game->vectors[game->vec_idx].y * SPEED;
 		return ;
 	}
 	render_game(game);
@@ -57,13 +57,13 @@ void    move_player_forward(t_game *game)
 
 void    move_player_backward(t_game *game)
 {
-	game->player_x -= game->vectors[game->vec_idx].x * SPEED;
-	game->player_y -= game->vectors[game->vec_idx].y * SPEED;
-	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
-		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
+	game->data->player->x -= game->vectors[game->vec_idx].x * SPEED;
+	game->data->player->y -= game->vectors[game->vec_idx].y * SPEED;
+	if (game->data->player->x < 0 || game->data->player->x > SCREEN_WIDTH
+		|| game->data->player->y < 0 || game->data->player->y > SCREEN_HEIGHT)
 	{
-		game->player_x += game->vectors[game->vec_idx].x * SPEED;
-		game->player_y += game->vectors[game->vec_idx].y * SPEED;
+		game->data->player->x += game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->y += game->vectors[game->vec_idx].y * SPEED;
 		return ;
 	}
 	render_game(game);
@@ -71,13 +71,13 @@ void    move_player_backward(t_game *game)
 
 void    move_player_left(t_game *game)
 {
-	game->player_x += game->vectors[game->vec_idx].y * SPEED;
-	game->player_y -= game->vectors[game->vec_idx].x * SPEED;
-	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
-		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
+	game->data->player->x += game->vectors[game->vec_idx].y * SPEED;
+	game->data->player->y -= game->vectors[game->vec_idx].x * SPEED;
+	if (game->data->player->x < 0 || game->data->player->x > SCREEN_WIDTH
+		|| game->data->player->y < 0 || game->data->player->y > SCREEN_HEIGHT)
 	{
-		game->player_x -= game->vectors[game->vec_idx].y * SPEED;
-		game->player_y += game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->x -= game->vectors[game->vec_idx].y * SPEED;
+		game->data->player->y += game->vectors[game->vec_idx].x * SPEED;
 		return ;
 	}
 	render_game(game);
@@ -85,13 +85,13 @@ void    move_player_left(t_game *game)
 
 void    move_player_right(t_game *game)
 {
-	game->player_x -= game->vectors[game->vec_idx].y * SPEED;
-	game->player_y += game->vectors[game->vec_idx].x * SPEED;
-	if (game->player_x < 0 || game->player_x > SCREEN_WIDTH
-		|| game->player_y < 0 || game->player_y > SCREEN_HEIGHT)
+	game->data->player->x -= game->vectors[game->vec_idx].y * SPEED;
+	game->data->player->y += game->vectors[game->vec_idx].x * SPEED;
+	if (game->data->player->x < 0 || game->data->player->x > SCREEN_WIDTH
+		|| game->data->player->y < 0 || game->data->player->y > SCREEN_HEIGHT)
 	{
-		game->player_x += game->vectors[game->vec_idx].y * SPEED;
-		game->player_y -= game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->x += game->vectors[game->vec_idx].y * SPEED;
+		game->data->player->y -= game->vectors[game->vec_idx].x * SPEED;
 		return ;
 	}
 	render_game(game);

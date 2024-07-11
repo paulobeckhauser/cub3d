@@ -52,8 +52,8 @@ void	raycaster(t_game *game)
 	{
 		dir_x = cosf(angle_iter);
 		dir_y = sinf(angle_iter);
-		game->ray_new_x = game->player_x + dir_x * 2 * SCREEN_WIDTH;
-		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_WIDTH;
+		game->ray_new_x = (float)game->data->player->x + dir_x * 2 * SCREEN_WIDTH;
+		game->ray_new_y = (float)game->data->player->y + dir_y * 2 * SCREEN_WIDTH;
 		cast_ray(game, angle_iter);
 		render_wall_line(game);
 		angle_iter += angle_incr_radians;
@@ -70,8 +70,8 @@ void    cast_ray(t_game *game, float ray_angle)
 	t_raycaster raycaster;
 	
 	calc_directions(&raycaster, game);
-	raycaster.x_iterator = game->player_x;
-	raycaster.y_iterator = game->player_y;
+	raycaster.x_iterator = (float)game->data->player->x;
+	raycaster.y_iterator = (float)game->data->player->y;
 	raycaster.speed = 1;
 	while (((raycaster.dir_x >= 0 && raycaster.x_iterator <= game->ray_new_x)
 	        || (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))
@@ -81,7 +81,7 @@ void    cast_ray(t_game *game, float ray_angle)
 		if (is_ray_on_square_edge(&raycaster, game))
 		{
 			calc_collision_point_x_y(&raycaster, game);
-			if (raycaster.colis_x < 0 || raycaster.colis_x >= 10 || raycaster.colis_y < 0 || raycaster.colis_y >= 10)
+			if (raycaster.colis_x < 0 || raycaster.colis_x >= 1000 || raycaster.colis_y < 0 || raycaster.colis_y >= 1000)
 				return ;
 			if (is_collision_point_wall(&raycaster, game))
 			{

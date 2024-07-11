@@ -30,6 +30,10 @@ int main(int argc, char **argv)
 	t_data		data;
 
 	parser(argv[1], &data);
+	printf("%s\n", data.texture_north);
+	printf("%s\n", data.texture_south);
+	printf("%s\n", data.texture_west);
+	printf("%s\n", data.texture_east);
 	init_game(&game, &data);
 	init_image(&image, &game);
 	game.image = &image;

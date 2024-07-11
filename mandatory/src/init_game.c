@@ -31,24 +31,16 @@ void    init_game(t_game *game, t_data *data)
 	game->map = data->map_element;
 	// mark_player(game);
 
-	game->player_x = data->player->x;
-	game->player_y = data->player->y;
-	
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
-
 	if (data->player->direction == 'N')
 		game->ray_main_angle = 280.0f;
-
 	else if (data->player->direction == 'W')
 		game->ray_main_angle = 190.0f;
-
 	else if (data->player->direction == 'S')
 		game->ray_main_angle = 100.0f;
 	else
 		game->ray_main_angle = 10.0f;
-	
-	// game->ray_main_angle = 280.0f;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
 	game->dist_idx = 0;
