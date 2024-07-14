@@ -42,6 +42,10 @@ void	raycaster(t_game *game)
 
 	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
 	angle_iter = to_radians(game->ray_main_angle) - to_radians(30.0f);
+	if (angle_iter < 0)
+		angle_iter += 2 * M_PI;
+	else if (angle_iter > 2 * M_PI)
+		angle_iter -= 2 * M_PI;
 	dir_x = 0;
 	dir_y = 0;
 	game->dist_idx = 0;
