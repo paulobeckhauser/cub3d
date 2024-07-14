@@ -35,10 +35,6 @@ int main(int argc, char **argv)
 	game.image = &image;
 	game.vectors = vectors;
 	game.data = &data;
-	// mark_player(&game);
-	printf("%i\n", data.player->x);
-	printf("%i\n", data.player->y);
-	printf("%c\n", data.player->direction);
 	calc_dir_vectors(&game);
 	load_images_from_dir(&game);
 	init_hooks(&game);

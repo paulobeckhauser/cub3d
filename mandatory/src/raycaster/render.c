@@ -30,17 +30,14 @@ void	render_background(t_game *game)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++] = rgb_to_hex(50, 50, 170);
+			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_ceiling;
 		y++;
 	}
 	while (y < SCREEN_HEIGHT)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++]
-					= rgb_to_hex((int)(20 + (y - SCREEN_HEIGHT / 2) * 0.01),
-								 (int)(10 + (y - SCREEN_HEIGHT / 2) * 0.01),
-								 (int)(40 + (y - SCREEN_HEIGHT / 2) * 0.01));
+			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_floor;
 		y++;
 	}
 }

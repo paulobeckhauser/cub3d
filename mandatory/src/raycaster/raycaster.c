@@ -91,6 +91,8 @@ void    cast_ray(t_game *game, float ray_angle)
 			calc_collision_point_x_y(&raycaster, game);
 //			if (raycaster.colis_x < 0 || raycaster.colis_x >= 1000 || raycaster.colis_y < 0 || raycaster.colis_y >= 1000)
 //				return ;
+//			if(raycaster.colis_x < 0 || raycaster.colis_y < 0)
+//				return ;
 			if (is_collision_point_wall(&raycaster, game))
 			{
 				set_ray_direction(&raycaster, game, &game->wall_direction);

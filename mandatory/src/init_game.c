@@ -30,13 +30,13 @@ void    init_game(t_game *game, t_data *data)
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
 	if (data->player->direction == 'N')
-		game->ray_main_angle = 280.0f;
+		game->ray_main_angle = 270;
 	else if (data->player->direction == 'W')
-		game->ray_main_angle = 190.0f;
+		game->ray_main_angle = 180;
 	else if (data->player->direction == 'S')
-		game->ray_main_angle = 100.0f;
+		game->ray_main_angle = 90;
 	else
-		game->ray_main_angle = 10.0f;
+		game->ray_main_angle = 0;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
 	game->dist_idx = 0;
