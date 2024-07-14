@@ -22,29 +22,6 @@ void    init_image(t_image *image, t_game *game)
 	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
 }
 
-void	mark_player(t_game *game)
-{
-	int x = 0;
-	int y = 0;
-	while (game->data->map_element[y])
-	{
-		x = 0;
-		while (game->data->map_element[y][x])
-		{
-			printf("%i %i %c\n", y, x, game->data->map_element[y][x]);
-			if (game->data->map_element[y][x] == 'N' || game->data->map_element[y][x] == 'S' || game->data->map_element[y][x] == 'W' || game->data->map_element[y][x] == 'E')
-			{
-				game->data->player->x = x;
-				game->data->player->y = y;
-				game->data->player->direction = game->data->map_element[y][x];
-				return;
-			}
-			++x;
-		}
-		++y;
-	}
-}
-
 int main(int argc, char **argv)
 {
 	t_game      game;
