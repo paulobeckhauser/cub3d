@@ -254,7 +254,6 @@ bool			store_textures(t_data *data);
 bool			store_surface_colors(t_data *data);
 bool			store_map(t_data *data);
 void	render_background(t_game *game);
-// void    		init_game(t_game *game);
 void    		init_keys(t_game *game);
 
 int checker_map(char *str);
