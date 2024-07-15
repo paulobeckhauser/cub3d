@@ -14,18 +14,6 @@
 
 void	render_game(t_game *game)
 {
-	render_background(game);
-	raycaster(game);
-	render_crosshair(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
-	render_minimap(game);
-	render_minimap_player(game);
-	render_gun(game);
-	render_hp(game);
-}
-
-void	render_background(t_game *game)
-{
 	int x;
 	int y;
 	
@@ -35,16 +23,26 @@ void	render_background(t_game *game)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_ceiling;
+			game->image->data[y * SCREEN_WIDTH + x++] = rgb_to_hex(50, 50, 170); // Very dark blue
 		y++;
 	}
 	while (y < SCREEN_HEIGHT)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_floor;
+			game->image->data[y * SCREEN_WIDTH + x++]
+					= rgb_to_hex((int)(20 + (y - SCREEN_HEIGHT / 2) * 0.01), // Dark gradient from blue to violet
+					             (int)(10 + (y - SCREEN_HEIGHT / 2) * 0.01),
+					             (int)(40 + (y - SCREEN_HEIGHT / 2) * 0.01));
 		y++;
 	}
+	raycaster(game);
+	render_crosshair(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+	render_minimap(game);
+	render_minimap_player(game);
+	render_gun(game);
+	render_hp(game);
 }
 
 void    render_minimap(t_game *game)
@@ -88,8 +86,8 @@ void    render_minimap_player(t_game *game)
 	int tex_y;
 	int color;
 	
-	int minimap_player_x = (int)(game->data->player->x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
-	int minimap_player_y = (int)(game->data->player->y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
+	int minimap_player_x = (int)(game->player_x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
+	int minimap_player_y = (int)(game->player_y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
 	
 	tex_y = 0;
 	while (tex_y < MINIMAP_SCALE)

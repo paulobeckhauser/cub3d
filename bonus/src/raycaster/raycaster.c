@@ -64,8 +64,8 @@ void	raycaster(t_game *game)
 	{
 		dir_x = cosf(angle_iter);
 		dir_y = sinf(angle_iter);
-		game->ray_new_x = game->data->player->x + dir_x * 2 * SCREEN_WIDTH;
-		game->ray_new_y = game->data->player->y + dir_y * 2 * SCREEN_WIDTH;
+		game->ray_new_x = game->player_x + dir_x * 2 * SCREEN_WIDTH;
+		game->ray_new_y = game->player_y + dir_y * 2 * SCREEN_WIDTH;
 		cast_ray(game, angle_iter);
 		render_wall_line(game);
 		if (game->hit_opened_door || game->hit_closed_door)
@@ -89,8 +89,8 @@ void    cast_ray(t_game *game, float ray_angle)
 	t_raycaster raycaster;
 	
 	calc_directions(&raycaster, game);
-	raycaster.x_iterator = game->data->player->x;
-	raycaster.y_iterator = game->data->player->y;
+	raycaster.x_iterator = game->player_x;
+	raycaster.y_iterator = game->player_y;
 	raycaster.speed = 1;
 	while (((raycaster.dir_x >= 0 && raycaster.x_iterator <= game->ray_new_x)
 	        || (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))

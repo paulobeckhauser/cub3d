@@ -16,9 +16,9 @@ MLX_DIR = $(PART)/libs/mlx_linux
 MLX_FLAGS = -L./$(PART)/libs/mlx_linux -lmlx -I$(PART)/mlx_linux -lXext -lX11 -lm -lz
 LIBFT_FLAGS = -L./$(PART)/libs/libft -lft
 
-SRC = main.c init_game.c controls/key_bindings.c controls/key_actions.c controls/hooks.c \
+SRC = main.c hex_color.c init_game.c controls/key_bindings.c controls/key_actions.c controls/hooks.c \
         raycaster/raycaster.c raycaster/init_test_map.c raycaster/render.c raycaster/load_images.c \
-        raycaster/utils.c raycaster/utils_2.c ft_free.c parser/parser.c parser/checker_utils.c \
+        raycaster/utils.c raycaster/utils_2.c ft_free.c #parser/parser.c parser/checker_utils.c \
 		parser/cub_file.c parser/free_variables_error.c parser/hex_color.c parser/init_vars.c parser/map.c \
 		parser/surfaces_colors.c parser/surfaces.c parser/textures.c
 

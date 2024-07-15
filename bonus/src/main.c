@@ -14,6 +14,7 @@
 
 void    init_image(t_image *image, t_game *game)
 {
+	(void)game;
 	image->img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	image->bits_per_pixel = 32;
 	image->line_length = SCREEN_WIDTH;
@@ -21,26 +22,26 @@ void    init_image(t_image *image, t_game *game)
 	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
 }
 
+//int	count_enemies()
+
 int main(int argc, char **argv)
 {
     t_game      game;
 	t_textures	textures;
 	t_image     image;
-	t_vectors   vectors[120];
-	t_data      data;
-	
-	parser(argv[1], &data);
-	game.data = &data;
-	init_game(&game);
-	init_image(&image, &game);
-	game.image = &image;
-	game.textures = &textures;
+	t_vectors   vectors[180];
+
+    init_game(&game);
+    init_image(&image, &game);
+    game.image = &image;
 	game.vectors = vectors;
+	game.textures = &textures;
 	calc_dir_vectors(&game);
     load_images_from_dir(&game);
     init_hooks(&game);
     render_game(&game);
 	(void)argc;
+	(void)argv;
 	mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
 	mlx_loop(game.mlx_ptr);
 	free(game.map);

@@ -27,20 +27,15 @@ void    init_game(t_game *game)
 		exit(EXIT_FAILURE);
 	}
 	game->square_size = 100;
+	game->map = init_test_map();
+	mark_player(game);
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
-	if (game->data->player->direction == 'N')
-		game->ray_main_angle = 270;
-	else if (game->data->player->direction == 'W')
-		game->ray_main_angle = 180;
-	else if (game->data->player->direction == 'S')
-		game->ray_main_angle = 90;
-	else
-		game->ray_main_angle = 0;
+	game->ray_main_angle = 290.0f;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
-//	game->ray_door_hit_x = 0;
-//	game->ray_door_hit_y = 0;
+	game->ray_door_hit_x = 0;
+	game->ray_door_hit_y = 0;
 	game->dist_idx = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
