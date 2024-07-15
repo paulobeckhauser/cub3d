@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:14:25 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 19:05:16 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:41:38 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,12 @@ bool	count_lines_map(t_data *data, char *str)
 	return (true);
 }
 
-bool	store_cub_file(t_data *data, char *str)
+void	write_lines(t_data *data, int fd)
 {
-	int		fd;
-	int		i;
 	char	*line;
+	int		i;
 	int		j;
 
-	if (!count_lines_map(data, str))
-		return (false);
-	data->cub_file = malloc((data->number_lines_map + 1) * sizeof(char *));
-	if (!data->cub_file)
-	{
-		ft_putstr_fd("Memory allocation error\n", 2);
-		return (1);
-	}
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
-	{
-		replace_error_message(data, strerror(errno));
-		return (free_variables_error(data));
-	}
 	i = 0;
 	while (1)
 	{
@@ -82,6 +67,27 @@ bool	store_cub_file(t_data *data, char *str)
 		free(line);
 	}
 	data->cub_file[i] = NULL;
+}
+
+bool	store_cub_file(t_data *data, char *str)
+{
+	int	fd;
+
+	if (!count_lines_map(data, str))
+		return (false);
+	data->cub_file = malloc((data->number_lines_map + 1) * sizeof(char *));
+	if (!data->cub_file)
+	{
+		ft_putstr_fd("Memory allocation error\n", 2);
+		return (1);
+	}
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+	{
+		replace_error_message(data, strerror(errno));
+		return (free_variables_error(data));
+	}
+	write_lines(data, fd);
 	close(fd);
 	return (true);
 }
