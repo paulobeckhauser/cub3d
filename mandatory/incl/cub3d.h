@@ -20,12 +20,13 @@
 #define SCREEN_HEIGHT 900
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
+#define SQUARE_SIZE 100
 
 // images
 #define TEXTURE_SIZE 500
 
 // vectors
-#define SPEED 40.0f
+#define SPEED 10
 
 // wall_directions
 #define NORTH 1
@@ -71,8 +72,8 @@ typedef struct  s_raycaster
 typedef struct s_player
 {
 	char		direction;
-	int			x;
-	int			y;
+	float		x;
+	float		y;
 }				t_player;
 
 typedef struct s_data

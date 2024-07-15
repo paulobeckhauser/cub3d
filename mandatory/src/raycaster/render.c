@@ -62,9 +62,13 @@ void    render_wall_line(t_game *game)
 		tex_x = (int)(game->ray_hit_x * TEXTURE_SIZE);
 	else
 		tex_x = (int)(game->ray_hit_y * TEXTURE_SIZE);
+	if (tex_x < 0)
+		tex_x = 0;
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
+		if (tex_y < 0)
+			tex_y = 0;
 		if (game->wall_direction == NORTH)
 			color = get_pixel_color(game->north_texture, tex_x, tex_y);
 		else if (game->wall_direction == SOUTH)

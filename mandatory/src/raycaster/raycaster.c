@@ -17,14 +17,14 @@ void    calc_dir_vectors(t_game *game)
 	float	angle_incr_radians;
 	float	angle_iter;
 	
-	angle_incr_radians = to_radians(10.0f);
+	angle_incr_radians = to_radians(2);
 	angle_iter = to_radians(game->ray_main_angle);
 	if (angle_iter < 0)
 		angle_iter += 2 * M_PI;
 	else if (angle_iter > 2 * M_PI)
 		angle_iter -= 2 * M_PI;
 	game->vec_idx = 0;
-	while (game->vec_idx < 36)
+	while (game->vec_idx < 180)
 	{
 		game->vectors[game->vec_idx].x = cosf(angle_iter);
 		game->vectors[game->vec_idx].y = sinf(angle_iter);
@@ -89,9 +89,7 @@ void    cast_ray(t_game *game, float ray_angle)
 		if (is_ray_on_square_edge(&raycaster, game))
 		{
 			calc_collision_point_x_y(&raycaster, game);
-//			if (raycaster.colis_x < 0 || raycaster.colis_x >= 1000 || raycaster.colis_y < 0 || raycaster.colis_y >= 1000)
-//				return ;
-//			if(raycaster.colis_x < 0 || raycaster.colis_y < 0)
+//			if (!game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
 //				return ;
 			if (is_collision_point_wall(&raycaster, game))
 			{

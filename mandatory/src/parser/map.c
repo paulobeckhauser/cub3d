@@ -81,13 +81,13 @@ void	store_last_line_map_element(t_data *data)
 
 bool	store_map_element(t_data *data)
 {
-	int	lines_map;
+//	int	lines_map;
 	int	i;
 	int	j;
 
 	i = data->line_start_map_position;
-	lines_map = data->line_end_map_position - data->line_start_map_position + 1;
-	data->map_element = malloc((lines_map + 1) * sizeof(char *));
+	data->number_lines_map_element = data->line_end_map_position - data->line_start_map_position + 1;
+	data->map_element = malloc((data->number_lines_map_element + 1) * sizeof(char *));
 	if (!data->map_element)
 	{
 		replace_error_message(data, "Memory allocation failed");
@@ -403,8 +403,6 @@ static void	replace_player_for_floor(t_data *data)
 				|| data->map_element[i][j] == 'W'
 				|| data->map_element[i][j] == 'E')
 			{
-//				data->player->x = (float)j * game->square_size + game->square_size / 2;
-//				data->player->y = (float)i * game->square_size + game->square_size / 2;
 				data->player->x = (float)j * 100 + 100 / 2;
 				data->player->y = (float)i * 100 + 100 / 2;
 				data->player->direction = data->map_element[i][j];

@@ -6,7 +6,7 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 22:18:01 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/06/05 22:18:02 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:39:11 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int get_pixel_color(void *img_ptr, int x, int y)
 	int     bits_per_pixel;
 	int     size_line;
 	int     endian;
+	
 	data = mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, &endian);
 	return (*(int *)(data + ((x + y * size_line / 4) * bits_per_pixel / 8)));
 }

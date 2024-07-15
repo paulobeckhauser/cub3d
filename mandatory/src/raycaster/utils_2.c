@@ -26,7 +26,8 @@ void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game)
 
 bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game)
 {
-	if (game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '1')
+	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
+		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '1')
 		return (true);
 	return (false);
 }
