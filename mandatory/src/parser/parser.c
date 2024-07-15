@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:08:00 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/07 15:25:58 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:18:27 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	parser(char *str, t_data *data)
 {
-	// t_data	data;
-
 	data->player = (t_player *)malloc(sizeof(t_player));
 	if (!data->player)
 	{

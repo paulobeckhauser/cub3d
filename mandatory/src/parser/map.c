@@ -6,12 +6,11 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:48 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:17:53 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:26:12 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
-
 
 bool	check_if_map_element(char *str)
 {
@@ -81,7 +80,6 @@ void	store_last_line_map_element(t_data *data)
 
 bool	store_map_element(t_data *data)
 {
-//	int	lines_map;
 	int	i;
 	int	j;
 
@@ -163,7 +161,6 @@ bool	check_empty_line_map(t_data *data)
 	i = data->line_start_map_position;
 	while (i < data->line_end_map_position)
 	{
-		// printf("%s\n", data->cub_file[i]);
 		if (check_if_empty_line(data->cub_file[i]))
 		{
 			replace_error_message(data, "Map element in wrong format");
@@ -171,8 +168,6 @@ bool	check_empty_line_map(t_data *data)
 		}
 		i++;
 	}
-	// printf("%d\n", data->line_start_map_position);
-	// printf("%d\n", data->line_end_map_position);
 	return (true);
 }
 
@@ -186,7 +181,6 @@ void	print_map(t_data *data)
 		printf("%s\n", (data->map_element[i]));
 		i++;
 	}
-	// data->line_start_map_position
 }
 
 bool	check_wall(t_data *data)
@@ -234,8 +228,6 @@ bool	check_wall(t_data *data)
 							}
 							col++;
 						}
-						// while(data->map_element[i][j])
-						// while()
 					}
 					if (i == size_array(data->map_element) - 1)
 					{
@@ -267,10 +259,6 @@ bool	check_wall(t_data *data)
 				j++;
 			}
 		}
-		// if (i == size_array(data->map_element) - 1)
-		// {
-		//     printf("%s\n", data->map_element[i]);
-		// }
 		i++;
 	}
 	return (true);
@@ -306,12 +294,6 @@ bool	check_surround(t_data *data)
 	bool	all_surrounded;
 	int		j;
 
-	// i = 0;
-	// while(data->map_element[i])
-	// {
-	//     printf("%s\n", data->map_element[i]);
-	//     i++;
-	// }
 	map_backup = malloc((size_array(data->map_element) + 1) * sizeof(char *));
 	i = 0;
 	while (data->map_element[i])
@@ -323,12 +305,6 @@ bool	check_surround(t_data *data)
 	all_surrounded = true;
 	i = 0;
 	j = 0;
-	// while(map_backup[i])
-	// {
-	//     printf("%s\n", map_backup[i]);
-	//     // flood_fill(map_backup, i, j, '0', 'X');
-	//     i++;
-	// }
 	while (map_backup[i])
 	{
 		j = 0;
@@ -348,78 +324,6 @@ bool	check_surround(t_data *data)
 	}
 	free_2d_array(map_backup);
 	return (all_surrounded);
-}
-
-static bool	count_player(t_data *data)
-{
-	int	i;
-	int	j;
-	int	count_player;
-
-	i = 0;
-	j = 0;
-	count_player = 0;
-	while (data->map_element[i])
-	{
-		j = 0;
-		while (data->map_element[i][j])
-		{
-			if (data->map_element[i][j] == 'N' || data->map_element[i][j] == 'S'
-				|| data->map_element[i][j] == 'W'
-				|| data->map_element[i][j] == 'E')
-			{
-				count_player++;
-			}
-			j++;
-		}
-		i++;
-	}
-	if (count_player == 0)
-	{
-		replace_error_message(data, "No player in the map");
-		return (false);
-	}
-	else if (count_player > 1)
-	{
-		replace_error_message(data, "More than one player in the map");
-		return (false);
-	}
-	return (true);
-}
-
-static void	replace_player_for_floor(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (data->map_element[i])
-	{
-		j = 0;
-		while (data->map_element[i][j])
-		{
-			if (data->map_element[i][j] == 'N' || data->map_element[i][j] == 'S'
-				|| data->map_element[i][j] == 'W'
-				|| data->map_element[i][j] == 'E')
-			{
-				data->player->x = (float)j * 100 + 100 / 2;
-				data->player->y = (float)i * 100 + 100 / 2;
-				data->player->direction = data->map_element[i][j];
-				data->map_element[i][j] = '0';
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-bool	check_player(t_data *data)
-{
-	if (!count_player(data))
-		return (false);
-	replace_player_for_floor(data);
-	return (true);
 }
 
 bool	store_map(t_data *data)

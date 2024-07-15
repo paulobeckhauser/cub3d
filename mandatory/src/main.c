@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:01:21 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/07/07 15:52:10 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:59:17 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,34 @@ int main(int argc, char **argv)
 	t_image     image;
 	t_vectors   vectors[120];
 	t_data		data;
+	int status;
 
-	parser(argv[1], &data);
-	init_game(&game, &data);
-	init_image(&image, &game);
-	game.image = &image;
-	game.vectors = vectors;
-	game.data = &data;
-	calc_dir_vectors(&game);
-	load_images_from_dir(&game);
-	init_hooks(&game);
-	render_game(&game);
-	(void)argc;
-	mlx_loop(game.mlx_ptr);
-	mlx_destroy_image(game.mlx_ptr, image.img);
-	image.img = NULL;
-    return (0);
+	status = 0;
+	if (argc == 2)
+	{
+		status = parser(argv[1], &data);
+		if (status != 0)
+			return(status);
+		init_game(&game, &data);
+		init_image(&image, &game);
+		game.image = &image;
+		game.vectors = vectors;
+		game.data = &data;
+		calc_dir_vectors(&game);
+		load_images_from_dir(&game);
+		init_hooks(&game);
+		render_game(&game);
+		mlx_loop(game.mlx_ptr);
+		mlx_destroy_image(game.mlx_ptr, image.img);
+		image.img = NULL;
+	}
+	else
+	{
+		ft_putstr_fd(RED, 2);
+        ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd("Incorrect number of arguments\n", 2);
+        ft_putstr_fd(RESET, 2);
+		return (1);
+	}
+    return (status);
 }
