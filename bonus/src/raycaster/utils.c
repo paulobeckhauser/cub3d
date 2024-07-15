@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/raycaster.h"
+#include "../../incl/cub3d.h"
 
 void	mark_player(t_game *game)
 {
@@ -25,8 +25,8 @@ void	mark_player(t_game *game)
 		{
 			if (game->map[y][x] == 'N')
 			{
-				game->player_x = (float)x * game->square_size + game->square_size / 2;
-				game->player_y = (float)y * game->square_size + game->square_size / 2;
+				game->data->player->x = (float)x * game->square_size + game->square_size / 2;
+				game->data->player->y = (float)y * game->square_size + game->square_size / 2;
 				return ;
 			}
 			x++;
@@ -42,8 +42,8 @@ float	to_radians(float degrees)
 
 void    calc_directions(t_raycaster *raycaster, t_game *game)
 {
-	raycaster->dir_x = game->ray_new_x - game->player_x;
-	raycaster->dir_y = game->ray_new_y - game->player_y;
+	raycaster->dir_x = game->ray_new_x - game->data->player->x;
+	raycaster->dir_y = game->ray_new_y - game->data->player->y;
 	raycaster->len = sqrtf(raycaster->dir_x * raycaster->dir_x + raycaster->dir_y * raycaster->dir_y);
 	raycaster->dir_x /= raycaster->len;
 	raycaster->dir_y /= raycaster->len;
@@ -63,6 +63,7 @@ int get_pixel_color(void *img_ptr, int x, int y)
 	int     bits_per_pixel;
 	int     size_line;
 	int     endian;
+
 	data = mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, &endian);
 	return (*(int *)(data + ((x + y * size_line / 4) * bits_per_pixel / 8)));
 }

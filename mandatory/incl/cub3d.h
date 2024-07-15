@@ -182,7 +182,7 @@ bool			store_hex_color(char *str, t_data *data, char surf);
 bool			store_textures(t_data *data);
 bool			store_surface_colors(t_data *data);
 bool			store_map(t_data *data);
-
+void	render_background(t_game *game);
 // void    		init_game(t_game *game);
 void    init_game(t_game *game, t_data *data);
 void    		init_keys(t_game *game);

@@ -12,7 +12,19 @@
 
 #include "../../incl/cub3d.h"
 
-void	render_map(t_game *game)
+void	render_game(t_game *game)
+{
+	render_background(game);
+	raycaster(game);
+	render_crosshair(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+	render_minimap(game);
+	render_minimap_player(game);
+	render_gun(game);
+	render_hp(game);
+}
+
+void	render_background(t_game *game)
 {
 	int x;
 	int y;
@@ -23,26 +35,16 @@ void	render_map(t_game *game)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++] = rgb_to_hex(50, 50, 170); // Very dark blue
+			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_ceiling;
 		y++;
 	}
 	while (y < SCREEN_HEIGHT)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++]
-					= rgb_to_hex((int)(20 + (y - SCREEN_HEIGHT / 2) * 0.01), // Dark gradient from blue to violet
-					             (int)(10 + (y - SCREEN_HEIGHT / 2) * 0.01),
-					             (int)(40 + (y - SCREEN_HEIGHT / 2) * 0.01));
+			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_floor;
 		y++;
 	}
-	raycaster(game);
-	render_crosshair(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
-	render_minimap(game);
-	render_minimap_player(game);
-	render_gun(game);
-	render_hp(game);
 }
 
 void    render_minimap(t_game *game)
@@ -66,9 +68,9 @@ void    render_minimap(t_game *game)
 				while (tex_x < MINIMAP_SCALE)
 				{
 					if (game->map[map_y][map_x] == '1')
-						color = get_pixel_color(game->wall_texture, tex_x, tex_y);
+						color = get_pixel_color(game->textures->wall_texture, tex_x, tex_y);
 					else
-						color = get_pixel_color(game->floor_texture, tex_x, tex_y);
+						color = get_pixel_color(game->textures->floor_texture, tex_x, tex_y);
 					game->image->data[(map_y * MINIMAP_SCALE + tex_y) * SCREEN_WIDTH + (map_x * MINIMAP_SCALE + tex_x)] = color;
 					tex_x++;
 				}
@@ -86,8 +88,8 @@ void    render_minimap_player(t_game *game)
 	int tex_y;
 	int color;
 	
-	int minimap_player_x = (int)(game->player_x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
-	int minimap_player_y = (int)(game->player_y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
+	int minimap_player_x = (int)(game->data->player->x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
+	int minimap_player_y = (int)(game->data->player->y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
 	
 	tex_y = 0;
 	while (tex_y < MINIMAP_SCALE)
@@ -95,7 +97,7 @@ void    render_minimap_player(t_game *game)
 		tex_x = 0;
 		while (tex_x < MINIMAP_SCALE)
 		{
-			color = get_pixel_color(game->player_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->player_texture, tex_x, tex_y);
 			game->image->data[(minimap_player_y + tex_y) * SCREEN_WIDTH + (minimap_player_x + tex_x)] = color;
 			tex_x++;
 		}
@@ -119,7 +121,7 @@ void	render_gun(t_game *game)
 		{
 			tex_x = x - (SCREEN_WIDTH / 2 + 150);
 			tex_y = y - (SCREEN_HEIGHT - 357);
-			color = get_pixel_color(game->gun_current_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->gun_current_texture, tex_x, tex_y);
 			if (color != rgb_to_hex(255, 0, 255))
 				game->image->data[y * SCREEN_WIDTH + x] = color;
 			y++;
@@ -144,7 +146,7 @@ void	render_hp(t_game *game)
 		{
 			tex_x = x;
 			tex_y = y - (SCREEN_HEIGHT - 77);
-			color = get_pixel_color(game->hp_current_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->hp_current_texture, tex_x, tex_y);
 			game->image->data[y * SCREEN_WIDTH + x] = color;
 			y++;
 		}
@@ -190,13 +192,13 @@ void    render_wall_line(t_game *game)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
 		if (game->wall_direction == NORTH)
-			color = get_pixel_color(game->north_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->north_texture, tex_x, tex_y);
 		else if (game->wall_direction == SOUTH)
-			color = get_pixel_color(game->south_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->south_texture, tex_x, tex_y);
 		else if (game->wall_direction == WEST)
-			color = get_pixel_color(game->west_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->west_texture, tex_x, tex_y);
 		else if (game->wall_direction == EAST)
-			color = get_pixel_color(game->east_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->east_texture, tex_x, tex_y);
 		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
@@ -226,7 +228,7 @@ void    render_door_line(t_game *game)
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		color = get_pixel_color(game->door_current_texture, tex_x, tex_y);
+		color = get_pixel_color(game->textures->door_current_texture, tex_x, tex_y);
 		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
@@ -260,7 +262,7 @@ void render_enemy_line(t_game *game)
 		if (tex_y < 0) tex_y = 0;
 		if (tex_y >= TEXTURE_SIZE)
 			tex_y = TEXTURE_SIZE - 1;
-		color = get_pixel_color(game->dark_priest_current_texture, tex_x, tex_y);
+		color = get_pixel_color(game->textures->dark_priest_current_texture, tex_x, tex_y);
 		if (color != rgb_to_hex(255, 0, 255) && game->enemy_dists[game->dist_idx] < game->wall_dists[game->dist_idx]
 			&& (game->open_door_visible || game->door_dists[game->dist_idx] == 0 || game->enemy_dists[game->dist_idx] < game->door_dists[game->dist_idx]))
 		{
@@ -270,4 +272,25 @@ void render_enemy_line(t_game *game)
 		y_iterator++;
 	}
 	game->hit_enemy = false;
+}
+
+void	render_game_over(t_game *game)
+{
+	int	x;
+	int	y;
+	int	color;
+
+	x = 0;
+	while (x < SCREEN_WIDTH)
+	{
+		y = 0;
+		while (y < SCREEN_HEIGHT)
+		{
+			color = get_pixel_color(game->textures->game_over_texture, x, y);
+			game->image->data[y * SCREEN_WIDTH + x] = color;
+			y++;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
 }

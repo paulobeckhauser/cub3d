@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/raycaster.h"
 #include "../incl/cub3d.h"
 
 void    init_game(t_game *game)
@@ -32,7 +31,14 @@ void    init_game(t_game *game)
 	mark_player(game);
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
-	game->ray_main_angle = 280.0f;
+	if (game->data->player->direction == 'N')
+		game->ray_main_angle = 270;
+	else if (game->data->player->direction == 'W')
+		game->ray_main_angle = 180;
+	else if (game->data->player->direction == 'S')
+		game->ray_main_angle = 90;
+	else
+		game->ray_main_angle = 0;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
 	game->ray_door_hit_x = 0;
@@ -48,9 +54,8 @@ void    init_game(t_game *game)
 	game->dist_idx = 0;
 	game->wall_direction = 0;
 	game->door_direction = 0;
-	game->enemy_direction = 0;
-	game->enemy_x = 0;
-	game->enemy_y = 0;
+	// game->enemy_x = 0;
+	// game->enemy_y = 0;
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);
@@ -72,6 +77,8 @@ void    init_game(t_game *game)
 	game->hit_enemy = false;
 	game->mouse_x = 0;
 	game->first_enemy_dist = -1;
+	game->hp_frame_updated = false;
+	game->player_dead = false;
 }
 
 void    init_keys(t_game *game)

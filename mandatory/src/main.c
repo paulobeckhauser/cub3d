@@ -14,7 +14,6 @@
 
 void    init_image(t_image *image, t_game *game)
 {
-	(void)game;
 	image->img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	image->bits_per_pixel = 32;
 	image->line_length = SCREEN_WIDTH;
@@ -26,13 +25,12 @@ int main(int argc, char **argv)
 {
 	t_game      game;
 	t_image     image;
-	t_vectors   vectors[180];
+	t_vectors   vectors[120];
 	t_data		data;
 
 	parser(argv[1], &data);
 	init_game(&game, &data);
 	init_image(&image, &game);
-//	printf("char: '%c'\n", data.map_element[0][1]);
 	game.image = &image;
 	game.vectors = vectors;
 	game.data = &data;

@@ -17,14 +17,14 @@ void    calc_dir_vectors(t_game *game)
 	float	angle_incr_radians;
 	float	angle_iter;
 	
-	angle_incr_radians = to_radians(2);
+	angle_incr_radians = to_radians(3);
 	angle_iter = to_radians(game->ray_main_angle);
 	if (angle_iter < 0)
 		angle_iter += 2 * M_PI;
 	else if (angle_iter > 2 * M_PI)
 		angle_iter -= 2 * M_PI;
 	game->vec_idx = 0;
-	while (game->vec_idx < 180)
+	while (game->vec_idx < 120)
 	{
 		game->vectors[game->vec_idx].x = cosf(angle_iter);
 		game->vectors[game->vec_idx].y = sinf(angle_iter);

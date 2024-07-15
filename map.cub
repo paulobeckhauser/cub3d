@@ -1,7 +1,7 @@
-NO ./mandatory/textures/walls/north_texture.xpm
-SO ./mandatory/textures/walls/south_texture.xpm
-WE ./mandatory/textures/walls/west_texture.xpm
-EA ./mandatory/textures/walls/east_texture.xpm
+NO ./bonus/textures/walls/wall_default_texture.xpm
+SO ./bonus/textures/walls/wall_default_texture.xpm
+WE ./bonus/textures/walls/wall_default_texture.xpm
+EA ./bonus/textures/walls/wall_default_texture.xpm
 
 F 145,33,16
 C 111,98,232
