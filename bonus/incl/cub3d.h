@@ -307,5 +307,22 @@ bool			store_map(t_data *data);
 // void    		init_game(t_game *game);
 void            init_game(t_game *game);
 void    		init_keys(t_game *game);
+void			init_vars_colors(int *red, int *green, int *blue);
+bool			get_red_color(int *red, char **array, t_data *data);
+bool			get_green_color(int *green, char **array, t_data *data);
+bool			get_blue_color(int *blue, char **array, t_data *data);
+bool	check_error_rgb_format(int color, t_data *data, char **array);
+bool	check_if_empty_line(char *str);
+bool	check_edges(int i, int j, t_data *data);
+void	init_vars_check_wall(int *i, int *j);
+bool	return_error_wall(t_data *data);
+bool	check_first_line(int i, int j, t_data *data);
+bool	check_last_line(int i, int j, t_data *data);
+bool	check_input_texture(t_data *data);
+bool	check_map_last_element(t_data *data);
+bool	check_map_element_input(t_data *data);
+bool	check_empty_line_map(t_data *data);
+void	store_first_line_map_element(t_data *data);
+void	store_last_line_map_element(t_data *data);
 
 #endif

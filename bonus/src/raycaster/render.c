@@ -91,7 +91,7 @@ void    render_minimap(t_game *game)
 				tex_x = 0;
 				while (tex_x < MINIMAP_SCALE)
 				{
-					if (map_y < 0 || map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
+					if (map_y < 0 ||    map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
 						break ;
 					if (game->data->map_element[map_y][map_x] == '1' || game->data->map_element[map_y][map_x] == '2' || game->data->map_element[map_y][map_x] == '3')
 						color = rgb_to_hex(30, 28, 87);

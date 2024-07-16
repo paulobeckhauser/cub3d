@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_actions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:47:25 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/07/16 21:57:01 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:13:10 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,56 +37,6 @@ void    rotate_player_right(t_game *game)
 	++game->vec_idx;
 	if (game->vec_idx == 60)
 		game->vec_idx = 0;
-}
-
-void    move_player_forward(t_game *game)
-{
-	game->data->player->x += game->vectors[game->vec_idx].x * SPEED;
-	game->data->player->y += game->vectors[game->vec_idx].y * SPEED;
-	if (game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
-	    || game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')	{
-		game->data->player->x -= game->vectors[game->vec_idx].x * SPEED;
-		game->data->player->y -= game->vectors[game->vec_idx].y * SPEED;
-		return ;
-	}
-}
-
-void    move_player_backward(t_game *game)
-{
-	game->data->player->x -= game->vectors[game->vec_idx].x * SPEED;
-	game->data->player->y -= game->vectors[game->vec_idx].y * SPEED;
-	if (game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
-	    || game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')	{
-		game->data->player->x += game->vectors[game->vec_idx].x * SPEED;
-		game->data->player->y += game->vectors[game->vec_idx].y * SPEED;
-		return ;
-	}
-}
-
-void    move_player_left(t_game *game)
-{
-	game->data->player->x += game->vectors[game->vec_idx].y * SPEED;
-	game->data->player->y -= game->vectors[game->vec_idx].x * SPEED;
-	if (game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
-	    || game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')
-	{
-		game->data->player->x -= game->vectors[game->vec_idx].y * SPEED;
-		game->data->player->y += game->vectors[game->vec_idx].x * SPEED;
-		return ;
-	}
-}
-
-void    move_player_right(t_game *game)
-{
-	game->data->player->x -= game->vectors[game->vec_idx].y * SPEED;
-	game->data->player->y += game->vectors[game->vec_idx].x * SPEED;
-	if (game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
-		|| game->data->map_element[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')
-	{
-		game->data->player->x += game->vectors[game->vec_idx].y * SPEED;
-		game->data->player->y -= game->vectors[game->vec_idx].x * SPEED;
-		return ;
-	}
 }
 
 void    open_close_door(t_game *game)
