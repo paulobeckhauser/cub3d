@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:15:56 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 18:15:44 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:10:56 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	replace_error_message(t_data *data, char *str)
 	if (data->map_error_message != NULL)
 		free(data->map_error_message);
 	data->map_error_message = ft_strdup(str);
+	if (!data->map_error_message)
+	{
+		replace_error_message(data, "Memory allocation failed");
+		free_variables_error(data);
+	}
 }
 
 int	free_variables_error(t_data *data)
