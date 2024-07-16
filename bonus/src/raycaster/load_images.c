@@ -14,10 +14,10 @@
 
 void load_images_from_dir(t_game *game)
 {
-	game->textures->north_texture = mlx_xpm_file_to_image(game->mlx_ptr, NORTH_TEXTURE, &game->img_x, &game->img_y);
-	game->textures->south_texture = mlx_xpm_file_to_image(game->mlx_ptr, SOUTH_TEXTURE, &game->img_x, &game->img_y);
-	game->textures->west_texture = mlx_xpm_file_to_image(game->mlx_ptr, WEST_TEXTURE, &game->img_x, &game->img_y);
-	game->textures->east_texture = mlx_xpm_file_to_image(game->mlx_ptr, EAST_TEXTURE, &game->img_x, &game->img_y);
+	game->textures->north_texture = mlx_xpm_file_to_image(game->mlx_ptr, game->data->texture_north, &game->img_x, &game->img_y);
+	game->textures->south_texture = mlx_xpm_file_to_image(game->mlx_ptr, game->data->texture_south, &game->img_x, &game->img_y);
+	game->textures->west_texture = mlx_xpm_file_to_image(game->mlx_ptr, game->data->texture_west, &game->img_x, &game->img_y);
+	game->textures->east_texture = mlx_xpm_file_to_image(game->mlx_ptr, game->data->texture_east, &game->img_x, &game->img_y);
 	game->textures->floor_texture = mlx_xpm_file_to_image(game->mlx_ptr, FLOOR_TEXTURE, &game->img_x, &game->img_y);
 	game->textures->wall_texture = mlx_xpm_file_to_image(game->mlx_ptr, WALL_TEXTURE, &game->img_x, &game->img_y);
 	game->textures->player_texture = mlx_xpm_file_to_image(game->mlx_ptr, PLAYER_TEXTURE, &game->img_x, &game->img_y);

@@ -14,6 +14,18 @@
 
 void	render_game(t_game *game)
 {
+	render_background(game);
+	raycaster(game);
+	render_crosshair(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+	render_minimap(game);
+	render_minimap_player(game);
+	render_gun(game);
+	render_hp(game);
+}
+
+void	render_background(t_game *game)
+{
 	int x;
 	int y;
 	
@@ -23,26 +35,16 @@ void	render_game(t_game *game)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++] = rgb_to_hex(50, 50, 170); // Very dark blue
+			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_ceiling;
 		y++;
 	}
 	while (y < SCREEN_HEIGHT)
 	{
 		x = 0;
 		while (x < SCREEN_WIDTH)
-			game->image->data[y * SCREEN_WIDTH + x++]
-					= rgb_to_hex((int)(20 + (y - SCREEN_HEIGHT / 2) * 0.01), // Dark gradient from blue to violet
-					             (int)(10 + (y - SCREEN_HEIGHT / 2) * 0.01),
-					             (int)(40 + (y - SCREEN_HEIGHT / 2) * 0.01));
+			game->image->data[y * SCREEN_WIDTH + x++] = game->data->color_floor;
 		y++;
 	}
-	raycaster(game);
-	render_crosshair(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
-	render_minimap(game);
-	render_minimap_player(game);
-	render_gun(game);
-	render_hp(game);
 }
 
 void    render_minimap(t_game *game)
@@ -54,10 +56,10 @@ void    render_minimap(t_game *game)
 	int color;
 	
 	map_y = 0;
-	while (map_y < 10)
+	while (map_y < game->data->number_lines_map_element)
 	{
 		map_x = 0;
-		while (map_x < 10)
+		while (game->data->map_element[map_y][map_x])
 		{
 			tex_y = 0;
 			while (tex_y < MINIMAP_SCALE)
@@ -65,7 +67,7 @@ void    render_minimap(t_game *game)
 				tex_x = 0;
 				while (tex_x < MINIMAP_SCALE)
 				{
-					if (game->map[map_y][map_x] == '1')
+					if (game->data->map_element[map_y][map_x] == '1')
 						color = get_pixel_color(game->textures->wall_texture, tex_x, tex_y);
 					else
 						color = get_pixel_color(game->textures->floor_texture, tex_x, tex_y);

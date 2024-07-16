@@ -278,6 +278,7 @@ void    render_enemy_line(t_game *game);
 int     mouse_press(int button, int x, int y, t_game *game);
 void	render_hp(t_game *game);
 void	render_game_over(t_game *game);
+void	render_background(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

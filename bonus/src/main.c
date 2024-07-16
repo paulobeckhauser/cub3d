@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     t_game      game;
 	t_textures	textures;
 	t_image     image;
-	t_vectors   vectors[180];
+	t_vectors   vectors[60];
 	t_data		data;
 	
 	parser(argv[1], &data);

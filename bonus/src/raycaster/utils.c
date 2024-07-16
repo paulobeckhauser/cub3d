@@ -18,12 +18,12 @@ void	mark_player(t_game *game)
 	int	y;
 	
 	y = 0;
-	while (game->map[y])
+	while (game->data->map_element[y])
 	{
 		x = 0;
-		while (game->map[y][x])
+		while (game->data->map_element[y][x])
 		{
-			if (game->map[y][x] == 'N')
+			if (game->data->map_element[y][x] == 'N')
 			{
 				game->data->player->x = (float)x * game->square_size + game->square_size / 2;
 				game->data->player->y = (float)y * game->square_size + game->square_size / 2;
