@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_bindings.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:33:32 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 11:40:28 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:46:53 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	keypress(const int keysymbol, t_game *game)
 	return (0);
 }
 
-int keyrelease(const int keysymbol, t_game *game)
+int	keyrelease(const int keysymbol, t_game *game)
 {
 	if (keysymbol == 65307)
 		game->keys[ESC] = false;
