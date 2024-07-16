@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/cub3d.h"
+#include "../incl/cub3d.h"
 
 int	rgb_to_hex(int red, int green, int blue)
 {
 	int	hex;
-	
+
 	hex = (red << 16) | (green << 8) | blue;
 	hex = (hex & 0xFFFFFF) | 0x00 << 24;
 	return (hex);
@@ -27,7 +27,7 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 	int		red;
 	int		green;
 	int		blue;
-	
+
 	array = ft_split(str, ',');
 	red = 0;
 	green = 0;
@@ -87,7 +87,7 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 bool	clean_store_hex_color(t_data *data, int i, char surf)
 {
 	char	*cleaned_string;
-	
+
 	cleaned_string = NULL;
 	cleaned_string = clean_str_color(data, i, surf);
 	if (!cleaned_string)
