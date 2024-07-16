@@ -217,6 +217,7 @@ typedef struct s_game
 	bool	hp_frame_updated;
 	bool	player_dead;
 	t_textures	*textures;
+	t_data  *data;
 }	t_game;
 
 typedef struct  s_raycaster
