@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:48 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 19:58:59 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:02:42 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ bool	store_map_element(t_data *data)
 	while (i <= data->line_end_map_position)
 	{
 		data->map_element[j] = ft_strdup(data->cub_file[i]);
+		if (!data->map_element[j])
+		{
+			replace_error_message(data, "Memory allocation failed");
+			free_variables_error(data);
+			return (false);
+		}
 		i++;
 		j++;
 	}
@@ -307,6 +313,12 @@ bool	check_surround(t_data *data)
 	while (data->map_element[i])
 	{
 		map_backup[i] = ft_strdup(data->map_element[i]);
+		if (!map_backup[i])
+		{
+			replace_error_message(data, "Memory allocation failed");
+			free_variables_error(data);
+			return (false);
+		}
 		i++;
 	}
 	map_backup[i] = NULL;

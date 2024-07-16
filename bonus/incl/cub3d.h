@@ -21,6 +21,7 @@
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 #define MINIMAP_SCALE 20
+# define SQUARE_SIZE 100
 
 // images
 #define TEXTURE_SIZE 500

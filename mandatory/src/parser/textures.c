@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:58 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 12:35:28 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:58:48 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	check_xpm_extension(t_data *data, char *str)
 		{
 			replace_error_message(data,
 				"One or more texture not in .xpm format");
+			free_2d_array(array);
 			return (false);
 		}
 	}
@@ -46,7 +47,7 @@ bool	check_storage_textures(t_data *data)
 		if (!array)
 		{
 			replace_error_message(data, "Memory allocation failed");
-			return (false);
+			return (free_2d_array(array), false);
 		}
 		if (array[0])
 		{
@@ -54,7 +55,7 @@ bool	check_storage_textures(t_data *data)
 				|| !store_south_texture_format(data, array)
 				|| !store_west_texture_format(data, array)
 				|| !store_east_texture_format(data, array))
-				return (false);
+				return (free_2d_array(array), false);
 		}
 		i++;
 		free_2d_array(array);

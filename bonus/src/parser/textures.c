@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:58 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:18:49 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:07:59 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,15 @@ bool	store_textures(t_data *data)
 				else if (!check_xpm_extension(data, array[1]))
 					return (false);
 				else
+				{
 					data->texture_north = ft_strdup(array[1]);
+					if (!data->texture_north)
+					{
+						replace_error_message(data, "Memory allocation failed");
+						free_variables_error(data);
+						return (false);
+					}
+				}
 			}
 			else if (ft_strcmp(array[0], "SO") == 0)
 			{
@@ -135,7 +143,16 @@ bool	store_textures(t_data *data)
 				else if (!check_xpm_extension(data, array[1]))
 					return (false);
 				else
+				{
 					data->texture_south = ft_strdup(array[1]);
+					if (!data->texture_south)
+					{
+						replace_error_message(data, "Memory allocation failed");
+						free_variables_error(data);
+						return (false);
+					}
+					
+				}
 			}
 			else if (ft_strcmp(array[0], "WE") == 0)
 			{
@@ -153,7 +170,16 @@ bool	store_textures(t_data *data)
 				else if (!check_xpm_extension(data, array[1]))
 					return (false);
 				else
+				{
 					data->texture_west = ft_strdup(array[1]);
+					if (!data->texture_west)
+					{
+						replace_error_message(data, "Memory allocation failed");
+						free_variables_error(data);
+						return (false);
+					}
+					
+				}
 			}
 			else if (ft_strcmp(array[0], "EA") == 0)
 			{
@@ -171,7 +197,15 @@ bool	store_textures(t_data *data)
 				else if (!check_xpm_extension(data, array[1]))
 					return (false);
 				else
+				{
 					data->texture_east = ft_strdup(array[1]);
+					if (!data->texture_east)
+					{
+						replace_error_message(data, "Memory allocation failed");
+						free_variables_error(data);
+						return (false);
+					}
+				}
 			}
 		}
 		i++;
