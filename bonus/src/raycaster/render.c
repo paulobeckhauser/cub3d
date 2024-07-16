@@ -18,8 +18,10 @@ void	render_game(t_game *game)
 	raycaster(game);
 	render_crosshair(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+	render_minimap_bg(game);
 	render_minimap(game);
 	render_minimap_player(game);
+	render_minimap_border(game);
 	render_gun(game);
 	render_hp(game);
 }
@@ -47,19 +49,41 @@ void	render_background(t_game *game)
 	}
 }
 
+void    render_minimap_bg(t_game *game)
+{
+	int tex_x;
+	int tex_y;
+	
+	tex_y = 0;
+	while (tex_y < 200)
+	{
+		tex_x = 0;
+		while (tex_x < 200)
+		{
+			game->image->data[tex_y * SCREEN_WIDTH + tex_x] = rgb_to_hex(0, 0, 0);
+			++tex_x;
+		}
+		++tex_y;
+	}
+}
+
 void    render_minimap(t_game *game)
 {
+	int screen_x;
+	int screen_y;
 	int map_x;
 	int map_y;
 	int tex_x;
 	int tex_y;
 	int color;
 	
-	map_y = 0;
-	while (map_y < game->data->number_lines_map_element)
+	screen_y = 0;
+	map_y = (int)game->data->player->y / 100 - 5;
+	while (screen_y < 10)
 	{
-		map_x = 0;
-		while (game->data->map_element[map_y][map_x])
+		screen_x = 0;
+		map_x = (int)game->data->player->x / 100 - 5;
+		while (screen_x < 10)
 		{
 			tex_y = 0;
 			while (tex_y < MINIMAP_SCALE)
@@ -67,18 +91,45 @@ void    render_minimap(t_game *game)
 				tex_x = 0;
 				while (tex_x < MINIMAP_SCALE)
 				{
-					if (game->data->map_element[map_y][map_x] == '1')
-						color = get_pixel_color(game->textures->wall_texture, tex_x, tex_y);
+					if (map_y < 0 || map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
+						break ;
+					if (game->data->map_element[map_y][map_x] == '1' || game->data->map_element[map_y][map_x] == '2' || game->data->map_element[map_y][map_x] == '3')
+						color = rgb_to_hex(30, 28, 87);
+					else if (game->data->map_element[map_y][map_x] == '0')
+						color = rgb_to_hex(74, 17, 17);
+					else if (game->data->map_element[map_y][map_x] == '4')
+						color = get_pixel_color(game->textures->skull, tex_x, tex_y);
 					else
-						color = get_pixel_color(game->textures->floor_texture, tex_x, tex_y);
-					game->image->data[(map_y * MINIMAP_SCALE + tex_y) * SCREEN_WIDTH + (map_x * MINIMAP_SCALE + tex_x)] = color;
+						break ;
+					game->image->data[(screen_y * MINIMAP_SCALE + tex_y) * SCREEN_WIDTH + (screen_x * MINIMAP_SCALE + tex_x)] = color;
 					tex_x++;
 				}
 				tex_y++;
 			}
 			map_x++;
+			screen_x++;
 		}
+		screen_y++;
 		map_y++;
+	}
+}
+
+void    render_minimap_border(t_game *game)
+{
+	int tex_x;
+	int tex_y;
+	
+	tex_y = 0;
+	while (tex_y < 200)
+	{
+		tex_x = 0;
+		while (tex_x < 200)
+		{
+			if ((tex_x >= 0 && tex_x < 5) || tex_x >= 195 || (tex_y >= 0 && tex_y < 5) || tex_y >= 195)
+				game->image->data[tex_y * SCREEN_WIDTH + tex_x] = rgb_to_hex(32, 204, 0);
+			++tex_x;
+		}
+		++tex_y;
 	}
 }
 
@@ -88,9 +139,6 @@ void    render_minimap_player(t_game *game)
 	int tex_y;
 	int color;
 	
-	int minimap_player_x = (int)(game->data->player->x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
-	int minimap_player_y = (int)(game->data->player->y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
-	
 	tex_y = 0;
 	while (tex_y < MINIMAP_SCALE)
 	{
@@ -98,7 +146,7 @@ void    render_minimap_player(t_game *game)
 		while (tex_x < MINIMAP_SCALE)
 		{
 			color = get_pixel_color(game->textures->player_texture, tex_x, tex_y);
-			game->image->data[(minimap_player_y + tex_y) * SCREEN_WIDTH + (minimap_player_x + tex_x)] = color;
+			game->image->data[(100 + tex_y) * SCREEN_WIDTH + (100 + tex_x)] = color;
 			tex_x++;
 		}
 		tex_y++;

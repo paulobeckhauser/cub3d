@@ -24,13 +24,11 @@
 
 // images
 #define TEXTURE_SIZE 500
-#define NORTH_TEXTURE "./bonus/textures/walls/wall_default_texture.xpm"
-#define SOUTH_TEXTURE "./bonus/textures/walls/wall_default_texture.xpm"
-#define WEST_TEXTURE "./bonus/textures/walls/wall_default_texture.xpm"
-#define EAST_TEXTURE "./bonus/textures/walls/wall_default_texture.xpm"
+#define MINIMAP_BG "./bonus/textures/minimap/minimap_bg.xpm"
 #define FLOOR_TEXTURE "./bonus/textures/minimap/floor_texture.xpm"
 #define WALL_TEXTURE "./bonus/textures/minimap/wall_texture.xpm"
 #define PLAYER_TEXTURE "./bonus/textures/minimap/player_ln_texture.xpm"
+#define SKULL "./bonus/textures/minimap/skull.xpm"
 #define	GUN_0_4 "./bonus/textures/guns/desert_eagle_0_4.xpm"
 #define GUN_1_4 "./bonus/textures/guns/desert_eagle_1_4.xpm"
 #define GUN_2_4 "./bonus/textures/guns/desert_eagle_2_4.xpm"
@@ -120,8 +118,10 @@ typedef struct s_textures
 	void    *south_texture;
 	void    *west_texture;
 	void    *east_texture;
+	void    *minimap_bg;
 	void    *floor_texture;
 	void    *wall_texture;
+	void    *skull;
 	void	*player_texture;
 	void	*gun_texture[5];
 	void    *gun_current_texture;
@@ -279,6 +279,8 @@ int     mouse_press(int button, int x, int y, t_game *game);
 void	render_hp(t_game *game);
 void	render_game_over(t_game *game);
 void	render_background(t_game *game);
+void    render_minimap_bg(t_game *game);
+void    render_minimap_border(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

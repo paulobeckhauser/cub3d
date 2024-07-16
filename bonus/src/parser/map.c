@@ -143,7 +143,9 @@ bool	check_map_element_input(t_data *data)
 			if (data->cub_file[i][j] != '0' && data->cub_file[i][j] != '1'
 				&& data->cub_file[i][j] != ' ' && data->cub_file[i][j] != 'N'
 				&& data->cub_file[i][j] != 'S' && data->cub_file[i][j] != 'E'
-				&& data->cub_file[i][j] != 'W' && (data->cub_file[i][j] < 9
+				&& data->cub_file[i][j] != 'W' && data->cub_file[i][j] != '2'
+			    && data->cub_file[i][j] != '3' && data->cub_file[i][j] != '4'
+			    && (data->cub_file[i][j] < 9
 					|| data->cub_file[i][j] > 13))
 			{
 				replace_error_message(data, "Map element in wrong format");
