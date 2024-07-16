@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:56 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:18:36 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:15:07 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ bool	store_surface_colors(t_data *data)
 		i++;
 	}
 	if (!check_input_surfaces(data))
-		return (false);	
+		return (false);
 	return (true);
 }

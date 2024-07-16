@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 22:19:39 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/06/05 22:19:40 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:23:31 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game)
 
 bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game)
 {
-	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
+	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element 
+		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
 		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '1')
 		return (true);
 	return (false);
