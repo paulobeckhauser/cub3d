@@ -115,7 +115,7 @@ int	loop_hook(t_game *game)
 		}
 		game->textures->gun_current_texture = game->textures->gun_texture[gun_frame];
 		if (gun_frame == 0 && game->body_hit[SCREEN_WIDTH / 2] == true)
-			game->map[game->enemy_y][game->enemy_x] = '0';
+			game->data->map_element[game->enemy_y][game->enemy_x] = '0';
 	}
 	if (game->door_are_opening)
 	{

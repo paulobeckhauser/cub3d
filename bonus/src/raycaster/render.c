@@ -56,10 +56,10 @@ void    render_minimap(t_game *game)
 	int color;
 	
 	map_y = 0;
-	while (map_y < 10)
+	while (map_y < game->data->number_lines_map_element)
 	{
 		map_x = 0;
-		while (map_x < 10)
+		while (game->data->map_element[map_y][map_x])
 		{
 			tex_y = 0;
 			while (tex_y < MINIMAP_SCALE)
@@ -67,7 +67,7 @@ void    render_minimap(t_game *game)
 				tex_x = 0;
 				while (tex_x < MINIMAP_SCALE)
 				{
-					if (game->map[map_y][map_x] == '1')
+					if (game->data->map_element[map_y][map_x] == '1')
 						color = get_pixel_color(game->textures->wall_texture, tex_x, tex_y);
 					else
 						color = get_pixel_color(game->textures->floor_texture, tex_x, tex_y);
