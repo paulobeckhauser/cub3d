@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:15:56 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 17:04:41 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:22:37 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	replace_error_message(t_data *data, char *str)
 	{
 		replace_error_message(data, "Memory allocation failed");
 		free_variables_error(data);
-		return (false);
 	}
 }
 

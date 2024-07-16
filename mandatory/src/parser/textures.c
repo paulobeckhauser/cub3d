@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:58 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 16:56:53 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:58:48 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,8 @@ bool	check_storage_textures(t_data *data)
 		array = ft_split(data->cub_file[i], ' ');
 		if (!array)
 		{
-			free_2d_array(array);
 			replace_error_message(data, "Memory allocation failed");
-			return (false);
+			return (free_2d_array(array), false);
 		}
 		if (array[0])
 		{
@@ -56,10 +55,7 @@ bool	check_storage_textures(t_data *data)
 				|| !store_south_texture_format(data, array)
 				|| !store_west_texture_format(data, array)
 				|| !store_east_texture_format(data, array))
-			{
-				free_2d_array(array);
-				return (false);
-			}
+				return (free_2d_array(array), false);
 		}
 		i++;
 		free_2d_array(array);

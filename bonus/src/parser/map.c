@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:48 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 17:05:45 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:32:47 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,34 +123,6 @@ bool	check_map_last_element(t_data *data)
 		while (data->cub_file[i][j])
 		{
 			if (data->cub_file[i][j] != ' ')
-			{
-				replace_error_message(data, "Map element in wrong format");
-				return (false);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (true);
-}
-
-bool	check_map_element_input(t_data *data)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = data->line_start_map_position + 1;
-	while (data->cub_file[i])
-	{
-		j = 0;
-		while (data->cub_file[i][j])
-		{
-			if (data->cub_file[i][j] != '0' && data->cub_file[i][j] != '1'
-				&& data->cub_file[i][j] != ' ' && data->cub_file[i][j] != 'N'
-				&& data->cub_file[i][j] != 'S' && data->cub_file[i][j] != 'E'
-				&& data->cub_file[i][j] != 'W' && (data->cub_file[i][j] < 9
-					|| data->cub_file[i][j] > 13))
 			{
 				replace_error_message(data, "Map element in wrong format");
 				return (false);

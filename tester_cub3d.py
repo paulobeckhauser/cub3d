@@ -46,11 +46,11 @@ def run_c_program(executable, args=None):
 def check_output(output, expected_output):
     return output == expected_output
 
-# def check_valgrind_output(valgrind_output):
-#     # Check if Valgrind detected any errors
-#     if "ERROR SUMMARY: 0 errors from 0 contexts" in valgrind_output:
-#         return True
-#     return False
+def check_valgrind_output(valgrind_output):
+    # Check if Valgrind detected any errors
+    if "ERROR SUMMARY: 0 errors from 0 contexts" in valgrind_output:
+        return True
+    return False
 
 
 def main():
