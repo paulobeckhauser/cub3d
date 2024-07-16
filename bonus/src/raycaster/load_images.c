@@ -18,6 +18,8 @@ void load_images_from_dir(t_game *game)
 	game->textures->south_texture = mlx_xpm_file_to_image(game->mlx_ptr, game->data->texture_south, &game->img_x, &game->img_y);
 	game->textures->west_texture = mlx_xpm_file_to_image(game->mlx_ptr, game->data->texture_west, &game->img_x, &game->img_y);
 	game->textures->east_texture = mlx_xpm_file_to_image(game->mlx_ptr, game->data->texture_east, &game->img_x, &game->img_y);
+	game->textures->minimap_bg = mlx_xpm_file_to_image(game->mlx_ptr, MINIMAP_BG, &game->img_x, &game->img_y);
+	game->textures->skull = mlx_xpm_file_to_image(game->mlx_ptr, SKULL, &game->img_x, &game->img_y);
 	game->textures->floor_texture = mlx_xpm_file_to_image(game->mlx_ptr, FLOOR_TEXTURE, &game->img_x, &game->img_y);
 	game->textures->wall_texture = mlx_xpm_file_to_image(game->mlx_ptr, WALL_TEXTURE, &game->img_x, &game->img_y);
 	game->textures->player_texture = mlx_xpm_file_to_image(game->mlx_ptr, PLAYER_TEXTURE, &game->img_x, &game->img_y);

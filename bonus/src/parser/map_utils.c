@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:51:44 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 20:05:17 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:19:14 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ bool	check_map_element_input(t_data *data)
 			if (data->cub_file[i][j] != '0' && data->cub_file[i][j] != '1'
 				&& data->cub_file[i][j] != ' ' && data->cub_file[i][j] != 'N'
 				&& data->cub_file[i][j] != 'S' && data->cub_file[i][j] != 'E'
-				&& data->cub_file[i][j] != 'W' && (data->cub_file[i][j] < 9
+				&& data->cub_file[i][j] != 'W' && data->cub_file[i][j] != '2'
+			    && data->cub_file[i][j] != '3' && data->cub_file[i][j] != '4'
+			    && (data->cub_file[i][j] < 9
 					|| data->cub_file[i][j] > 13))
 			{
 				replace_error_message(data, "Map element in wrong format");

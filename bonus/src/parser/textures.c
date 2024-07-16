@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:58 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 17:07:59 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:14:13 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,56 +32,6 @@ bool	check_xpm_extension(t_data *data, char *str)
 	free_2d_array(array);
 	return (true);
 }
-
-bool	check_input_texture(t_data *data)
-{
-	if (data->text_count_n > 1)
-	{
-		replace_error_message(data, "More than 1 input for North Texture");
-		return (false);
-	}
-	else if (data->text_count_n < 1)
-	{
-		replace_error_message(data,
-			"No input for North Texture or in wrong format");
-		return (false);
-	}
-	else if (data->text_count_s > 1)
-	{
-		replace_error_message(data, "More than 1 input for South Texture");
-		return (false);
-	}
-	else if (data->text_count_s < 1)
-	{
-		replace_error_message(data,
-			"No input for South Texture or in wrong format");
-		return (false);
-	}
-	else if (data->text_count_w > 1)
-	{
-		replace_error_message(data, "More than 1 input for West Texture");
-		return (false);
-	}
-	else if (data->text_count_w < 1)
-	{
-		replace_error_message(data,
-			"No input for West Texture or in wrong format");
-		return (false);
-	}
-	else if (data->text_count_e > 1)
-	{
-		replace_error_message(data, "More than 1 input for East Texture");
-		return (false);
-	}
-	else if (data->text_count_e < 1)
-	{
-		replace_error_message(data,
-			"No input for East Texture or in wrong format");
-		return (false);
-	}
-	return (true);
-}
-
 
 bool	store_textures(t_data *data)
 {

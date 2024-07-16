@@ -29,24 +29,38 @@ int main(int argc, char **argv)
 	t_image     image;
 	t_vectors   vectors[60];
 	t_data		data;
+	int status;
 	
-	parser(argv[1], &data);
-	game.data = &data;
-	init_game(&game);
-    init_image(&image, &game);
-    game.image = &image;
-	game.vectors = vectors;
-	game.textures = &textures;
-	calc_dir_vectors(&game);
-    load_images_from_dir(&game);
-    init_hooks(&game);
-    render_game(&game);
-	(void)argc;
-	(void)argv;
-	mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
-	mlx_loop(game.mlx_ptr);
-	free(game.map);
-	mlx_destroy_image(game.mlx_ptr, image.img);
-	image.img = NULL;
-    return (0);
+	status = 0;
+	if (argc == 2)
+	{
+		status = parser(argv[1], &data);
+		if (status != 0)
+			return(status);
+		game.data = &data;
+		init_game(&game);
+		init_image(&image, &game);
+		game.image = &image;
+		game.vectors = vectors;
+		game.textures = &textures;
+		calc_dir_vectors(&game);
+		load_images_from_dir(&game);
+		init_hooks(&game);
+		render_game(&game);
+		mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
+		mlx_loop(game.mlx_ptr);
+		free(game.map);
+		mlx_destroy_image(game.mlx_ptr, image.img);
+		image.img = NULL;
+	}
+	else
+	{
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd("Incorrect number of arguments\n", 2);
+		ft_putstr_fd(RESET, 2);
+		return (1);
+	}
+
+    return (status);
 }
