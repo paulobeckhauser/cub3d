@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:14 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 19:49:12 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:03:47 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ bool	clean_store_hex_color(t_data *data, int i, char surf)
 	if (!cleaned_string)
 	{
 		free(cleaned_string);
+		free_variables_error(data);
 		return (false);
 	}
 	if (!store_hex_color(cleaned_string, data, surf))

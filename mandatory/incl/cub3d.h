@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:08:22 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 21:22:13 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:38:35 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,12 @@ typedef struct s_game
 	t_vectors	*vectors;
 	int			vec_idx;
 	t_data		*data;
+	int			line_height;
+	int			y_iterator;
+	int			y_end;
+	int			tex_x;
+	int			tex_y;
+	int			color;
 }				t_game;
 
 bool			apply_ffill_algo(char **map_backup, t_data *data);
