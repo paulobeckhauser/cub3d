@@ -92,8 +92,8 @@ void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction)
 
 // void set_enemy_direction(t_raycaster *raycaster, t_game *game)
 // {
-	// double dx = game->player_x - raycaster->colis_x;
-	// double dy = game->player_y - raycaster->colis_y;
+	// double dx = game->data->player->x - raycaster->colis_x;
+	// double dy = game->data->player->y - raycaster->colis_y;
 	// double angle = atan2(dy, dx);
 	
 	// double angle_degrees = angle * 180 / M_PI;
@@ -109,9 +109,9 @@ void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle,
 	float raw_dist;
 	
 	raw_dist = sqrtf(powf(raycaster->colis_x
-	                    * game->square_size - game->player_x, 2)
+	                    * game->square_size - game->data->player->x, 2)
 	                + powf(raycaster->colis_y
-	                      * game->square_size - game->player_y, 2));
+	                      * game->square_size - game->data->player->y, 2));
 	*dist = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
 }
 

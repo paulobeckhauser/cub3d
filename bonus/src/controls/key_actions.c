@@ -41,50 +41,50 @@ void    rotate_player_right(t_game *game)
 
 void    move_player_forward(t_game *game)
 {
-	game->player_x += game->vectors[game->vec_idx].x * SPEED;
-	game->player_y += game->vectors[game->vec_idx].y * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')	{
-		game->player_x -= game->vectors[game->vec_idx].x * SPEED;
-		game->player_y -= game->vectors[game->vec_idx].y * SPEED;
+	game->data->player->x += game->vectors[game->vec_idx].x * SPEED;
+	game->data->player->y += game->vectors[game->vec_idx].y * SPEED;
+	if (game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
+	    || game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')	{
+		game->data->player->x -= game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->y -= game->vectors[game->vec_idx].y * SPEED;
 		return ;
 	}
 }
 
 void    move_player_backward(t_game *game)
 {
-	game->player_x -= game->vectors[game->vec_idx].x * SPEED;
-	game->player_y -= game->vectors[game->vec_idx].y * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')	{
-		game->player_x += game->vectors[game->vec_idx].x * SPEED;
-		game->player_y += game->vectors[game->vec_idx].y * SPEED;
+	game->data->player->x -= game->vectors[game->vec_idx].x * SPEED;
+	game->data->player->y -= game->vectors[game->vec_idx].y * SPEED;
+	if (game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
+	    || game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')	{
+		game->data->player->x += game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->y += game->vectors[game->vec_idx].y * SPEED;
 		return ;
 	}
 }
 
 void    move_player_left(t_game *game)
 {
-	game->player_x += game->vectors[game->vec_idx].y * SPEED;
-	game->player_y -= game->vectors[game->vec_idx].x * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-	    || game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')
+	game->data->player->x += game->vectors[game->vec_idx].y * SPEED;
+	game->data->player->y -= game->vectors[game->vec_idx].x * SPEED;
+	if (game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
+	    || game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')
 	{
-		game->player_x -= game->vectors[game->vec_idx].y * SPEED;
-		game->player_y += game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->x -= game->vectors[game->vec_idx].y * SPEED;
+		game->data->player->y += game->vectors[game->vec_idx].x * SPEED;
 		return ;
 	}
 }
 
 void    move_player_right(t_game *game)
 {
-	game->player_x -= game->vectors[game->vec_idx].y * SPEED;
-	game->player_y += game->vectors[game->vec_idx].x * SPEED;
-	if (game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '1'
-		|| game->map[(int)(game->player_y / game->square_size)][(int)(game->player_x / game->square_size)] == '2')
+	game->data->player->x -= game->vectors[game->vec_idx].y * SPEED;
+	game->data->player->y += game->vectors[game->vec_idx].x * SPEED;
+	if (game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '1'
+		|| game->map[(int)(game->data->player->y / game->square_size)][(int)(game->data->player->x / game->square_size)] == '2')
 	{
-		game->player_x += game->vectors[game->vec_idx].y * SPEED;
-		game->player_y -= game->vectors[game->vec_idx].x * SPEED;
+		game->data->player->x += game->vectors[game->vec_idx].y * SPEED;
+		game->data->player->y -= game->vectors[game->vec_idx].x * SPEED;
 		return ;
 	}
 }

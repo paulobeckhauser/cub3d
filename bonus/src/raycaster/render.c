@@ -86,8 +86,8 @@ void    render_minimap_player(t_game *game)
 	int tex_y;
 	int color;
 	
-	int minimap_player_x = (int)(game->player_x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
-	int minimap_player_y = (int)(game->player_y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
+	int minimap_player_x = (int)(game->data->player->x / (float)SCREEN_WIDTH * 200 / ((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH) - MINIMAP_SCALE);
+	int minimap_player_y = (int)(game->data->player->y / (float)SCREEN_HEIGHT * 200 - MINIMAP_SCALE);
 	
 	tex_y = 0;
 	while (tex_y < MINIMAP_SCALE)
