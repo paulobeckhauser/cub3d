@@ -303,6 +303,6 @@ bool			check_if_empty_line(char *str);
 void			init_vars_check_wall(int *i, int *j);
 bool			check_first_line(int i, int j, t_data *data);
 bool			check_last_line(int i, int j, t_data *data);
-bool			check_map_element_input(t_data *data);
+bool			macheck_map_element_input(t_data *data);
 
 #endif

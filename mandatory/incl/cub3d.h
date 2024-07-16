@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:08:22 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 20:19:27 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:55:42 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # include <sys/time.h>
 
 // screen
-# define SCREEN_WIDTH 3000
-# define SCREEN_HEIGHT 1080
+# define SCREEN_WIDTH 1600
+# define SCREEN_HEIGHT 900
 # define DRAWING_SCALE 180000
 # define FIELD_OF_VIEW 60.0f
 # define SQUARE_SIZE 100
