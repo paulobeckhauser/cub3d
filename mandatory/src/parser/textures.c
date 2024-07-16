@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:58 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 18:14:25 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:35:28 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,37 @@ bool	check_storage_textures(t_data *data)
 	return (true);
 }
 
+bool	check_open_texture_files(t_data *data)
+{
+	int	fd_north;
+	int	fd_south;
+	int	fd_west;
+	int	fd_east;
+
+	fd_north = open(data->texture_north, O_RDONLY);
+	fd_south = open(data->texture_south, O_RDONLY);
+	fd_west = open(data->texture_west, O_RDONLY);
+	fd_east = open(data->texture_east, O_RDONLY);
+	if (fd_north == -1 || fd_south == -1 || fd_west == -1 || fd_east == -1)
+	{
+		replace_error_message(data, "One or more texture file does not exist");
+		close(fd_north);
+		close(fd_south);
+		close(fd_west);
+		close(fd_east);
+		return (false);
+	}
+	close(fd_north);
+	close(fd_south);
+	close(fd_west);
+	close(fd_east);
+	return (true);
+}
+
 bool	store_textures(t_data *data)
 {
-	if (!check_storage_textures(data) || !check_input_texture(data))
+	if (!check_storage_textures(data) || !check_input_texture(data)
+		|| !check_open_texture_files(data))
 		return (false);
 	return (true);
 }

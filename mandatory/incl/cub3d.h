@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:08:22 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 21:20:31 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:22:13 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ typedef struct s_game
 	t_data		*data;
 }				t_game;
 
-bool 			apply_ffill_algo(char **map_backup, t_data *data);
+bool			apply_ffill_algo(char **map_backup, t_data *data);
 void			calc_dir_vectors(t_game *game);
 void			raycaster(t_game *game);
 void			render_game(t_game *game);
@@ -186,7 +186,7 @@ bool			check_south_texture(t_data *data);
 bool			check_west_texture(t_data *data);
 bool			check_east_texture(t_data *data);
 bool			check_input_texture(t_data *data);
-bool 			check_number_player(t_data *data, int count_player);
+bool			check_number_player(t_data *data, int count_player);
 bool			check_edges(int i, int j, t_data *data);
 bool			check_first_line(int i, int j, t_data *data);
 bool			check_last_line(int i, int j, t_data *data);
