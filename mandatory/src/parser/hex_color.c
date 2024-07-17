@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:14 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 17:03:47 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:32:15 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ bool	array_format_check(char **array, t_data *data)
 	return (true);
 }
 
-bool	check_error_rgb_format(int color, t_data *data, char **array)
+bool	check_error_rgb_format(int color, t_data *data)
 {
 	if (color <= 0 || color > 255)
 	{
 		replace_error_message(data, "RGB in wrong format");
-		free_2d_array(array);
 		return (false);
 	}
 	return (true);
@@ -51,12 +50,16 @@ bool	store_hex_color(char *str, t_data *data, char surf)
 	int		blue;
 
 	array = ft_split(str, ',');
+	if (!array)
+		return (free_2d_array(array), false);
 	init_vars_colors(&red, &green, &blue);
-	if (!array_format_check(array, data))
+	if (!array_format_check(array, data) || !get_red_color(&red, array, data)
+		|| !get_green_color(&green, array, data) || !get_blue_color(&blue,
+			array, data))
+	{
+		free_2d_array(array);
 		return (false);
-	if (!get_red_color(&red, array, data) || !get_green_color(&green, array,
-			data) || !get_blue_color(&blue, array, data))
-		return (false);
+	}
 	if (surf == 'F')
 		data->color_floor = rgb_to_hex(red, green, blue);
 	else if (surf == 'C')
@@ -73,7 +76,7 @@ bool	clean_store_hex_color(t_data *data, int i, char surf)
 
 	cleaned_string = NULL;
 	cleaned_string = clean_str_color(data, i, surf);
-	if (!cleaned_string)
+	if (!cleaned_string || !(check_other_values_rgb(cleaned_string, data)))
 	{
 		free(cleaned_string);
 		free_variables_error(data);

@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:08:22 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 21:55:42 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:32:41 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ bool			check_if_empty_line(char *str);
 bool			check_map_last_element(t_data *data);
 bool			check_empty_line_map(t_data *data);
 bool			check_map_element_input(t_data *data);
-bool			check_error_rgb_format(int color, t_data *data, char **array);
+bool			check_error_rgb_format(int color, t_data *data);
 bool			check_player(t_data *data);
 bool			check_xpm_extension(t_data *data, char *str);
 bool			check_north_texture(t_data *data);
@@ -196,6 +196,7 @@ bool			check_number_player(t_data *data, int count_player);
 bool			check_edges(int i, int j, t_data *data);
 bool			check_first_line(int i, int j, t_data *data);
 bool			check_last_line(int i, int j, t_data *data);
+bool			check_other_values_rgb(char *cleaned_string, t_data *data);
 char			*clean_str_color(t_data *data, int i, char surf);
 bool			clean_store_hex_color(t_data *data, int i, char surf);
 bool			count_lines_map(t_data *data, char *str);

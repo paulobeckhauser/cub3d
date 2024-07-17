@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:13:45 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:14:11 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:32:13 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,25 @@ bool	check_extension(t_data *data, char *str, char *extension)
 		replace_error_message(data, "Map is not a '.cub' file");
 		free_2d_array(array);
 		return (false);
+	}
+	free_2d_array(array);
+	return (true);
+}
+
+bool	check_other_values_rgb(char *cleaned_string, t_data *data)
+{
+	char	**array;
+
+	(void)data;
+	array = ft_split(cleaned_string, ',');
+	if (!array)
+	{
+		return (false);
+	}
+	if (size_array(array) != 3)
+	{
+		return (replace_error_message(data, "More elements in rgb value"),
+			false);
 	}
 	free_2d_array(array);
 	return (true);
