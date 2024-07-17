@@ -93,10 +93,12 @@ void    render_minimap(t_game *game)
 				{
 					if (map_y < 0 ||    map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
 						break ;
-					if (game->data->map_element[map_y][map_x] == '1' || game->data->map_element[map_y][map_x] == '2' || game->data->map_element[map_y][map_x] == '3')
-						color = rgb_to_hex(30, 28, 87);
-					else if (game->data->map_element[map_y][map_x] == '0')
+					if (game->data->map_element[map_y][map_x] == '0')
 						color = rgb_to_hex(74, 17, 17);
+					else if (game->data->map_element[map_y][map_x] == '1')
+						color = rgb_to_hex(30, 28, 87);
+					else if (game->data->map_element[map_y][map_x] == '2' || game->data->map_element[map_y][map_x] == '3')
+						color = get_pixel_color(game->textures->door_minimap, tex_x, tex_y);
 					else if (game->data->map_element[map_y][map_x] == '4')
 						color = get_pixel_color(game->textures->skull, tex_x, tex_y);
 					else
@@ -296,8 +298,9 @@ void render_enemy_line(t_game *game)
 	
 	if (game->first_enemy_dist == -1)
 		game->first_enemy_dist = game->dist_idx;
-	line_height = (400 * TEXTURE_SIZE) / (game->enemy_dists[game->dist_idx] + 1);
-	if (line_height > SCREEN_HEIGHT) line_height = SCREEN_HEIGHT;
+//	line_height = (400 * TEXTURE_SIZE) / (game->enemy_dists[game->dist_idx] + 1);
+	line_height = DRAWING_SCALE / (game->wall_dists[game->dist_idx] + 1);
+	if (line_height > DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1)) line_height = DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1);
 	if (line_height < 290) line_height = 290;
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	y_end = SCREEN_HEIGHT / 2 + line_height / 2;

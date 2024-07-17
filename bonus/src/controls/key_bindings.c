@@ -171,8 +171,8 @@ int	loop_hook(t_game *game)
 				game->textures->hp_current_texture = game->textures->hp_texture[--i];
 			game->hp_frame_updated = true;
 		}
-		if (game->textures->hp_current_texture == game->textures->hp_texture[0] && enemy_frame == 0)
-			game->player_dead = true;
+//		if (game->textures->hp_current_texture == game->textures->hp_texture[0] && enemy_frame == 0)
+//			game->player_dead = true;
 	}
 	if (!game->player_dead)
 		render_game(game);

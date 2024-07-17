@@ -29,6 +29,7 @@
 #define FLOOR_TEXTURE "./bonus/textures/minimap/floor_texture.xpm"
 #define WALL_TEXTURE "./bonus/textures/minimap/wall_texture.xpm"
 #define PLAYER_TEXTURE "./bonus/textures/minimap/player_ln_texture.xpm"
+#define DOOR_MINIMAP "./bonus/textures/minimap/door.xpm"
 #define SKULL "./bonus/textures/minimap/skull.xpm"
 #define	GUN_0_4 "./bonus/textures/guns/desert_eagle_0_4.xpm"
 #define GUN_1_4 "./bonus/textures/guns/desert_eagle_1_4.xpm"
@@ -119,9 +120,7 @@ typedef struct s_textures
 	void    *south_texture;
 	void    *west_texture;
 	void    *east_texture;
-	void    *minimap_bg;
-	void    *floor_texture;
-	void    *wall_texture;
+	void    *door_minimap;
 	void    *skull;
 	void	*player_texture;
 	void	*gun_texture[5];
@@ -219,6 +218,7 @@ typedef struct s_game
 	bool	player_dead;
 	t_textures	*textures;
 	t_data  *data;
+	bool    found_wall;
 }	t_game;
 
 typedef struct  s_raycaster
@@ -282,6 +282,7 @@ void	render_game_over(t_game *game);
 void	render_background(t_game *game);
 void    render_minimap_bg(t_game *game);
 void    render_minimap_border(t_game *game);
+void    render_enemy(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);
