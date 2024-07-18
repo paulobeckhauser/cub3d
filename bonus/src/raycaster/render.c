@@ -299,17 +299,19 @@ void render_enemy_line(t_game *game)
 	if (game->first_enemy_dist == -1)
 		game->first_enemy_dist = game->dist_idx;
 //	line_height = (400 * TEXTURE_SIZE) / (game->enemy_dists[game->dist_idx] + 1);
-	line_height = DRAWING_SCALE / (game->wall_dists[game->dist_idx] + 1);
-	if (line_height > DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1)) line_height = DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1);
-	if (line_height < 290) line_height = 290;
+	line_height = (int)((SCREEN_WIDTH - SQUARE_SIZE) / game->enemy_dists[game->dist_idx] * SQUARE_SIZE);
+//	line_height = DRAWING_SCALE / (game->wall_dists[game->dist_idx] + 1);
+//	if (line_height > DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1)) line_height = DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1);
+//	if (line_height < 290) line_height = 290;
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	y_end = SCREEN_HEIGHT / 2 + line_height / 2;
-	tex_x = game->dist_idx - game->first_enemy_dist + 120;
-	if (tex_x >= TEXTURE_SIZE)
-		tex_x = TEXTURE_SIZE - 1;
+	tex_x = (game->dist_idx - game->first_enemy_dist + 120);
+//	if (tex_x > line_height)
+//		return;
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator - (SCREEN_HEIGHT / 2 - line_height / 2)) * TEXTURE_SIZE) / line_height;
+//		tex_y = (y_iterator - (SCREEN_HEIGHT / 2 - line_height / 2)) / line_height / TEXTURE_SIZE;
 		if (tex_y < 0) tex_y = 0;
 		if (tex_y >= TEXTURE_SIZE)
 			tex_y = TEXTURE_SIZE - 1;
@@ -317,6 +319,7 @@ void render_enemy_line(t_game *game)
 		if (color != rgb_to_hex(255, 0, 255) && game->enemy_dists[game->dist_idx] < game->wall_dists[game->dist_idx]
 			&& (game->open_door_visible || game->door_dists[game->dist_idx] == 0 || game->enemy_dists[game->dist_idx] < game->door_dists[game->dist_idx]))
 		{
+			printf("enemy x: %i\n", game->dist_idx);
 			game->body_hit[game->dist_idx] = true;
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		}

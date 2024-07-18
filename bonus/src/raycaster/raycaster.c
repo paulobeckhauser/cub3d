@@ -104,8 +104,9 @@ void    render_enemy(t_game *game)
 	i = 0;
 	while (i < SCREEN_WIDTH)
 	{
-		if (game->enemy_dists[i++] != 0)
+		if (game->enemy_dists[i] != 0 && game->enemy_dists[i] < game->wall_dists[i])
 			++enemy_square_pixels_seen;
+		++i;
 	}
 	current_square_size = (int)((SCREEN_WIDTH - SQUARE_SIZE) / game->closest_enemy_distance * SQUARE_SIZE);
 	printf("enemy_square_pixels_seen: %i\n", enemy_square_pixels_seen);
