@@ -172,8 +172,6 @@ typedef struct s_game
 	t_image *image;
 	float   square_size;
 	char	**map;
-	float	player_x;
-	float	player_y;
 	float	ray_new_x;
 	float	ray_new_y;
 	float	ray_main_angle;
@@ -206,19 +204,17 @@ typedef struct s_game
 	float   prev_door_distance;
 	long    enemy_animation_start_time;
 	long    gun_animation_start_time;
-	float   closest_enemy_distance;
-	float   prev_enemy_distance;
-	float   ray_enemy_hit_x;
-	float   ray_enemy_hit_y;
 	bool    hit_enemy;
 	bool    enemy_visible;
 	int     mouse_x;
-	int     first_enemy_dist;
 	bool	hp_frame_updated;
 	bool	player_dead;
 	t_textures	*textures;
 	t_data  *data;
 	bool    found_wall;
+	bool    found_door;
+	int     x_enemy_start;
+	int     x_enemy_end;
 }	t_game;
 
 typedef struct  s_raycaster

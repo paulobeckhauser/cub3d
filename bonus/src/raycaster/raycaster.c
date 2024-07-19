@@ -56,8 +56,6 @@ void	raycaster(t_game *game)
 	game->open_door_visible = false;
 	game->prev_door_distance = INFINITY;
 	game->closest_door_distance = 0;
-	game->prev_enemy_distance = INFINITY;
-	game->closest_enemy_distance = 0;
 	struct timeval  tv;
 	gettimeofday(&tv, NULL);
 	game->enemy_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
@@ -78,10 +76,6 @@ void	raycaster(t_game *game)
 		render_wall_line(game);
 		if (game->hit_opened_door || game->hit_closed_door)
 			render_door_line(game);
-		if (game->hit_enemy)
-			render_enemy_line(game);
-		else
-			game->first_enemy_dist = -1;
 		angle_iter += angle_incr_radians;
 		if (angle_iter < 0)
 			angle_iter += 2 * M_PI;
@@ -89,29 +83,8 @@ void	raycaster(t_game *game)
 			angle_iter -= 2 * M_PI;
 		++game->dist_idx;
 	}
-	game->first_enemy_dist = -1;
-//	if (game->hit_enemy)
+	if (game->hit_enemy)
 		render_enemy(game);
-}
-
-void    render_enemy(t_game *game)
-{
-	int enemy_square_pixels_seen;
-	int i;
-	int current_square_size;
-	
-	enemy_square_pixels_seen = 0;
-	i = 0;
-	while (i < SCREEN_WIDTH)
-	{
-		if (game->enemy_dists[i] != 0 && game->enemy_dists[i] < game->wall_dists[i])
-			++enemy_square_pixels_seen;
-		++i;
-	}
-	current_square_size = (int)((SCREEN_WIDTH - SQUARE_SIZE) / game->closest_enemy_distance * SQUARE_SIZE);
-	printf("enemy_square_pixels_seen: %i\n", enemy_square_pixels_seen);
-	printf("distance: %i\n", (int)game->closest_enemy_distance);
-	printf("calculated square size: %i\n", current_square_size);
 }
 
 void    cast_ray(t_game *game, float ray_angle)
@@ -119,6 +92,7 @@ void    cast_ray(t_game *game, float ray_angle)
 	t_raycaster raycaster;
 	
 	game->found_wall = false;
+	game->found_door = false;
 	calc_directions(&raycaster, game);
 	raycaster.x_iterator = game->data->player->x;
 	raycaster.y_iterator = game->data->player->y;
@@ -132,8 +106,9 @@ void    cast_ray(t_game *game, float ray_angle)
 		{
 			calc_collision_point_x_y(&raycaster, game);
 			if (raycaster.colis_y < 0 || raycaster.colis_x < 0 || !game->data->map_element[(int)raycaster.colis_y]
-				|| !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
+				|| !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x]) {
 				return ;
+			}
 			if (is_collision_point_wall(&raycaster, game) && !game->found_wall)
 			{
 				set_ray_direction(&raycaster, game, &game->wall_direction);
@@ -143,13 +118,14 @@ void    cast_ray(t_game *game, float ray_angle)
 //				return ;
 				game->found_wall = true;
 			}
-			if (is_collision_point_closed_door(&raycaster, game))
+			if (is_collision_point_closed_door(&raycaster, game) && !game->found_door)
 			{
 				set_ray_direction(&raycaster, game, &game->door_direction);
 				calc_ray_distance(&raycaster, game, ray_angle, &game->door_dists[game->dist_idx]);
 				save_closest_distance(game->door_dists[game->dist_idx], &game->prev_door_distance, &game->closest_door_distance);
 				game->ray_door_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->ray_door_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
+				game->found_door = true;
 			}
 			if (is_collision_point_opened_door(&raycaster, game))
 			{
@@ -158,14 +134,11 @@ void    cast_ray(t_game *game, float ray_angle)
 				save_closest_distance(game->door_dists[game->dist_idx], &game->prev_door_distance, &game->closest_door_distance);
 				game->ray_door_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->ray_door_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
+				game->found_door = true;
 			}
 			if (is_collision_point_enemy(&raycaster, game))
 			{
-				// set_enemy_direction(&raycaster, game);
 				calc_ray_distance(&raycaster, game, ray_angle, &game->enemy_dists[game->dist_idx]);
-				save_closest_distance(game->enemy_dists[game->dist_idx], &game->prev_enemy_distance, &game->closest_enemy_distance);
-				game->ray_enemy_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
-				game->ray_enemy_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 			}
 		}
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;

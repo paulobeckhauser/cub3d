@@ -68,15 +68,12 @@ void    init_game(t_game *game)
 	game->closest_door_distance = INFINITY;
 	game->prev_door_distance = 0;
 	game->enemy_animation_start_time = 0;
-	game->closest_enemy_distance = INFINITY;
-	game->prev_enemy_distance = 0;
-	game->ray_enemy_hit_x = 0;
-	game->ray_enemy_hit_y = 0;
 	game->hit_enemy = false;
 	game->mouse_x = 0;
-	game->first_enemy_dist = -1;
 	game->hp_frame_updated = false;
 	game->player_dead = false;
+	game->x_enemy_start = 0;
+	game->x_enemy_end = 0;
 }
 
 void    init_keys(t_game *game)

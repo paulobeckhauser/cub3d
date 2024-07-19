@@ -64,7 +64,10 @@ bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
 	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
 	    && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '4')
 	{
-		game->enemy_visible = true;
+		if (!game->x_enemy_start)
+			game->x_enemy_start = game->dist_idx;
+		if (game->dist_idx > game->x_enemy_end)
+			game->x_enemy_end = game->dist_idx;
 		game->enemy_x = (int)raycaster->colis_x;
 		game->enemy_y = (int)raycaster->colis_y;
 		game->hit_enemy = true;
