@@ -39,6 +39,8 @@ int main(int argc, char **argv)
 			return(status);
 		game.data = &data;
 		init_game(&game);
+		printf("%f\n", game.depth[game.depth_lvl].dists[game.dist_idx]);
+		exit (0);
 		init_image(&image, &game);
 		game.image = &image;
 		game.vectors = vectors;

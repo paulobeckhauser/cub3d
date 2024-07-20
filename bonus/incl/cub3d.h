@@ -165,6 +165,23 @@ typedef struct s_data
 	char		*texture_east;
 }				t_data;
 
+typedef enum s_obj
+{
+	EMPTY,
+	WALL,
+	OPEN_DOOR,
+	CLOSED_DOOR,
+	ENEMY,
+}   t_obj;
+
+typedef struct s_depth
+{
+	float   dists[SCREEN_WIDTH];
+	t_obj   obj;
+	float   ray_hit_x;
+	float   ray_hit_y;
+}   t_depth;
+
 typedef struct s_game
 {
 	void    *mlx_ptr;
@@ -179,11 +196,13 @@ typedef struct s_game
 	float   ray_hit_y;
 	float	ray_door_hit_x;
 	float	ray_door_hit_y;
-	float   wall_dists[SCREEN_WIDTH];
-	float	door_dists[SCREEN_WIDTH];
-	float   enemy_dists[SCREEN_WIDTH];
-	bool    body_hit[SCREEN_WIDTH];
+//	float   wall_dists[30][SCREEN_WIDTH];
+//	float	door_dists[30][SCREEN_WIDTH];
+//	float   enemy_dists[30][SCREEN_WIDTH];
+	t_depth depth[30];
+	bool    body_hit[30][SCREEN_WIDTH];
 	int     dist_idx;
+	int     depth_lvl;
 	int     wall_direction;
 	int     door_direction;
 	int		enemy_x;

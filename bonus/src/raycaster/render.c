@@ -227,7 +227,7 @@ void    render_wall_line(t_game *game)
 	int	tex_y;
 	int color;
 	
-	line_height = DRAWING_SCALE / (game->wall_dists[game->dist_idx] + 1);
+	line_height = DRAWING_SCALE / (game->wall_dists[game->depth_lvl][game->dist_idx] + 1);
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	if (y_iterator < 0)
 		y_iterator = 0;
@@ -264,7 +264,7 @@ void    render_door_line(t_game *game)
 	int	tex_y;
 	int color;
 	
-	line_height = DRAWING_SCALE / (game->door_dists[game->dist_idx] + 1);
+	line_height = DRAWING_SCALE / (game->door_dists[game->depth_lvl][game->dist_idx] + 1);
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	if (y_iterator < 0)
 		y_iterator = 0;
@@ -314,7 +314,7 @@ void render_enemy(t_game *game)
 			    && (game->open_door_visible || game->door_dists[x] == 0 || game->enemy_dists[x] < game->door_dists[x]))
 			{
 				game->enemy_visible = true;
-				game->body_hit[x] = true;
+				game->body_hit[game->depth_lvl][x] = true;
 				game->image->data[y * SCREEN_WIDTH + x] = color;
 			}
 			++x;

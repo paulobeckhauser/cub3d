@@ -41,14 +41,22 @@ void    init_game(t_game *game)
 	game->ray_hit_y = 0;
 	game->ray_door_hit_x = 0;
 	game->ray_door_hit_y = 0;
+	game->depth_lvl = 0;
 	game->dist_idx = 0;
-	while (game->dist_idx < SCREEN_WIDTH)
+	while (game->depth_lvl < 30)
 	{
-		game->wall_dists[game->dist_idx] = 0;
-		game->door_dists[game->dist_idx] = 0;
-		game->enemy_dists[game->dist_idx] = 0;
-		game->body_hit[game->dist_idx++] = false;
+		while (game->dist_idx < SCREEN_WIDTH)
+		{
+//			game->wall_dists[game->depth_lvl][game->dist_idx] = 0;
+//			game->door_dists[game->depth_lvl][game->dist_idx] = 0;
+//			game->enemy_dists[game->depth_lvl][game->dist_idx] = 0;
+//			game->body_hit[game->depth_lvl][game->dist_idx++] = false;
+			game->depth[game->depth_lvl].dists[game->dist_idx++] = 2;
+		}
+		game->depth[game->depth_lvl].obj = EMPTY;
+		++game->depth_lvl;
 	}
+	game->depth_lvl = 0;
 	game->dist_idx = 0;
 	game->wall_direction = 0;
 	game->door_direction = 0;
