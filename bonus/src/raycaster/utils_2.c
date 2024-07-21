@@ -32,32 +32,40 @@ bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game)
 	return (false);
 }
 
-bool    is_collision_point_closed_door(t_raycaster *raycaster, t_game *game)
+//bool    is_collision_point_closed_door(t_raycaster *raycaster, t_game *game)
+//{
+//	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
+//	    && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2')
+//	{
+//		game->closed_door_visible = true;
+//		game->hit_closed_door = true;
+//		game->hit_opened_door = false;
+//		return (true);
+//	}
+//	return (false);
+//}
+
+bool    is_collision_point_door(t_raycaster *raycaster, t_game *game)
 {
 	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-	    && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2')
-	{
-		game->closed_door_visible = true;
-		game->hit_closed_door = true;
-		game->hit_opened_door = false;
+	    && (game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2' || game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3'))
 		return (true);
-	}
 	return (false);
 }
 
-bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game)
-{
-	
-	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-	    && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3')
-	{
-		game->open_door_visible = true;
-		game->hit_opened_door = true;
-		game->hit_closed_door = false;
-		return (true);
-	}
-	return (false);
-}
+//bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game)
+//{
+//
+//	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
+//	    && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3')
+//	{
+//		game->open_door_visible = true;
+//		game->hit_opened_door = true;
+//		game->hit_closed_door = false;
+//		return (true);
+//	}
+//	return (false);
+//}
 
 bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
 {
@@ -122,11 +130,29 @@ void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle,
 	*dist = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
 }
 
-void    save_closest_distance(float dist, float *prev_dist, float *closest_dist)
+//void    save_closest_distance(float dist, float *prev_dist, float *closest_dist)
+//{
+//	if (dist > 0 && dist < *prev_dist)
+//	{
+//		*closest_dist = dist;
+//		*prev_dist = dist;
+//	}
+//}
+
+void    save_closest_distance(t_raycaster *raycaster, t_game *game)
 {
-	if (dist > 0 && dist < *prev_dist)
+	int i;
+	
+	i = 0;
+	while (i < 30)
 	{
-		*closest_dist = dist;
-		*prev_dist = dist;
+		if (game->door[i].y == (int)raycaster->colis_y && game->door[i].x == (int)raycaster->colis_x)
+			break ;
+		++i;
+	}
+	if (game->depth[game->depth_lvl].dist > 0 && game->depth[game->depth_lvl].dist < game->prev_door_distance)
+	{
+		game->door[i].dist = game->depth[game->depth_lvl].dist;
+		game->prev_door_distance = game->depth[game->depth_lvl].dist;
 	}
 }

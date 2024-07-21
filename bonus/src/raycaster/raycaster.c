@@ -51,8 +51,7 @@ void	raycaster(t_game *game)
 		angle_iter -= 2 * M_PI;
 	dir_x = 0;
 	dir_y = 0;
-	game->closed_door_visible = false;
-	game->open_door_visible = false;
+	game->door_visible = false;
 	game->prev_door_distance = INFINITY;
 	game->closest_door_distance = 0;
 	struct timeval  tv;
@@ -64,12 +63,10 @@ void	raycaster(t_game *game)
 	{
 		while (game->dist_idx < SCREEN_WIDTH)
 		{
-//			game->wall_dists[game->depth_lvl][game->dist_idx] = 0;
-//			game->door_dists[game->depth_lvl][game->dist_idx] = 0;
-//			game->enemy_dists[game->depth_lvl][game->dist_idx] = 0;
-			game->depth[game->depth_lvl].dists[game->dist_idx] = 0;
+			game->depth[game->depth_lvl].dist = 0;
 			game->body_hit[game->depth_lvl][game->dist_idx++] = false;
 		}
+		game->door[game->depth_lvl].dist = 0;
 		game->depth[game->depth_lvl].obj = EMPTY;
 		++game->depth_lvl;
 	}
@@ -77,14 +74,22 @@ void	raycaster(t_game *game)
 	game->dist_idx = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
+		game->depth_lvl = 0;
 		dir_x = cosf(angle_iter);
 		dir_y = sinf(angle_iter);
 		game->ray_new_x = game->data->player->x + dir_x * 2 * SCREEN_WIDTH;
 		game->ray_new_y = game->data->player->y + dir_y * 2 * SCREEN_WIDTH;
 		cast_ray(game, angle_iter);
-		render_wall_line(game);
-		if (game->hit_opened_door || game->hit_closed_door)
-			render_door_line(game);
+		while (game->depth_lvl >= 0)
+		{
+			if (game->depth[game->depth_lvl].obj == WALL)
+				render_wall_line(game);
+			else if (game->depth[game->depth_lvl].obj == DOOR)
+				render_door_line(game);
+//			else if (game->depth[game->depth_lvl].obj == ENEMY)
+//				render_enemy_line(game);
+            --game->depth_lvl;
+		}
 		angle_iter += angle_incr_radians;
 		if (angle_iter < 0)
 			angle_iter += 2 * M_PI;
@@ -92,8 +97,8 @@ void	raycaster(t_game *game)
 			angle_iter -= 2 * M_PI;
 		++game->dist_idx;
 	}
-	if (game->hit_enemy)
-		render_enemy(game);
+//	if (game->hit_enemy)
+//		render_enemy(game);
 }
 
 
@@ -114,35 +119,32 @@ void    cast_ray(t_game *game, float ray_angle)
 		{
 			calc_collision_point_x_y(&raycaster, game);
 			if (raycaster.colis_y < 0 || raycaster.colis_x < 0 || !game->data->map_element[(int)raycaster.colis_y]
-			    || !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x]) {
+			    || !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
 				return ;
-			}
 			if (is_collision_point_wall(&raycaster, game))
 			{
 				set_ray_direction(&raycaster, game, &game->wall_direction);
-				calc_ray_distance(&raycaster, game, ray_angle, &game->wall_dists[game->depth_lvl][game->dist_idx]);
+				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
 				game->depth[game->depth_lvl].ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->depth[game->depth_lvl].ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
+				game->depth[game->depth_lvl].obj = WALL;
+				return ;
 			}
-			if (is_collision_point_closed_door(&raycaster, game))
+			if (is_collision_point_door(&raycaster, game))
 			{
 				set_ray_direction(&raycaster, game, &game->door_direction);
-				calc_ray_distance(&raycaster, game, ray_angle, &game->door_dists[game->depth_lvl][game->dist_idx]);
-				save_closest_distance(game->door_dists[game->depth_lvl][game->dist_idx], &game->prev_door_distance, &game->closest_door_distance);
+				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
+				save_closest_distance(&raycaster, game);
 				game->depth[game->depth_lvl].ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->depth[game->depth_lvl].ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
-			}
-			if (is_collision_point_opened_door(&raycaster, game))
-			{
-				set_ray_direction(&raycaster, game, &game->door_direction);
-				calc_ray_distance(&raycaster, game, ray_angle, &game->door_dists[game->depth_lvl][game->dist_idx]);
-				save_closest_distance(game->door_dists[game->depth_lvl][game->dist_idx], &game->prev_door_distance, &game->closest_door_distance);
-				game->depth[game->depth_lvl].ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
-				game->depth[game->depth_lvl].ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
+				game->depth[game->depth_lvl].obj = DOOR;
+				++game->depth_lvl;
 			}
 			if (is_collision_point_enemy(&raycaster, game))
 			{
-				calc_ray_distance(&raycaster, game, ray_angle, &game->enemy_dists[game->depth_lvl][game->dist_idx]);
+				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
+				game->depth[game->depth_lvl].obj = ENEMY;
+				++game->depth_lvl;
 			}
 		}
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;

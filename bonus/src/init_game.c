@@ -45,19 +45,17 @@ void    init_game(t_game *game)
 	game->dist_idx = 0;
 	while (game->depth_lvl < 30)
 	{
-		while (game->dist_idx < SCREEN_WIDTH)
-		{
 //			game->wall_dists[game->depth_lvl][game->dist_idx] = 0;
 //			game->door_dists[game->depth_lvl][game->dist_idx] = 0;
 //			game->enemy_dists[game->depth_lvl][game->dist_idx] = 0;
 //			game->body_hit[game->depth_lvl][game->dist_idx++] = false;
-			game->depth[game->depth_lvl].dists[game->dist_idx++] = 2;
-		}
+		game->depth[game->depth_lvl].dist = 0;
 		game->depth[game->depth_lvl].obj = EMPTY;
+		game->depth[game->depth_lvl].ray_hit_x = 0;
+		game->depth[game->depth_lvl].ray_hit_y = 0;
 		++game->depth_lvl;
 	}
 	game->depth_lvl = 0;
-	game->dist_idx = 0;
 	game->wall_direction = 0;
 	game->door_direction = 0;
 	// game->enemy_x = 0;
@@ -69,12 +67,11 @@ void    init_game(t_game *game)
 	game->gun_animation_start_time = 0;
 	game->hit_closed_door = false;
 	game->hit_opened_door = false;
-	game->closed_door_visible = false;
-	game->open_door_visible = false;
+//	game->closed_door_visible = false;
+//	game->open_door_visible = false;
+	game->door_visible = false;
 	game->door_are_opening = false;
 	game->door_are_closing = false;
-	game->closest_door_distance = INFINITY;
-	game->prev_door_distance = 0;
 	game->enemy_animation_start_time = 0;
 	game->hit_enemy = false;
 	game->mouse_x = 0;

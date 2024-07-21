@@ -39,40 +39,71 @@ void    rotate_player_right(t_game *game)
 		game->vec_idx = 0;
 }
 
+//void    open_close_door(t_game *game)
+//{
+//	int x;
+//	int y;
+//
+//	y = 0;
+//	x = 0;
+//	struct timeval  tv;
+//	gettimeofday(&tv, NULL);
+//	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+//	while (game->data->map_element[y])
+//	{
+//		x = 0;
+//		while (game->data->map_element[y][x])
+//		{
+//			if (game->door_visible && game->closest_door_distance < DOOR_OPEN_DISTANCE)
+//			{
+//				if (game->data->map_element[y][x] == '2')
+//				{
+//					game->door_are_opening = true;
+//					game->data->map_element[y][x] = '3';
+//					game->keys[E] = false;
+//					return ;
+//				}
+//				else if (game->data->map_element[y][x] == '3')
+//				{
+//					game->door_are_closing = true;
+//					game->data->map_element[y][x] = '2';
+//					game->keys[E] = false;
+//					return ;
+//				}
+//			}
+//			x++;
+//		}
+//		y++;
+//	}
+//}
+
 void    open_close_door(t_game *game)
 {
-	int x;
-	int y;
+	int i;
 	
-	y = 0;
-	x = 0;
-	struct timeval  tv;
+	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
-	while (game->data->map_element[y])
+	i = 0;
+	while (i < 30)
 	{
-		x = 0;
-		while (game->data->map_element[y][x])
+		if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 		{
-			if ((game->open_door_visible || game->closed_door_visible) && game->closest_door_distance < DOOR_OPEN_DISTANCE)
+			if (game->data->map_element[game->door[i].y][game->door[i].x] == '2')
 			{
-				if (game->data->map_element[y][x] == '2')
-				{
-					game->door_are_opening = true;
-					game->data->map_element[y][x] = '3';
-					game->keys[E] = false;
-					return ;
-				}
-				else if (game->data->map_element[y][x] == '3')
-				{
-					game->door_are_closing = true;
-					game->data->map_element[y][x] = '2';
-					game->keys[E] = false;
-					return ;
-				}
+				game->door_are_opening = true;
+				game->data->map_element[game->door[i].y][game->door[i].x] = '3';
+				game->keys[E] = false;
+				return ;
 			}
-			x++;
+			else
+			{
+				game->door_are_closing = true;
+				game->data->map_element[game->door[i].y][game->door[i].x] = '2';
+				game->keys[E] = false;
+				return ;
+			}
 		}
-		y++;
+		++i;
 	}
 }

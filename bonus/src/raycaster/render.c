@@ -227,7 +227,7 @@ void    render_wall_line(t_game *game)
 	int	tex_y;
 	int color;
 	
-	line_height = DRAWING_SCALE / (game->wall_dists[game->depth_lvl][game->dist_idx] + 1);
+	line_height = DRAWING_SCALE / (game->depth[game->depth_lvl].dist + 1);
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	if (y_iterator < 0)
 		y_iterator = 0;
@@ -235,9 +235,10 @@ void    render_wall_line(t_game *game)
 	if (y_end > SCREEN_HEIGHT)
 		y_end = SCREEN_HEIGHT;
 	if (game->wall_direction == NORTH || game->wall_direction == SOUTH)
-		tex_x = (int)(game->ray_hit_x * TEXTURE_SIZE);
+		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_x * TEXTURE_SIZE);
 	else
-		tex_x = (int)(game->ray_hit_y * TEXTURE_SIZE);
+		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_y * TEXTURE_SIZE);
+	color = rgb_to_hex(255, 0, 255);
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
@@ -263,8 +264,9 @@ void    render_door_line(t_game *game)
 	int tex_x;
 	int	tex_y;
 	int color;
+	int i;
 	
-	line_height = DRAWING_SCALE / (game->door_dists[game->depth_lvl][game->dist_idx] + 1);
+	line_height = DRAWING_SCALE / (game->depth[game->depth_lvl].dist + 1);
 	y_iterator = SCREEN_HEIGHT / 2 - line_height / 2;
 	if (y_iterator < 0)
 		y_iterator = 0;
@@ -272,20 +274,30 @@ void    render_door_line(t_game *game)
 	if (y_end > SCREEN_HEIGHT)
 		y_end = SCREEN_HEIGHT;
 	if (game->door_direction == NORTH || game->door_direction == SOUTH)
-		tex_x = (int)(game->ray_door_hit_x * TEXTURE_SIZE);
+		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_x * TEXTURE_SIZE);
 	else
-		tex_x = (int)(game->ray_door_hit_y * TEXTURE_SIZE);
+		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_y * TEXTURE_SIZE);
+	i = 0;
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		color = get_pixel_color(game->textures->door_current_texture, tex_x, tex_y);
-		if (color != rgb_to_hex(255, 0, 255) && game->door_dists[game->dist_idx] < game->wall_dists[game->dist_idx])
+		printf("colis_x %i\n", game->door[i].x);
+		printf("%i\n", game->dist_idx / SQUARE_SIZE);
+		while (game->door[i + 1].x != 0 && game->door[i + 1].y != 0)
+			++i;
+		color = get_pixel_color(game->door[i].texture, tex_x, tex_y);
+		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
 	}
 	game->hit_opened_door = false;
 	game->hit_closed_door = false;
 }
+
+//void    render_enemy_line(t_game *game)
+//{
+//
+//}
 
 void render_enemy(t_game *game)
 {
@@ -310,11 +322,10 @@ void render_enemy(t_game *game)
 		while (x < game->x_enemy_end)
 		{
 			color = get_pixel_color(game->textures->dark_priest_current_texture, (int)tex_x, (int)tex_y);
-			if (color != rgb_to_hex(255, 0, 255) && game->enemy_dists[x] < game->wall_dists[x]
-			    && (game->open_door_visible || game->door_dists[x] == 0 || game->enemy_dists[x] < game->door_dists[x]))
+			if (color != rgb_to_hex(255, 0, 255))
 			{
 				game->enemy_visible = true;
-				game->body_hit[game->depth_lvl][x] = true;
+//				game->body_hit[game->depth_lvl][x] = true;
 				game->image->data[y * SCREEN_WIDTH + x] = color;
 			}
 			++x;

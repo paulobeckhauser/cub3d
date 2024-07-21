@@ -66,6 +66,6 @@ void	init_keys(t_game *game)
 	int	i;
 
 	i = 0;
-	while (i < 9)
+	while (i < 7)
 		game->keys[i++] = false;
 }

@@ -169,18 +169,37 @@ typedef enum s_obj
 {
 	EMPTY,
 	WALL,
-	OPEN_DOOR,
-	CLOSED_DOOR,
+	DOOR,
 	ENEMY,
 }   t_obj;
 
 typedef struct s_depth
 {
-	float   dists[SCREEN_WIDTH];
+	float   dist;
 	t_obj   obj;
 	float   ray_hit_x;
 	float   ray_hit_y;
 }   t_depth;
+
+typedef struct s_door
+{
+	void    *texture;
+	float   dist;
+	int     x;
+	int     y;
+}   t_door;
+
+typedef struct  s_raycaster
+{
+	float	dir_x;
+	float	dir_y;
+	float	len;
+	float	x_iterator;
+	float	y_iterator;
+	float	speed;
+	float   colis_x;
+	float   colis_y;
+}   t_raycaster;
 
 typedef struct s_game
 {
@@ -196,9 +215,6 @@ typedef struct s_game
 	float   ray_hit_y;
 	float	ray_door_hit_x;
 	float	ray_door_hit_y;
-//	float   wall_dists[30][SCREEN_WIDTH];
-//	float	door_dists[30][SCREEN_WIDTH];
-//	float   enemy_dists[30][SCREEN_WIDTH];
 	t_depth depth[30];
 	bool    body_hit[30][SCREEN_WIDTH];
 	int     dist_idx;
@@ -215,8 +231,7 @@ typedef struct s_game
 	long    door_animation_start_time;
 	bool    hit_closed_door;
 	bool	hit_opened_door;
-	bool    closed_door_visible;
-	bool    open_door_visible;
+	bool    door_visible;
 	bool    door_are_opening;
 	bool    door_are_closing;
 	float   closest_door_distance;
@@ -234,19 +249,8 @@ typedef struct s_game
 	bool    found_door;
 	int     x_enemy_start;
 	int     x_enemy_end;
+	t_door  door[30];
 }	t_game;
-
-typedef struct  s_raycaster
-{
-	float	dir_x;
-	float	dir_y;
-	float	len;
-	float	x_iterator;
-	float	y_iterator;
-	float	speed;
-	float   colis_x;
-	float   colis_y;
-}   t_raycaster;
 
 void    calc_dir_vectors(t_game *game);
 void	raycaster(t_game *game);
@@ -289,7 +293,7 @@ void    render_door_line(t_game *game);
 void    open_close_door(t_game *game);
 bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
-void    save_closest_distance(float dist, float *prev_dist, float *closest_dist);
+void    save_closest_distance(t_raycaster *raycaster, t_game *game);
 void    render_enemy_line(t_game *game);
 int     mouse_press(int button, int x, int y, t_game *game);
 void	render_hp(t_game *game);
@@ -298,6 +302,7 @@ void	render_background(t_game *game);
 void    render_minimap_bg(t_game *game);
 void    render_minimap_border(t_game *game);
 void    render_enemy(t_game *game);
+bool    is_collision_point_door(t_raycaster *raycaster, t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

@@ -131,7 +131,18 @@ int	loop_hook(t_game *game)
 			game->door_are_opening = false;
 			door_frame = DOOR_FRAMES - 1;
 		}
-		game->textures->door_current_texture = game->textures->door_texture[door_frame];
+		int i = 0;
+		while (i < 30)
+		{
+			if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
+			{
+				printf("%i\n", door_frame);
+				game->door[i].texture = game->textures->door_texture[door_frame];
+				break ;
+			}
+			++i;
+		}
+//		game->textures->door_current_texture = game->textures->door_texture[door_frame];
 		
 	}
 	if (game->door_are_closing)
@@ -148,7 +159,17 @@ int	loop_hook(t_game *game)
 			game->door_are_closing = false;
 			door_frame = 0;
 		}
-		game->textures->door_current_texture = game->textures->door_texture[door_frame];
+		int i = 0;
+		while (i < 30)
+		{
+			if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
+			{
+				game->door[i].texture = game->textures->door_texture[door_frame];
+				break ;
+			}
+			++i;
+		}
+//		game->textures->door_current_texture = game->textures->door_texture[door_frame];
 	}
 	if (game->enemy_visible)
 	{
