@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:08:22 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/17 15:32:41 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:00:32 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ bool			check_edges(int i, int j, t_data *data);
 bool			check_first_line(int i, int j, t_data *data);
 bool			check_last_line(int i, int j, t_data *data);
 bool			check_other_values_rgb(char *cleaned_string, t_data *data);
+bool			check_surround(t_data *data);
 char			*clean_str_color(t_data *data, int i, char surf);
 bool			clean_store_hex_color(t_data *data, int i, char surf);
 bool			count_lines_map(t_data *data, char *str);

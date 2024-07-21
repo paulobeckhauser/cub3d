@@ -1,4 +1,4 @@
-C 111,         98,         232
+
 
 NO             ./bonus/textures/walls/wall_default_texture.xpm
 SO                                              ./bonus/textures/walls/wall_default_texture.xpm
@@ -6,7 +6,8 @@ WE             ./bonus/textures/walls/wall_default_texture.xpm
 EA                ./bonus/textures/walls/wall_default_texture.xpm
 
 
-         F  145,33,160
+F  145,33,160
+C 111,         98,        232
 
               111
               101
