@@ -21,7 +21,11 @@
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 #define MINIMAP_SCALE 20
-# define SQUARE_SIZE 100
+#define SQUARE_SIZE 100
+
+// objects
+#define DEPTH_MAX 30
+#define DOOR_MAX 30
 
 // images
 #define TEXTURE_SIZE 500
@@ -65,7 +69,9 @@
 #define GAME_OVER "./bonus/textures/menu/game_over.xpm"
 
 // vectors
-#define SPEED 20.0f
+#define ANGLE_MAX 360
+#define MOVEMENT_SPEED 10
+#define ROTATION_SPEED 4
 #define DOOR_OPEN_DISTANCE 170
 
 // wall_directions
@@ -207,15 +213,12 @@ typedef struct s_game
 	void    *mlx_ptr;
 	void    *win_ptr;
 	t_image *image;
-	float   square_size;
 	char	**map;
 	float	ray_new_x;
 	float	ray_new_y;
 	float	ray_main_angle;
 	float   ray_hit_x;
 	float   ray_hit_y;
-	float	ray_door_hit_x;
-	float	ray_door_hit_y;
 	t_depth depth[30];
 	bool    body_hit[30][SCREEN_WIDTH];
 	int     dist_idx;
@@ -230,12 +233,8 @@ typedef struct s_game
 	t_vectors *vectors;
 	int     vec_idx;
 	long    door_animation_start_time;
-	bool    hit_closed_door;
-	bool	hit_opened_door;
-	bool    door_visible;
 	bool    door_are_opening;
 	bool    door_are_closing;
-	float   closest_door_distance;
 	float   prev_door_distance;
 	long    enemy_animation_start_time;
 	long    gun_animation_start_time;
@@ -246,11 +245,9 @@ typedef struct s_game
 	bool	player_dead;
 	t_textures	*textures;
 	t_data  *data;
-	bool    found_wall;
-	bool    found_door;
 	int     x_enemy_start;
 	int     x_enemy_end;
-	t_door  door[30];
+	t_door  door[DOOR_MAX];
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);
@@ -268,10 +265,9 @@ void	mark_player(t_game *game);
 
 float	to_radians(float degrees);
 void    calc_directions(t_raycaster *raycaster, t_game *game);
-bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game);
-void    calc_collision_point_x_y(t_raycaster *raycaster, t_game *game);
+bool    is_ray_on_square_edge(t_raycaster *raycaster);
+void    calc_collision_point_x_y(t_raycaster *raycaster);
 bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game);
-bool    is_collision_point_closed_door(t_raycaster *raycaster, t_game *game);
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle, float *dist);
 int		get_pixel_color(void *img_ptr, int x, int y);
 
@@ -289,11 +285,10 @@ void    move_player_forward(t_game *game);
 void    move_player_left(t_game *game);
 void    move_player_right(t_game *game);
 
-bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game);
 void    render_door_line(t_game *game);
 void    open_close_door(t_game *game);
 bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
-void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction);
+void    set_ray_direction(t_raycaster *raycaster, int *direction);
 void    save_closest_distance(t_raycaster *raycaster, t_game *game);
 void    render_enemy_line(t_game *game);
 int     mouse_press(int button, int x, int y, t_game *game);

@@ -132,7 +132,7 @@ int	loop_hook(t_game *game)
 			door_frame = DOOR_FRAMES - 1;
 		}
 		int i = 0;
-		while (i < 30)
+		while (i < DOOR_MAX)
 		{
 			if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 			{
@@ -158,7 +158,7 @@ int	loop_hook(t_game *game)
 			door_frame = 0;
 		}
 		int i = 0;
-		while (i < 30)
+		while (i < DOOR_MAX)
 		{
 			if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 			{

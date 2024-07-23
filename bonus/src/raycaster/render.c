@@ -281,7 +281,7 @@ void    render_door_line(t_game *game)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
 		i = 0;
-		while (i < 30)
+		while (i < DOOR_MAX)
 		{
 			if ((int)game->depth[game->depth_lvl].colis_y == game->door[i].y
 				&& (int)game->depth[game->depth_lvl].colis_x == game->door[i].x)

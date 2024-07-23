@@ -21,14 +21,13 @@ void    init_image(t_image *image, t_game *game)
 	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
 }
 
-void    mark_door(t_game *game)
+void    mark_doors(t_game *game)
 {
 	int y;
 	int x;
 	int i;
 	
 	y = 0;
-	x = 0;
 	i = 0;
 	while (game->data->map_element[y])
 	{
@@ -57,7 +56,7 @@ int main(int argc, char **argv)
     t_game      game;
 	t_textures	textures;
 	t_image     image;
-	t_vectors   vectors[90];
+	t_vectors   vectors[ANGLE_MAX / ROTATION_SPEED];
 	t_data		data;
 	int status;
 	
@@ -75,7 +74,7 @@ int main(int argc, char **argv)
 		game.textures = &textures;
 		calc_dir_vectors(&game);
 		load_images_from_dir(&game);
-		mark_door(&game);
+		mark_doors(&game);
 		init_hooks(&game);
 		render_game(&game);
 		mlx_mouse_hide(game.mlx_ptr, game.win_ptr);

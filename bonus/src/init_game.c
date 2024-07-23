@@ -26,36 +26,26 @@ void    init_game(t_game *game)
 		perror("mlx window");
 		exit(EXIT_FAILURE);
 	}
-	game->square_size = 100;
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
 	if (game->data->player->direction == 'N')
-		game->ray_main_angle = 270;
+		game->ray_main_angle = 0.75f * ANGLE_MAX;
 	else if (game->data->player->direction == 'W')
-		game->ray_main_angle = 180;
+		game->ray_main_angle = 0.5f * ANGLE_MAX;
 	else if (game->data->player->direction == 'S')
-		game->ray_main_angle = 90;
+		game->ray_main_angle = 0.25f * ANGLE_MAX;
 	else
 		game->ray_main_angle = 0;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
-	game->ray_door_hit_x = 0;
-	game->ray_door_hit_y = 0;
 	game->dist_idx = 0;
 	game->wall_direction = 0;
 	game->door_direction = 0;
-	// game->enemy_x = 0;
-	// game->enemy_y = 0;
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);
 	game->door_animation_start_time = 0;
 	game->gun_animation_start_time = 0;
-	game->hit_closed_door = false;
-	game->hit_opened_door = false;
-//	game->closed_door_visible = false;
-//	game->open_door_visible = false;
-	game->door_visible = false;
 	game->door_are_opening = false;
 	game->door_are_closing = false;
 	game->enemy_animation_start_time = 0;
@@ -67,7 +57,7 @@ void    init_game(t_game *game)
 	game->x_enemy_end = 0;
 	game->depth_lvl = 0;
 	game->dist_idx = 0;
-	while (game->depth_lvl < 30)
+	while (game->depth_lvl < DEPTH_MAX)
 	{
 		while (game->dist_idx < SCREEN_WIDTH)
 		{

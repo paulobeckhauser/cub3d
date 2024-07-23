@@ -21,21 +21,21 @@ int	close_game(t_game *game)
 
 void    rotate_player_left(t_game *game)
 {
-	game->ray_main_angle -= 4;
+	game->ray_main_angle -= ROTATION_SPEED;
 	if (game->ray_main_angle <= 0)
 		game->ray_main_angle += 0;
 	--game->vec_idx;
 	if (game->vec_idx == -1)
-		game->vec_idx = 89;
+		game->vec_idx = ANGLE_MAX / ROTATION_SPEED - 1;
 }
 
 void    rotate_player_right(t_game *game)
 {
-	game->ray_main_angle += 4;
-	if (game->ray_main_angle >= 360)
-		game->ray_main_angle -= 360;
+	game->ray_main_angle += ROTATION_SPEED;
+	if (game->ray_main_angle >= ANGLE_MAX)
+		game->ray_main_angle -= ANGLE_MAX;
 	++game->vec_idx;
-	if (game->vec_idx == 90)
+	if (game->vec_idx == ANGLE_MAX / ROTATION_SPEED)
 		game->vec_idx = 0;
 }
 
@@ -85,7 +85,7 @@ void    open_close_door(t_game *game)
 	gettimeofday(&tv, NULL);
 	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	i = 0;
-	while (i < 30)
+	while (i < DOOR_MAX)
 	{
 		if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 		{
