@@ -26,8 +26,9 @@
 // objects
 #define DEPTH_MAX 30
 #define DOOR_MAX 30
+#define ENEMY_MAX 30
 
-// images
+// textures
 #define TEXTURE_SIZE 500
 #define MINIMAP_BG "./bonus/textures/minimap/minimap_bg.xpm"
 #define FLOOR_TEXTURE "./bonus/textures/minimap/floor_texture.xpm"
@@ -114,12 +115,6 @@ typedef struct s_vectors
 	float y;
 }   t_vectors;
 
-typedef struct s_enemy
-{
-	int	x;
-	int	y;
-}	t_enemy;
-
 typedef struct s_textures
 {
 	void    *north_texture;
@@ -196,6 +191,13 @@ typedef struct s_door
 	int     y;
 }   t_door;
 
+typedef struct s_enemy
+{
+	void    *texture;
+	int     x;
+	int     y;
+}	t_enemy;
+
 typedef struct  s_raycaster
 {
 	float	dir_x;
@@ -248,6 +250,8 @@ typedef struct s_game
 	int     x_enemy_start;
 	int     x_enemy_end;
 	t_door  door[DOOR_MAX];
+	t_enemy enemy[ENEMY_MAX];
+	float   tmp_dist;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);

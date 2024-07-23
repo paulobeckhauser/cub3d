@@ -24,7 +24,7 @@ void    calc_dir_vectors(t_game *game)
 	else if (angle_iter > 2 * M_PI)
 		angle_iter -= 2 * M_PI;
 	game->vec_idx = 0;
-	while (game->vec_idx < 90)
+	while (game->vec_idx < ANGLE_MAX / ROTATION_SPEED)
 	{
 		game->vectors[game->vec_idx].x = cosf(angle_iter);
 		game->vectors[game->vec_idx].y = sinf(angle_iter);
@@ -99,6 +99,8 @@ void	raycaster(t_game *game)
 			angle_iter -= 2 * M_PI;
 		++game->dist_idx;
 	}
+	printf("curr sq size: %i ", game->x_enemy_end - game->x_enemy_start);
+	printf("tex_x incrementor: %f dist: %f\n", TEXTURE_SIZE / ((float)game->x_enemy_end - (float)game->x_enemy_start), game->tmp_dist);
 }
 
 
@@ -145,6 +147,7 @@ void    cast_ray(t_game *game, float ray_angle)
 			if (is_collision_point_enemy(&raycaster, game))
 			{
 				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
+				game->tmp_dist = game->depth[game->depth_lvl].dist;
 				game->depth[game->depth_lvl].obj = ENEMY;
 				++game->depth_lvl;
 			}
@@ -153,63 +156,3 @@ void    cast_ray(t_game *game, float ray_angle)
 		raycaster.y_iterator += raycaster.dir_y * raycaster.speed;
 	}
 }
-
-//
-//void    cast_ray(t_game *game, float ray_angle)
-//{
-//	t_raycaster raycaster;
-//
-//	game->found_wall = false;
-//	game->found_door = false;
-//	calc_directions(&raycaster, game);
-//	raycaster.x_iterator = game->data->player->x;
-//	raycaster.y_iterator = game->data->player->y;
-//	raycaster.MOVEMENT_SPEED = 1;
-//	while (((raycaster.dir_x >= 0 && raycaster.x_iterator <= game->ray_new_x)
-//	        || (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))
-//	       && ((raycaster.dir_y >= 0 && raycaster.y_iterator <= game->ray_new_y)
-//	           || (raycaster.dir_y < 0 && raycaster.y_iterator >= game->ray_new_y)))
-//	{
-//		if (is_ray_on_square_edge(&raycaster, game))
-//		{
-//			calc_collision_point_x_y(&raycaster, game);
-//			if (raycaster.colis_y < 0 || raycaster.colis_x < 0 || !game->data->map_element[(int)raycaster.colis_y]
-//				|| !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x]) {
-//				return ;
-//			}
-//			if (is_collision_point_wall(&raycaster, game) && !game->found_wall)
-//			{
-//				set_ray_direction(&raycaster, game, &game->wall_direction);
-//				calc_ray_distance(&raycaster, game, ray_angle, &game->wall_dists[game->depth_lvl][game->dist_idx]);
-//				game->ray_hit_x = fmodf(raycaster.x_iterator, SQUARE_SIZE) / SQUARE_SIZE;
-//				game->ray_hit_y = fmodf(raycaster.y_iterator, SQUARE_SIZE) / SQUARE_SIZE;
-////				return ;
-//				game->found_wall = true;
-//			}
-//			if (is_collision_point_closed_door(&raycaster, game))
-//			{
-//				set_ray_direction(&raycaster, game, &game->door_direction);
-//				calc_ray_distance(&raycaster, game, ray_angle, &game->door_dists[game->depth_lvl][game->dist_idx]);
-//				save_closest_distance(game->door_dists[game->depth_lvl][game->dist_idx], &game->prev_door_distance, &game->closest_door_distance);
-//				game->ray_door_hit_x = fmodf(raycaster.x_iterator, SQUARE_SIZE) / SQUARE_SIZE;
-//				game->ray_door_hit_y = fmodf(raycaster.y_iterator, SQUARE_SIZE) / SQUARE_SIZE;
-//				game->found_door = true;
-//			}
-//			if (is_collision_point_opened_door(&raycaster, game))
-//			{
-//				set_ray_direction(&raycaster, game, &game->door_direction);
-//				calc_ray_distance(&raycaster, game, ray_angle, &game->door_dists[game->depth_lvl][game->dist_idx]);
-//				save_closest_distance(game->door_dists[game->depth_lvl][game->dist_idx], &game->prev_door_distance, &game->closest_door_distance);
-//				game->ray_door_hit_x = fmodf(raycaster.x_iterator, SQUARE_SIZE) / SQUARE_SIZE;
-//				game->ray_door_hit_y = fmodf(raycaster.y_iterator, SQUARE_SIZE) / SQUARE_SIZE;
-//				game->found_door = true;
-//			}
-//			if (is_collision_point_enemy(&raycaster, game))
-//			{
-//				calc_ray_distance(&raycaster, game, ray_angle, &game->enemy_dists[game->depth_lvl][game->dist_idx]);
-//			}
-//		}
-//		raycaster.x_iterator += raycaster.dir_x * raycaster.MOVEMENT_SPEED;
-//		raycaster.y_iterator += raycaster.dir_y * raycaster.MOVEMENT_SPEED;
-//	}
-//}

@@ -51,6 +51,32 @@ void    mark_doors(t_game *game)
 	}
 }
 
+void    mark_enemies(t_game *game)
+{
+	int y;
+	int x;
+	int i;
+	
+	y = 0;
+	i = 0;
+	while (game->data->map_element[y])
+	{
+		x = 0;
+		while (game->data->map_element[y][x])
+		{
+			if (game->data->map_element[y][x] == '4')
+			{
+				game->enemy[i].y = y;
+				game->enemy[i].x = x;
+				game->enemy[i].texture = game->textures->dark_priest_texture[0];
+				++i;
+			}
+			++x;
+		}
+		++y;
+	}
+}
+
 int main(int argc, char **argv)
 {
     t_game      game;
@@ -75,6 +101,7 @@ int main(int argc, char **argv)
 		calc_dir_vectors(&game);
 		load_images_from_dir(&game);
 		mark_doors(&game);
+		mark_enemies(&game);
 		init_hooks(&game);
 		render_game(&game);
 		mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
