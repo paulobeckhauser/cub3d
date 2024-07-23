@@ -69,6 +69,8 @@ void	raycaster(t_game *game)
 		game->depth[game->depth_lvl].obj = EMPTY;
 		game->depth[game->depth_lvl].ray_hit_x = 0;
 		game->depth[game->depth_lvl].ray_hit_y = 0;
+		game->depth[game->depth_lvl].colis_y = 0;
+		game->depth[game->depth_lvl].colis_x = 0;
 		game->door[game->depth_lvl].dist = 0;
 		++game->depth_lvl;
 	}
@@ -99,8 +101,6 @@ void	raycaster(t_game *game)
 			angle_iter -= 2 * M_PI;
 		++game->dist_idx;
 	}
-//	if (game->hit_enemy)
-//		render_enemy(game);
 }
 
 
@@ -140,16 +140,17 @@ void    cast_ray(t_game *game, float ray_angle)
 				game->depth[game->depth_lvl].ray_hit_x = fmodf(raycaster.x_iterator, game->square_size) / game->square_size;
 				game->depth[game->depth_lvl].ray_hit_y = fmodf(raycaster.y_iterator, game->square_size) / game->square_size;
 				game->depth[game->depth_lvl].obj = DOOR;
-				game->colis_y = raycaster.colis_y;
-				game->colis_x = raycaster.colis_x;
+				game->depth[game->depth_lvl].colis_y = raycaster.colis_y;
+				game->depth[game->depth_lvl].colis_x = raycaster.colis_x;
+				++game->depth_lvl;
 			}
 			if (is_collision_point_enemy(&raycaster, game))
 			{
 				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
 				game->depth[game->depth_lvl].obj = ENEMY;
+				++game->depth_lvl;
 			}
 		}
-		++game->depth_lvl;
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;
 		raycaster.y_iterator += raycaster.dir_y * raycaster.speed;
 	}

@@ -283,7 +283,8 @@ void    render_door_line(t_game *game)
 		i = 0;
 		while (i < 30)
 		{
-			if ((int)game->colis_y == game->door[i].y && (int)game->colis_x == game->door[i].x)
+			if ((int)game->depth[game->depth_lvl].colis_y == game->door[i].y
+				&& (int)game->depth[game->depth_lvl].colis_x == game->door[i].x)
 			{
 				color = get_pixel_color(game->door[i].texture, tex_x, tex_y);
 				break ;

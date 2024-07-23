@@ -126,7 +126,6 @@ typedef struct s_textures
 	void	*gun_texture[5];
 	void    *gun_current_texture;
 	void	*door_texture[5];
-	void    *door_current_texture;
 	void    *dark_priest_texture[10];
 	void    *dark_priest_current_texture;
 	void    *hp_texture[11];
@@ -179,12 +178,13 @@ typedef struct s_depth
 	t_obj   obj;
 	float   ray_hit_x;
 	float   ray_hit_y;
+	float   colis_y;
+	float   colis_x;
 }   t_depth;
 
 typedef struct s_door
 {
 	void    *texture;
-	void    *texture_frame[5];
 	float   dist;
 	int     x;
 	int     y;
@@ -251,8 +251,6 @@ typedef struct s_game
 	int     x_enemy_start;
 	int     x_enemy_end;
 	t_door  door[30];
-	float   colis_y;
-	float   colis_x;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);

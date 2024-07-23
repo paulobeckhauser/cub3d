@@ -40,26 +40,10 @@ void    mark_door(t_game *game)
 				game->door[i].dist = 0;
 				game->door[i].y = y;
 				game->door[i].x = x;
-//				if (i == 0)
-//				{
-				game->door[i].texture_frame[1] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_3_4, &game->img_x, &game->img_y);
-				game->door[i].texture_frame[2] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_2_4, &game->img_x, &game->img_y);
-				game->door[i].texture_frame[3] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_1_4, &game->img_x, &game->img_y);
-				game->door[i].texture_frame[4] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_0_4, &game->img_x, &game->img_y);
-				game->door[i].texture_frame[0] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_4_4, &game->img_x, &game->img_y);
-//				}
-//				else
-//				{
-//					game->door[i].texture_frame[1] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_4_9, &game->img_x, &game->img_y);
-//					game->door[i].texture_frame[2] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_3_9, &game->img_x, &game->img_y);
-//					game->door[i].texture_frame[3] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_2_9, &game->img_x, &game->img_y);
-//					game->door[i].texture_frame[4] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_1_9, &game->img_x, &game->img_y);
-//					game->door[i].texture_frame[0] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_0_9, &game->img_x, &game->img_y);
-//				}
 				if (game->data->map_element[y][x] == '2')
-					game->door[i].texture = game->door[i].texture_frame[0];
+					game->door[i].texture = game->textures->door_texture[0];
 				else
-					game->door[i].texture = game->door[i].texture_frame[4];
+					game->door[i].texture = game->textures->door_texture[4];
 				++i;
 			}
 			++x;
