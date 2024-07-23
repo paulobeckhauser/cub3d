@@ -184,6 +184,7 @@ typedef struct s_depth
 typedef struct s_door
 {
 	void    *texture;
+	void    *texture_frame[5];
 	float   dist;
 	int     x;
 	int     y;
@@ -250,6 +251,8 @@ typedef struct s_game
 	int     x_enemy_start;
 	int     x_enemy_end;
 	t_door  door[30];
+	float   colis_y;
+	float   colis_x;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);

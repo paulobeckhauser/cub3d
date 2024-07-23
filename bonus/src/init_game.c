@@ -41,21 +41,7 @@ void    init_game(t_game *game)
 	game->ray_hit_y = 0;
 	game->ray_door_hit_x = 0;
 	game->ray_door_hit_y = 0;
-	game->depth_lvl = 0;
 	game->dist_idx = 0;
-	while (game->depth_lvl < 30)
-	{
-//			game->wall_dists[game->depth_lvl][game->dist_idx] = 0;
-//			game->door_dists[game->depth_lvl][game->dist_idx] = 0;
-//			game->enemy_dists[game->depth_lvl][game->dist_idx] = 0;
-//			game->body_hit[game->depth_lvl][game->dist_idx++] = false;
-		game->depth[game->depth_lvl].dist = 0;
-		game->depth[game->depth_lvl].obj = EMPTY;
-		game->depth[game->depth_lvl].ray_hit_x = 0;
-		game->depth[game->depth_lvl].ray_hit_y = 0;
-		++game->depth_lvl;
-	}
-	game->depth_lvl = 0;
 	game->wall_direction = 0;
 	game->door_direction = 0;
 	// game->enemy_x = 0;
@@ -79,6 +65,26 @@ void    init_game(t_game *game)
 	game->player_dead = false;
 	game->x_enemy_start = 0;
 	game->x_enemy_end = 0;
+	game->colis_y = 0;
+	game->colis_x = 0;
+	game->depth_lvl = 0;
+	game->dist_idx = 0;
+	while (game->depth_lvl < 30)
+	{
+		while (game->dist_idx < SCREEN_WIDTH)
+		{
+			game->body_hit[game->depth_lvl][game->dist_idx++] = false;
+		}
+		game->depth[game->depth_lvl].dist = 0;
+		game->depth[game->depth_lvl].obj = EMPTY;
+		game->depth[game->depth_lvl].ray_hit_x = 0;
+		game->depth[game->depth_lvl].ray_hit_y = 0;
+		game->door[game->depth_lvl].y = 0;
+		game->door[game->depth_lvl].x = 0;
+		++game->depth_lvl;
+	}
+	game->depth_lvl = 0;
+	game->dist_idx = 0;
 }
 
 void    init_keys(t_game *game)

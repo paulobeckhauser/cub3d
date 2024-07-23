@@ -32,40 +32,15 @@ bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game)
 	return (false);
 }
 
-//bool    is_collision_point_closed_door(t_raycaster *raycaster, t_game *game)
-//{
-//	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-//	    && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2')
-//	{
-//		game->closed_door_visible = true;
-//		game->hit_closed_door = true;
-//		game->hit_opened_door = false;
-//		return (true);
-//	}
-//	return (false);
-//}
-
 bool    is_collision_point_door(t_raycaster *raycaster, t_game *game)
 {
 	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
 	    && (game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2' || game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3'))
+	{
 		return (true);
+	}
 	return (false);
 }
-
-//bool    is_collision_point_opened_door(t_raycaster *raycaster, t_game *game)
-//{
-//
-//	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-//	    && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3')
-//	{
-//		game->open_door_visible = true;
-//		game->hit_opened_door = true;
-//		game->hit_closed_door = false;
-//		return (true);
-//	}
-//	return (false);
-//}
 
 bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
 {
@@ -105,20 +80,6 @@ void    set_ray_direction(t_raycaster *raycaster, t_game *game, int *direction)
 	}
 }
 
-// void set_enemy_direction(t_raycaster *raycaster, t_game *game)
-// {
-	// double dx = game->data->player->x - raycaster->colis_x;
-	// double dy = game->data->player->y - raycaster->colis_y;
-	// double angle = atan2(dy, dx);
-	
-	// double angle_degrees = angle * 180 / M_PI;
-	
-	// if (angle_degrees < 0)
-		// angle_degrees += 360;
-	
-	// game->enemy_direction = (int)round(angle_degrees / 45) % 8;
-// }
-
 void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle, float *dist)
 {
 	float raw_dist;
@@ -129,15 +90,6 @@ void    calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle,
 	                      * game->square_size - game->data->player->y, 2));
 	*dist = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
 }
-
-//void    save_closest_distance(float dist, float *prev_dist, float *closest_dist)
-//{
-//	if (dist > 0 && dist < *prev_dist)
-//	{
-//		*closest_dist = dist;
-//		*prev_dist = dist;
-//	}
-//}
 
 void    save_closest_distance(t_raycaster *raycaster, t_game *game)
 {

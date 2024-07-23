@@ -277,21 +277,23 @@ void    render_door_line(t_game *game)
 		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_x * TEXTURE_SIZE);
 	else
 		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_y * TEXTURE_SIZE);
-	i = 0;
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
-		printf("colis_x %i\n", game->door[i].x);
-		printf("%i\n", game->dist_idx / SQUARE_SIZE);
-		while (game->door[i + 1].x != 0 && game->door[i + 1].y != 0)
+		i = 0;
+		while (i < 30)
+		{
+			if ((int)game->colis_y == game->door[i].y && (int)game->colis_x == game->door[i].x)
+			{
+				color = get_pixel_color(game->door[i].texture, tex_x, tex_y);
+				break ;
+			}
 			++i;
-		color = get_pixel_color(game->door[i].texture, tex_x, tex_y);
+		}
 		if (color != rgb_to_hex(255, 0, 255))
 			game->image->data[y_iterator * SCREEN_WIDTH + game->dist_idx] = color;
 		y_iterator++;
 	}
-	game->hit_opened_door = false;
-	game->hit_closed_door = false;
 }
 
 //void    render_enemy_line(t_game *game)
