@@ -251,7 +251,6 @@ typedef struct s_game
 	int     x_enemy_end;
 	t_door  door[DOOR_MAX];
 	t_enemy enemy[ENEMY_MAX];
-	float   tmp_dist;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);
@@ -268,7 +267,7 @@ void    load_images_from_dir(t_game *game);
 void	mark_player(t_game *game);
 
 float	to_radians(float degrees);
-void    calc_directions(t_raycaster *raycaster, t_game *game);
+void    calc_directions(t_raycaster *raycaster, t_game *game, float ray_new_x, float ray_new_y);
 bool    is_ray_on_square_edge(t_raycaster *raycaster);
 void    calc_collision_point_x_y(t_raycaster *raycaster);
 bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game);
@@ -303,6 +302,8 @@ void    render_minimap_bg(t_game *game);
 void    render_minimap_border(t_game *game);
 void    render_enemy(t_game *game);
 bool    is_collision_point_door(t_raycaster *raycaster, t_game *game);
+int 	find_enemy_end(t_game *game, float angle_iter, int dist_idx);
+int     cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);
