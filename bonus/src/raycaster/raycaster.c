@@ -101,17 +101,19 @@ void	raycaster(t_game *game)
 	}
 }
 
-int	find_enemy_end(t_game *game, float angle_iter, int dist_idx)
+int	find_enemy_end(t_game *game, float angle_iter)
 {
 	float	angle_incr_radians;
 	float	dir_x;
 	float	dir_y;
 	float   ray_new_x;
 	float   ray_new_y;
+	int     dist_idx;
 	
 	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
 	dir_x = 0;
 	dir_y = 0;
+	dist_idx = game->dist_idx;
 	while (dist_idx < SCREEN_WIDTH)
 	{
 		dir_x = cosf(angle_iter);
@@ -183,7 +185,9 @@ void    cast_ray(t_game *game, float ray_angle)
 			calc_collision_point_x_y(&raycaster);
 			if (raycaster.colis_y < 0 || raycaster.colis_x < 0 || !game->data->map_element[(int)raycaster.colis_y]
 			    || !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
+			{
 				return ;
+			}
 			if (is_collision_point_wall(&raycaster, game))
 			{
 				set_ray_direction(&raycaster, &game->wall_direction);
@@ -209,6 +213,18 @@ void    cast_ray(t_game *game, float ray_angle)
 			{
 				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
 				game->depth[game->depth_lvl].obj = ENEMY;
+				int i = 0;
+				while (i < ENEMY_MAX)
+				{
+					if ((int)raycaster.colis_y == game->enemy[i].y && (int)raycaster.colis_x == game->enemy[i].x
+						&& !game->enemy[i].start_x && !game->enemy[i].end_x)
+					{
+						game->enemy[i].start_x = game->dist_idx;
+						game->enemy[i].end_x = find_enemy_end(game, ray_angle);
+						break ;
+					}
+					++i;
+				}
 				++game->depth_lvl;
 			}
 		}
