@@ -69,6 +69,8 @@ void    mark_enemies(t_game *game)
 				game->enemy[i].texture = game->textures->dark_priest_texture[0];
 				game->enemy[i].y = y;
 				game->enemy[i].x = x;
+				game->enemy[i].x_start = 0;
+				game->enemy[i].x_end = 0;
 				game->enemy[i].size = 0;
 				++i;
 			}

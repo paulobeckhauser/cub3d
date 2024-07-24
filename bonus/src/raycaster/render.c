@@ -297,28 +297,58 @@ void    render_door_line(t_game *game)
 	}
 }
 
+//void    render_enemy_line(t_game *game, int enemy_i)
+//{
+//	int y;
+//	int y_end;
+//	float tex_y;
+//	static float tex_x = 120;
+//	int color;
+//	float scale;
+//
+//	scale = 0.1f * (float)game->enemy[enemy_i].size;
+//	y = SCREEN_HEIGHT / 2 - game->enemy[enemy_i].size / 2 + (int)scale; if (y < 0) y = 0; if (y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT - 1;
+//	y_end = SCREEN_HEIGHT / 2 + game->enemy[enemy_i].size / 2 + (int)scale; if (y_end < 0) y_end = 0;
+//	tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
+//	if (tex_x >= TEXTURE_SIZE)
+//		tex_x = 0;
+//	tex_y = 0;
+//	while (y < y_end)
+//	{
+//		color = get_pixel_color(game->enemy[enemy_i].texture, (int)tex_x, (int)tex_y);
+//		if (color != rgb_to_hex(255, 0 , 255))
+//			game->image->data[y * SCREEN_WIDTH + game->dist_idx] = color;
+//		++y;
+//		tex_y += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
+//	}
+//}
+
 void    render_enemy_line(t_game *game, int enemy_i)
 {
 	int y;
 	int y_end;
 	float tex_y;
-	static float tex_x = 0;
 	int color;
 	float scale;
-
+	
 	scale = 0.1f * (float)game->enemy[enemy_i].size;
 	y = SCREEN_HEIGHT / 2 - game->enemy[enemy_i].size / 2 + (int)scale; if (y < 0) y = 0; if (y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT - 1;
 	y_end = SCREEN_HEIGHT / 2 + game->enemy[enemy_i].size / 2 + (int)scale; if (y_end < 0) y_end = 0;
-	tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
 	tex_y = 0;
 	while (y < y_end)
 	{
-		color = get_pixel_color(game->enemy[enemy_i].texture, (int)tex_x, (int)tex_y);
+		color = get_pixel_color(game->enemy[enemy_i].texture, (int)game->enemy[enemy_i].tex_x, (int)tex_y);
+//		printf("tex_x %i ", (int)game->enemy[enemy_i].tex_x);
 		if (color != rgb_to_hex(255, 0 , 255))
-			game->image->data[y * SCREEN_WIDTH + game->dist_idx] = color;
+			game->image->data[y * SCREEN_WIDTH + game->enemy[enemy_i].x_iter] = color;
 		++y;
 		tex_y += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
+		printf("increment: %f ", (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size);
 	}
+	game->enemy[enemy_i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
+	++game->enemy[enemy_i].x_iter;
+	if (game->enemy[enemy_i].x_iter >= game->enemy[enemy_i].x_end)
+		game->enemy[enemy_i].rendered = true;
 }
 
 void render_enemy(t_game *game)

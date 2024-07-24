@@ -196,7 +196,12 @@ typedef struct s_enemy
 	void    *texture;
 	int     x;
 	int     y;
+	int     x_start;
+	int     x_end;
 	int     size;
+	bool    rendered;
+	float   tex_x;
+	int     x_iter;
 }	t_enemy;
 
 typedef struct  s_raycaster
