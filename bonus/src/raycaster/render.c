@@ -343,10 +343,10 @@ void    render_enemy_line(t_game *game, int enemy_i)
 			game->image->data[y * SCREEN_WIDTH + game->enemy[enemy_i].x_iter] = color;
 		++y;
 		tex_y += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
-		printf("increment: %f ", (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size);
 	}
 	game->enemy[enemy_i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
 	++game->enemy[enemy_i].x_iter;
+//	printf("%i ", game->enemy[enemy_i].x_end);
 	if (game->enemy[enemy_i].x_iter >= game->enemy[enemy_i].x_end)
 		game->enemy[enemy_i].rendered = true;
 }

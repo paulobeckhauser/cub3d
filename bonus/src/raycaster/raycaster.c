@@ -74,6 +74,8 @@ void	raycaster(t_game *game)
 		game->enemy[game->depth_lvl].size = 0;
 		game->enemy[game->depth_lvl].x_start = 0;
 		game->enemy[game->depth_lvl].x_end = 0;
+		game->enemy[game->depth_lvl].tex_x = 0;
+		game->enemy[game->depth_lvl].x_iter = 0;
 		game->enemy[game->depth_lvl].rendered = false;
 		++game->depth_lvl;
 	}
@@ -94,7 +96,7 @@ void	raycaster(t_game *game)
 //			game->enemy[game->depth_lvl].size = 0;
 //			game->enemy[game->depth_lvl].x_start = 0;
 //			game->enemy[game->depth_lvl].x_end = 0;
-			game->enemy[game->depth_lvl].rendered = false;
+//			game->enemy[game->depth_lvl].rendered = false;
 			++game->depth_lvl;
 		}
 		game->depth_lvl = 0;
@@ -123,6 +125,8 @@ void	raycaster(t_game *game)
 				}
 				if (!game->enemy[i].rendered)
 					render_enemy_line(game, i);
+//				else
+//					exit(0);
 			}
             --game->depth_lvl;
 		}
@@ -192,6 +196,7 @@ void    cast_ray(t_game *game, float ray_angle)
 //						printf("raycaster: colis_x: %i colis_y %i ", (int)raycaster.colis_x, (int)raycaster.colis_y);
 //						printf("game->dist_idx: %i ", i);
 						game->enemy[i].x_start = game->dist_idx;
+						game->enemy[i].x_iter = game->enemy[i].x_start;
 						game->enemy[i].x_end = find_enemy_end(game, ray_angle);
 						game->enemy[i].size = game->enemy[i].x_end - game->enemy[i].x_start;
 //						printf("size: %i ", game->enemy[i].size);
