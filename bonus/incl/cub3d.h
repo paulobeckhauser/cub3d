@@ -196,8 +196,7 @@ typedef struct s_enemy
 	void    *texture;
 	int     x;
 	int     y;
-	int     start_x;
-	int     end_x;
+	int     size;
 }	t_enemy;
 
 typedef struct  s_raycaster
@@ -295,7 +294,7 @@ void    open_close_door(t_game *game);
 bool    is_collision_point_enemy(t_raycaster *raycaster, t_game *game);
 void    set_ray_direction(t_raycaster *raycaster, int *direction);
 void    save_closest_distance(t_raycaster *raycaster, t_game *game);
-void    render_enemy_line(t_game *game);
+void    render_enemy_line(t_game *game, int enemy_i);
 int     mouse_press(int button, int x, int y, t_game *game);
 void	render_hp(t_game *game);
 void	render_game_over(t_game *game);

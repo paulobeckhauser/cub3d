@@ -299,42 +299,26 @@ void    render_door_line(t_game *game)
 
 void    render_enemy_line(t_game *game, int enemy_i)
 {
-	int curr_square_size;
 	int y;
-	int x;
 	int y_end;
-	static float tex_y = 0;
+	float tex_y;
 	static float tex_x = 0;
 	int color;
 	float scale;
-	
-	curr_square_size = game->enemy[enemy_i].end_x - game->enemy[enemy_i].start_x;
-	scale = 0.1f * (float)curr_square_size;
-	y = SCREEN_HEIGHT / 2 - curr_square_size / 2 + (int)scale; if (y < 0) y = 0; if (y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT - 1;
-	y_end = SCREEN_HEIGHT / 2 + curr_square_size / 2 + (int)scale; if (y_end < 0) y_end = 0;
+
+	scale = 0.1f * (float)game->enemy[enemy_i].size;
+	y = SCREEN_HEIGHT / 2 - game->enemy[enemy_i].size / 2 + (int)scale; if (y < 0) y = 0; if (y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT - 1;
+	y_end = SCREEN_HEIGHT / 2 + game->enemy[enemy_i].size / 2 + (int)scale; if (y_end < 0) y_end = 0;
+	tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
 	tex_y = 0;
 	while (y < y_end)
 	{
-		x = game->x_enemy_start;
-		tex_x = 0;
-		while (x < game->x_enemy_end)
-		{
-			color = get_pixel_color(game->textures->dark_priest_current_texture, (int)tex_x, (int)tex_y);
-			if (color != rgb_to_hex(255, 0, 255))
-			{
-				game->enemy_visible = true;
-//				game->body_hit[game->depth_lvl][x] = true;
-				game->image->data[y * SCREEN_WIDTH + x] = color;
-			}
-			++x;
-			tex_x += (float)TEXTURE_SIZE / (float)curr_square_size;
-		}
+		color = get_pixel_color(game->enemy[enemy_i].texture, (int)tex_x, (int)tex_y);
+		if (color != rgb_to_hex(255, 0 , 255))
+			game->image->data[y * SCREEN_WIDTH + game->dist_idx] = color;
 		++y;
-		tex_y += (float)TEXTURE_SIZE / (float)curr_square_size;
+		tex_y += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
 	}
-	game->hit_enemy = false;
-	game->x_enemy_start = 0;
-	game->x_enemy_end = 0;
 }
 
 void render_enemy(t_game *game)

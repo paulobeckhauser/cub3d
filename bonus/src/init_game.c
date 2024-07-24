@@ -71,6 +71,9 @@ void    init_game(t_game *game)
 		game->depth[game->depth_lvl].colis_x = 0;
 		game->door[game->depth_lvl].y = 0;
 		game->door[game->depth_lvl].x = 0;
+		game->enemy[game->depth_lvl].x = 0;
+		game->enemy[game->depth_lvl].y = 0;
+		game->enemy[game->depth_lvl].size = 0;
 		++game->depth_lvl;
 	}
 	game->depth_lvl = 0;
