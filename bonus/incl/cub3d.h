@@ -202,6 +202,7 @@ typedef struct s_enemy
 	bool    rendered;
 	float   tex_x;
 	int     x_iter;
+	bool    found;
 }	t_enemy;
 
 typedef struct  s_raycaster
@@ -214,6 +215,10 @@ typedef struct  s_raycaster
 	float	speed;
 	float   colis_x;
 	float   colis_y;
+	int     prev_colis_x;
+	int     prev_colis_y;
+	bool    found_wall;
+	bool    found_enemy;
 }   t_raycaster;
 
 typedef struct s_game
@@ -257,6 +262,7 @@ typedef struct s_game
 	int     x_enemy_end;
 	t_door  door[DOOR_MAX];
 	t_enemy enemy[ENEMY_MAX];
+	char    *str;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);
@@ -352,5 +358,8 @@ bool	check_map_element_input(t_data *data);
 bool	check_empty_line_map(t_data *data);
 void	store_first_line_map_element(t_data *data);
 void	store_last_line_map_element(t_data *data);
+
+// DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER
+void    render_vertical_line(int x, t_game *game, int red, int green, int blue);
 
 #endif

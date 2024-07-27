@@ -76,7 +76,7 @@ void	raycaster(t_game *game)
 		game->enemy[game->depth_lvl].x_end = 0;
 		game->enemy[game->depth_lvl].tex_x = 0;
 		game->enemy[game->depth_lvl].x_iter = 0;
-		game->enemy[game->depth_lvl].rendered = false;
+		game->enemy[game->depth_lvl].found = false;
 		++game->depth_lvl;
 	}
 	game->depth_lvl = 0;
@@ -123,10 +123,7 @@ void	raycaster(t_game *game)
 					}
 					--i;
 				}
-				if (!game->enemy[i].rendered)
-					render_enemy_line(game, i);
-//				else
-//					exit(0);
+				render_enemy_line(game, i);
 			}
             --game->depth_lvl;
 		}
@@ -147,6 +144,9 @@ void    cast_ray(t_game *game, float ray_angle)
 	raycaster.x_iterator = game->data->player->x;
 	raycaster.y_iterator = game->data->player->y;
 	raycaster.speed = 1;
+	raycaster.prev_colis_x = 0;
+	raycaster.prev_colis_y = 0;
+	raycaster.found_wall = false;
 	while (((raycaster.dir_x >= 0 && raycaster.x_iterator <= game->ray_new_x)
 	        || (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))
 	       && ((raycaster.dir_y >= 0 && raycaster.y_iterator <= game->ray_new_y)
@@ -160,16 +160,24 @@ void    cast_ray(t_game *game, float ray_angle)
 			{
 				return ;
 			}
-			else if (is_collision_point_wall(&raycaster, game))
+			else if (is_collision_point_wall(&raycaster, game)
+				&& ((int)raycaster.colis_y != raycaster.prev_colis_y
+					|| (int)raycaster.colis_x != raycaster.prev_colis_x)
+				&& !raycaster.found_wall)
 			{
+//				printf("idx: %i depth: %i\n", game->dist_idx, game->depth_lvl);
 				set_ray_direction(&raycaster, &game->wall_direction);
 				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
 				game->depth[game->depth_lvl].ray_hit_x = fmodf(raycaster.x_iterator, SQUARE_SIZE) / SQUARE_SIZE;
 				game->depth[game->depth_lvl].ray_hit_y = fmodf(raycaster.y_iterator, SQUARE_SIZE) / SQUARE_SIZE;
 				game->depth[game->depth_lvl].obj = WALL;
-				return ;
+				++game->depth_lvl;
+				raycaster.found_wall = true;
+//				return ;
 			}
-			else if (is_collision_point_door(&raycaster, game))
+			else if (is_collision_point_door(&raycaster, game)
+				&& ((int)raycaster.colis_y != raycaster.prev_colis_y
+					|| (int)raycaster.colis_x != raycaster.prev_colis_x))
 			{
 				set_ray_direction(&raycaster, &game->door_direction);
 				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
@@ -181,16 +189,18 @@ void    cast_ray(t_game *game, float ray_angle)
 				game->depth[game->depth_lvl].colis_x = raycaster.colis_x;
 				++game->depth_lvl;
 			}
-			else if (is_collision_point_enemy(&raycaster, game))
+			else if (is_collision_point_enemy(&raycaster, game)
+				&& ((int)raycaster.colis_y != raycaster.prev_colis_y
+					|| (int)raycaster.colis_x != raycaster.prev_colis_x))
 			{
 				calc_ray_distance(&raycaster, game, ray_angle, &game->depth[game->depth_lvl].dist);
 				game->depth[game->depth_lvl].obj = ENEMY;
-//				printf("%i ", game->depth_lvl);
 				int i = 0;
+//				printf("idx: %i depth: %i\n", game->dist_idx, game->depth_lvl);
 				while (i < ENEMY_MAX)
 				{
 					if ((int)raycaster.colis_y == game->enemy[i].y && (int)raycaster.colis_x == game->enemy[i].x
-						&& !game->enemy[i].size)
+						&& game->enemy[i].size == 0 && !game->enemy[i].found)
 					{
 //						printf("colis_x: %f colis_y %f", raycaster.colis_x, raycaster.colis_y);
 //						printf("raycaster: colis_x: %i colis_y %i ", (int)raycaster.colis_x, (int)raycaster.colis_y);
@@ -199,6 +209,9 @@ void    cast_ray(t_game *game, float ray_angle)
 						game->enemy[i].x_iter = game->enemy[i].x_start;
 						game->enemy[i].x_end = find_enemy_end(game, ray_angle);
 						game->enemy[i].size = game->enemy[i].x_end - game->enemy[i].x_start;
+						render_vertical_line(game->enemy[i].x_start, game, 0, 255, 0);
+						render_vertical_line(game->enemy[i].x_end, game,255, 0, 0);
+//						game->enemy[i].found = true;
 //						printf("size: %i ", game->enemy[i].size);
 						break ;
 					}
@@ -207,6 +220,8 @@ void    cast_ray(t_game *game, float ray_angle)
 				++game->depth_lvl;
 			}
 		}
+		raycaster.prev_colis_x = (int)raycaster.colis_x;
+		raycaster.prev_colis_y = (int)raycaster.colis_y;
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;
 		raycaster.y_iterator += raycaster.dir_y * raycaster.speed;
 	}
@@ -234,6 +249,7 @@ int	find_enemy_end(t_game *game, float angle_iter)
 		ray_new_y = game->data->player->y + dir_y * 2 * SCREEN_WIDTH;
 		if (!cast_ray_till_enemy(game, ray_new_x, ray_new_y))
 		{
+//			printf("%s\n", game->str);
 //			printf("dist_idx: %i\n", dist_idx);
 			return (dist_idx);
 		}
@@ -255,12 +271,11 @@ int cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y)
 	calc_directions(&raycaster, game, ray_new_x, ray_new_y);
 	raycaster.x_iterator = game->data->player->x;
 	raycaster.y_iterator = game->data->player->y;
+	raycaster.prev_colis_x = 0;
+	raycaster.prev_colis_y = 0;
 	raycaster.speed = 1;
 	depth_lvl = 0;
-	while (((raycaster.dir_x >= 0 && raycaster.x_iterator <= game->ray_new_x)
-	        || (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))
-	       && ((raycaster.dir_y >= 0 && raycaster.y_iterator <= game->ray_new_y)
-	           || (raycaster.dir_y < 0 && raycaster.y_iterator >= game->ray_new_y)))
+	while (1)
 	{
 		if (is_ray_on_square_edge(&raycaster))
 		{
@@ -270,37 +285,42 @@ int cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y)
 			if (raycaster.colis_y < 0 || raycaster.colis_x < 0 || !game->data->map_element[(int)raycaster.colis_y]
 			    || !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
 			{
+				game->str = "end";
 //				printf("end\n");
 				return 0;
 			}
-			if (is_collision_point_wall(&raycaster, game))
-			{
-				if (depth_lvl == game->depth_lvl)
-				{
-//					printf("wall\n");
-					return 0;
-				}
-				++depth_lvl;
-			}
-			if (is_collision_point_door(&raycaster, game))
-			{
-				if (depth_lvl == game->depth_lvl)
-				{
+//			if (is_collision_point_wall(&raycaster, game)  && ((int)raycaster.colis_y != raycaster.prev_colis_y || (int)raycaster.colis_x != raycaster.prev_colis_x))
+//			{
+//				if (depth_lvl == game->depth_lvl)
+//				{
+//					return 0;
+//				}
+//				++depth_lvl;
+//			}
+//			if (is_collision_point_door(&raycaster, game) && ((int)raycaster.colis_y != raycaster.prev_colis_y || (int)raycaster.colis_x != raycaster.prev_colis_x))
+//			{
+//				if (depth_lvl == game->depth_lvl)
+//				{
+//					game->str = "door";
 //					printf("door\n");
-					return 0;
-				}
-				++depth_lvl;
-			}
-			if (is_collision_point_enemy(&raycaster, game))
+//					return 0;
+//				}
+//				++depth_lvl;
+//			}
+			if (is_collision_point_enemy(&raycaster, game) && ((int)raycaster.colis_y != raycaster.prev_colis_y || (int)raycaster.colis_x != raycaster.prev_colis_x))
 			{
-				if (depth_lvl == game->depth_lvl)
+				if (depth_lvl - game->depth_lvl == -1 || game->depth_lvl - game->depth_lvl == 1 || game->depth_lvl == depth_lvl)
 				{
+//					printf("x: %i y: %i\n", (int)raycaster.colis_x, (int)raycaster.colis_y);
+//					game->str = "enemy";
 //					printf("enemy\n");
 					return 1;
 				}
 				++depth_lvl;
 			}
 		}
+		raycaster.prev_colis_x = (int)raycaster.colis_x;
+		raycaster.prev_colis_y = (int)raycaster.colis_y;
 		raycaster.x_iterator += raycaster.dir_x * raycaster.speed;
 		raycaster.y_iterator += raycaster.dir_y * raycaster.speed;
 	}

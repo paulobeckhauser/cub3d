@@ -348,7 +348,12 @@ void    render_enemy_line(t_game *game, int enemy_i)
 	++game->enemy[enemy_i].x_iter;
 //	printf("%i ", game->enemy[enemy_i].x_end);
 	if (game->enemy[enemy_i].x_iter >= game->enemy[enemy_i].x_end)
-		game->enemy[enemy_i].rendered = true;
+	{
+//		printf("end x: %i ", game->enemy[enemy_i].x_end);
+		game->enemy[enemy_i].x_iter = game->enemy[enemy_i].x_start;
+		game->enemy[enemy_i].tex_x = 0;
+//		game->enemy[enemy_i].rendered = true;
+	}
 }
 
 void render_enemy(t_game *game)
@@ -410,4 +415,14 @@ void	render_game_over(t_game *game)
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
+}
+
+void    render_vertical_line(int x, t_game *game, int red, int green, int blue)
+{
+	int tex_y = 0;
+	while (tex_y < SCREEN_HEIGHT)
+	{
+		game->image->data[tex_y * SCREEN_WIDTH + x] = rgb_to_hex(red, green, blue);
+		++tex_y;
+	}
 }

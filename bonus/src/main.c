@@ -72,6 +72,7 @@ void    mark_enemies(t_game *game)
 				game->enemy[i].x_start = 0;
 				game->enemy[i].x_end = 0;
 				game->enemy[i].size = 0;
+				game->enemy[i].found = false;
 				++i;
 			}
 			++x;
