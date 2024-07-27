@@ -200,14 +200,10 @@ void    cast_ray(t_game *game, float ray_angle)
 							game->enemy[i].x_iter = game->enemy[i].x_start;
 							game->enemy[i].x_end = find_enemy_end(game, ray_angle, i);
 							game->enemy[i].size = game->enemy[i].x_end - game->enemy[i].x_start;
-							render_vertical_line(game->enemy[i].x_end, game, 255, 0, 0);
-							if (game->enemy[i].x_iter > 0)
+							if (game->enemy[i].x_start < 0)
 							{
-								for (int y = 0; y < game->enemy[i].x_iter; y++)
-								{
-									printf("start: %i iter: %i\n",game->enemy[i].x_start, game->enemy[i].x_iter);
+								for (int y = 0; y < game->enemy[i].x_start * -1; y++)
 									game->enemy[i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[i].size;
-								}
 								game->enemy[i].x_iter = 0;
 							}
 						}
@@ -240,12 +236,7 @@ int	find_enemy_end(t_game *game, float angle_iter, int enemy_i)
 	dir_y = 0;
 	dist_idx = game->enemy[enemy_i].x_start;
 	if (dist_idx == 0)
-	{
 		game->enemy[enemy_i].x_start = find_enemy_start(game, angle_iter, enemy_i);
-//		game->enemy[enemy_i].x_iter = game->enemy[enemy_i].x_start;
-//		game->enemy[enemy_i].tex_x = game->enemy[enemy_i].x_start;
-//		dist_idx = game->enemy[enemy_i].x_start;
-	}
 	while (true)
 	{
 		dir_x = cosf(angle_iter);

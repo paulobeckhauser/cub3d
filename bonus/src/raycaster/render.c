@@ -307,7 +307,7 @@ void    render_enemy_line(t_game *game, int enemy_i)
 	
 	scale = 0.1f * (float)game->enemy[enemy_i].size;
 	y = SCREEN_HEIGHT / 2 - game->enemy[enemy_i].size / 2 + (int)scale; if (y < 0) y = 0; if (y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT - 1;
-	y_end = SCREEN_HEIGHT / 2 + game->enemy[enemy_i].size / 2 + (int)scale; if (y_end < 0) y_end = 0;
+	y_end = SCREEN_HEIGHT / 2 + game->enemy[enemy_i].size / 2 + (int)scale; if (y_end < 0) y_end = 0; if (y_end > SCREEN_HEIGHT) y_end = SCREEN_HEIGHT - 1;
 	tex_y = 0;
 	while (y < y_end)
 	{
