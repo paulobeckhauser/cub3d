@@ -297,32 +297,6 @@ void    render_door_line(t_game *game)
 	}
 }
 
-//void    render_enemy_line(t_game *game, int enemy_i)
-//{
-//	int y;
-//	int y_end;
-//	float tex_y;
-//	static float tex_x = 120;
-//	int color;
-//	float scale;
-//
-//	scale = 0.1f * (float)game->enemy[enemy_i].size;
-//	y = SCREEN_HEIGHT / 2 - game->enemy[enemy_i].size / 2 + (int)scale; if (y < 0) y = 0; if (y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT - 1;
-//	y_end = SCREEN_HEIGHT / 2 + game->enemy[enemy_i].size / 2 + (int)scale; if (y_end < 0) y_end = 0;
-//	tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
-//	if (tex_x >= TEXTURE_SIZE)
-//		tex_x = 0;
-//	tex_y = 0;
-//	while (y < y_end)
-//	{
-//		color = get_pixel_color(game->enemy[enemy_i].texture, (int)tex_x, (int)tex_y);
-//		if (color != rgb_to_hex(255, 0 , 255))
-//			game->image->data[y * SCREEN_WIDTH + game->dist_idx] = color;
-//		++y;
-//		tex_y += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
-//	}
-//}
-
 void    render_enemy_line(t_game *game, int enemy_i)
 {
 	int y;
@@ -338,7 +312,6 @@ void    render_enemy_line(t_game *game, int enemy_i)
 	while (y < y_end)
 	{
 		color = get_pixel_color(game->enemy[enemy_i].texture, (int)game->enemy[enemy_i].tex_x, (int)tex_y);
-//		printf("tex_x %i ", (int)game->enemy[enemy_i].tex_x);
 		if (color != rgb_to_hex(255, 0 , 255))
 			game->image->data[y * SCREEN_WIDTH + game->enemy[enemy_i].x_iter] = color;
 		++y;
@@ -346,54 +319,11 @@ void    render_enemy_line(t_game *game, int enemy_i)
 	}
 	game->enemy[enemy_i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
 	++game->enemy[enemy_i].x_iter;
-//	printf("%i ", game->enemy[enemy_i].x_end);
 	if (game->enemy[enemy_i].x_iter >= game->enemy[enemy_i].x_end)
 	{
-//		printf("end x: %i ", game->enemy[enemy_i].x_end);
 		game->enemy[enemy_i].x_iter = game->enemy[enemy_i].x_start;
 		game->enemy[enemy_i].tex_x = 0;
-//		game->enemy[enemy_i].rendered = true;
 	}
-}
-
-void render_enemy(t_game *game)
-{
-	int curr_square_size;
-	int y;
-	int x;
-	int y_end;
-	float tex_y;
-	float tex_x;
-	int color;
-	float scale;
-	
-	curr_square_size = game->x_enemy_end - game->x_enemy_start;
-	scale = 0.1f * (float)curr_square_size;
-	y = SCREEN_HEIGHT / 2 - curr_square_size / 2 + (int)scale; if (y < 0) y = 0; if (y >= SCREEN_HEIGHT) y = SCREEN_HEIGHT - 1;
-	y_end = SCREEN_HEIGHT / 2 + curr_square_size / 2 + (int)scale; if (y_end < 0) y_end = 0;
-	tex_y = 0;
-	while (y < y_end)
-	{
-		x = game->x_enemy_start;
-		tex_x = 0;
-		while (x < game->x_enemy_end)
-		{
-			color = get_pixel_color(game->textures->dark_priest_current_texture, (int)tex_x, (int)tex_y);
-			if (color != rgb_to_hex(255, 0, 255))
-			{
-				game->enemy_visible = true;
-//				game->body_hit[game->depth_lvl][x] = true;
-				game->image->data[y * SCREEN_WIDTH + x] = color;
-			}
-			++x;
-			tex_x += (float)TEXTURE_SIZE / (float)curr_square_size;
-		}
-		++y;
-		tex_y += (float)TEXTURE_SIZE / (float)curr_square_size;
-	}
-	game->hit_enemy = false;
-	game->x_enemy_start = 0;
-	game->x_enemy_end = 0;
 }
 
 void	render_game_over(t_game *game)

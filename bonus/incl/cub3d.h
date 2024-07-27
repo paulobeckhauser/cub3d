@@ -179,8 +179,8 @@ typedef struct s_depth
 	t_obj   obj;
 	float   ray_hit_x;
 	float   ray_hit_y;
-	float   colis_y;
-	float   colis_x;
+	int     colis_y;
+	int     colis_x;
 }   t_depth;
 
 typedef struct s_door
@@ -199,10 +199,9 @@ typedef struct s_enemy
 	int     x_start;
 	int     x_end;
 	int     size;
-	bool    rendered;
 	float   tex_x;
 	int     x_iter;
-	bool    found;
+	int     depth_lvl;
 }	t_enemy;
 
 typedef struct  s_raycaster
@@ -314,8 +313,8 @@ void    render_minimap_bg(t_game *game);
 void    render_minimap_border(t_game *game);
 void    render_enemy(t_game *game);
 bool    is_collision_point_door(t_raycaster *raycaster, t_game *game);
-int 	find_enemy_end(t_game *game, float angle_iter);
-int     cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y);
+int	    find_enemy_end(t_game *game, float angle_iter, int enemy_i);
+int     cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enemy_i);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

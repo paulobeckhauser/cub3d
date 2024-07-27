@@ -76,7 +76,6 @@ void    init_game(t_game *game)
 		game->enemy[game->depth_lvl].x_start = 0;
 		game->enemy[game->depth_lvl].x_end = 0;
 		game->enemy[game->depth_lvl].size = 0;
-		game->enemy[game->depth_lvl].rendered = false;
 		game->enemy[game->depth_lvl].tex_x = 0;
 		game->enemy[game->depth_lvl].x_iter = 0;
 		++game->depth_lvl;
