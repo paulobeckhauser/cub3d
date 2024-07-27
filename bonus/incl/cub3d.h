@@ -311,10 +311,10 @@ void	render_game_over(t_game *game);
 void	render_background(t_game *game);
 void    render_minimap_bg(t_game *game);
 void    render_minimap_border(t_game *game);
-void    render_enemy(t_game *game);
 bool    is_collision_point_door(t_raycaster *raycaster, t_game *game);
 int	    find_enemy_end(t_game *game, float angle_iter, int enemy_i);
 int     cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enemy_i);
+int     find_enemy_start(t_game *game, float angle_iter, int enemy_i);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

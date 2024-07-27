@@ -114,6 +114,7 @@ void	raycaster(t_game *game)
 				{
 					if (game->depth[game->depth_lvl].colis_x == game->enemy[i].x && game->depth[game->depth_lvl].colis_y == game->enemy[i].y)
 					{
+//						printf("depth lvl: %i\n", game->depth_lvl);
 						render_enemy_line(game, i);
 						break ;
 					}
@@ -199,6 +200,16 @@ void    cast_ray(t_game *game, float ray_angle)
 							game->enemy[i].x_iter = game->enemy[i].x_start;
 							game->enemy[i].x_end = find_enemy_end(game, ray_angle, i);
 							game->enemy[i].size = game->enemy[i].x_end - game->enemy[i].x_start;
+							render_vertical_line(game->enemy[i].x_end, game, 255, 0, 0);
+							if (game->enemy[i].x_iter > 0)
+							{
+								for (int y = 0; y < game->enemy[i].x_iter; y++)
+								{
+									printf("start: %i iter: %i\n",game->enemy[i].x_start, game->enemy[i].x_iter);
+									game->enemy[i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[i].size;
+								}
+								game->enemy[i].x_iter = 0;
+							}
 						}
 						game->enemy[i].depth_lvl = game->depth_lvl;
 						break ;
@@ -227,8 +238,15 @@ int	find_enemy_end(t_game *game, float angle_iter, int enemy_i)
 	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
 	dir_x = 0;
 	dir_y = 0;
-	dist_idx = game->dist_idx;
-	while (dist_idx < SCREEN_WIDTH)
+	dist_idx = game->enemy[enemy_i].x_start;
+	if (dist_idx == 0)
+	{
+		game->enemy[enemy_i].x_start = find_enemy_start(game, angle_iter, enemy_i);
+//		game->enemy[enemy_i].x_iter = game->enemy[enemy_i].x_start;
+//		game->enemy[enemy_i].tex_x = game->enemy[enemy_i].x_start;
+//		dist_idx = game->enemy[enemy_i].x_start;
+	}
+	while (true)
 	{
 		dir_x = cosf(angle_iter);
 		dir_y = sinf(angle_iter);
@@ -246,6 +264,38 @@ int	find_enemy_end(t_game *game, float angle_iter, int enemy_i)
 	return (dist_idx);
 }
 
+int find_enemy_start(t_game *game, float angle_iter, int enemy_i)
+{
+	float	angle_decr_radians;
+	float	dir_x;
+	float	dir_y;
+	float   ray_new_x;
+	float   ray_new_y;
+	int     dist_idx;
+	
+	angle_decr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
+	dir_x = 0;
+	dir_y = 0;
+	dist_idx = game->dist_idx;
+	while (true)
+	{
+		dir_x = cosf(angle_iter);
+		dir_y = sinf(angle_iter);
+		ray_new_x = game->data->player->x + dir_x * 2 * SCREEN_WIDTH;
+		ray_new_y = game->data->player->y + dir_y * 2 * SCREEN_WIDTH;
+		if (!cast_ray_till_enemy(game, ray_new_x, ray_new_y, enemy_i))
+			return (dist_idx);
+		angle_iter -= angle_decr_radians;
+		if (angle_iter < 0)
+			angle_iter += 2 * M_PI;
+		else if (angle_iter > 2 * M_PI)
+			angle_iter -= 2 * M_PI;
+		--dist_idx;
+		++game->enemy[enemy_i].x_iter;
+	}
+	return (dist_idx);
+}
+
 int cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enemy_i)
 {
 	t_raycaster raycaster;
@@ -254,7 +304,7 @@ int cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enem
 	raycaster.x_iterator = game->data->player->x;
 	raycaster.y_iterator = game->data->player->y;
 	raycaster.speed = 1;
-	while (1)
+	while (true)
 	{
 		if (is_ray_on_square_edge(&raycaster))
 		{

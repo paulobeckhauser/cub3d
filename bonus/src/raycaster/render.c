@@ -312,18 +312,13 @@ void    render_enemy_line(t_game *game, int enemy_i)
 	while (y < y_end)
 	{
 		color = get_pixel_color(game->enemy[enemy_i].texture, (int)game->enemy[enemy_i].tex_x, (int)tex_y);
-		if (color != rgb_to_hex(255, 0 , 255))
+		if (color != rgb_to_hex(255, 0 , 255) && game->enemy[enemy_i].x_iter >= 0)
 			game->image->data[y * SCREEN_WIDTH + game->enemy[enemy_i].x_iter] = color;
 		++y;
 		tex_y += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
 	}
 	game->enemy[enemy_i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
 	++game->enemy[enemy_i].x_iter;
-	if (game->enemy[enemy_i].x_iter >= game->enemy[enemy_i].x_end)
-	{
-		game->enemy[enemy_i].x_iter = game->enemy[enemy_i].x_start;
-		game->enemy[enemy_i].tex_x = 0;
-	}
 }
 
 void	render_game_over(t_game *game)
