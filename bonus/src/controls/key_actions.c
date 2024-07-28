@@ -39,43 +39,17 @@ void    rotate_player_right(t_game *game)
 		game->vec_idx = 0;
 }
 
-//void    open_close_door(t_game *game)
-//{
-//	int x;
-//	int y;
-//
-//	y = 0;
-//	x = 0;
-//	struct timeval  tv;
-//	gettimeofday(&tv, NULL);
-//	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
-//	while (game->data->map_element[y])
-//	{
-//		x = 0;
-//		while (game->data->map_element[y][x])
-//		{
-//			if (game->door_visible && game->closest_door_distance < DOOR_OPEN_DISTANCE)
-//			{
-//				if (game->data->map_element[y][x] == '2')
-//				{
-//					game->door_are_opening = true;
-//					game->data->map_element[y][x] = '3';
-//					game->keys[E] = false;
-//					return ;
-//				}
-//				else if (game->data->map_element[y][x] == '3')
-//				{
-//					game->door_are_closing = true;
-//					game->data->map_element[y][x] = '2';
-//					game->keys[E] = false;
-//					return ;
-//				}
-//			}
-//			x++;
-//		}
-//		y++;
-//	}
-//}
+void    rotate_player_mouse(t_game *game)
+{
+	int dir_x;
+	
+	dir_x = game->mouse_x - SCREEN_WIDTH / 2;
+	if (dir_x < 0)
+		rotate_player_left(game);
+	else if (dir_x > 0)
+		rotate_player_right(game);
+	mlx_mouse_move(game->mlx_ptr, game->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+}
 
 void    open_close_door(t_game *game)
 {
@@ -87,7 +61,7 @@ void    open_close_door(t_game *game)
 	i = 0;
 	while (i < DOOR_MAX)
 	{
-		if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
+		if (game->door[i].dist >= 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 		{
 			if (game->data->map_element[game->door[i].y][game->door[i].x] == '2')
 			{

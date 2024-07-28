@@ -74,6 +74,8 @@ void    init_game(t_game *game)
 		game->enemy[game->depth_lvl].size = 0;
 		game->enemy[game->depth_lvl].tex_x = 0;
 		game->enemy[game->depth_lvl].visible = false;
+		game->enemy[game->depth_lvl].got_bullet = false;
+		game->enemy[game->depth_lvl].dead = false;
 		++game->depth_lvl;
 	}
 	game->depth_lvl = 0;

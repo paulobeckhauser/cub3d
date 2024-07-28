@@ -69,6 +69,36 @@
 #define HP_90 "./bonus/textures/hp/90.xpm"
 #define HP_100 "./bonus/textures/hp/100.xpm"
 #define GAME_OVER "./bonus/textures/menu/game_over.xpm"
+#define BLOOD_0_29 "./bonus/textures/blood/1_0.xpm"
+#define BLOOD_1_29 "./bonus/textures/blood/1_1.xpm"
+#define BLOOD_2_29 "./bonus/textures/blood/1_2.xpm"
+#define BLOOD_3_29 "./bonus/textures/blood/1_3.xpm"
+#define BLOOD_4_29 "./bonus/textures/blood/1_4.xpm"
+#define BLOOD_5_29 "./bonus/textures/blood/1_5.xpm"
+#define BLOOD_6_29 "./bonus/textures/blood/1_6.xpm"
+#define BLOOD_7_29 "./bonus/textures/blood/1_7.xpm"
+#define BLOOD_8_29 "./bonus/textures/blood/1_8.xpm"
+#define BLOOD_9_29 "./bonus/textures/blood/1_9.xpm"
+#define BLOOD_10_29 "./bonus/textures/blood/1_10.xpm"
+#define BLOOD_11_29 "./bonus/textures/blood/1_11.xpm"
+#define BLOOD_12_29 "./bonus/textures/blood/1_12.xpm"
+#define BLOOD_13_29 "./bonus/textures/blood/1_13.xpm"
+#define BLOOD_14_29 "./bonus/textures/blood/1_14.xpm"
+#define BLOOD_15_29 "./bonus/textures/blood/1_15.xpm"
+#define BLOOD_16_29 "./bonus/textures/blood/1_16.xpm"
+#define BLOOD_17_29 "./bonus/textures/blood/1_17.xpm"
+#define BLOOD_18_29 "./bonus/textures/blood/1_18.xpm"
+#define BLOOD_19_29 "./bonus/textures/blood/1_19.xpm"
+#define BLOOD_20_29 "./bonus/textures/blood/1_20.xpm"
+#define BLOOD_21_29 "./bonus/textures/blood/1_21.xpm"
+#define BLOOD_22_29 "./bonus/textures/blood/1_22.xpm"
+#define BLOOD_23_29 "./bonus/textures/blood/1_23.xpm"
+#define BLOOD_24_29 "./bonus/textures/blood/1_24.xpm"
+#define BLOOD_25_29 "./bonus/textures/blood/1_25.xpm"
+#define BLOOD_26_29 "./bonus/textures/blood/1_26.xpm"
+#define BLOOD_27_29 "./bonus/textures/blood/1_27.xpm"
+#define BLOOD_28_29 "./bonus/textures/blood/1_28.xpm"
+#define BLOOD_29_29 "./bonus/textures/blood/1_29.xpm"
 
 // vectors
 #define ANGLE_MAX 360
@@ -96,10 +126,13 @@
 // animation
 #define DOOR_FRAMES 5
 #define DOOR_FRAME_DURATION 1200000
-#define ENEMY_FRAMES 10
+#define ENEMY_FRAMES 11
 #define ENEMY_FRAME_DURATION 4800000
 #define GUN_FRAMES 5
 #define GUN_FRAME_DURATION 600000
+#define BLOOD_FRAMES 30
+#define BLOOD_FRAME_DURATION 2400000
+
 
 typedef struct	s_image
 {
@@ -133,6 +166,7 @@ typedef struct s_textures
 	void    *hp_texture[11];
 	void    *hp_current_texture;
 	void	*game_over_texture;
+	void    *blood[30];
 }	t_textures;
 
 typedef struct s_player
@@ -204,6 +238,8 @@ typedef struct s_enemy
 	int     depth_lvl;
 	bool    visible;
 	bool    hit_body[SCREEN_WIDTH];
+	bool    got_bullet;
+	bool    dead;
 }	t_enemy;
 
 typedef struct  s_raycaster
@@ -316,6 +352,11 @@ int	    find_enemy_end(t_game *game, float angle_iter, int enemy_i);
 int     cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enemy_i);
 int     find_enemy_start(t_game *game, float angle_iter, int enemy_i);
 void    action_mouse_left_click(t_game *game);
+void    animation_enemy_cast(t_game *game);
+void    animation_close_door(t_game *game);
+void    animation_open_door(t_game *game);
+void    rotate_player_mouse(t_game *game);
+void    animation_enemy_death(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

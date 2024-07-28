@@ -71,7 +71,7 @@ void	raycaster(t_game *game)
 		game->depth[game->depth_lvl].ray_hit_y = 0;
 		game->depth[game->depth_lvl].colis_y = 0;
 		game->depth[game->depth_lvl].colis_x = 0;
-		game->door[game->depth_lvl].dist = 0;
+		game->door[game->depth_lvl].dist = -1;
 		game->enemy[game->depth_lvl].size = 0;
 		game->enemy[game->depth_lvl].x_start = 0;
 		game->enemy[game->depth_lvl].x_end = 0;
@@ -93,7 +93,6 @@ void	raycaster(t_game *game)
 			game->depth[game->depth_lvl].ray_hit_y = 0;
 			game->depth[game->depth_lvl].colis_y = 0;
 			game->depth[game->depth_lvl].colis_x = 0;
-			game->door[game->depth_lvl].dist = 0;
 			++game->depth_lvl;
 		}
 		game->depth_lvl = 0;
@@ -130,10 +129,6 @@ void	raycaster(t_game *game)
 			angle_iter -= 2 * M_PI;
 		++game->dist_idx;
 	}
-//	for (int z = 0; z < ENEMY_MAX; z++)
-//	{
-//		printf("enemy: %i true? %i\n", z, game->enemy[z].hit_body[SCREEN_WIDTH / 2]);
-//	}
 }
 
 void    cast_ray(t_game *game, float ray_angle)

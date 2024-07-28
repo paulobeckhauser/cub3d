@@ -209,7 +209,6 @@ void	render_crosshair(t_game *game)
 	int	x;
 	int	y;
 
-	(void)game;
 	x = SCREEN_WIDTH / 2 - 10.0;
 	y = SCREEN_HEIGHT / 2 - 10.0;
 	while (x < SCREEN_WIDTH / 2 + 10)
