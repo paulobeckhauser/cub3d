@@ -76,6 +76,7 @@ int mouse_press(int button, int x, int y, t_game *game)
 int	loop_hook(t_game *game)
 {
 	int dir_x;
+	int j;
 
 	dir_x = game->mouse_x - SCREEN_WIDTH / 2;
 	if (dir_x < 0)
@@ -100,23 +101,7 @@ int	loop_hook(t_game *game)
 	if (game->keys[ESC])
 		close_game(game);
 	if (game->keys[MOUSE_LEFT_CLICK])
-	{
-		struct timeval  tv;
-		gettimeofday(&tv, NULL);
-		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-		long    elapsed_time =  current_time - game->gun_animation_start_time;
-		int gun_frame = elapsed_time / (GUN_FRAME_DURATION / GUN_FRAMES);
-		if (gun_frame < 0)
-			gun_frame = 0;
-		if (gun_frame >= GUN_FRAMES)
-		{
-			game->keys[MOUSE_LEFT_CLICK] = false;
-			gun_frame = 0;
-		}
-		game->textures->gun_current_texture = game->textures->gun_texture[gun_frame];
-		if (gun_frame == 0 && game->body_hit[game->depth_lvl][SCREEN_WIDTH / 2] == true)
-			game->data->map_element[game->enemy_y][game->enemy_x] = '0';
-	}
+		action_mouse_left_click(game);
 	if (game->door_are_opening)
 	{
 		struct timeval  tv;
@@ -168,33 +153,96 @@ int	loop_hook(t_game *game)
 			++i;
 		}
 	}
-	if (game->enemy_visible)
+	j = 0;
+	while (j < ENEMY_MAX)
 	{
-		struct timeval  tv;
-		gettimeofday(&tv, NULL);
-		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-		long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1;
-		int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES;
-		static  int i = 10;
-		if (enemy_frame == 0 && game->hp_frame_updated) {
-			game->hp_frame_updated = false;
-		}
-		if (enemy_frame < 0)
-			enemy_frame = 0;
-		game->textures->dark_priest_current_texture = game->textures->dark_priest_texture[enemy_frame];
-		game->enemy_visible = false;
-		if (enemy_frame == 9 && !game->hp_frame_updated)
+		if (game->enemy[j].visible)
 		{
-			if (i != 0)
-				game->textures->hp_current_texture = game->textures->hp_texture[--i];
-			game->hp_frame_updated = true;
+			struct timeval  tv;
+			gettimeofday(&tv, NULL);
+			long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+			long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1;
+			int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES;
+			static  int i = ENEMY_FRAMES;
+			if (enemy_frame == 0 && game->hp_frame_updated) {
+				game->hp_frame_updated = false;
+			}
+			if (enemy_frame < 0)
+				enemy_frame = 0;
+			game->enemy[j].texture = game->textures->dark_priest_texture[enemy_frame];
+			game->enemy[j].visible = false;
+			if (enemy_frame == 9 && !game->hp_frame_updated)
+			{
+				if (i != 0)
+					game->textures->hp_current_texture = game->textures->hp_texture[--i];
+				game->hp_frame_updated = true;
+			}
+	//		if (game->textures->hp_current_texture == game->textures->hp_texture[0] && enemy_frame == 0)
+	//			game->player_dead = true;
 		}
+		++j;
+	}
+//	if (game->enemy_visible)
+//	{
+//		struct timeval  tv;
+//		gettimeofday(&tv, NULL);
+//		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+//		long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1;
+//		int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES;
+//		static  int i = 10;
+//		if (enemy_frame == 0 && game->hp_frame_updated) {
+//			game->hp_frame_updated = false;
+//		}
+//		if (enemy_frame < 0)
+//			enemy_frame = 0;
+//		game->textures->dark_priest_current_texture = game->textures->dark_priest_texture[enemy_frame];
+//		game->enemy_visible = false;
+//		if (enemy_frame == 9 && !game->hp_frame_updated)
+//		{
+//			if (i != 0)
+//				game->textures->hp_current_texture = game->textures->hp_texture[--i];
+//			game->hp_frame_updated = true;
+//		}
 //		if (game->textures->hp_current_texture == game->textures->hp_texture[0] && enemy_frame == 0)
 //			game->player_dead = true;
-	}
+//	}
 	if (!game->player_dead)
 		render_game(game);
 	else
 		render_game_over(game);
 	return (0);
+}
+
+void    action_mouse_left_click(t_game *game)
+{
+	struct timeval  tv;
+	gettimeofday(&tv, NULL);
+	long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	long    elapsed_time =  current_time - game->gun_animation_start_time;
+	int gun_frame = elapsed_time / (GUN_FRAME_DURATION / GUN_FRAMES);
+	int i;
+	
+	if (gun_frame < 0) {
+		gun_frame = 0;
+	}
+	if (gun_frame >= GUN_FRAMES)
+	{
+		game->keys[MOUSE_LEFT_CLICK] = false;
+		gun_frame = 0;
+	}
+	game->textures->gun_current_texture = game->textures->gun_texture[gun_frame];
+	i = 0;
+	while (i < ENEMY_MAX)
+	{
+		if (game->enemy[i].hit_body[SCREEN_WIDTH / 2] && gun_frame == 0)
+		{
+			game->data->map_element[game->enemy[i].y][game->enemy[i].x] = '0';
+			printf("%i ", i);
+			return ;
+		}
+		++i;
+	}
+	
+//		if (gun_frame == 0 && game->body_hit[game->depth_lvl][SCREEN_WIDTH / 2] == true)
+//			game->data->map_element[game->enemy_y][game->enemy_x] = '0';
 }

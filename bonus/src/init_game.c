@@ -59,10 +59,6 @@ void    init_game(t_game *game)
 	game->dist_idx = 0;
 	while (game->depth_lvl < DEPTH_MAX)
 	{
-		while (game->dist_idx < SCREEN_WIDTH)
-		{
-			game->body_hit[game->depth_lvl][game->dist_idx++] = false;
-		}
 		game->depth[game->depth_lvl].dist = 0;
 		game->depth[game->depth_lvl].obj = EMPTY;
 		game->depth[game->depth_lvl].ray_hit_y = 0;
@@ -77,7 +73,7 @@ void    init_game(t_game *game)
 		game->enemy[game->depth_lvl].x_end = 0;
 		game->enemy[game->depth_lvl].size = 0;
 		game->enemy[game->depth_lvl].tex_x = 0;
-		game->enemy[game->depth_lvl].x_iter = 0;
+		game->enemy[game->depth_lvl].visible = false;
 		++game->depth_lvl;
 	}
 	game->depth_lvl = 0;

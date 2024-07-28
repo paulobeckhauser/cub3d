@@ -56,6 +56,7 @@
 #define DARK_PRIEST_7_9 "./bonus/textures/enemies/dark_priest_7_9.xpm"
 #define DARK_PRIEST_8_9 "./bonus/textures/enemies/dark_priest_8_9.xpm"
 #define DARK_PRIEST_9_9 "./bonus/textures/enemies/dark_priest_9_9.xpm"
+#define DARK_PRIEST_CORPSE "./bonus/textures/enemies/dark_priest_corpse.xpm"
 #define HP_0 "./bonus/textures/hp/0.xpm"
 #define HP_10 "./bonus/textures/hp/10.xpm"
 #define HP_20 "./bonus/textures/hp/20.xpm"
@@ -127,7 +128,7 @@ typedef struct s_textures
 	void	*gun_texture[5];
 	void    *gun_current_texture;
 	void	*door_texture[5];
-	void    *dark_priest_texture[10];
+	void    *dark_priest_texture[11];
 	void    *dark_priest_current_texture;
 	void    *hp_texture[11];
 	void    *hp_current_texture;
@@ -200,8 +201,9 @@ typedef struct s_enemy
 	int     x_end;
 	int     size;
 	float   tex_x;
-	int     x_iter;
 	int     depth_lvl;
+	bool    visible;
+	bool    hit_body[SCREEN_WIDTH];
 }	t_enemy;
 
 typedef struct  s_raycaster
@@ -232,7 +234,6 @@ typedef struct s_game
 	float   ray_hit_x;
 	float   ray_hit_y;
 	t_depth depth[30];
-	bool    body_hit[30][SCREEN_WIDTH];
 	int     dist_idx;
 	int     depth_lvl;
 	int     wall_direction;
@@ -261,7 +262,6 @@ typedef struct s_game
 	int     x_enemy_end;
 	t_door  door[DOOR_MAX];
 	t_enemy enemy[ENEMY_MAX];
-	char    *str;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);
@@ -315,6 +315,7 @@ bool    is_collision_point_door(t_raycaster *raycaster, t_game *game);
 int	    find_enemy_end(t_game *game, float angle_iter, int enemy_i);
 int     cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enemy_i);
 int     find_enemy_start(t_game *game, float angle_iter, int enemy_i);
+void    action_mouse_left_click(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

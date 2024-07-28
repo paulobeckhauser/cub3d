@@ -60,9 +60,10 @@ void	raycaster(t_game *game)
 	game->dist_idx = 0;
 	while (game->depth_lvl < DEPTH_MAX)
 	{
+		game->dist_idx = 0;
 		while (game->dist_idx < SCREEN_WIDTH)
 		{
-			game->body_hit[game->depth_lvl][game->dist_idx++] = false;
+			game->enemy[game->depth_lvl].hit_body[game->dist_idx++] = false;
 		}
 		game->depth[game->depth_lvl].dist = 0;
 		game->depth[game->depth_lvl].obj = EMPTY;
@@ -75,8 +76,8 @@ void	raycaster(t_game *game)
 		game->enemy[game->depth_lvl].x_start = 0;
 		game->enemy[game->depth_lvl].x_end = 0;
 		game->enemy[game->depth_lvl].tex_x = 0;
-		game->enemy[game->depth_lvl].x_iter = 0;
 		game->enemy[game->depth_lvl].depth_lvl = -1;
+		game->enemy[game->depth_lvl].visible = false;
 		++game->depth_lvl;
 	}
 	game->depth_lvl = 0;
@@ -114,7 +115,6 @@ void	raycaster(t_game *game)
 				{
 					if (game->depth[game->depth_lvl].colis_x == game->enemy[i].x && game->depth[game->depth_lvl].colis_y == game->enemy[i].y)
 					{
-//						printf("depth lvl: %i\n", game->depth_lvl);
 						render_enemy_line(game, i);
 						break ;
 					}
@@ -130,6 +130,10 @@ void	raycaster(t_game *game)
 			angle_iter -= 2 * M_PI;
 		++game->dist_idx;
 	}
+//	for (int z = 0; z < ENEMY_MAX; z++)
+//	{
+//		printf("enemy: %i true? %i\n", z, game->enemy[z].hit_body[SCREEN_WIDTH / 2]);
+//	}
 }
 
 void    cast_ray(t_game *game, float ray_angle)
@@ -197,14 +201,13 @@ void    cast_ray(t_game *game, float ray_angle)
 						if (game->enemy[i].size == 0)
 						{
 							game->enemy[i].x_start = game->dist_idx;
-							game->enemy[i].x_iter = game->enemy[i].x_start;
 							game->enemy[i].x_end = find_enemy_end(game, ray_angle, i);
 							game->enemy[i].size = game->enemy[i].x_end - game->enemy[i].x_start;
+							game->enemy[i].visible = true;
 							if (game->enemy[i].x_start < 0)
 							{
 								for (int y = 0; y < game->enemy[i].x_start * -1; y++)
 									game->enemy[i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[i].size;
-								game->enemy[i].x_iter = 0;
 							}
 						}
 						game->enemy[i].depth_lvl = game->depth_lvl;
@@ -282,7 +285,6 @@ int find_enemy_start(t_game *game, float angle_iter, int enemy_i)
 		else if (angle_iter > 2 * M_PI)
 			angle_iter -= 2 * M_PI;
 		--dist_idx;
-		++game->enemy[enemy_i].x_iter;
 	}
 	return (dist_idx);
 }
