@@ -30,6 +30,8 @@ int	keypress(const int keysymbol, t_game *game)
 		game->keys[RIGHT_ARROW] = true;
 	if (keysymbol == 101)
 		game->keys[E] = true;
+	if (keysymbol == 65293)
+		game->keys[ENTER] = true;
 	return (0);
 }
 
@@ -49,6 +51,10 @@ int keyrelease(const int keysymbol, t_game *game)
 		game->keys[LEFT_ARROW] = false;
 	if (keysymbol == 65363)
 		game->keys[RIGHT_ARROW] = false;
+//	if (keysymbol == 101)
+//		game->keys[E] = false;
+	if (keysymbol == 65293)
+		game->keys[ENTER] = false;
 	return (0);
 }
 
@@ -75,33 +81,55 @@ int mouse_press(int button, int x, int y, t_game *game)
 
 int	loop_hook(t_game *game)
 {
-	if (game->keys[W])
-		move_player_forward(game);
-	if (game->keys[S])
-		move_player_backward(game);
-	if (game->keys[A])
-		move_player_left(game);
-	if (game->keys[D])
-		move_player_right(game);
-	if (game->keys[LEFT_ARROW])
-		rotate_player_left(game);
-	if (game->keys[RIGHT_ARROW])
-		rotate_player_right(game);
-	rotate_player_mouse(game);
-	if (game->keys[E] && !game->door_are_closing && !game->door_are_opening)
-		open_close_door(game);
-	if (game->keys[ESC])
-		close_game(game);
-	if (game->keys[MOUSE_LEFT_CLICK])
-		action_mouse_left_click(game);
-	animation_open_door(game);
-	animation_close_door(game);
-	animation_enemy_cast(game);
-	animation_enemy_death(game);
-	if (!game->player_dead)
-		render_game(game);
+	if (!game->main_menu)
+	{
+		if (game->keys[W])
+			move_player_forward(game);
+		if (game->keys[S])
+			move_player_backward(game);
+		if (game->keys[A])
+			move_player_left(game);
+		if (game->keys[D])
+			move_player_right(game);
+		if (game->keys[LEFT_ARROW])
+			rotate_player_left(game);
+		if (game->keys[RIGHT_ARROW])
+			rotate_player_right(game);
+		rotate_player_mouse(game);
+		if (game->keys[E] && !game->door_are_closing && !game->door_are_opening)
+			open_close_door(game);
+		if (game->keys[ESC])
+			close_game(game);
+		if (game->keys[MOUSE_LEFT_CLICK])
+			action_mouse_left_click(game);
+		animation_open_door(game);
+		animation_close_door(game);
+		animation_enemy_cast(game);
+		animation_enemy_death(game);
+		animation_avatar(game);
+	}
 	else
-		render_game_over(game);
+	{
+		if (game->keys[LEFT_ARROW])
+		{
+			game->textures->main_menu_current = game->textures->main_menu[0];
+			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
+			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_1_1, &game->img_x, &game->img_y);
+			game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
+		}
+		if (game->keys[RIGHT_ARROW])
+		{
+			game->textures->main_menu_current = game->textures->main_menu[1];
+			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
+			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_1_1, &game->img_x, &game->img_y);
+			game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
+		}
+		if (game->keys[ENTER])
+		{
+			game->main_menu = false;
+		}
+	}
+	render_game(game);
 	return (0);
 }
 
@@ -129,7 +157,6 @@ void    action_mouse_left_click(t_game *game)
 		if (game->enemy[i].hit_body[SCREEN_WIDTH / 2] && gun_frame == 0)
 		{
 			game->data->map_element[game->enemy[i].y][game->enemy[i].x] = '5';
-			// game->enemy[i].got_bullet = true;
 			return ;
 		}
 		++i;
@@ -145,7 +172,6 @@ void    animation_enemy_death(t_game *game)
 	j = 0;
 	while (j < ENEMY_MAX)
 	{
-		// if (game->enemy[j].got_bullet && !game->enemy[j].dead)
 		if (game->data->map_element[game->enemy[j].y][game->enemy[j].x] == '5' && !game->enemy[j].dead)
 		{
 			struct timeval  tv;
@@ -183,9 +209,9 @@ void    animation_enemy_cast(t_game *game)
 			long    elapsed_time = current_time - game->enemy_animation_start_time * 2 * -1;
 			int     enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES)) % ENEMY_FRAMES;
 			static  int i = ENEMY_FRAMES;
-			if (enemy_frame == 0 && game->hp_frame_updated) {
+			
+			if (enemy_frame == 0 && game->hp_frame_updated)
 				game->hp_frame_updated = false;
-			}
 			if (enemy_frame < 0)
 				enemy_frame = 0;
 			if (enemy_frame != 10)
@@ -197,8 +223,8 @@ void    animation_enemy_cast(t_game *game)
 					game->textures->hp_current_texture = game->textures->hp_texture[--i];
 				game->hp_frame_updated = true;
 			}
-			//		if (game->textures->hp_current_texture == game->textures->hp_texture[0] && enemy_frame == 0)
-			//			game->player_dead = true;
+			if (game->textures->hp_current_texture == game->textures->hp_texture[0] && enemy_frame == 0)
+				game->player_dead = true;
 		}
 		++j;
 	}
@@ -260,4 +286,24 @@ void    animation_open_door(t_game *game)
 			++i;
 		}
 	}
+}
+
+void    animation_avatar(t_game *game)
+{
+	struct timeval  tv;
+	gettimeofday(&tv, NULL);
+	long    start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	gettimeofday(&tv, NULL);
+	long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	long    elapsed_time = current_time - start_time * -2;
+	int     avatar_frame = (elapsed_time / (AVATAR_FRAME_DURATION / AVATAR_FRAMES)) % AVATAR_FRAMES;
+	
+	if (avatar_frame < 0)
+		avatar_frame = 0;
+	if (avatar_frame >= AVATAR_FRAMES)
+		avatar_frame = AVATAR_FRAMES - 1;
+	if (avatar_frame == AVATAR_FRAMES / 2)
+		game->textures->avatar_current = game->textures->avatar[1];
+	else
+		game->textures->avatar_current = game->textures->avatar[0];
 }

@@ -20,8 +20,17 @@
 #define SCREEN_HEIGHT 900
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
-#define MINIMAP_SCALE 20
+#define MINIMAP_SCALE (SCREEN_WIDTH / 80)
+#define MINIMAP_SIZE (SCREEN_WIDTH / 8)
+#define MINIMAP_SIZE_SQUARES 10
+#define TEXTURE_SIZE_AVATAR 300
+#define SIZE_AVATAR 250
+#define TEXTURE_SIZE_MINIMAP 20
+#define TEXTURE_SIZE_DEFAULT 500
 #define SQUARE_SIZE 100
+#define BORDER_THICKNESS 5
+#define TEXTURE_HEIGHT_HP 77
+#define TEXTURE_WIDTH_HP 120
 
 // objects
 #define DEPTH_MAX 30
@@ -29,7 +38,6 @@
 #define ENEMY_MAX 30
 
 // textures
-#define TEXTURE_SIZE 500
 #define MINIMAP_BG "./bonus/textures/minimap/minimap_bg.xpm"
 #define FLOOR_TEXTURE "./bonus/textures/minimap/floor_texture.xpm"
 #define WALL_TEXTURE "./bonus/textures/minimap/wall_texture.xpm"
@@ -103,6 +111,8 @@
 #define AVATAR_SZYMON_1_1 "./bonus/textures/player/szymon_1_1.xpm"
 #define AVATAR_PAULO_0_1 "./bonus/textures/player/paulo_0_1.xpm"
 #define AVATAR_PAULO_1_1 "./bonus/textures/player/paulo_1_1.xpm"
+#define MAIN_MENU_PABECKHA "./bonus/textures/menu/pabeckha.xpm"
+#define MAIN_MENU_SFRANKIE "./bonus/textures/menu/sfrankie.xpm"
 
 // vectors
 #define ANGLE_MAX 360
@@ -126,6 +136,7 @@
 #define RIGHT_ARROW 6
 #define E 7
 #define MOUSE_LEFT_CLICK 8
+#define ENTER 9
 
 // animation
 #define DOOR_FRAMES 5
@@ -136,7 +147,8 @@
 #define GUN_FRAME_DURATION 600000
 #define BLOOD_FRAMES 30
 #define BLOOD_FRAME_DURATION 2400000
-
+#define AVATAR_FRAMES 15
+#define AVATAR_FRAME_DURATION 12000000
 
 typedef struct	s_image
 {
@@ -173,6 +185,8 @@ typedef struct s_textures
 	void    *blood[30];
 	void	*avatar[2];
 	void	*avatar_current;
+	void    *main_menu[2];
+	void    *main_menu_current;
 }	t_textures;
 
 typedef struct s_player
@@ -284,7 +298,7 @@ typedef struct s_game
 	int		enemy_y;
 	int     img_x;
 	int     img_y;
-	bool    keys[9];
+	bool    keys[10];
 	t_vectors *vectors;
 	int     vec_idx;
 	long    door_animation_start_time;
@@ -304,6 +318,7 @@ typedef struct s_game
 	int     x_enemy_end;
 	t_door  door[DOOR_MAX];
 	t_enemy enemy[ENEMY_MAX];
+	bool    main_menu;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);
@@ -352,7 +367,8 @@ void	render_hp(t_game *game);
 void	render_game_over(t_game *game);
 void	render_background(t_game *game);
 void    render_minimap_bg(t_game *game);
-void    render_minimap_border(t_game *game);
+//void    render_border(t_game *game);
+void    render_border(t_game *game, int size, int x, int y);
 bool    is_collision_point_door(t_raycaster *raycaster, t_game *game);
 int	    find_enemy_end(t_game *game, float angle_iter, int enemy_i);
 int     cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enemy_i);
@@ -363,6 +379,9 @@ void    animation_close_door(t_game *game);
 void    animation_open_door(t_game *game);
 void    rotate_player_mouse(t_game *game);
 void    animation_enemy_death(t_game *game);
+void    render_avatar(t_game *game);
+void    animation_avatar(t_game *game);
+void    render_main_menu(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

@@ -202,7 +202,7 @@ void    cast_ray(t_game *game, float ray_angle)
 							if (game->enemy[i].x_start < 0)
 							{
 								for (int y = 0; y < game->enemy[i].x_start * -1; y++)
-									game->enemy[i].tex_x += (float)TEXTURE_SIZE / (float)game->enemy[i].size;
+									game->enemy[i].tex_x += (float)TEXTURE_SIZE_DEFAULT / (float)game->enemy[i].size;
 							}
 						}
 						game->enemy[i].depth_lvl = game->depth_lvl;

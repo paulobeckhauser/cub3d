@@ -80,6 +80,7 @@ void    init_game(t_game *game)
 	}
 	game->depth_lvl = 0;
 	game->dist_idx = 0;
+	game->main_menu = true;
 }
 
 void    init_keys(t_game *game)
@@ -87,6 +88,6 @@ void    init_keys(t_game *game)
 	int i;
 	
 	i = 0;
-	while (i < 9)
+	while (i < 10)
 		game->keys[i++] = false;
 }
