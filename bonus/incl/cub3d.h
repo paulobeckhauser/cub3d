@@ -315,8 +315,6 @@ typedef struct s_game
 	bool	player_dead;
 	t_textures	*textures;
 	t_data  *data;
-	int     x_enemy_start;
-	int     x_enemy_end;
 	t_door  door[DOOR_MAX];
 	t_enemy enemy[ENEMY_MAX];
 	bool    main_menu;

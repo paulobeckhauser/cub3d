@@ -123,7 +123,7 @@ int	loop_hook(t_game *game)
 			open_close_door(game);
 		if (game->keys[MOUSE_LEFT_CLICK])
 			action_mouse_left_click(game);
-		if (!game->animation_gun)
+		if (!game->animation_gun && !game->keys[MOUSE_LEFT_CLICK])
 			game->textures->gun_current_texture = game->textures->gun_texture[0];
 		animation_open_door(game);
 		animation_close_door(game);

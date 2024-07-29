@@ -52,8 +52,6 @@ void    init_game(t_game *game)
 	game->mouse_x = 0;
 	game->hp_frame_updated = false;
 	game->player_dead = false;
-	game->x_enemy_start = 0;
-	game->x_enemy_end = 0;
 	game->depth_lvl = 0;
 	game->dist_idx = 0;
 	while (game->depth_lvl < DEPTH_MAX)
