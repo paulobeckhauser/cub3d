@@ -128,8 +128,8 @@ void    action_mouse_left_click(t_game *game)
 	{
 		if (game->enemy[i].hit_body[SCREEN_WIDTH / 2] && gun_frame == 0)
 		{
-//			game->data->map_element[game->enemy[i].y][game->enemy[i].x] = '5';
-			game->enemy[i].got_bullet = true;
+			game->data->map_element[game->enemy[i].y][game->enemy[i].x] = '5';
+			// game->enemy[i].got_bullet = true;
 			return ;
 		}
 		++i;
@@ -145,7 +145,8 @@ void    animation_enemy_death(t_game *game)
 	j = 0;
 	while (j < ENEMY_MAX)
 	{
-		if (game->enemy[j].got_bullet && !game->enemy[j].dead)
+		// if (game->enemy[j].got_bullet && !game->enemy[j].dead)
+		if (game->data->map_element[game->enemy[j].y][game->enemy[j].x] == '5' && !game->enemy[j].dead)
 		{
 			struct timeval  tv;
 			gettimeofday(&tv, NULL);

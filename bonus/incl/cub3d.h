@@ -99,6 +99,10 @@
 #define BLOOD_27_29 "./bonus/textures/blood/1_27.xpm"
 #define BLOOD_28_29 "./bonus/textures/blood/1_28.xpm"
 #define BLOOD_29_29 "./bonus/textures/blood/1_29.xpm"
+#define AVATAR_SZYMON_0_1 "./bonus/textures/player/szymon_0_1.xpm"
+#define AVATAR_SZYMON_1_1 "./bonus/textures/player/szymon_1_1.xpm"
+#define AVATAR_PAULO_0_1 "./bonus/textures/player/paulo_0_1.xpm"
+#define AVATAR_PAULO_1_1 "./bonus/textures/player/paulo_1_1.xpm"
 
 // vectors
 #define ANGLE_MAX 360
@@ -167,6 +171,8 @@ typedef struct s_textures
 	void    *hp_current_texture;
 	void	*game_over_texture;
 	void    *blood[30];
+	void	*avatar[2];
+	void	*avatar_current;
 }	t_textures;
 
 typedef struct s_player

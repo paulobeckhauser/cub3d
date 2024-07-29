@@ -87,4 +87,8 @@ void load_images_from_dir(t_game *game)
 	game->textures->blood[27] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_27_29, &game->img_x, &game->img_y);
 	game->textures->blood[28] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_28_29, &game->img_x, &game->img_y);
 	game->textures->blood[29] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_29_29, &game->img_x, &game->img_y);
+	game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_0, &game->img_x, &game->img_y);
+	game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
+	game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_0, &game->img_x, &game->img_y);
+
 }

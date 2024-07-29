@@ -91,7 +91,7 @@ void    render_minimap(t_game *game)
 				tex_x = 0;
 				while (tex_x < MINIMAP_SCALE)
 				{
-					if (map_y < 0 ||    map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
+					if (map_y < 0 ||map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
 						break ;
 					if (game->data->map_element[map_y][map_x] == '0')
 						color = rgb_to_hex(74, 17, 17);
@@ -276,6 +276,7 @@ void    render_door_line(t_game *game)
 		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_x * TEXTURE_SIZE);
 	else
 		tex_x = (int)(game->depth[game->depth_lvl].ray_hit_y * TEXTURE_SIZE);
+	color = 0;
 	while (y_iterator < y_end)
 	{
 		tex_y = ((y_iterator * 2 - SCREEN_HEIGHT + line_height) * TEXTURE_SIZE) / line_height / 2;
@@ -314,7 +315,8 @@ void    render_enemy_line(t_game *game, int enemy_i)
 		if (color != rgb_to_hex(255, 0 , 255))
 		{
 			game->image->data[y * SCREEN_WIDTH + game->dist_idx] = color;
-			game->enemy[enemy_i].hit_body[game->dist_idx] = true;
+			if (!game->enemy[enemy_i].dead)
+				game->enemy[enemy_i].hit_body[game->dist_idx] = true;
 		}
 		++y;
 		tex_y += (float)TEXTURE_SIZE / (float)game->enemy[enemy_i].size;
