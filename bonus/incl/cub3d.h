@@ -54,6 +54,11 @@
 #define DOOR_FRAME_2_4 "./bonus/textures/door/door_frame_2_4.xpm"
 #define DOOR_FRAME_1_4 "./bonus/textures/door/door_frame_1_4.xpm"
 #define DOOR_FRAME_0_4 "./bonus/textures/door/door_frame_0_4.xpm"
+#define EXIT_4_4 "./bonus/textures/door/exit_4_4.xpm"
+#define EXIT_3_4 "./bonus/textures/door/exit_3_4.xpm"
+#define EXIT_2_4 "./bonus/textures/door/exit_2_4.xpm"
+#define EXIT_1_4 "./bonus/textures/door/exit_1_4.xpm"
+#define EXIT_0_4 "./bonus/textures/door/exit_0_4.xpm"
 #define DARK_PRIEST_0_9 "./bonus/textures/enemies/dark_priest_0_9.xpm"
 #define DARK_PRIEST_1_9 "./bonus/textures/enemies/dark_priest_1_9.xpm"
 #define DARK_PRIEST_2_9 "./bonus/textures/enemies/dark_priest_2_9.xpm"
@@ -284,18 +289,16 @@ typedef struct s_game
 	void    *win_ptr;
 	t_image *image;
 	char	**map;
-	float	ray_new_x;
-	float	ray_new_y;
 	float	ray_main_angle;
 	float   ray_hit_x;
 	float   ray_hit_y;
+	float	ray_new_x;
+	float	ray_new_y;
 	t_depth depth[30];
 	int     dist_idx;
 	int     depth_lvl;
 	int     wall_direction;
 	int     door_direction;
-	int		enemy_x;
-	int		enemy_y;
 	int     img_x;
 	int     img_y;
 	bool    keys[10];
@@ -307,8 +310,6 @@ typedef struct s_game
 	float   prev_door_distance;
 	long    enemy_animation_start_time;
 	long    gun_animation_start_time;
-	bool    hit_enemy;
-	bool    enemy_visible;
 	int     mouse_x;
 	bool	hp_frame_updated;
 	bool	player_dead;
@@ -319,6 +320,7 @@ typedef struct s_game
 	t_door  door[DOOR_MAX];
 	t_enemy enemy[ENEMY_MAX];
 	bool    main_menu;
+	bool    animation_gun;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);
@@ -382,6 +384,7 @@ void    animation_enemy_death(t_game *game);
 void    render_avatar(t_game *game);
 void    animation_avatar(t_game *game);
 void    render_main_menu(t_game *game);
+void    animation_gun(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

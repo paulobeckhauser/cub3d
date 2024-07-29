@@ -49,7 +49,6 @@ void    init_game(t_game *game)
 	game->door_are_opening = false;
 	game->door_are_closing = false;
 	game->enemy_animation_start_time = 0;
-	game->hit_enemy = false;
 	game->mouse_x = 0;
 	game->hp_frame_updated = false;
 	game->player_dead = false;
@@ -81,6 +80,7 @@ void    init_game(t_game *game)
 	game->depth_lvl = 0;
 	game->dist_idx = 0;
 	game->main_menu = true;
+	game->animation_gun = false;
 }
 
 void    init_keys(t_game *game)

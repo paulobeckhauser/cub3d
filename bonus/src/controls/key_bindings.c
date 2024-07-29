@@ -51,8 +51,8 @@ int keyrelease(const int keysymbol, t_game *game)
 		game->keys[LEFT_ARROW] = false;
 	if (keysymbol == 65363)
 		game->keys[RIGHT_ARROW] = false;
-//	if (keysymbol == 101)
-//		game->keys[E] = false;
+	if (keysymbol == 101)
+		game->keys[E] = false;
 	if (keysymbol == 65293)
 		game->keys[ENTER] = false;
 	return (0);
@@ -81,34 +81,9 @@ int mouse_press(int button, int x, int y, t_game *game)
 
 int	loop_hook(t_game *game)
 {
-	if (!game->main_menu)
-	{
-		if (game->keys[W])
-			move_player_forward(game);
-		if (game->keys[S])
-			move_player_backward(game);
-		if (game->keys[A])
-			move_player_left(game);
-		if (game->keys[D])
-			move_player_right(game);
-		if (game->keys[LEFT_ARROW])
-			rotate_player_left(game);
-		if (game->keys[RIGHT_ARROW])
-			rotate_player_right(game);
-		rotate_player_mouse(game);
-		if (game->keys[E] && !game->door_are_closing && !game->door_are_opening)
-			open_close_door(game);
-		if (game->keys[ESC])
-			close_game(game);
-		if (game->keys[MOUSE_LEFT_CLICK])
-			action_mouse_left_click(game);
-		animation_open_door(game);
-		animation_close_door(game);
-		animation_enemy_cast(game);
-		animation_enemy_death(game);
-		animation_avatar(game);
-	}
-	else
+	if (game->keys[ESC])
+		close_game(game);
+	if (game->main_menu)
 	{
 		if (game->keys[LEFT_ARROW])
 		{
@@ -128,6 +103,34 @@ int	loop_hook(t_game *game)
 		{
 			game->main_menu = false;
 		}
+	}
+	else
+	{
+		if (game->keys[W])
+			move_player_forward(game);
+		if (game->keys[S])
+			move_player_backward(game);
+		if (game->keys[A])
+			move_player_left(game);
+		if (game->keys[D])
+			move_player_right(game);
+		if (game->keys[LEFT_ARROW])
+			rotate_player_left(game);
+		if (game->keys[RIGHT_ARROW])
+			rotate_player_right(game);
+		rotate_player_mouse(game);
+		if (game->keys[E] && !game->door_are_closing && !game->door_are_opening)
+			open_close_door(game);
+		if (game->keys[MOUSE_LEFT_CLICK])
+			action_mouse_left_click(game);
+		if (!game->animation_gun)
+			game->textures->gun_current_texture = game->textures->gun_texture[0];
+		animation_open_door(game);
+		animation_close_door(game);
+		animation_enemy_cast(game);
+		animation_enemy_death(game);
+		animation_avatar(game);
+		animation_gun(game);
 	}
 	render_game(game);
 	return (0);
@@ -306,4 +309,30 @@ void    animation_avatar(t_game *game)
 		game->textures->avatar_current = game->textures->avatar[1];
 	else
 		game->textures->avatar_current = game->textures->avatar[0];
+}
+
+void    animation_gun(t_game *game)
+{
+	if (!game->keys[MOUSE_LEFT_CLICK]
+		&& (game->keys[W] || game->keys[S] || game->keys[A] || game->keys[S]))
+	{
+		game->animation_gun = true;
+		struct timeval  tv;
+		gettimeofday(&tv, NULL);
+		long    start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+		gettimeofday(&tv, NULL);
+		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+		long    elapsed_time = current_time - start_time * -2;
+		int     gun_frame = (elapsed_time / ((GUN_FRAME_DURATION * 4) / (GUN_FRAMES / 2))) % (GUN_FRAMES / 2);
+		
+		if (gun_frame < 0)
+			gun_frame = 0;
+		if (gun_frame >= GUN_FRAMES / 2)
+			gun_frame = GUN_FRAMES / 2 - 1;
+		if (gun_frame == 0)
+			game->textures->gun_current_texture = game->textures->gun_texture[gun_frame];
+		else
+			game->textures->gun_current_texture = game->textures->gun_texture[4];
+		game->animation_gun = false;
+	}
 }
