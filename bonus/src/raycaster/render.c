@@ -75,49 +75,6 @@ void    render_minimap_bg(t_game *game)
 	}
 }
 
-//void    render_minimap(t_game *game)
-//{
-//	int screen_x;
-//	int screen_y;
-//	int map_x;
-//	int map_y;
-//	float tex_x;
-//	float tex_y;
-//	int color;
-//
-//	screen_y = 0;
-//	map_y = (int)game->data->player->y / SQUARE_SIZE - (MINIMAP_SIZE_SQUARES / 2);
-//	tex_y = 0;
-//	while (screen_y < MINIMAP_SIZE_SQUARES)
-//	{
-//		screen_x = 0;
-//		map_x = (int)game->data->player->x / SQUARE_SIZE - (MINIMAP_SIZE_SQUARES / 2);
-//		tex_x = 0;
-//		while (screen_x < MINIMAP_SIZE_SQUARES)
-//		{
-//			if (map_y < 0 || map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
-//				break ;
-//			if (game->data->map_element[map_y][map_x] == '0')
-//				color = rgb_to_hex(74, 17, 17);
-//			else if (game->data->map_element[map_y][map_x] == '1')
-//				color = rgb_to_hex(30, 28, 87);
-//			else if (game->data->map_element[map_y][map_x] == '2' || game->data->map_element[map_y][map_x] == '3')
-//				color = get_pixel_color(game->textures->door_minimap, tex_x, tex_y);
-//			else if (game->data->map_element[map_y][map_x] == '4')
-//				color = get_pixel_color(game->textures->skull, tex_x, tex_y);
-//			else
-//				break ;
-//			game->image->data[(screen_y * MINIMAP_SCALE + screen_x) * SCREEN_WIDTH + (screen_x * MINIMAP_SCALE + screen_y)] = color;
-//			tex_x += (float)TEXTURE_SIZE_MINIMAP / (float)MINIMAP_SCALE;
-//			++screen_x;
-//			++map_x;
-//		}
-//		tex_y = (float)TEXTURE_SIZE_MINIMAP / (float)MINIMAP_SCALE;
-//		++screen_y;
-//		++map_y;
-//	}
-//}
-
 void    render_minimap(t_game *game)
 {
 	int screen_x;
@@ -447,21 +404,27 @@ void    render_main_menu(t_game *game)
 {
 	int	x;
 	int	y;
+	float tex_x;
+	float tex_y;
 	
 	x = 0;
-	while (x < SCREEN_WIDTH)
+	tex_x = 0;
+	while (x < SCREEN_WIDTH && tex_x < TEXTURE_MENU_WIDTH)
 	{
 		y = 0;
-		while (y < SCREEN_HEIGHT)
+		tex_y = 0;
+		while (y < SCREEN_HEIGHT && tex_y < TEXTURE_MENU_HEIGHT)
 		{
 			if (game->player_dead)
-				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->game_over_texture, x, y);
+				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->game_over_texture, (int)tex_x, (int)tex_y);
 			else if (game->won_game)
-				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->win_screen, x, y);
+				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->win_screen, (int)tex_x, (int)tex_y);
 			else
-				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->main_menu_current, x, y);
+				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->main_menu_current, (int)tex_x, (int)tex_y);
+			tex_y += (float)TEXTURE_MENU_HEIGHT / (float)SCREEN_HEIGHT;
 			y++;
 		}
+		tex_x += (float)TEXTURE_MENU_WIDTH / (float)SCREEN_WIDTH;
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);

@@ -16,8 +16,8 @@
 #include "color.h"
 
 // screen
-#define SCREEN_WIDTH 3200
-#define SCREEN_HEIGHT 1800
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 400
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 #define MINIMAP_SCALE (SCREEN_WIDTH / 80)
@@ -33,6 +33,8 @@
 #define TEXTURE_WIDTH_HP 120
 #define SIZE_GUN 300
 #define TEXTURE_SIZE_GUN 300
+#define TEXTURE_MENU_WIDTH 1600
+#define TEXTURE_MENU_HEIGHT 900
 
 // objects
 #define DEPTH_MAX 30
