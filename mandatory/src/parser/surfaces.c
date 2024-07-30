@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:56 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 18:15:07 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:44:45 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,12 @@ bool	store_surface_colors(t_data *data)
 		array = ft_split(data->cub_file[i], ' ');
 		if (!array)
 		{
-			replace_error_message(data, "Memory allocation failed");
 			free_2d_array(array);
-			return (false);
+			return (replace_error_message(data, "Memory allocation failed"),
+				false);
 		}
 		if (!floor_ceiling_lines(array, data, i))
-		{
-			free_2d_array(array);
-			return (false);
-		}
+			return (free_2d_array(array), false);
 		free_2d_array(array);
 		i++;
 	}

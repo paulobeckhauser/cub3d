@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:48 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 18:04:40 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:57:14 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,6 @@ bool	store_map_element(t_data *data)
 	}
 	if (!store_lines_map(data, i))
 		return (false);
-	return (true);
-}
-
-bool	check_surround(t_data *data)
-{
-	int		i;
-	char	**map_backup;
-
-	map_backup = malloc((size_array(data->map_element) + 1) * sizeof(char *));
-	i = 0;
-	while (data->map_element[i])
-	{
-		map_backup[i] = ft_strdup(data->map_element[i]);
-		if (!map_backup)
-		{
-			replace_error_message(data, "Memory allocation failed");
-			free_variables_error(data);
-			return (false);
-		}
-		i++;
-	}
-	map_backup[i] = NULL;
-	i = 0;
-	if (!apply_ffill_algo(map_backup, data))
-		return (false);
-	free_2d_array(map_backup);
 	return (true);
 }
 
