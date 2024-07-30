@@ -12,47 +12,24 @@
 
 #include "../../incl/cub3d.h"
 
-void	mark_player(t_game *game)
-{
-	int	x;
-	int	y;
-	
-	y = 0;
-	while (game->data->map_element[y])
-	{
-		x = 0;
-		while (game->data->map_element[y][x])
-		{
-			if (game->data->map_element[y][x] == 'N')
-			{
-				game->data->player->x = (float)x * game->square_size + game->square_size / 2;
-				game->data->player->y = (float)y * game->square_size + game->square_size / 2;
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
 float	to_radians(float degrees)
 {
-	return (degrees * (M_PI / 180));
+	return (degrees * (M_PI / (ANGLE_MAX / 2)));
 }
 
-void    calc_directions(t_raycaster *raycaster, t_game *game)
+void    calc_directions(t_raycaster *raycaster, t_game *game, float ray_new_x, float ray_new_y)
 {
-	raycaster->dir_x = game->ray_new_x - game->data->player->x;
-	raycaster->dir_y = game->ray_new_y - game->data->player->y;
+	raycaster->dir_x = ray_new_x - game->data->player->x;
+	raycaster->dir_y = ray_new_y - game->data->player->y;
 	raycaster->len = sqrtf(raycaster->dir_x * raycaster->dir_x + raycaster->dir_y * raycaster->dir_y);
 	raycaster->dir_x /= raycaster->len;
 	raycaster->dir_y /= raycaster->len;
 }
 
-bool    is_ray_on_square_edge(t_raycaster *raycaster, t_game *game)
+bool    is_ray_on_square_edge(t_raycaster *raycaster)
 {
-	if ((int)raycaster->x_iterator % (int)game->square_size == 0
-		|| (int)raycaster->y_iterator % (int)game->square_size == 0)
+	if ((int)raycaster->x_iterator % SQUARE_SIZE == 0
+		|| (int)raycaster->y_iterator % SQUARE_SIZE == 0)
 		return (true);
 	return (false);
 }

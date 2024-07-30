@@ -26,57 +26,63 @@ void    init_game(t_game *game)
 		perror("mlx window");
 		exit(EXIT_FAILURE);
 	}
-	game->square_size = 100;
 	game->ray_new_x = 0;
 	game->ray_new_y = 0;
 	if (game->data->player->direction == 'N')
-		game->ray_main_angle = 270;
+		game->ray_main_angle = 0.75f * ANGLE_MAX;
 	else if (game->data->player->direction == 'W')
-		game->ray_main_angle = 180;
+		game->ray_main_angle = 0.5f * ANGLE_MAX;
 	else if (game->data->player->direction == 'S')
-		game->ray_main_angle = 90;
+		game->ray_main_angle = 0.25f * ANGLE_MAX;
 	else
 		game->ray_main_angle = 0;
 	game->ray_hit_x = 0;
 	game->ray_hit_y = 0;
-	game->ray_door_hit_x = 0;
-	game->ray_door_hit_y = 0;
-	game->dist_idx = 0;
-	while (game->dist_idx < SCREEN_WIDTH)
-	{
-		game->wall_dists[game->dist_idx] = 0;
-		game->door_dists[game->dist_idx] = 0;
-		game->enemy_dists[game->dist_idx] = 0;
-		game->body_hit[game->dist_idx++] = false;
-	}
 	game->dist_idx = 0;
 	game->wall_direction = 0;
 	game->door_direction = 0;
-	// game->enemy_x = 0;
-	// game->enemy_y = 0;
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);
 	game->door_animation_start_time = 0;
 	game->gun_animation_start_time = 0;
-	game->hit_closed_door = false;
-	game->hit_opened_door = false;
-	game->closed_door_visible = false;
-	game->open_door_visible = false;
 	game->door_are_opening = false;
 	game->door_are_closing = false;
-	game->closest_door_distance = INFINITY;
-	game->prev_door_distance = 0;
 	game->enemy_animation_start_time = 0;
-	game->closest_enemy_distance = INFINITY;
-	game->prev_enemy_distance = 0;
-	game->ray_enemy_hit_x = 0;
-	game->ray_enemy_hit_y = 0;
-	game->hit_enemy = false;
 	game->mouse_x = 0;
-	game->first_enemy_dist = -1;
 	game->hp_frame_updated = false;
 	game->player_dead = false;
+	game->depth_lvl = 0;
+	game->dist_idx = 0;
+	while (game->depth_lvl < DEPTH_MAX)
+	{
+		game->depth[game->depth_lvl].dist = 0;
+		game->depth[game->depth_lvl].obj = EMPTY;
+		game->depth[game->depth_lvl].ray_hit_y = 0;
+		game->depth[game->depth_lvl].ray_hit_x = 0;
+		game->depth[game->depth_lvl].colis_y = 0;
+		game->depth[game->depth_lvl].colis_x = 0;
+		game->door[game->depth_lvl].y = 0;
+		game->door[game->depth_lvl].x = 0;
+		game->enemy[game->depth_lvl].x = 0;
+		game->enemy[game->depth_lvl].y = 0;
+		game->enemy[game->depth_lvl].x_start = 0;
+		game->enemy[game->depth_lvl].x_end = 0;
+		game->enemy[game->depth_lvl].size = 0;
+		game->enemy[game->depth_lvl].tex_x = 0;
+		game->enemy[game->depth_lvl].visible = false;
+		game->enemy[game->depth_lvl].got_bullet = false;
+		game->enemy[game->depth_lvl].dead = false;
+		++game->depth_lvl;
+	}
+	game->depth_lvl = 0;
+	game->dist_idx = 0;
+	game->main_menu = true;
+	game->animation_gun = false;
+	game->enemy_count = 0;
+	game->won_game = false;
+	game->player = PABECKHA;
+	game->enemy_visible = false;
 }
 
 void    init_keys(t_game *game)
@@ -84,6 +90,6 @@ void    init_keys(t_game *game)
 	int i;
 	
 	i = 0;
-	while (i < 9)
+	while (i < 10)
 		game->keys[i++] = false;
 }

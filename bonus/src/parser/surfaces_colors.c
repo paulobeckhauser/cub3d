@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:54 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:18:15 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:30:36 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ char	*clean_str_color(t_data *data, int i, char surf)
 	cleaned_string = malloc((count_chars + 1) * sizeof(char));
 	if (!cleaned_string)
 	{
-		replace_error_message(data, "Memory allocation failed!");
-		return (NULL);
+		free(cleaned_string);
+		return (replace_error_message(data, "Memory allocation failed!"), NULL);
 	}
 	j = 0;
 	while (data->cub_file[i][j])

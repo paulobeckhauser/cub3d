@@ -41,12 +41,10 @@ void	get_new_ray_values(t_game *game, float angle_incr_radians,
 {
 	float	dir_x;
 	float	dir_y;
-	int		i;
 
 	dir_x = 0;
 	dir_y = 0;
 	game->dist_idx = 0;
-	i = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
 	{
 		dir_x = cosf(angle_iter);
@@ -70,8 +68,6 @@ void	raycaster(t_game *game)
 {
 	float	angle_incr_radians;
 	float	angle_iter;
-	float	dir_x;
-	float	dir_y;
 	int		i;
 
 	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
@@ -80,8 +76,6 @@ void	raycaster(t_game *game)
 		angle_iter += 2 * M_PI;
 	else if (angle_iter > 2 * M_PI)
 		angle_iter -= 2 * M_PI;
-	dir_x = 0;
-	dir_y = 0;
 	game->dist_idx = 0;
 	i = 0;
 	while (i < SCREEN_WIDTH)
