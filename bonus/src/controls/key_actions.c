@@ -63,18 +63,31 @@ void    open_close_door(t_game *game)
 	{
 		if (game->door[i].dist >= 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 		{
-			if (game->data->map_element[game->door[i].y][game->door[i].x] == '2')
+			if (game->data->map_element[game->door[i].y][game->door[i].x] == '6')
+			{
+				if (game->enemy_count <= 0)
+				{
+					game->door_are_opening = true;
+					game->data->map_element[game->door[i].y][game->door[i].x] = '7';
+					return ;
+				}
+			}
+			else if (game->data->map_element[game->door[i].y][game->door[i].x] == '2')
 			{
 				game->door_are_opening = true;
 				game->data->map_element[game->door[i].y][game->door[i].x] = '3';
-				game->keys[E] = false;
+				return ;
+			}
+			else if (game->data->map_element[game->door[i].y][game->door[i].x] == '7')
+			{
+				game->door_are_closing = true;
+				game->data->map_element[game->door[i].y][game->door[i].x] = '6';
 				return ;
 			}
 			else
 			{
 				game->door_are_closing = true;
 				game->data->map_element[game->door[i].y][game->door[i].x] = '2';
-				game->keys[E] = false;
 				return ;
 			}
 		}

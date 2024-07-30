@@ -2,7 +2,7 @@
 static char *image__1_1722290168[] = {
 /* columns rows colors chars-per-pixel */
 "500 500 221 2 ",
-"   c None",
+"   c #000000",
 ".  c #030201",
 "X  c #0C0300",
 "o  c #0D0900",

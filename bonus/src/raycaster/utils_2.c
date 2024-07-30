@@ -34,8 +34,12 @@ bool    is_collision_point_wall(t_raycaster *raycaster, t_game *game)
 
 bool    is_collision_point_door(t_raycaster *raycaster, t_game *game)
 {
-	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element && game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-	    && (game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2' || game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3'))
+	if ((int)raycaster->colis_y >= 0 && (int)raycaster->colis_y < game->data->number_lines_map_element
+		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
+	    && (game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2'
+			|| game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3'
+			|| game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '6'
+			|| game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '7'))
 		return (true);
 	return (false);
 }

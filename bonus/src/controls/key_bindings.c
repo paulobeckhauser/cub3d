@@ -83,7 +83,7 @@ int	loop_hook(t_game *game)
 {
 	if (game->keys[ESC])
 		close_game(game);
-	if (game->main_menu)
+	if (game->main_menu && !game->won_game)
 	{
 		if (game->keys[LEFT_ARROW])
 		{
@@ -104,7 +104,7 @@ int	loop_hook(t_game *game)
 			game->main_menu = false;
 		}
 	}
-	else
+	else if (!game->main_menu && !game->won_game)
 	{
 		if (game->keys[W])
 			move_player_forward(game);
@@ -160,6 +160,7 @@ void    action_mouse_left_click(t_game *game)
 		if (game->enemy[i].hit_body[SCREEN_WIDTH / 2] && gun_frame == 0)
 		{
 			game->data->map_element[game->enemy[i].y][game->enemy[i].x] = '5';
+			--game->enemy_count;
 			return ;
 		}
 		++i;
@@ -254,7 +255,10 @@ void    animation_close_door(t_game *game)
 		{
 			if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 			{
-				game->door[i].texture = game->textures->door_texture[door_frame];
+				if (game->data->map_element[game->door[i].y][game->door[i].x] == '6')
+					game->door[i].texture = game->textures->exit[door_frame];
+				else
+					game->door[i].texture = game->textures->door_texture[door_frame];
 				break ;
 			}
 			++i;
@@ -283,7 +287,10 @@ void    animation_open_door(t_game *game)
 		{
 			if (game->door[i].dist > 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 			{
-				game->door[i].texture = game->textures->door_texture[door_frame];
+				if (game->data->map_element[game->door[i].y][game->door[i].x] == '7')
+					game->door[i].texture = game->textures->exit[door_frame];
+				else
+					game->door[i].texture = game->textures->door_texture[door_frame];
 				break ;
 			}
 			++i;

@@ -81,7 +81,8 @@
 #define HP_80 "./bonus/textures/hp/80.xpm"
 #define HP_90 "./bonus/textures/hp/90.xpm"
 #define HP_100 "./bonus/textures/hp/100.xpm"
-#define GAME_OVER "./bonus/textures/menu/game_over.xpm"
+#define GAME_OVER "./bonus/textures/menu/you_died.xpm"
+#define WIN_SCREEN "./bonus/textures/menu/you_win.xpm"
 #define BLOOD_0_29 "./bonus/textures/blood/1_0.xpm"
 #define BLOOD_1_29 "./bonus/textures/blood/1_1.xpm"
 #define BLOOD_2_29 "./bonus/textures/blood/1_2.xpm"
@@ -182,11 +183,13 @@ typedef struct s_textures
 	void	*gun_texture[5];
 	void    *gun_current_texture;
 	void	*door_texture[5];
+	void    *exit[5];
 	void    *dark_priest_texture[11];
 	void    *dark_priest_current_texture;
 	void    *hp_texture[11];
 	void    *hp_current_texture;
 	void	*game_over_texture;
+	void    *win_screen;
 	void    *blood[30];
 	void	*avatar[2];
 	void	*avatar_current;
@@ -294,7 +297,7 @@ typedef struct s_game
 	float   ray_hit_y;
 	float	ray_new_x;
 	float	ray_new_y;
-	t_depth depth[30];
+	t_depth depth[DEPTH_MAX];
 	int     dist_idx;
 	int     depth_lvl;
 	int     wall_direction;
@@ -319,6 +322,8 @@ typedef struct s_game
 	t_enemy enemy[ENEMY_MAX];
 	bool    main_menu;
 	bool    animation_gun;
+	int     enemy_count;
+	bool    won_game;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);

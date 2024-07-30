@@ -32,6 +32,11 @@ void load_images_from_dir(t_game *game)
 	game->textures->door_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_2_4, &game->img_x, &game->img_y);
 	game->textures->door_texture[3] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_1_4, &game->img_x, &game->img_y);
 	game->textures->door_texture[4] = mlx_xpm_file_to_image(game->mlx_ptr, DOOR_FRAME_0_4, &game->img_x, &game->img_y);
+	game->textures->exit[0] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_4_4, &game->img_x, &game->img_y);
+	game->textures->exit[1] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_3_4, &game->img_x, &game->img_y);
+	game->textures->exit[2] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_2_4, &game->img_x, &game->img_y);
+	game->textures->exit[3] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_1_4, &game->img_x, &game->img_y);
+	game->textures->exit[4] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_0_4, &game->img_x, &game->img_y);
 	game->textures->dark_priest_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_0_9, &game->img_x, &game->img_y);
 	game->textures->dark_priest_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_1_9, &game->img_x, &game->img_y);
 	game->textures->dark_priest_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr, DARK_PRIEST_2_9, &game->img_x, &game->img_y);
@@ -57,6 +62,7 @@ void load_images_from_dir(t_game *game)
 	game->textures->hp_texture[10] = mlx_xpm_file_to_image(game->mlx_ptr, HP_100, &game->img_x, &game->img_y);
 	game->textures->hp_current_texture = mlx_xpm_file_to_image(game->mlx_ptr, HP_100, &game->img_x, &game->img_y);
 	game->textures->game_over_texture = mlx_xpm_file_to_image(game->mlx_ptr, GAME_OVER, &game->img_x, &game->img_y);
+	game->textures->win_screen = mlx_xpm_file_to_image(game->mlx_ptr, WIN_SCREEN, &game->img_x, &game->img_y);
 	game->textures->blood[0] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_0_29, &game->img_x, &game->img_y);
 	game->textures->blood[1] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_1_29, &game->img_x, &game->img_y);
 	game->textures->blood[2] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_2_29, &game->img_x, &game->img_y);

@@ -34,15 +34,17 @@ void    mark_doors(t_game *game)
 		x = 0;
 		while (game->data->map_element[y][x])
 		{
-			if (game->data->map_element[y][x] == '2' || game->data->map_element[y][x] == '3')
+			if (game->data->map_element[y][x] == '2' || game->data->map_element[y][x] == '3' || game->data->map_element[y][x] == '6')
 			{
 				game->door[i].dist = 0;
 				game->door[i].y = y;
 				game->door[i].x = x;
 				if (game->data->map_element[y][x] == '2')
 					game->door[i].texture = game->textures->door_texture[0];
-				else
+				else if (game->data->map_element[y][x] == '3')
 					game->door[i].texture = game->textures->door_texture[4];
+				else
+					game->door[i].texture = game->textures->exit[0];
 				++i;
 			}
 			++x;
@@ -73,6 +75,7 @@ void    mark_enemies(t_game *game)
 				game->enemy[i].x_end = 0;
 				game->enemy[i].size = 0;
 				++i;
+				++game->enemy_count;
 			}
 			++x;
 		}

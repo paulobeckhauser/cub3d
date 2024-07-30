@@ -14,10 +14,10 @@
 
 void	render_game(t_game *game)
 {
-	if (game->main_menu)
+	if (game->main_menu || game->player_dead || game->won_game)
 		render_main_menu(game);
-	else if (game->player_dead)
-		render_game_over(game);
+//	else if (game->player_dead)
+//		render_game_over(game);
 	else
 	{
 		render_background(game);
@@ -441,7 +441,12 @@ void    render_main_menu(t_game *game)
 		y = 0;
 		while (y < SCREEN_HEIGHT)
 		{
-			game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->main_menu_current, x, y);
+			if (game->player_dead)
+				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->game_over_texture, x, y);
+			else if (game->won_game)
+				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->win_screen, x, y);
+			else
+				game->image->data[y * SCREEN_WIDTH + x] = get_pixel_color(game->textures->main_menu_current, x, y);
 			y++;
 		}
 		x++;
