@@ -6,7 +6,7 @@
 /*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:01:21 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/07/16 16:57:05 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:43:12 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv)
 	int		status;
 
 	status = 0;
-	if (argc == 2)
+	if (argc == 2 && argv[1] && ft_strcmp(argv[1], "") != 0)
 	{
 		status = parser(argv[1], &data);
 		if (status != 0)

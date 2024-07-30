@@ -65,8 +65,8 @@ def main():
     test_cases_error = []
     test_cases_correct = []
 
-    map_files_errors = glob.glob('maps/bad/*')
-    map_files_correct = glob.glob('maps/good/*')
+    map_files_errors = glob.glob('maps_testing_progress/bad/*')
+    map_files_correct = glob.glob('maps_testing_progress/good/*')
 
     for map_file_error in map_files_errors:
         test_cases_error.append({"args": [map_file_error]})
