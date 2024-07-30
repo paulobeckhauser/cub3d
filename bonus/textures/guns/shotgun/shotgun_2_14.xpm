@@ -2,7 +2,7 @@
 static char *shotgun_2_141722309366[] = {
 /* columns rows colors chars-per-pixel */
 "300 300 256 2 ",
-"   c None",
+"   c #FF00FF",
 ".  c #0D0706",
 "X  c #130B08",
 "o  c #1B130E",

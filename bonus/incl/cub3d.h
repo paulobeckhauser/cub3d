@@ -16,8 +16,8 @@
 #include "color.h"
 
 // screen
-#define SCREEN_WIDTH 1600
-#define SCREEN_HEIGHT 900
+#define SCREEN_WIDTH 3200
+#define SCREEN_HEIGHT 1800
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 #define MINIMAP_SCALE (SCREEN_WIDTH / 80)
@@ -32,9 +32,7 @@
 #define TEXTURE_HEIGHT_HP 77
 #define TEXTURE_WIDTH_HP 120
 #define SIZE_GUN 300
-#define DESERT_EAGLE_WIDTH 241
-#define DESERT_EAGLE_HEIGHT 357
-#define SHOTGUN_SIZE 300
+#define TEXTURE_SIZE_GUN 300
 
 // objects
 #define DEPTH_MAX 30
@@ -57,6 +55,8 @@
 #define DESERT_EAGLE_2_4 "./bonus/textures/guns/desert_eagle/desert_eagle_2_4.xpm"
 #define DESERT_EAGLE_3_4 "./bonus/textures/guns/desert_eagle/desert_eagle_3_4.xpm"
 #define DESERT_EAGLE_4_4 "./bonus/textures/guns/desert_eagle/desert_eagle_4_4.xpm"
+#define DESERT_EAGLE_RUN_0_1 "./bonus/textures/guns/desert_eagle/desert_eagle_run_0_1.xpm"
+#define DESERT_EAGLE_RUN_1_1 "./bonus/textures/guns/desert_eagle/desert_eagle_run_1_1.xpm"
 #define SHOTGUN_0_14 "./bonus/textures/guns/shotgun/shotgun_0_14.xpm"
 #define SHOTGUN_1_14 "./bonus/textures/guns/shotgun/shotgun_1_14.xpm"
 #define SHOTGUN_2_14 "./bonus/textures/guns/shotgun/shotgun_2_14.xpm"
@@ -72,6 +72,8 @@
 #define SHOTGUN_12_14 "./bonus/textures/guns/shotgun/shotgun_12_14.xpm"
 #define SHOTGUN_13_14 "./bonus/textures/guns/shotgun/shotgun_13_14.xpm"
 #define SHOTGUN_14_14 "./bonus/textures/guns/shotgun/shotgun_14_14.xpm"
+#define SHOTGUN_RUN_0_1 "./bonus/textures/guns/shotgun/shotgun_run_0_1.xpm"
+#define SHOTGUN_RUN_1_1 "./bonus/textures/guns/shotgun/shotgun_run_1_1.xpm"
 #define DOOR_FRAME_4_4 "./bonus/textures/door/door_frame_4_4.xpm"
 #define DOOR_FRAME_3_4 "./bonus/textures/door/door_frame_3_4.xpm"
 #define DOOR_FRAME_2_4 "./bonus/textures/door/door_frame_2_4.xpm"
@@ -146,7 +148,7 @@
 // vectors
 #define ANGLE_MAX 360
 #define MOVEMENT_SPEED 10
-#define ROTATION_SPEED 4
+#define ROTATION_SPEED 3
 #define DOOR_OPEN_DISTANCE 170
 
 // wall_directions
@@ -172,8 +174,12 @@
 #define DOOR_FRAME_DURATION 1200000
 #define ENEMY_FRAMES 11
 #define ENEMY_FRAME_DURATION 4800000
-#define GUN_FRAMES 5
-#define GUN_FRAME_DURATION 600000
+#define DESERT_EAGLE_FRAMES 5
+#define DESERT_EAGLE_FRAME_DURATION 600000
+#define SHOTGUN_FRAMES 15
+#define SHOTGUN_FRAME_DURATION 1300000
+#define GUN_RUN_FRAMES 2
+#define GUN_RUN_FRAME_DURATION 1800000
 #define BLOOD_FRAMES 30
 #define BLOOD_FRAME_DURATION 2400000
 #define AVATAR_FRAMES 15
@@ -204,7 +210,9 @@ typedef struct s_textures
 	void    *skull;
 	void	*player_texture;
 	void	*desert_eagle[5];
+	void    *desert_eagle_run[2];
 	void	*shotgun[15];
+	void    *shotgun_run[2];
 	void    *gun_current_texture;
 	void	*door_texture[5];
 	void    *exit[5];
@@ -349,6 +357,7 @@ typedef struct s_game
 	int     enemy_count;
 	bool    won_game;
 	int		player;
+	bool    enemy_visible;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);
@@ -412,7 +421,8 @@ void    animation_enemy_death(t_game *game);
 void    render_avatar(t_game *game);
 void    animation_avatar(t_game *game);
 void    render_main_menu(t_game *game);
-void    animation_gun(t_game *game);
+void    animation_gun_running(t_game *game);
+void    animation_gun_shoot(t_game *game, int frame_duration, int frames);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

@@ -73,6 +73,17 @@ int mouse_press(int button, int x, int y, t_game *game)
 	(void)y;
 	if (button == 1)
 	{
+		int i = 0;
+		while (i < ENEMY_MAX)
+		{
+			if (game->enemy[i].hit_body[SCREEN_WIDTH / 2])
+			{
+				game->data->map_element[game->enemy[i].y][game->enemy[i].x] = '5';
+				--game->enemy_count;
+				break ;
+			}
+			++i;
+		}
 		game->gun_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 		game->keys[MOUSE_LEFT_CLICK] = true;
 	}
@@ -92,6 +103,7 @@ int	loop_hook(t_game *game)
 			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
 			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_1_1, &game->img_x, &game->img_y);
 			game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
+			game->textures->gun_current_texture = game->textures->shotgun[0];
 		}
 		if (game->keys[RIGHT_ARROW])
 		{
@@ -100,6 +112,7 @@ int	loop_hook(t_game *game)
 			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
 			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_1_1, &game->img_x, &game->img_y);
 			game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
+			game->textures->gun_current_texture = game->textures->desert_eagle[0];
 		}
 		if (game->keys[ENTER])
 		{
@@ -125,14 +138,17 @@ int	loop_hook(t_game *game)
 			open_close_door(game);
 		if (game->keys[MOUSE_LEFT_CLICK])
 			action_mouse_left_click(game);
-		if (!game->animation_gun && !game->keys[MOUSE_LEFT_CLICK])
+		if (!game->animation_gun && !game->keys[MOUSE_LEFT_CLICK] && game->player == SFRANKIE)
 			game->textures->gun_current_texture = game->textures->desert_eagle[0];
+		else if (!game->animation_gun && !game->keys[MOUSE_LEFT_CLICK] && game->player == PABECKHA)
+			game->textures->gun_current_texture = game->textures->shotgun[0];
 		animation_open_door(game);
 		animation_close_door(game);
-		animation_enemy_cast(game);
+		if (game->enemy_visible)
+			animation_enemy_cast(game);
 		animation_enemy_death(game);
 		animation_avatar(game);
-		animation_gun(game);
+		animation_gun_running(game);
 	}
 	render_game(game);
 	return (0);
@@ -140,35 +156,30 @@ int	loop_hook(t_game *game)
 
 void    action_mouse_left_click(t_game *game)
 {
+	if (game->player == PABECKHA)
+		animation_gun_shoot(game, SHOTGUN_FRAME_DURATION, SHOTGUN_FRAMES);
+	else
+		animation_gun_shoot(game, DESERT_EAGLE_FRAME_DURATION, DESERT_EAGLE_FRAMES);
+}
+void    animation_gun_shoot(t_game *game, int frame_duration, int frames)
+{
 	struct timeval  tv;
 	gettimeofday(&tv, NULL);
 	long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	long    elapsed_time =  current_time - game->gun_animation_start_time;
-	int gun_frame = elapsed_time / (GUN_FRAME_DURATION / GUN_FRAMES);
-	int i;
+	int gun_frame = elapsed_time / (frame_duration / frames);
 	
-	if (gun_frame < 0) {
+	if (gun_frame < 0)
 		gun_frame = 0;
-	}
-	if (gun_frame >= GUN_FRAMES)
+	if (gun_frame >= frames)
 	{
 		game->keys[MOUSE_LEFT_CLICK] = false;
 		gun_frame = 0;
 	}
-	game->textures->gun_current_texture = game->textures->desert_eagle[gun_frame];
-	i = 0;
-	while (i < ENEMY_MAX)
-	{
-		if (game->enemy[i].hit_body[SCREEN_WIDTH / 2] && gun_frame == 0)
-		{
-			game->data->map_element[game->enemy[i].y][game->enemy[i].x] = '5';
-			--game->enemy_count;
-			return ;
-		}
-		++i;
-	}
-//		if (gun_frame == 0 && game->body_hit[game->depth_lvl][SCREEN_WIDTH / 2] == true)
-//			game->data->map_element[game->enemy_y][game->enemy_x] = '0';
+	if (game->player == PABECKHA)
+		game->textures->gun_current_texture = game->textures->shotgun[gun_frame];
+	else
+		game->textures->gun_current_texture = game->textures->desert_eagle[gun_frame];
 }
 
 void    animation_enemy_death(t_game *game)
@@ -320,7 +331,7 @@ void    animation_avatar(t_game *game)
 		game->textures->avatar_current = game->textures->avatar[0];
 }
 
-void    animation_gun(t_game *game)
+void    animation_gun_running(t_game *game)
 {
 	if (!game->keys[MOUSE_LEFT_CLICK]
 		&& (game->keys[W] || game->keys[S] || game->keys[A] || game->keys[S]))
@@ -332,16 +343,16 @@ void    animation_gun(t_game *game)
 		gettimeofday(&tv, NULL);
 		long    current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 		long    elapsed_time = current_time - start_time * -2;
-		int     gun_frame = (elapsed_time / ((GUN_FRAME_DURATION * 4) / (GUN_FRAMES / 2))) % (GUN_FRAMES / 2);
+		int     gun_frame = (elapsed_time / (GUN_RUN_FRAME_DURATION / GUN_RUN_FRAMES) % GUN_RUN_FRAMES);
 		
 		if (gun_frame < 0)
 			gun_frame = 0;
-		if (gun_frame >= GUN_FRAMES / 2)
-			gun_frame = GUN_FRAMES / 2 - 1;
-		if (gun_frame == 0)
-			game->textures->gun_current_texture = game->textures->desert_eagle[gun_frame];
+		if (gun_frame >= GUN_RUN_FRAMES)
+			gun_frame = GUN_RUN_FRAMES - 1;
+		if (game->player == PABECKHA)
+			game->textures->gun_current_texture = game->textures->shotgun_run[gun_frame];
 		else
-			game->textures->gun_current_texture = game->textures->desert_eagle[4];
+			game->textures->gun_current_texture = game->textures->desert_eagle_run[gun_frame];
 		game->animation_gun = false;
 	}
 }

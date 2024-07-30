@@ -80,6 +80,7 @@ void	raycaster(t_game *game)
 		game->enemy[game->depth_lvl].visible = false;
 		++game->depth_lvl;
 	}
+	game->enemy_visible = false;
 	game->depth_lvl = 0;
 	game->dist_idx = 0;
 	while (game->dist_idx < SCREEN_WIDTH)
@@ -114,6 +115,8 @@ void	raycaster(t_game *game)
 				{
 					if (game->depth[game->depth_lvl].colis_x == game->enemy[i].x && game->depth[game->depth_lvl].colis_y == game->enemy[i].y)
 					{
+						if (game->depth_lvl == 0)
+							game->enemy_visible = true;
 						render_enemy_line(game, i);
 						break ;
 					}

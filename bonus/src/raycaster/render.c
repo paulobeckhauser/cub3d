@@ -25,7 +25,10 @@ void	render_game(t_game *game)
 		render_minimap_bg(game);
 		render_minimap(game);
 		render_minimap_player(game);
-		render_gun(game);
+		if (game->player == PABECKHA)
+			render_gun(game);
+		else
+			render_gun(game);
 		render_hp(game);
 		render_avatar(game);
 	}
@@ -220,27 +223,56 @@ void	render_gun(t_game *game)
 	float	tex_x;
 	float	tex_y;
 	int	color;
-
-	y = SCREEN_HEIGHT - SIZE_GUN;
+	
+	y = SCREEN_HEIGHT - TEXTURE_SIZE_GUN;
 	tex_y = 0;
-	while (y < SCREEN_HEIGHT && tex_y < DESERT_EAGLE_HEIGHT)
+	while (y < SCREEN_HEIGHT && tex_y < TEXTURE_SIZE_GUN)
 	{
-		x = SCREEN_WIDTH - SIZE_GUN;
+		x = SCREEN_WIDTH - TEXTURE_SIZE_GUN;
 		tex_x = 0;
-
-		while (x < SCREEN_WIDTH && tex_x < DESERT_EAGLE_WIDTH)
+		
+		while (x < SCREEN_WIDTH && tex_x < TEXTURE_SIZE_GUN)
 		{
 			color = get_pixel_color(game->textures->gun_current_texture, (int)tex_x, (int)tex_y);
 			if (color != rgb_to_hex(255, 0, 255))
 				game->image->data[y * SCREEN_WIDTH +x] = color;
 			++x;
-			tex_x += (float)SIZE_GUN / (float)DESERT_EAGLE_WIDTH;
+			tex_x += (float)SIZE_GUN / (float)TEXTURE_SIZE_GUN;
 		}
 		++y;
-		tex_y += (float)SIZE_GUN / (float)DESERT_EAGLE_HEIGHT;
+		tex_y += (float)SIZE_GUN / (float)TEXTURE_SIZE_GUN;
 	}
-
+	
 }
+
+//void	render_gun(t_game *game)
+//{
+//	int	x;
+//	int	y;
+//	float	tex_x;
+//	float	tex_y;
+//	int	color;
+//
+//	y = SCREEN_HEIGHT - SIZE_GUN;
+//	tex_y = 0;
+//	while (y < SCREEN_HEIGHT && tex_y < DESERT_EAGLE_HEIGHT)
+//	{
+//		x = SCREEN_WIDTH - SIZE_GUN;
+//		tex_x = 0;
+//
+//		while (x < SCREEN_WIDTH && tex_x < DESERT_EAGLE_WIDTH)
+//		{
+//			color = get_pixel_color(game->textures->gun_current_texture, (int)tex_x, (int)tex_y);
+//			if (color != rgb_to_hex(255, 0, 255))
+//				game->image->data[y * SCREEN_WIDTH +x] = color;
+//			++x;
+//			tex_x += (float)SIZE_GUN / (float)DESERT_EAGLE_WIDTH;
+//		}
+//		++y;
+//		tex_y += (float)SIZE_GUN / (float)DESERT_EAGLE_HEIGHT;
+//	}
+//
+//}
 
 void	render_hp(t_game *game)
 {
@@ -409,27 +441,6 @@ void    render_enemy_line(t_game *game, int enemy_i)
 		tex_y += (float)TEXTURE_SIZE_DEFAULT / (float)game->enemy[enemy_i].size;
 	}
 	game->enemy[enemy_i].tex_x += (float)TEXTURE_SIZE_DEFAULT / (float)game->enemy[enemy_i].size;
-}
-
-void	render_game_over(t_game *game)
-{
-	int	x;
-	int	y;
-	int	color;
-
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		y = 0;
-		while (y < SCREEN_HEIGHT)
-		{
-			color = get_pixel_color(game->textures->game_over_texture, x, y);
-			game->image->data[y * SCREEN_WIDTH + x] = color;
-			y++;
-		}
-		x++;
-	}
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0, 0);
 }
 
 void    render_main_menu(t_game *game)
