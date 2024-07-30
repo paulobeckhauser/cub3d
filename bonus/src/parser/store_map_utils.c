@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:03:20 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 22:10:32 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:05:26 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

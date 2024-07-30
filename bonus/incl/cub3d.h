@@ -16,8 +16,8 @@
 #include "color.h"
 
 // screen
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 400
+#define SCREEN_WIDTH 1600
+#define SCREEN_HEIGHT 900
 #define DRAWING_SCALE (SCREEN_HEIGHT * 200)
 #define FIELD_OF_VIEW 60.0f
 #define MINIMAP_SCALE (SCREEN_WIDTH / 80)
@@ -454,7 +454,7 @@ void			init_vars_colors(int *red, int *green, int *blue);
 bool			get_red_color(int *red, char **array, t_data *data);
 bool			get_green_color(int *green, char **array, t_data *data);
 bool			get_blue_color(int *blue, char **array, t_data *data);
-bool	check_error_rgb_format(int color, t_data *data, char **array);
+bool    check_error_rgb_format(int color, t_data *data);
 bool	check_if_empty_line(char *str);
 bool	check_edges(int i, int j, t_data *data);
 void	init_vars_check_wall(int *i, int *j);
@@ -467,6 +467,13 @@ bool	check_map_element_input(t_data *data);
 bool	check_empty_line_map(t_data *data);
 void	store_first_line_map_element(t_data *data);
 void	store_last_line_map_element(t_data *data);
+bool	check_other_values_rgb(char *cleaned_string, t_data *data);
+bool	check_surround(t_data *data);
+bool	store_north_texture_format(t_data *data, char **array);
+bool	store_south_texture_format(t_data *data, char **array);
+bool	store_west_texture_format(t_data *data, char **array);
+bool	store_east_texture_format(t_data *data, char **array);
+bool	apply_ffill_algo(char **map_backup, t_data *data);
 
 // DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER DELETE IT AFTER
 void    render_vertical_line(int x, t_game *game, int red, int green, int blue);
