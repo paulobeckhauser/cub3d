@@ -81,6 +81,7 @@ void    init_game(t_game *game)
 	game->animation_gun = false;
 	game->enemy_count = 0;
 	game->won_game = false;
+	game->player = PABECKHA;
 }
 
 void    init_keys(t_game *game)

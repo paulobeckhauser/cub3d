@@ -31,11 +31,19 @@
 #define BORDER_THICKNESS 5
 #define TEXTURE_HEIGHT_HP 77
 #define TEXTURE_WIDTH_HP 120
+#define SIZE_GUN 300
+#define DESERT_EAGLE_WIDTH 241
+#define DESERT_EAGLE_HEIGHT 357
+#define SHOTGUN_SIZE 300
 
 // objects
 #define DEPTH_MAX 30
 #define DOOR_MAX 30
 #define ENEMY_MAX 30
+
+// players
+#define PABECKHA 0
+#define SFRANKIE 1
 
 // textures
 #define MINIMAP_BG "./bonus/textures/minimap/minimap_bg.xpm"
@@ -44,11 +52,26 @@
 #define PLAYER_TEXTURE "./bonus/textures/minimap/player_ln_texture.xpm"
 #define DOOR_MINIMAP "./bonus/textures/minimap/door.xpm"
 #define SKULL "./bonus/textures/minimap/skull.xpm"
-#define	GUN_0_4 "./bonus/textures/guns/desert_eagle_0_4.xpm"
-#define GUN_1_4 "./bonus/textures/guns/desert_eagle_1_4.xpm"
-#define GUN_2_4 "./bonus/textures/guns/desert_eagle_2_4.xpm"
-#define GUN_3_4 "./bonus/textures/guns/desert_eagle_3_4.xpm"
-#define GUN_4_4 "./bonus/textures/guns/desert_eagle_4_4.xpm"
+#define	DESERT_EAGLE_0_4 "./bonus/textures/guns/desert_eagle/desert_eagle_0_4.xpm"
+#define DESERT_EAGLE_1_4 "./bonus/textures/guns/desert_eagle/desert_eagle_1_4.xpm"
+#define DESERT_EAGLE_2_4 "./bonus/textures/guns/desert_eagle/desert_eagle_2_4.xpm"
+#define DESERT_EAGLE_3_4 "./bonus/textures/guns/desert_eagle/desert_eagle_3_4.xpm"
+#define DESERT_EAGLE_4_4 "./bonus/textures/guns/desert_eagle/desert_eagle_4_4.xpm"
+#define SHOTGUN_0_14 "./bonus/textures/guns/shotgun/shotgun_0_14.xpm"
+#define SHOTGUN_1_14 "./bonus/textures/guns/shotgun/shotgun_1_14.xpm"
+#define SHOTGUN_2_14 "./bonus/textures/guns/shotgun/shotgun_2_14.xpm"
+#define SHOTGUN_3_14 "./bonus/textures/guns/shotgun/shotgun_3_14.xpm"
+#define SHOTGUN_4_14 "./bonus/textures/guns/shotgun/shotgun_4_14.xpm"
+#define SHOTGUN_5_14 "./bonus/textures/guns/shotgun/shotgun_5_14.xpm"
+#define SHOTGUN_6_14 "./bonus/textures/guns/shotgun/shotgun_6_14.xpm"
+#define SHOTGUN_7_14 "./bonus/textures/guns/shotgun/shotgun_7_14.xpm"
+#define SHOTGUN_8_14 "./bonus/textures/guns/shotgun/shotgun_8_14.xpm"
+#define SHOTGUN_9_14 "./bonus/textures/guns/shotgun/shotgun_9_14.xpm"
+#define SHOTGUN_10_14 "./bonus/textures/guns/shotgun/shotgun_10_14.xpm"
+#define SHOTGUN_11_14 "./bonus/textures/guns/shotgun/shotgun_11_14.xpm"
+#define SHOTGUN_12_14 "./bonus/textures/guns/shotgun/shotgun_12_14.xpm"
+#define SHOTGUN_13_14 "./bonus/textures/guns/shotgun/shotgun_13_14.xpm"
+#define SHOTGUN_14_14 "./bonus/textures/guns/shotgun/shotgun_14_14.xpm"
 #define DOOR_FRAME_4_4 "./bonus/textures/door/door_frame_4_4.xpm"
 #define DOOR_FRAME_3_4 "./bonus/textures/door/door_frame_3_4.xpm"
 #define DOOR_FRAME_2_4 "./bonus/textures/door/door_frame_2_4.xpm"
@@ -180,7 +203,8 @@ typedef struct s_textures
 	void    *door_minimap;
 	void    *skull;
 	void	*player_texture;
-	void	*gun_texture[5];
+	void	*desert_eagle[5];
+	void	*shotgun[15];
 	void    *gun_current_texture;
 	void	*door_texture[5];
 	void    *exit[5];
@@ -324,6 +348,7 @@ typedef struct s_game
 	bool    animation_gun;
 	int     enemy_count;
 	bool    won_game;
+	int		player;
 }	t_game;
 
 void    calc_dir_vectors(t_game *game);

@@ -87,6 +87,7 @@ int	loop_hook(t_game *game)
 	{
 		if (game->keys[LEFT_ARROW])
 		{
+			game->player = PABECKHA;
 			game->textures->main_menu_current = game->textures->main_menu[0];
 			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
 			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_1_1, &game->img_x, &game->img_y);
@@ -94,6 +95,7 @@ int	loop_hook(t_game *game)
 		}
 		if (game->keys[RIGHT_ARROW])
 		{
+			game->player = SFRANKIE;
 			game->textures->main_menu_current = game->textures->main_menu[1];
 			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
 			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_1_1, &game->img_x, &game->img_y);
@@ -124,7 +126,7 @@ int	loop_hook(t_game *game)
 		if (game->keys[MOUSE_LEFT_CLICK])
 			action_mouse_left_click(game);
 		if (!game->animation_gun && !game->keys[MOUSE_LEFT_CLICK])
-			game->textures->gun_current_texture = game->textures->gun_texture[0];
+			game->textures->gun_current_texture = game->textures->desert_eagle[0];
 		animation_open_door(game);
 		animation_close_door(game);
 		animation_enemy_cast(game);
@@ -153,7 +155,7 @@ void    action_mouse_left_click(t_game *game)
 		game->keys[MOUSE_LEFT_CLICK] = false;
 		gun_frame = 0;
 	}
-	game->textures->gun_current_texture = game->textures->gun_texture[gun_frame];
+	game->textures->gun_current_texture = game->textures->desert_eagle[gun_frame];
 	i = 0;
 	while (i < ENEMY_MAX)
 	{
@@ -337,9 +339,9 @@ void    animation_gun(t_game *game)
 		if (gun_frame >= GUN_FRAMES / 2)
 			gun_frame = GUN_FRAMES / 2 - 1;
 		if (gun_frame == 0)
-			game->textures->gun_current_texture = game->textures->gun_texture[gun_frame];
+			game->textures->gun_current_texture = game->textures->desert_eagle[gun_frame];
 		else
-			game->textures->gun_current_texture = game->textures->gun_texture[4];
+			game->textures->gun_current_texture = game->textures->desert_eagle[4];
 		game->animation_gun = false;
 	}
 }

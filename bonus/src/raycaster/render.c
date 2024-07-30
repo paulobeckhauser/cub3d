@@ -16,8 +16,6 @@ void	render_game(t_game *game)
 {
 	if (game->main_menu || game->player_dead || game->won_game)
 		render_main_menu(game);
-//	else if (game->player_dead)
-//		render_game_over(game);
 	else
 	{
 		render_background(game);
@@ -219,25 +217,29 @@ void	render_gun(t_game *game)
 {
 	int	x;
 	int	y;
-	int	tex_x;
-	int	tex_y;
+	float	tex_x;
+	float	tex_y;
 	int	color;
 
-	x = SCREEN_WIDTH / 2 + 150;
-	while (x < SCREEN_WIDTH / 2 + 150 + 241)
+	y = SCREEN_HEIGHT - SIZE_GUN;
+	tex_y = 0;
+	while (y < SCREEN_HEIGHT && tex_y < DESERT_EAGLE_HEIGHT)
 	{
-		y = SCREEN_HEIGHT - 357;
-		while (y < SCREEN_HEIGHT)
+		x = SCREEN_WIDTH - SIZE_GUN;
+		tex_x = 0;
+
+		while (x < SCREEN_WIDTH && tex_x < DESERT_EAGLE_WIDTH)
 		{
-			tex_x = x - (SCREEN_WIDTH / 2 + 150);
-			tex_y = y - (SCREEN_HEIGHT - 357);
-			color = get_pixel_color(game->textures->gun_current_texture, tex_x, tex_y);
+			color = get_pixel_color(game->textures->gun_current_texture, (int)tex_x, (int)tex_y);
 			if (color != rgb_to_hex(255, 0, 255))
-				game->image->data[y * SCREEN_WIDTH + x] = color;
-			y++;
+				game->image->data[y * SCREEN_WIDTH +x] = color;
+			++x;
+			tex_x += (float)SIZE_GUN / (float)DESERT_EAGLE_WIDTH;
 		}
-		x++;
+		++y;
+		tex_y += (float)SIZE_GUN / (float)DESERT_EAGLE_HEIGHT;
 	}
+
 }
 
 void	render_hp(t_game *game)
