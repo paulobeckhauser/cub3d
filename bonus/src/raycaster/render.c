@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_textures.c                                    :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:26:48 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 15:26:49 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:19:51 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void    render_minimap(t_game *game)
 				tex_x = 0;
 				while (tex_x < MINIMAP_SCALE)
 				{
-					if (map_y < 0 || map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
+					if (map_x < 0 || map_y < 0 || map_y >= game->data->number_lines_map_element || !game->data->map_element[map_y] || !game->data->map_element[map_y][map_x])
 						break ;
 					if (game->data->map_element[map_y][map_x] == '0')
 						color = rgb_to_hex(74, 17, 17);

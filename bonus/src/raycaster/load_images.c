@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:33:19 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 16:33:21 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:23:01 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,9 @@ void load_images_from_dir(t_game *game)
 	game->textures->blood[29] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_29_29, &game->img_x, &game->img_y);
 	game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
 	game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_1_1, &game->img_x, &game->img_y);
-	game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
+	game->textures->avatar[2] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
+	game->textures->avatar[3] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_1_1, &game->img_x, &game->img_y);
+	game->textures->avatar_current = game->textures->avatar[0];
 	game->textures->main_menu[0] = mlx_xpm_file_to_image(game->mlx_ptr, MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);
 	game->textures->main_menu[1] = mlx_xpm_file_to_image(game->mlx_ptr, MAIN_MENU_SFRANKIE, &game->img_x, &game->img_y);
 	game->textures->main_menu_current = mlx_xpm_file_to_image(game->mlx_ptr, MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);

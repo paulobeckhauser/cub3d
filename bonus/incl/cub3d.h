@@ -186,6 +186,7 @@
 #define BLOOD_FRAME_DURATION 2400000
 #define AVATAR_FRAMES 15
 #define AVATAR_FRAME_DURATION 12000000
+#define HP_FRAMES 11
 
 typedef struct	s_image
 {
@@ -211,21 +212,21 @@ typedef struct s_textures
 	void    *door_minimap;
 	void    *skull;
 	void	*player_texture;
-	void	*desert_eagle[5];
-	void    *desert_eagle_run[2];
-	void	*shotgun[15];
-	void    *shotgun_run[2];
+	void	*desert_eagle[DESERT_EAGLE_FRAMES];
+	void    *desert_eagle_run[GUN_RUN_FRAMES];
+	void	*shotgun[SHOTGUN_FRAMES];
+	void    *shotgun_run[GUN_RUN_FRAMES];
 	void    *gun_current_texture;
-	void	*door_texture[5];
-	void    *exit[5];
-	void    *dark_priest_texture[11];
+	void	*door_texture[DOOR_FRAMES];
+	void    *exit[DOOR_FRAMES];
+	void    *dark_priest_texture[ENEMY_FRAMES];
 	void    *dark_priest_current_texture;
-	void    *hp_texture[11];
+	void    *hp_texture[HP_FRAMES];
 	void    *hp_current_texture;
 	void	*game_over_texture;
 	void    *win_screen;
-	void    *blood[30];
-	void	*avatar[2];
+	void    *blood[BLOOD_FRAMES];
+	void	*avatar[4];
 	void	*avatar_current;
 	void    *main_menu[2];
 	void    *main_menu_current;
@@ -447,7 +448,6 @@ bool			store_hex_color(char *str, t_data *data, char surf);
 bool			store_textures(t_data *data);
 bool			store_surface_colors(t_data *data);
 bool			store_map(t_data *data);
-// void    		init_game(t_game *game);
 void            init_game(t_game *game);
 void    		init_keys(t_game *game);
 void			init_vars_colors(int *red, int *green, int *blue);
