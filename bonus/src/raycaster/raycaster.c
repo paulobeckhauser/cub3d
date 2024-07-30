@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:02 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 15:10:03 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:50:32 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void    cast_ray(t_game *game, float ray_angle)
 	raycaster.x_iterator = game->data->player->x;
 	raycaster.y_iterator = game->data->player->y;
 	raycaster.speed = 1;
+	raycaster.colis_x = 0;
+	raycaster.colis_y = 0;
 	raycaster.prev_colis_x = 0;
 	raycaster.prev_colis_y = 0;
 	raycaster.found_wall = false;
@@ -154,7 +156,8 @@ void    cast_ray(t_game *game, float ray_angle)
 		{
 			calc_collision_point_x_y(&raycaster);
 			if (raycaster.colis_y < 0 || raycaster.colis_x < 0 || !game->data->map_element[(int)raycaster.colis_y]
-			    || !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
+			    || ft_strlen(game->data->map_element[(int)raycaster.colis_y]) < (size_t)raycaster.colis_x
+				|| !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
 				return ;
 			else if (is_collision_point_wall(&raycaster, game)
 				&& ((int)raycaster.colis_y != raycaster.prev_colis_y
@@ -300,8 +303,10 @@ int cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y, int enem
 		if (is_ray_on_square_edge(&raycaster))
 		{
 			calc_collision_point_x_y(&raycaster);
+			// printf("colis_y: %i colis_x: %i\n", (int)raycaster.colis_y, (int)raycaster.colis_x);
 			if (raycaster.colis_y < 0 || raycaster.colis_x < 0 || !game->data->map_element[(int)raycaster.colis_y]
-			    || !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
+			    || ft_strlen(game->data->map_element[(int)raycaster.colis_y]) < (size_t)raycaster.colis_x
+				|| !game->data->map_element[(int)raycaster.colis_y][(int)raycaster.colis_x])
 				return (0);
 			if ((int)raycaster.colis_x == game->enemy[enemy_i].x && (int)raycaster.colis_y == game->enemy[enemy_i].y)
 				return (1);

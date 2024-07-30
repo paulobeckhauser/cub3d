@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_bindings.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:33:32 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/29 11:40:28 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:25:01 by pabeckha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,14 @@ int	loop_hook(t_game *game)
 		{
 			game->player = PABECKHA;
 			game->textures->main_menu_current = game->textures->main_menu[0];
-			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
-			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_1_1, &game->img_x, &game->img_y);
-			game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
+			game->textures->avatar_current = game->textures->avatar[0];
 			game->textures->gun_current_texture = game->textures->shotgun[0];
 		}
 		if (game->keys[RIGHT_ARROW])
 		{
 			game->player = SFRANKIE;
 			game->textures->main_menu_current = game->textures->main_menu[1];
-			game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
-			game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_1_1, &game->img_x, &game->img_y);
-			game->textures->avatar_current = mlx_xpm_file_to_image(game->mlx_ptr, AVATAR_SZYMON_0_1, &game->img_x, &game->img_y);
+			game->textures->avatar_current = game->textures->avatar[2];
 			game->textures->gun_current_texture = game->textures->desert_eagle[0];
 		}
 		if (game->keys[ENTER])
@@ -325,10 +321,20 @@ void    animation_avatar(t_game *game)
 		avatar_frame = 0;
 	if (avatar_frame >= AVATAR_FRAMES)
 		avatar_frame = AVATAR_FRAMES - 1;
-	if (avatar_frame == AVATAR_FRAMES / 2)
-		game->textures->avatar_current = game->textures->avatar[1];
+	if (game->player == PABECKHA)
+	{
+		if (avatar_frame == AVATAR_FRAMES / 2)
+			game->textures->avatar_current = game->textures->avatar[1];
+		else
+			game->textures->avatar_current = game->textures->avatar[0];
+	}
 	else
-		game->textures->avatar_current = game->textures->avatar[0];
+	{
+		if (avatar_frame == AVATAR_FRAMES / 2)
+			game->textures->avatar_current = game->textures->avatar[3];
+		else
+			game->textures->avatar_current = game->textures->avatar[2];
+	}
 }
 
 void    animation_gun_running(t_game *game)
