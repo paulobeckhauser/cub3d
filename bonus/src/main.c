@@ -6,27 +6,28 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:01:21 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/05/28 19:01:22 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:53:49 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/cub3d.h"
 
-void    init_image(t_image *image, t_game *game)
+void	init_image(t_image *image, t_game *game)
 {
 	image->img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	image->bits_per_pixel = 32;
 	image->line_length = SCREEN_WIDTH;
 	image->endian = 0;
-	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->line_length, &image->endian);
+	image->data = (int *)mlx_get_data_addr(image->img, &image->bits_per_pixel,
+			&image->line_length, &image->endian);
 }
 
-void    mark_doors(t_game *game)
+void	mark_doors(t_game *game)
 {
-	int y;
-	int x;
-	int i;
-	
+	int	y;
+	int	x;
+	int	i;
+
 	y = 0;
 	i = 0;
 	while (game->data->map_element[y])
@@ -34,7 +35,9 @@ void    mark_doors(t_game *game)
 		x = 0;
 		while (game->data->map_element[y][x])
 		{
-			if (game->data->map_element[y][x] == '2' || game->data->map_element[y][x] == '3' || game->data->map_element[y][x] == '6')
+			if (game->data->map_element[y][x] == '2'
+				|| game->data->map_element[y][x] == '3'
+				|| game->data->map_element[y][x] == '6')
 			{
 				game->door[i].dist = 0;
 				game->door[i].y = y;
@@ -53,12 +56,12 @@ void    mark_doors(t_game *game)
 	}
 }
 
-void    mark_enemies(t_game *game)
+void	mark_enemies(t_game *game)
 {
-	int y;
-	int x;
-	int i;
-	
+	int	y;
+	int	x;
+	int	i;
+
 	y = 0;
 	i = 0;
 	while (game->data->map_element[y])
@@ -83,21 +86,21 @@ void    mark_enemies(t_game *game)
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    t_game      game;
+	t_game		game;
 	t_textures	textures;
-	t_image     image;
-	t_vectors   vectors[ANGLE_MAX / ROTATION_SPEED];
+	t_image		image;
+	t_vectors	vectors[ANGLE_MAX / ROTATION_SPEED];
 	t_data		data;
-	int status;
-	
+	int			status;
+
 	status = 0;
 	if (argc == 2)
 	{
 		status = parser(argv[1], &data);
 		if (status != 0)
-			return(status);
+			return (status);
 		game.data = &data;
 		init_game(&game);
 		init_image(&image, &game);
@@ -124,6 +127,5 @@ int main(int argc, char **argv)
 		ft_putstr_fd(RESET, 2);
 		return (1);
 	}
-
-    return (status);
+	return (status);
 }
