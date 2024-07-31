@@ -6,13 +6,13 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:25:26 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/06/05 12:25:27 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:55:21 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/cub3d.h"
 
-void    init_game(t_game *game)
+void	init_game(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
@@ -20,7 +20,8 @@ void    init_game(t_game *game)
 		perror("mlx");
 		exit(EXIT_FAILURE);
 	}
-	game->win_ptr = mlx_new_window(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
+			"cub3d");
 	if (!game->win_ptr)
 	{
 		perror("mlx window");
@@ -85,10 +86,10 @@ void    init_game(t_game *game)
 	game->enemy_visible = false;
 }
 
-void    init_keys(t_game *game)
+void	init_keys(t_game *game)
 {
 	int i;
-	
+
 	i = 0;
 	while (i < 10)
 		game->keys[i++] = false;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:16:32 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/30 18:19:32 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:38:15 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,6 +442,16 @@ void			render_main_menu(t_game *game);
 void			animation_gun_running(t_game *game);
 void			animation_gun_shoot(t_game *game, int frame_duration,
 					int frames);
+void	action_main_menu(t_game *game);
+void	action_game(t_game *game);
+void	animation(t_game *game);
+void	update_enemy_cast_textures(t_game *game, int j);
+void	update_hp_status(t_game *game, int enemy_frame, int *i);
+void	update_door_close_textures(t_game *game, int door_frame);
+void	update_door_open_textures(t_game *game,	int door_frame);
+void	update_avatar_textures(t_game *game, int avatar_frame);
+void	update_gun_running_textures(t_game *game, int gun_frame);
+void	update_death_textures(t_game *game, int j);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

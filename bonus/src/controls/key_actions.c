@@ -6,7 +6,7 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:47:25 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/07/16 22:13:10 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:56:57 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	close_game(t_game *game)
 {
-    mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-    free(game->mlx_ptr);
-    exit(0);
+	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	free(game->mlx_ptr);
+	exit(0);
 }
 
-void    rotate_player_left(t_game *game)
+void	rotate_player_left(t_game *game)
 {
 	game->ray_main_angle -= ROTATION_SPEED;
 	if (game->ray_main_angle <= 0)
@@ -29,7 +29,7 @@ void    rotate_player_left(t_game *game)
 		game->vec_idx = ANGLE_MAX / ROTATION_SPEED - 1;
 }
 
-void    rotate_player_right(t_game *game)
+void	rotate_player_right(t_game *game)
 {
 	game->ray_main_angle += ROTATION_SPEED;
 	if (game->ray_main_angle >= ANGLE_MAX)
@@ -39,23 +39,24 @@ void    rotate_player_right(t_game *game)
 		game->vec_idx = 0;
 }
 
-void    rotate_player_mouse(t_game *game)
+void	rotate_player_mouse(t_game *game)
 {
-	int dir_x;
-	
+	int	dir_x;
+
 	dir_x = game->mouse_x - SCREEN_WIDTH / 2;
 	if (dir_x < 0)
 		rotate_player_left(game);
 	else if (dir_x > 0)
 		rotate_player_right(game);
-	mlx_mouse_move(game->mlx_ptr, game->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	mlx_mouse_move(game->mlx_ptr, game->win_ptr, SCREEN_WIDTH / 2, SCREEN_HEIGHT
+		/ 2);
 }
 
-void    open_close_door(t_game *game)
+void	open_close_door(t_game *game)
 {
-	int i;
+	int				i;
+	struct timeval	tv;
 	
-	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	i = 0;
