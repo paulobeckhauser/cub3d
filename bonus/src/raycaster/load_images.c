@@ -12,7 +12,7 @@
 
 #include "../../incl/cub3d.h"
 
-void	load_images_from_dir(t_game *game)
+void	load_images_wall(t_game *game)
 {
 	game->textures->north_texture = mlx_xpm_file_to_image(game->mlx_ptr,
 			game->data->texture_north, &game->img_x, &game->img_y);
@@ -22,12 +22,20 @@ void	load_images_from_dir(t_game *game)
 			game->data->texture_west, &game->img_x, &game->img_y);
 	game->textures->east_texture = mlx_xpm_file_to_image(game->mlx_ptr,
 			game->data->texture_east, &game->img_x, &game->img_y);
+}
+
+void	load_images_minimap(t_game *game)
+{
 	game->textures->door_minimap = mlx_xpm_file_to_image(game->mlx_ptr,
 			DOOR_MINIMAP, &game->img_x, &game->img_y);
 	game->textures->skull = mlx_xpm_file_to_image(game->mlx_ptr, SKULL,
 			&game->img_x, &game->img_y);
 	game->textures->player_texture = mlx_xpm_file_to_image(game->mlx_ptr,
 			PLAYER_TEXTURE, &game->img_x, &game->img_y);
+}
+
+void	load_images_desert_eagle(t_game *game)
+{
 	game->textures->desert_eagle[0] = mlx_xpm_file_to_image(game->mlx_ptr,
 			DESERT_EAGLE_0_4, &game->img_x, &game->img_y);
 	game->textures->desert_eagle[1] = mlx_xpm_file_to_image(game->mlx_ptr,
@@ -42,6 +50,10 @@ void	load_images_from_dir(t_game *game)
 			DESERT_EAGLE_RUN_0_1, &game->img_x, &game->img_y);
 	game->textures->desert_eagle_run[1] = mlx_xpm_file_to_image(game->mlx_ptr,
 			DESERT_EAGLE_RUN_1_1, &game->img_x, &game->img_y);
+}
+
+void	load_images_shotgun_1_2(t_game *game)
+{
 	game->textures->shotgun[0] = mlx_xpm_file_to_image(game->mlx_ptr,
 			SHOTGUN_0_14, &game->img_x, &game->img_y);
 	game->textures->shotgun[1] = mlx_xpm_file_to_image(game->mlx_ptr,
@@ -60,6 +72,10 @@ void	load_images_from_dir(t_game *game)
 			SHOTGUN_7_14, &game->img_x, &game->img_y);
 	game->textures->shotgun[8] = mlx_xpm_file_to_image(game->mlx_ptr,
 			SHOTGUN_8_14, &game->img_x, &game->img_y);
+}
+
+void	load_images_shotgun_2_2(t_game *game)
+{
 	game->textures->shotgun[9] = mlx_xpm_file_to_image(game->mlx_ptr,
 			SHOTGUN_9_14, &game->img_x, &game->img_y);
 	game->textures->shotgun[10] = mlx_xpm_file_to_image(game->mlx_ptr,
@@ -77,6 +93,10 @@ void	load_images_from_dir(t_game *game)
 	game->textures->shotgun_run[1] = mlx_xpm_file_to_image(game->mlx_ptr,
 			SHOTGUN_RUN_1_1, &game->img_x, &game->img_y);
 	game->textures->gun_current_texture = game->textures->shotgun[0];
+}
+
+void	load_imaged_door(t_game *game)
+{
 	game->textures->door_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr,
 			DOOR_FRAME_4_4, &game->img_x, &game->img_y);
 	game->textures->door_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr,
@@ -87,39 +107,61 @@ void	load_images_from_dir(t_game *game)
 			DOOR_FRAME_1_4, &game->img_x, &game->img_y);
 	game->textures->door_texture[4] = mlx_xpm_file_to_image(game->mlx_ptr,
 			DOOR_FRAME_0_4, &game->img_x, &game->img_y);
-	game->textures->exit[0] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_4_4,
-			&game->img_x, &game->img_y);
-	game->textures->exit[1] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_3_4,
-			&game->img_x, &game->img_y);
-	game->textures->exit[2] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_2_4,
-			&game->img_x, &game->img_y);
-	game->textures->exit[3] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_1_4,
-			&game->img_x, &game->img_y);
-	game->textures->exit[4] = mlx_xpm_file_to_image(game->mlx_ptr, EXIT_0_4,
-			&game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->exit[0] = mlx_xpm_file_to_image(game->mlx_ptr,
+			EXIT_4_4, &game->img_x, &game->img_y);
+	game->textures->exit[1] = mlx_xpm_file_to_image(game->mlx_ptr,
+			EXIT_3_4, &game->img_x, &game->img_y);
+	game->textures->exit[2] = mlx_xpm_file_to_image(game->mlx_ptr,
+			EXIT_2_4, &game->img_x, &game->img_y);
+	game->textures->exit[3] = mlx_xpm_file_to_image(game->mlx_ptr,
+			EXIT_1_4, &game->img_x, &game->img_y);
+	game->textures->exit[4] = mlx_xpm_file_to_image(game->mlx_ptr,
+			EXIT_0_4, &game->img_x, &game->img_y);
+}
+
+void	load_images_enemy_1_2(t_game *game)
+{
+	game->textures->dark_priest_texture[0]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_0_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[1]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_1_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[2] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[2]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_2_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[3] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[3]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_3_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[4] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[4]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_4_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[5] = mlx_xpm_file_to_image(game->mlx_ptr,
+}
+
+void	load_images_enemy_2_2(t_game *game)
+{
+	game->textures->dark_priest_texture[5]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_5_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[6] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[6]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_6_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[7] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[7]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_7_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[8] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[8]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_8_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[9] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[9]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_9_9, &game->img_x, &game->img_y);
-	game->textures->dark_priest_texture[10] = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->textures->dark_priest_texture[10]
+		= mlx_xpm_file_to_image(game->mlx_ptr,
 			DARK_PRIEST_CORPSE, &game->img_x, &game->img_y);
-	game->textures->dark_priest_current_texture = game->textures->dark_priest_texture[0];
+}
+
+void	load_images_hp(t_game *game)
+{
 	game->textures->hp_texture[0] = mlx_xpm_file_to_image(game->mlx_ptr, HP_0,
 			&game->img_x, &game->img_y);
 	game->textures->hp_texture[1] = mlx_xpm_file_to_image(game->mlx_ptr, HP_10,
@@ -144,10 +186,10 @@ void	load_images_from_dir(t_game *game)
 			HP_100, &game->img_x, &game->img_y);
 	game->textures->hp_current_texture = mlx_xpm_file_to_image(game->mlx_ptr,
 			HP_100, &game->img_x, &game->img_y);
-	game->textures->game_over_texture = mlx_xpm_file_to_image(game->mlx_ptr,
-			GAME_OVER, &game->img_x, &game->img_y);
-	game->textures->win_screen = mlx_xpm_file_to_image(game->mlx_ptr,
-			WIN_SCREEN, &game->img_x, &game->img_y);
+}
+
+void	load_images_blood_1_3(t_game *game)
+{
 	game->textures->blood[0] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_0_29,
 			&game->img_x, &game->img_y);
 	game->textures->blood[1] = mlx_xpm_file_to_image(game->mlx_ptr, BLOOD_1_29,
@@ -170,6 +212,10 @@ void	load_images_from_dir(t_game *game)
 			&game->img_x, &game->img_y);
 	game->textures->blood[10] = mlx_xpm_file_to_image(game->mlx_ptr,
 			BLOOD_10_29, &game->img_x, &game->img_y);
+}
+
+void	load_images_blood_2_3(t_game *game)
+{
 	game->textures->blood[11] = mlx_xpm_file_to_image(game->mlx_ptr,
 			BLOOD_11_29, &game->img_x, &game->img_y);
 	game->textures->blood[12] = mlx_xpm_file_to_image(game->mlx_ptr,
@@ -190,6 +236,10 @@ void	load_images_from_dir(t_game *game)
 			BLOOD_19_29, &game->img_x, &game->img_y);
 	game->textures->blood[20] = mlx_xpm_file_to_image(game->mlx_ptr,
 			BLOOD_20_29, &game->img_x, &game->img_y);
+}
+
+void	load_images_blood_3_3(t_game *game)
+{
 	game->textures->blood[21] = mlx_xpm_file_to_image(game->mlx_ptr,
 			BLOOD_21_29, &game->img_x, &game->img_y);
 	game->textures->blood[22] = mlx_xpm_file_to_image(game->mlx_ptr,
@@ -208,6 +258,24 @@ void	load_images_from_dir(t_game *game)
 			BLOOD_28_29, &game->img_x, &game->img_y);
 	game->textures->blood[29] = mlx_xpm_file_to_image(game->mlx_ptr,
 			BLOOD_29_29, &game->img_x, &game->img_y);
+}
+
+void	load_images_menu(t_game *game)
+{
+	game->textures->main_menu[0] = mlx_xpm_file_to_image(game->mlx_ptr,
+			MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);
+	game->textures->main_menu[1] = mlx_xpm_file_to_image(game->mlx_ptr,
+			MAIN_MENU_SFRANKIE, &game->img_x, &game->img_y);
+	game->textures->main_menu_current = mlx_xpm_file_to_image(game->mlx_ptr,
+			MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);
+	game->textures->game_over_texture = mlx_xpm_file_to_image(game->mlx_ptr,
+			GAME_OVER, &game->img_x, &game->img_y);
+	game->textures->win_screen = mlx_xpm_file_to_image(game->mlx_ptr,
+			WIN_SCREEN, &game->img_x, &game->img_y);
+}
+
+void	load_images_avatar(t_game *game)
+{
 	game->textures->avatar[0] = mlx_xpm_file_to_image(game->mlx_ptr,
 			AVATAR_PAULO_0_1, &game->img_x, &game->img_y);
 	game->textures->avatar[1] = mlx_xpm_file_to_image(game->mlx_ptr,
@@ -217,10 +285,22 @@ void	load_images_from_dir(t_game *game)
 	game->textures->avatar[3] = mlx_xpm_file_to_image(game->mlx_ptr,
 			AVATAR_SZYMON_1_1, &game->img_x, &game->img_y);
 	game->textures->avatar_current = game->textures->avatar[0];
-	game->textures->main_menu[0] = mlx_xpm_file_to_image(game->mlx_ptr,
-			MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);
-	game->textures->main_menu[1] = mlx_xpm_file_to_image(game->mlx_ptr,
-			MAIN_MENU_SFRANKIE, &game->img_x, &game->img_y);
-	game->textures->main_menu_current = mlx_xpm_file_to_image(game->mlx_ptr,
-			MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);
+}
+
+void	load_images_from_dir(t_game *game)
+{
+	load_images_wall(game);
+	load_images_minimap(game);
+	load_images_desert_eagle(game);
+	load_images_shotgun_1_2(game);
+	load_images_shotgun_2_2(game);
+	load_imaged_door(game);
+	load_images_hp(game);
+	load_images_blood_1_3(game);
+	load_images_blood_2_3(game);
+	load_images_blood_3_3(game);
+	load_images_menu(game);
+	load_images_avatar(game);
+	load_images_enemy_1_2(game);
+	load_images_enemy_2_2(game);
 }

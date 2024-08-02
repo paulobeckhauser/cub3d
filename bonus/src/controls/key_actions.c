@@ -56,7 +56,7 @@ void	open_close_door(t_game *game)
 {
 	int				i;
 	struct timeval	tv;
-	
+
 	gettimeofday(&tv, NULL);
 	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	i = 0;
@@ -64,34 +64,34 @@ void	open_close_door(t_game *game)
 	{
 		if (game->door[i].dist >= 0 && game->door[i].dist < DOOR_OPEN_DISTANCE)
 		{
-			if (game->data->map_element[game->door[i].y][game->door[i].x] == '6')
-			{
-				if (game->enemy_count <= 0)
-				{
-					game->door_are_opening = true;
-					game->data->map_element[game->door[i].y][game->door[i].x] = '7';
-					return ;
-				}
-			}
-			else if (game->data->map_element[game->door[i].y][game->door[i].x] == '2')
-			{
-				game->door_are_opening = true;
-				game->data->map_element[game->door[i].y][game->door[i].x] = '3';
-				return ;
-			}
-			else if (game->data->map_element[game->door[i].y][game->door[i].x] == '7')
-			{
-				game->door_are_closing = true;
-				game->data->map_element[game->door[i].y][game->door[i].x] = '6';
-				return ;
-			}
-			else
-			{
-				game->door_are_closing = true;
-				game->data->map_element[game->door[i].y][game->door[i].x] = '2';
-				return ;
-			}
+			change_door_state(game, i);
+			return ;
 		}
 		++i;
+	}
+}
+
+void	change_door_state(t_game *game, int i)
+{
+	if (game->data->map_element[game->door[i].y][game->door[i].x]
+		== '6' && game->enemy_count <= 0)
+	{
+		game->door_are_opening = true;
+		game->data->map_element[game->door[i].y][game->door[i].x] = '7';
+	}
+	else if (game->data->map_element[game->door[i].y][game->door[i].x] == '2')
+	{
+		game->door_are_opening = true;
+		game->data->map_element[game->door[i].y][game->door[i].x] = '3';
+	}
+	else if (game->data->map_element[game->door[i].y][game->door[i].x] == '7')
+	{
+		game->door_are_closing = true;
+		game->data->map_element[game->door[i].y][game->door[i].x] = '6';
+	}
+	else
+	{
+		game->door_are_closing = true;
+		game->data->map_element[game->door[i].y][game->door[i].x] = '2';
 	}
 }

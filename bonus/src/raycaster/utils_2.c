@@ -28,8 +28,10 @@ bool	is_collision_point_wall(t_raycaster *raycaster, t_game *game)
 {
 	if ((int)raycaster->colis_y >= 0
 		&& (int)raycaster->colis_y < game->data->number_lines_map_element
-		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '1')
+		&& game->data->map_element[(int)raycaster->colis_y]
+		[(int)raycaster->colis_x]
+		&& game->data->map_element[(int)raycaster->colis_y]
+		[(int)raycaster->colis_x] == '1')
 		return (true);
 	return (false);
 }
@@ -38,11 +40,16 @@ bool	is_collision_point_door(t_raycaster *raycaster, t_game *game)
 {
 	if ((int)raycaster->colis_y >= 0
 		&& (int)raycaster->colis_y < game->data->number_lines_map_element
-		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-		&& (game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '2'
-			|| game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '3'
-			|| game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '6'
-			|| game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '7'))
+		&& game->data->map_element[(int)raycaster->colis_y]
+		[(int)raycaster->colis_x]
+		&& (game->data->map_element[(int)raycaster->colis_y]
+			[(int)raycaster->colis_x] == '2'
+			|| game->data->map_element[(int)raycaster->colis_y]
+			[(int)raycaster->colis_x] == '3'
+			|| game->data->map_element[(int)raycaster->colis_y]
+			[(int)raycaster->colis_x] == '6'
+			|| game->data->map_element[(int)raycaster->colis_y]
+			[(int)raycaster->colis_x] == '7'))
 		return (true);
 	return (false);
 }
@@ -51,9 +58,12 @@ bool	is_collision_point_enemy(t_raycaster *raycaster, t_game *game)
 {
 	if ((int)raycaster->colis_y >= 0
 		&& (int)raycaster->colis_y < game->data->number_lines_map_element
-		&& game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x]
-		&& (game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '4'
-			|| game->data->map_element[(int)raycaster->colis_y][(int)raycaster->colis_x] == '5'))
+		&& game->data->map_element[(int)raycaster->colis_y]
+		[(int)raycaster->colis_x]
+		&& (game->data->map_element[(int)raycaster->colis_y]
+			[(int)raycaster->colis_x] == '4'
+			|| game->data->map_element[(int)raycaster->colis_y]
+			[(int)raycaster->colis_x] == '5'))
 		return (true);
 	return (false);
 }
@@ -87,12 +97,13 @@ void	calc_ray_distance(t_raycaster *raycaster, t_game *game, float ray_angle,
 	raw_dist = sqrtf(powf(raycaster->colis_x * SQUARE_SIZE
 				- game->data->player->x, 2) + powf(raycaster->colis_y
 				* SQUARE_SIZE - game->data->player->y, 2));
-	*dist = raw_dist * cosf(ray_angle - to_radians(game->ray_main_angle));
+	*dist = raw_dist * cosf(ray_angle
+			- to_radians(game->ray_main_angle));
 }
 
 void	save_closest_distance(t_raycaster *raycaster, t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < DOOR_MAX)
