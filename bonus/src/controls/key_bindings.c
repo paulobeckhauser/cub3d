@@ -298,26 +298,35 @@ void	update_hp_status(t_game *game, int enemy_frame)
 void	animation_close_door(t_game *game)
 {
 	struct timeval	tv;
+	static long		start_time;
 	long			current_time;
 	long			elapsed_time;
 	int				door_frame;
-
+	
 	if (game->door_are_closing)
 	{
+		if (start_time == 0)
+		{
+			gettimeofday(&tv, NULL);
+			start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+		}
 		gettimeofday(&tv, NULL);
 		current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-		elapsed_time = current_time - game->door_animation_start_time;
+		elapsed_time = current_time - start_time;
 		door_frame = DOOR_FRAMES - 1 - elapsed_time / (DOOR_FRAME_DURATION
-				/ DOOR_FRAMES);
+													   / DOOR_FRAMES);
 		if (door_frame >= DOOR_FRAMES)
 			door_frame = DOOR_FRAMES - 1;
 		if (door_frame <= 0)
 		{
 			game->door_are_closing = false;
 			door_frame = 0;
+			start_time = 0;
 		}
 		update_door_close_textures(game, door_frame);
 	}
+//	else
+//		start_time = 0;
 }
 
 void	update_door_close_textures(t_game *game, int door_frame)
