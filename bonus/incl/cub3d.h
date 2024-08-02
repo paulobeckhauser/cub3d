@@ -446,7 +446,7 @@ void	action_main_menu(t_game *game);
 void	action_game(t_game *game);
 void	animation(t_game *game);
 void	update_enemy_cast_textures(t_game *game, int j);
-void	update_hp_status(t_game *game, int enemy_frame, int *i);
+void	update_hp_status(t_game *game, int enemy_frame);
 void	update_door_close_textures(t_game *game, int door_frame);
 void	update_door_open_textures(t_game *game,	int door_frame);
 void	update_avatar_textures(t_game *game, int avatar_frame);

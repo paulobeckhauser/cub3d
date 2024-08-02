@@ -257,14 +257,16 @@ void	animation_enemy_cast(t_game *game)
 void	update_enemy_cast_textures(t_game *game, int j)
 {
 	struct timeval	tv;
+	long			start_time;
 	long			current_time;
 	long			elapsed_time;
 	int				enemy_frame;
-	static int		i = ENEMY_FRAMES;
-
+	
+	gettimeofday(&tv, NULL);
+	start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-	elapsed_time = current_time - game->enemy_animation_start_time * -2;
+	elapsed_time = current_time - start_time * -2;
 	enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES))
 		% ENEMY_FRAMES;
 	if (enemy_frame == 0 && game->hp_frame_updated)
@@ -275,16 +277,17 @@ void	update_enemy_cast_textures(t_game *game, int j)
 		game->enemy[j].texture
 			= game->textures->dark_priest_texture[enemy_frame];
 	game->enemy[j].visible = false;
-	update_hp_status(game, enemy_frame, &i);
+	update_hp_status(game, enemy_frame);
 }
 
-void	update_hp_status(t_game *game, int enemy_frame, int *i)
+void	update_hp_status(t_game *game, int enemy_frame)
 {
+	static int	i = ENEMY_FRAMES;
 	if (enemy_frame == 9 && !game->hp_frame_updated)
 	{
 		if (i != 0)
 			game->textures->hp_current_texture
-				= game->textures->hp_texture[--(*i)];
+				= game->textures->hp_texture[--i];
 		game->hp_frame_updated = true;
 	}
 	if (game->textures->hp_current_texture == game->textures->hp_texture[0]

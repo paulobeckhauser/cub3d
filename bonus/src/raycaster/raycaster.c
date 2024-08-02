@@ -38,14 +38,12 @@ void	calc_dir_vectors(t_game *game)
 
 void	raycaster(t_game *game)
 {
-	float			angle_incr_radians;
 	float			angle_iter;
 	float			dir_x;
 	float			dir_y;
 	int				i;
 	struct timeval	tv;
 
-	angle_incr_radians = to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
 	angle_iter = to_radians(game->ray_main_angle) - to_radians(FIELD_OF_VIEW
 			/ 2);
 	if (angle_iter < 0)
@@ -127,7 +125,7 @@ void	raycaster(t_game *game)
 			}
 			--game->depth_lvl;
 		}
-		angle_iter += angle_incr_radians;
+		angle_iter += to_radians(FIELD_OF_VIEW / SCREEN_WIDTH);
 		if (angle_iter < 0)
 			angle_iter += 2 * M_PI;
 		else if (angle_iter > 2 * M_PI)
