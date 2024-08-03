@@ -55,10 +55,7 @@ void	rotate_player_mouse(t_game *game)
 void	open_close_door(t_game *game)
 {
 	int				i;
-	struct timeval	tv;
 
-	gettimeofday(&tv, NULL);
-	game->door_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	i = 0;
 	while (i < DOOR_MAX)
 	{

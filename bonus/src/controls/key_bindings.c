@@ -67,13 +67,11 @@ int	mouse_move(int x, int y, t_game *game)
 
 int	mouse_press(int button, int x, int y, t_game *game)
 {
-	struct timeval	tv;
 	int				i;
 
-	gettimeofday(&tv, NULL);
 	(void)x;
 	(void)y;
-	if (button == 1)
+	if (button == 1 && !game->animation_gun)
 	{
 		i = 0;
 		while (i < ENEMY_MAX)
@@ -87,7 +85,6 @@ int	mouse_press(int button, int x, int y, t_game *game)
 			}
 			++i;
 		}
-		game->gun_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 		game->keys[MOUSE_LEFT_CLICK] = true;
 	}
 	return (0);
@@ -136,8 +133,10 @@ void	animation(t_game *game)
 	else if (!game->animation_gun && !game->keys[MOUSE_LEFT_CLICK]
 		&& game->player == PABECKHA)
 		game->textures->gun_current_texture = game->textures->shotgun[0];
-	animation_open_door(game);
-	animation_close_door(game);
+	if (game->door_are_opening)
+		animation_open_door(game);
+	if (game->door_are_closing)
+		animation_close_door(game);
 	if (game->enemy_visible)
 		animation_enemy_cast(game);
 	animation_enemy_death(game);
@@ -169,37 +168,39 @@ void	action_main_menu(t_game *game)
 
 void	action_mouse_left_click(t_game *game)
 {
+	game->animation_gun = true;
 	if (game->player == PABECKHA)
-		animation_gun_shoot(game, SHOTGUN_FRAME_DURATION, SHOTGUN_FRAMES);
+		animation_gun_shoot(game, SHOTGUN_FRAME_DURATION, SHOTGUN_FRAMES,
+			game->textures->shotgun);
 	else
 		animation_gun_shoot(game, DESERT_EAGLE_FRAME_DURATION,
-			DESERT_EAGLE_FRAMES);
+			DESERT_EAGLE_FRAMES, game->textures->desert_eagle);
 }
 
-void	animation_gun_shoot(t_game *game, int frame_duration, int frames)
+void	animation_gun_shoot(t_game *game, int frame_duration, int frames,
+			void **gun_type)
 {
 	struct timeval	tv;
+	static long		start_time = 0;
 	long			current_time;
-	long			elapsed_time;
 	int				gun_frame;
 
+	if (start_time == 0)
+	{
+		gettimeofday(&tv, NULL);
+		start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	}
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-	elapsed_time = current_time - game->gun_animation_start_time;
-	gun_frame = elapsed_time / (frame_duration / frames);
-	if (gun_frame < 0)
-		gun_frame = 0;
-	if (gun_frame >= frames)
+	gun_frame = (current_time - start_time) / (frame_duration / frames);
+	if (gun_frame >= frames || gun_frame < 0)
 	{
 		game->keys[MOUSE_LEFT_CLICK] = false;
 		gun_frame = 0;
+		start_time = 0;
+		game->animation_gun = false;
 	}
-	if (game->player == PABECKHA)
-		game->textures->gun_current_texture
-			= game->textures->shotgun[gun_frame];
-	else
-		game->textures->gun_current_texture
-			= game->textures->desert_eagle[gun_frame];
+	game->textures->gun_current_texture = gun_type[gun_frame];
 }
 
 void	animation_enemy_death(t_game *game)
@@ -218,17 +219,20 @@ void	animation_enemy_death(t_game *game)
 
 void	update_death_textures(t_game *game, int j)
 {
+	static long		start_time = 0;
 	long			current_time;
-	long			elapsed_time;
 	int				blood_frame;
 	struct timeval	tv;
 
+	if (start_time == 0)
+	{
+		gettimeofday(&tv, NULL);
+		start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	}
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-	elapsed_time = current_time - game->enemy_animation_start_time * 2
-		* -1;
-	blood_frame = (elapsed_time / (BLOOD_FRAME_DURATION / BLOOD_FRAMES))
-		% BLOOD_FRAMES;
+	blood_frame = (current_time - start_time)
+		/ (BLOOD_FRAME_DURATION / BLOOD_FRAMES);
 	if (blood_frame < 0)
 		blood_frame = 0;
 	if (blood_frame >= BLOOD_FRAMES - 1)
@@ -236,6 +240,7 @@ void	update_death_textures(t_game *game, int j)
 		game->enemy[j].texture
 			= game->textures->dark_priest_texture[ENEMY_FRAMES - 1];
 		game->enemy[j].dead = true;
+		start_time = 0;
 		return ;
 	}
 	game->enemy[j].texture = game->textures->blood[blood_frame];
@@ -257,23 +262,25 @@ void	animation_enemy_cast(t_game *game)
 void	update_enemy_cast_textures(t_game *game, int j)
 {
 	struct timeval	tv;
-	long			start_time;
+	static long		start_time = 0;
 	long			current_time;
-	long			elapsed_time;
 	int				enemy_frame;
-	
-	gettimeofday(&tv, NULL);
-	start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+
+	if (start_time == 0)
+	{
+		gettimeofday(&tv, NULL);
+		start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	}
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-	elapsed_time = current_time - start_time * -2;
-	enemy_frame = (elapsed_time / (ENEMY_FRAME_DURATION / ENEMY_FRAMES))
-		% ENEMY_FRAMES;
-	if (enemy_frame == 0 && game->hp_frame_updated)
-		game->hp_frame_updated = false;
-	if (enemy_frame < 0)
+	enemy_frame = (current_time - start_time)
+		/ (ENEMY_FRAME_DURATION / ENEMY_FRAMES);
+	if (enemy_frame > ENEMY_FRAMES - 1 || enemy_frame < 0)
+	{
+		start_time = 0;
 		enemy_frame = 0;
-	if (enemy_frame != 10)
+	}
+	if (enemy_frame != ENEMY_FRAMES - 1)
 		game->enemy[j].texture
 			= game->textures->dark_priest_texture[enemy_frame];
 	game->enemy[j].visible = false;
@@ -283,6 +290,9 @@ void	update_enemy_cast_textures(t_game *game, int j)
 void	update_hp_status(t_game *game, int enemy_frame)
 {
 	static int	i = ENEMY_FRAMES;
+
+	if (enemy_frame == 0 && game->hp_frame_updated)
+		game->hp_frame_updated = false;
 	if (enemy_frame == 9 && !game->hp_frame_updated)
 	{
 		if (i != 0)
@@ -298,35 +308,28 @@ void	update_hp_status(t_game *game, int enemy_frame)
 void	animation_close_door(t_game *game)
 {
 	struct timeval	tv;
-	static long		start_time;
+	static long		start_time = 0;
 	long			current_time;
-	long			elapsed_time;
 	int				door_frame;
-	
-	if (game->door_are_closing)
+
+	if (start_time == 0)
 	{
-		if (start_time == 0)
-		{
-			gettimeofday(&tv, NULL);
-			start_time = tv.tv_sec * 1000000 + tv.tv_usec;
-		}
 		gettimeofday(&tv, NULL);
-		current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-		elapsed_time = current_time - start_time;
-		door_frame = DOOR_FRAMES - 1 - elapsed_time / (DOOR_FRAME_DURATION
-													   / DOOR_FRAMES);
-		if (door_frame >= DOOR_FRAMES)
-			door_frame = DOOR_FRAMES - 1;
-		if (door_frame <= 0)
-		{
-			game->door_are_closing = false;
-			door_frame = 0;
-			start_time = 0;
-		}
-		update_door_close_textures(game, door_frame);
+		start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	}
-//	else
-//		start_time = 0;
+	gettimeofday(&tv, NULL);
+	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	door_frame = DOOR_FRAMES - 1 - (current_time - start_time)
+		/ (DOOR_FRAME_DURATION / DOOR_FRAMES);
+	if (door_frame >= DOOR_FRAMES)
+		door_frame = DOOR_FRAMES - 1;
+	if (door_frame <= 0)
+	{
+		game->door_are_closing = false;
+		door_frame = 0;
+		start_time = 0;
+	}
+	update_door_close_textures(game, door_frame);
 }
 
 void	update_door_close_textures(t_game *game, int door_frame)
@@ -354,25 +357,28 @@ void	update_door_close_textures(t_game *game, int door_frame)
 void	animation_open_door(t_game *game)
 {
 	struct timeval	tv;
+	static long		start_time = 0;
 	long			current_time;
-	long			elapsed_time;
 	int				door_frame;
 
-	if (game->door_are_opening)
+	if (start_time == 0)
 	{
 		gettimeofday(&tv, NULL);
-		current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-		elapsed_time = current_time - game->door_animation_start_time;
-		door_frame = elapsed_time / (DOOR_FRAME_DURATION / DOOR_FRAMES);
-		if (door_frame < 0)
-			door_frame = 0;
-		if (door_frame >= DOOR_FRAMES)
-		{
-			game->door_are_opening = false;
-			door_frame = DOOR_FRAMES - 1;
-		}
-		update_door_open_textures(game, door_frame);
+		start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	}
+	gettimeofday(&tv, NULL);
+	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	door_frame = (current_time - start_time)
+		/ (DOOR_FRAME_DURATION / DOOR_FRAMES);
+	if (door_frame < 0)
+		door_frame = 0;
+	if (door_frame >= DOOR_FRAMES)
+	{
+		game->door_are_opening = false;
+		door_frame = DOOR_FRAMES - 1;
+		start_time = 0;
+	}
+	update_door_open_textures(game, door_frame);
 }
 
 void	update_door_open_textures(t_game *game,	int door_frame)
@@ -400,22 +406,26 @@ void	update_door_open_textures(t_game *game,	int door_frame)
 void	animation_avatar(t_game *game)
 {
 	struct timeval	tv;
-	long			start_time;
+	static long		start_time = 0;
 	long			current_time;
-	long			elapsed_time;
 	int				avatar_frame;
 
-	gettimeofday(&tv, NULL);
-	start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	if (start_time == 0)
+	{
+		gettimeofday(&tv, NULL);
+		start_time = tv.tv_sec * 1000000 + tv.tv_usec;
+	}
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
-	elapsed_time = current_time - start_time * -2;
-	avatar_frame = (elapsed_time / (AVATAR_FRAME_DURATION / AVATAR_FRAMES))
-		% AVATAR_FRAMES;
+	avatar_frame = (current_time - start_time)
+		/ (AVATAR_FRAME_DURATION / AVATAR_FRAMES);
 	if (avatar_frame < 0)
 		avatar_frame = 0;
 	if (avatar_frame >= AVATAR_FRAMES)
+	{
 		avatar_frame = AVATAR_FRAMES - 1;
+		start_time = 0;
+	}
 	update_avatar_textures(game, avatar_frame);
 }
 

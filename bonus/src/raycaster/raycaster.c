@@ -42,7 +42,6 @@ void	raycaster(t_game *game)
 	float			dir_x;
 	float			dir_y;
 	int				i;
-	struct timeval	tv;
 
 	angle_iter = to_radians(game->ray_main_angle) - to_radians(FIELD_OF_VIEW
 			/ 2);
@@ -53,8 +52,6 @@ void	raycaster(t_game *game)
 	dir_x = 0;
 	dir_y = 0;
 	game->prev_door_distance = INFINITY;
-	gettimeofday(&tv, NULL);
-	game->enemy_animation_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	game->depth_lvl = 0;
 	game->dist_idx = 0;
 	while (game->depth_lvl < DEPTH_MAX)
@@ -75,7 +72,6 @@ void	raycaster(t_game *game)
 		game->enemy[game->depth_lvl].x_start = 0;
 		game->enemy[game->depth_lvl].x_end = 0;
 		game->enemy[game->depth_lvl].tex_x = 0;
-		game->enemy[game->depth_lvl].depth_lvl = -1;
 		game->enemy[game->depth_lvl].visible = false;
 		++game->depth_lvl;
 	}
@@ -227,7 +223,6 @@ void	cast_ray(t_game *game, float ray_angle)
 										/ (float)game->enemy[i].size;
 							}
 						}
-						game->enemy[i].depth_lvl = game->depth_lvl;
 						break ;
 					}
 					++i;

@@ -45,11 +45,8 @@ void	init_game(t_game *game)
 	game->img_x = 0;
 	game->img_y = 0;
 	init_keys(game);
-	game->door_animation_start_time = 0;
-	game->gun_animation_start_time = 0;
 	game->door_are_opening = false;
 	game->door_are_closing = false;
-	game->enemy_animation_start_time = 0;
 	game->mouse_x = 0;
 	game->hp_frame_updated = false;
 	game->player_dead = false;
@@ -72,7 +69,6 @@ void	init_game(t_game *game)
 		game->enemy[game->depth_lvl].size = 0;
 		game->enemy[game->depth_lvl].tex_x = 0;
 		game->enemy[game->depth_lvl].visible = false;
-		game->enemy[game->depth_lvl].got_bullet = false;
 		game->enemy[game->depth_lvl].dead = false;
 		++game->depth_lvl;
 	}
@@ -91,6 +87,6 @@ void	init_keys(t_game *game)
 	int i;
 
 	i = 0;
-	while (i < 10)
+	while (i < NUM_KEYS)
 		game->keys[i++] = false;
 }

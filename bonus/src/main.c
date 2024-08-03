@@ -115,7 +115,6 @@ int	main(int argc, char **argv)
 		render_game(&game);
 		mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
 		mlx_loop(game.mlx_ptr);
-		free(game.map);
 		mlx_destroy_image(game.mlx_ptr, image.img);
 		image.img = NULL;
 	}

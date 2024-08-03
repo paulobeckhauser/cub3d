@@ -58,9 +58,6 @@
 # define SFRANKIE 1
 
 // textures
-# define MINIMAP_BG "./bonus/textures/minimap/minimap_bg.xpm"
-# define FLOOR_TEXTURE "./bonus/textures/minimap/floor_texture.xpm"
-# define WALL_TEXTURE "./bonus/textures/minimap/wall_texture.xpm"
 # define PLAYER_TEXTURE "./bonus/textures/minimap/player_ln_texture.xpm"
 # define DOOR_MINIMAP "./bonus/textures/minimap/door.xpm"
 # define SKULL "./bonus/textures/minimap/skull.xpm"
@@ -172,6 +169,7 @@
 # define WEST 4
 
 // keys
+# define NUM_KEYS 10
 # define ESC 0
 # define W 1
 # define S 2
@@ -187,7 +185,7 @@
 # define DOOR_FRAMES 5
 # define DOOR_FRAME_DURATION 1200000
 # define ENEMY_FRAMES 11
-# define ENEMY_FRAME_DURATION 4800000
+# define ENEMY_FRAME_DURATION 1550000
 # define DESERT_EAGLE_FRAMES 5
 # define DESERT_EAGLE_FRAME_DURATION 600000
 # define SHOTGUN_FRAMES 15
@@ -195,9 +193,9 @@
 # define GUN_RUN_FRAMES 2
 # define GUN_RUN_FRAME_DURATION 1800000
 # define BLOOD_FRAMES 30
-# define BLOOD_FRAME_DURATION 2400000
+# define BLOOD_FRAME_DURATION 600000
 # define AVATAR_FRAMES 15
-# define AVATAR_FRAME_DURATION 12000000
+# define AVATAR_FRAME_DURATION 3000000
 # define HP_FRAMES 11
 
 typedef struct s_image
@@ -310,10 +308,8 @@ typedef struct s_enemy
 	int			x_end;
 	int			size;
 	float		tex_x;
-	int			depth_lvl;
 	bool		visible;
 	bool		hit_body[SCREEN_WIDTH];
-	bool		got_bullet;
 	bool		dead;
 }				t_enemy;
 
@@ -330,7 +326,6 @@ typedef struct s_raycaster
 	int			prev_colis_x;
 	int			prev_colis_y;
 	bool		found_wall;
-	bool		found_enemy;
 }				t_raycaster;
 
 typedef struct s_game
@@ -338,7 +333,6 @@ typedef struct s_game
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_image		*image;
-	char		**map;
 	float		ray_main_angle;
 	float		ray_hit_x;
 	float		ray_hit_y;
@@ -351,15 +345,12 @@ typedef struct s_game
 	int			door_direction;
 	int			img_x;
 	int			img_y;
-	bool		keys[10];
+	bool		keys[NUM_KEYS];
 	t_vectors	*vectors;
 	int			vec_idx;
-	long		door_animation_start_time;
 	bool		door_are_opening;
 	bool		door_are_closing;
 	float		prev_door_distance;
-	long		enemy_animation_start_time;
-	long		gun_animation_start_time;
 	int			mouse_x;
 	bool		hp_frame_updated;
 	bool		player_dead;
@@ -384,9 +375,7 @@ void			render_gun(t_game *game);
 void			render_crosshair(t_game *game);
 void			render_wall_line(t_game *game);
 void			cast_ray(t_game *game, float ray_angle);
-char			**init_test_map(void);
 void			load_images_from_dir(t_game *game);
-void			mark_player(t_game *game);
 
 float			to_radians(float degrees);
 void			calc_directions(t_raycaster *raycaster, t_game *game,
@@ -420,10 +409,8 @@ void			save_closest_distance(t_raycaster *raycaster, t_game *game);
 void			render_enemy_line(t_game *game, int enemy_i);
 int				mouse_press(int button, int x, int y, t_game *game);
 void			render_hp(t_game *game);
-void			render_game_over(t_game *game);
 void			render_background(t_game *game);
 void			render_minimap_bg(t_game *game);
-// void    render_border(t_game *game);
 void			render_border(t_game *game, int size, int x, int y);
 bool			is_collision_point_door(t_raycaster *raycaster, t_game *game);
 int				find_enemy_end(t_game *game, float angle_iter, int enemy_i);
@@ -440,8 +427,8 @@ void			render_avatar(t_game *game);
 void			animation_avatar(t_game *game);
 void			render_main_menu(t_game *game);
 void			animation_gun_running(t_game *game);
-void			animation_gun_shoot(t_game *game, int frame_duration,
-					int frames);
+void	animation_gun_shoot(t_game *game, int frame_duration, int frames,
+								void **gun_type);
 void	action_main_menu(t_game *game);
 void	action_game(t_game *game);
 void	animation(t_game *game);
