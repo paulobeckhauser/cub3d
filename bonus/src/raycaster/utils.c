@@ -17,7 +17,7 @@ float	to_radians(float degrees)
 	return (degrees * (M_PI / (ANGLE_MAX / 2)));
 }
 
-void	calc_directions(t_raycaster *raycaster, t_game *game, float ray_new_x,
+void	init_raycaster_data(t_raycaster *raycaster, t_game *game, float ray_new_x,
 		float ray_new_y)
 {
 	raycaster->dir_x = ray_new_x - game->data->player->x;
@@ -26,6 +26,14 @@ void	calc_directions(t_raycaster *raycaster, t_game *game, float ray_new_x,
 			+ raycaster->dir_y * raycaster->dir_y);
 	raycaster->dir_x /= raycaster->len;
 	raycaster->dir_y /= raycaster->len;
+	raycaster->x_iterator = game->data->player->x;
+	raycaster->y_iterator = game->data->player->y;
+	raycaster->speed = 1;
+	raycaster->colis_x = 0;
+	raycaster->colis_y = 0;
+	raycaster->prev_colis_x = 0;
+	raycaster->prev_colis_y = 0;
+	raycaster->found_wall = false;
 }
 
 bool	is_ray_on_square_edge(t_raycaster *raycaster)

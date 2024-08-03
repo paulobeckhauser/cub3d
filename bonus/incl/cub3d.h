@@ -378,7 +378,7 @@ void			cast_ray(t_game *game, float ray_angle);
 void			load_images_from_dir(t_game *game);
 
 float			to_radians(float degrees);
-void			calc_directions(t_raycaster *raycaster, t_game *game,
+void			init_raycaster_data(t_raycaster *raycaster, t_game *game,
 					float ray_new_x, float ray_new_y);
 bool			is_ray_on_square_edge(t_raycaster *raycaster);
 void			calc_collision_point_x_y(t_raycaster *raycaster);
@@ -454,6 +454,18 @@ void	load_images_blood_2_3(t_game *game);
 void	load_images_blood_3_3(t_game *game);
 void	load_images_menu(t_game *game);
 void	load_images_avatar(t_game *game);
+void	reset_objects_data(t_game *game);
+void	reset_depth_data(t_game *game);
+void	render_vertical(t_game *game);
+float	fix_angle_overflow(float angle_iter);
+int	find_enemy(t_game *game);
+bool	is_ray_out_of_map(t_raycaster *raycaster, t_game *game);
+bool	is_direction_in_range(t_raycaster *raycaster, t_game *game);
+void	save_object_wall(t_raycaster *raycaster, t_game *game, float ray_angle);
+void	save_object_door(t_raycaster *raycaster, t_game *game, float ray_angle);
+void	save_object_enemy(t_raycaster *raycaster, t_game *game, float ray_angle);
+bool	is_coll_point_same(t_raycaster *raycaster);
+void	calc_enemy_data_relative_to_player(t_game *game, float ray_angle, int i);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);
