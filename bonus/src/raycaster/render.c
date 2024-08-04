@@ -78,62 +78,56 @@ void	render_minimap_bg(t_game *game)
 	}
 }
 
+
+void	render_minimap_horizontal_pixels(t_game *game, t_minimap *minimap)
+{
+	minimap->tex_x = 0;
+	while (minimap->tex_x < MINIMAP_SCALE)
+	{
+		if (minimap->map_x < 0 || minimap->map_y < 0
+			|| minimap->map_y >= game->data->number_lines_map_element
+			|| !game->data->map_element[minimap->map_y]
+			|| !game->data->map_element[minimap->map_y][minimap->map_x])
+			break ;
+		if (game->data->map_element[minimap->map_y][minimap->map_x] == '0')
+			minimap->color = rgb_to_hex(74, 17, 17);
+		else if (game->data->map_element[minimap->map_y][minimap->map_x] == '1')
+			minimap->color = rgb_to_hex(30, 28, 87);
+		else if (game->data->map_element[minimap->map_y][minimap->map_x] == '2'
+				 || game->data->map_element[minimap->map_y][minimap->map_x] == '3')
+			minimap->color = get_pixel_color(game->textures->door_minimap,minimap->tex_x, minimap->tex_y);
+		else if (game->data->map_element[minimap->map_y][minimap->map_x] == '4')
+			minimap->color = get_pixel_color(game->textures->skull, minimap->tex_x,minimap->tex_y);
+		else
+			break ;
+		game->image->data[(minimap->screen_y * MINIMAP_SCALE + minimap->tex_y) * SCREEN_WIDTH + (minimap->screen_x * MINIMAP_SCALE + minimap->tex_x)] = minimap->color;
+		minimap->tex_x++;
+	}
+}
+
 void	render_minimap(t_game *game)
 {
-	int	screen_x;
-	int	screen_y;
-	int	map_x;
-	int	map_y;
-	int	tex_x;
-	int	tex_y;
-	int	color;
-
-	screen_y = 0;
-	map_y = (int)game->data->player->y / SQUARE_SIZE - (MINIMAP_SIZE_SQUARES
-			/ 2);
-	while (screen_y < MINIMAP_SIZE_SQUARES)
+	t_minimap	minimap;
+	
+	minimap.screen_y = 0;
+	minimap.map_y = (int)game->data->player->y / SQUARE_SIZE - (MINIMAP_SIZE_SQUARES / 2);
+	while (minimap.screen_y < MINIMAP_SIZE_SQUARES)
 	{
-		screen_x = 0;
-		map_x = (int)game->data->player->x / SQUARE_SIZE - (MINIMAP_SIZE_SQUARES
-				/ 2);
-		while (screen_x < MINIMAP_SIZE_SQUARES)
+		minimap.screen_x = 0;
+		minimap.map_x = (int)game->data->player->x / SQUARE_SIZE - (MINIMAP_SIZE_SQUARES / 2);
+		while (minimap.screen_x < MINIMAP_SIZE_SQUARES)
 		{
-			tex_y = 0;
-			while (tex_y < MINIMAP_SCALE)
+			minimap.tex_y = 0;
+			while (minimap.tex_y < MINIMAP_SCALE)
 			{
-				tex_x = 0;
-				while (tex_x < MINIMAP_SCALE)
-				{
-					if (map_x < 0 || map_y < 0
-						|| map_y >= game->data->number_lines_map_element
-						|| !game->data->map_element[map_y]
-						|| !game->data->map_element[map_y][map_x])
-						break ;
-					if (game->data->map_element[map_y][map_x] == '0')
-						color = rgb_to_hex(74, 17, 17);
-					else if (game->data->map_element[map_y][map_x] == '1')
-						color = rgb_to_hex(30, 28, 87);
-					else if (game->data->map_element[map_y][map_x] == '2'
-						|| game->data->map_element[map_y][map_x] == '3')
-						color = get_pixel_color(game->textures->door_minimap,
-								tex_x, tex_y);
-					else if (game->data->map_element[map_y][map_x] == '4')
-						color = get_pixel_color(game->textures->skull, tex_x,
-								tex_y);
-					else
-						break ;
-					game->image->data[(screen_y * MINIMAP_SCALE + tex_y)
-						* SCREEN_WIDTH + (screen_x * MINIMAP_SCALE
-							+ tex_x)] = color;
-					tex_x++;
-				}
-				tex_y++;
+				render_minimap_horizontal_pixels(game, &minimap);
+				++minimap.tex_y;
 			}
-			map_x++;
-			screen_x++;
+			minimap.map_x++;
+			minimap.screen_x++;
 		}
-		screen_y++;
-		map_y++;
+		minimap.screen_y++;
+		minimap.map_y++;
 	}
 }
 
@@ -446,17 +440,4 @@ void	render_main_menu(t_game *game)
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->image->img, 0,
 		0);
-}
-
-void	render_vertical_line(int x, t_game *game, int red, int green, int blue)
-{
-	int	tex_y;
-
-	tex_y = 0;
-	while (tex_y < SCREEN_HEIGHT)
-	{
-		game->image->data[tex_y * SCREEN_WIDTH + x] = rgb_to_hex(red, green,
-				blue);
-		++tex_y;
-	}
 }

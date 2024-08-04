@@ -17,8 +17,8 @@ float	to_radians(float degrees)
 	return (degrees * (M_PI / (ANGLE_MAX / 2)));
 }
 
-void	init_raycaster_data(t_raycaster *raycaster, t_game *game, float ray_new_x,
-		float ray_new_y)
+void	init_raycaster_data(t_raycaster *raycaster, t_game *game,
+		float ray_new_x, float ray_new_y)
 {
 	raycaster->dir_x = ray_new_x - game->data->player->x;
 	raycaster->dir_y = ray_new_y - game->data->player->y;

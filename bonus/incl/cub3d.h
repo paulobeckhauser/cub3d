@@ -198,6 +198,17 @@
 # define AVATAR_FRAME_DURATION 3000000
 # define HP_FRAMES 11
 
+typedef struct s_minimap
+{
+	int	screen_x;
+	int	screen_y;
+	int	map_x;
+	int	map_y;
+	int	tex_x;
+	int	tex_y;
+	int	color;
+}				t_minimap;
+
 typedef struct s_image
 {
 	void		*img;
@@ -466,6 +477,7 @@ void	save_object_door(t_raycaster *raycaster, t_game *game, float ray_angle);
 void	save_object_enemy(t_raycaster *raycaster, t_game *game, float ray_angle);
 bool	is_coll_point_same(t_raycaster *raycaster);
 void	calc_enemy_data_relative_to_player(t_game *game, float ray_angle, int i);
+void	render_minimap_horizontal_pixels(t_game *game, t_minimap *minimap);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);
