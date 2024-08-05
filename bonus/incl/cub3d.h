@@ -209,6 +209,17 @@ typedef struct s_minimap
 	int	color;
 }				t_minimap;
 
+typedef struct s_render
+{
+	int		line_height;
+	int		y_iterator;
+	int		y_end;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+	float	scale;
+}				t_render;
+
 typedef struct s_image
 {
 	void		*img;
@@ -339,42 +350,48 @@ typedef struct s_raycaster
 	bool		found_wall;
 }				t_raycaster;
 
+typedef struct	s_animation
+{
+	bool		door_are_opening;
+	bool		door_are_closing;
+	bool		hp_frame_updated;
+	bool		animation_gun;
+	
+}	t_animation;
+
 typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_image		*image;
 	float		ray_main_angle;
 	float		ray_hit_x;
 	float		ray_hit_y;
 	float		ray_new_x;
 	float		ray_new_y;
-	t_depth		depth[DEPTH_MAX];
 	int			dist_idx;
 	int			depth_lvl;
 	int			wall_direction;
 	int			door_direction;
 	int			img_x;
 	int			img_y;
-	bool		keys[NUM_KEYS];
-	t_vectors	*vectors;
 	int			vec_idx;
-	bool		door_are_opening;
-	bool		door_are_closing;
 	float		prev_door_distance;
 	int			mouse_x;
-	bool		hp_frame_updated;
 	bool		player_dead;
-	t_textures	*textures;
-	t_data		*data;
-	t_door		door[DOOR_MAX];
-	t_enemy		enemy[ENEMY_MAX];
+	bool		enemy_visible;
 	bool		main_menu;
-	bool		animation_gun;
 	int			enemy_count;
 	bool		won_game;
 	int			player;
-	bool		enemy_visible;
+	bool		keys[NUM_KEYS];
+	t_image		image;
+	t_depth		depth[DEPTH_MAX];
+	t_vectors	vectors[ANGLE_MAX / ROTATION_SPEED];
+	t_textures	textures;
+	t_data		data;
+	t_door		door[DOOR_MAX];
+	t_enemy		enemy[ENEMY_MAX];
+	t_animation animation;
 }				t_game;
 
 void			calc_dir_vectors(t_game *game);
@@ -456,7 +473,7 @@ void	load_images_minimap(t_game *game);
 void	load_images_desert_eagle(t_game *game);
 void	load_images_shotgun_1_2(t_game *game);
 void	load_images_shotgun_2_2(t_game *game);
-void	load_imaged_door(t_game *game);
+void	load_images_door(t_game *game);
 void	load_images_enemy_1_2(t_game *game);
 void	load_images_enemy_2_2(t_game *game);
 void	load_images_hp(t_game *game);
@@ -469,7 +486,7 @@ void	reset_objects_data(t_game *game);
 void	reset_depth_data(t_game *game);
 void	render_vertical(t_game *game);
 float	fix_angle_overflow(float angle_iter);
-int	find_enemy(t_game *game);
+int		find_enemy(t_game *game);
 bool	is_ray_out_of_map(t_raycaster *raycaster, t_game *game);
 bool	is_direction_in_range(t_raycaster *raycaster, t_game *game);
 void	save_object_wall(t_raycaster *raycaster, t_game *game, float ray_angle);
@@ -478,6 +495,15 @@ void	save_object_enemy(t_raycaster *raycaster, t_game *game, float ray_angle);
 bool	is_coll_point_same(t_raycaster *raycaster);
 void	calc_enemy_data_relative_to_player(t_game *game, float ray_angle, int i);
 void	render_minimap_horizontal_pixels(t_game *game, t_minimap *minimap);
+void	render_wall_pixels_vertical(t_game *game, t_render *render);
+void	render_door_pixels_vertical(t_game *game, t_render *render);
+void	render_door_pixels_vertical(t_game *game, t_render *render);
+void	render_enemy_pixels_vertical(t_game *game, int enemy_i, int y, int y_end);
+void	render_main_menu_pixels_vertical(t_game *game, float tex_x, int x);
+void	init_mlx(t_game *game);
+void	init_utils(t_game *game);
+void	assign_door_texture(t_game *game, int x, int y, int i);
+void	init_image(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);
@@ -490,7 +516,6 @@ bool			floor_ceiling_lines(char **array, t_data *data, int i);
 void			free_2d_array(char **array);
 int				free_variables_error(t_data *data);
 void			init_vars(t_data *data);
-// int				parser(char *str);
 int				parser(char *str, t_data *data);
 void			replace_error_message(t_data *data, char *str);
 int				rgb_to_hex(int red, int green, int blue);
@@ -501,7 +526,6 @@ bool			store_textures(t_data *data);
 bool			store_surface_colors(t_data *data);
 bool			store_map(t_data *data);
 void			init_game(t_game *game);
-void			init_keys(t_game *game);
 void			init_vars_colors(int *red, int *green, int *blue);
 bool			get_red_color(int *red, char **array, t_data *data);
 bool			get_green_color(int *green, char **array, t_data *data);
@@ -526,5 +550,6 @@ bool			store_south_texture_format(t_data *data, char **array);
 bool			store_west_texture_format(t_data *data, char **array);
 bool			store_east_texture_format(t_data *data, char **array);
 bool			apply_ffill_algo(char **map_backup, t_data *data);
+void			print_arg_error(void);
 
 #endif
