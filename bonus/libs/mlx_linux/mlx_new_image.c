@@ -52,8 +52,8 @@ void	*mlx_int_new_xshm_image(t_xvar *xvar,int width,int height,int format)
     }
   img->width = width;
   img->height = height;
-  img->size_line = img->image->bytes_per_line;
-  img->bpp = img->image->bits_per_pixel;
+  img->size_line = img->image.bytes_per_line;
+  img->bpp = img->image.bits_per_pixel;
   img->format = format;
   img->shm.shmid = shmget(IPC_PRIVATE,(width+32)*height*4,IPC_CREAT|0777);
   if (img->shm.shmid==-1)
@@ -62,7 +62,7 @@ void	*mlx_int_new_xshm_image(t_xvar *xvar,int width,int height,int format)
       free(img);
       return ((void *)0);
     }
-  img->data = img->shm.shmaddr = img->image->data = shmat(img->shm.shmid,0,0);
+  img->data = img->shm.shmaddr = img->image.data = shmat(img->shm.shmid,0,0);
   if (img->data==(void *)-1)
     {
       shmctl(img->shm.shmid,IPC_RMID,0);
@@ -125,8 +125,8 @@ void	*mlx_int_new_image(t_xvar *xvar,int width, int height,int format)
       return ((void *)0);
     }
   img->gc = 0;
-  img->size_line = img->image->bytes_per_line;
-  img->bpp = img->image->bits_per_pixel;
+  img->size_line = img->image.bytes_per_line;
+  img->bpp = img->image.bits_per_pixel;
   img->width = width;
   img->height = height;
   img->pix = XCreatePixmap(xvar->display,xvar->root,width,height,xvar->depth);

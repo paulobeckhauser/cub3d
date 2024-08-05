@@ -12,6 +12,14 @@
 
 #include "../../incl/cub3d.h"
 
+void	print_arg_error(void)
+{
+	ft_putstr_fd(RED, 2);
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd("Incorrect number of arguments\n", 2);
+	ft_putstr_fd(RESET, 2);
+}
+
 void	replace_error_message(t_data *data, char *str)
 {
 	if (data->map_error_message != NULL)
