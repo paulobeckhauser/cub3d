@@ -17,8 +17,8 @@ void	action_mouse_left_click(t_game *game)
 	game->animation.animation_gun = true;
 	if (game->player == PABECKHA)
 		animation_gun_shoot(game, SHOTGUN_FRAME_DURATION, SHOTGUN_FRAMES,
-							game->textures.shotgun);
+			game->textures.shotgun);
 	else
 		animation_gun_shoot(game, DESERT_EAGLE_FRAME_DURATION,
-							DESERT_EAGLE_FRAMES, game->textures.desert_eagle);
+			DESERT_EAGLE_FRAMES, game->textures.desert_eagle);
 }

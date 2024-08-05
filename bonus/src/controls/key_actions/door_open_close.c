@@ -15,7 +15,7 @@
 void	open_close_door(t_game *game)
 {
 	int				i;
-	
+
 	i = 0;
 	while (i < DOOR_MAX)
 	{

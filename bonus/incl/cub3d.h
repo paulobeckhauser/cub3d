@@ -6,7 +6,7 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:16:32 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/31 13:38:15 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/05 02:21:15 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "../libs/mlx_linux/mlx.h"
 # include "color.h"
 # include <errno.h>
-# include <fcntl.h> // open file function
+# include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -61,13 +61,13 @@
 # define PLAYER_TEXTURE "./bonus/textures/minimap/player_ln_texture.xpm"
 # define DOOR_MINIMAP "./bonus/textures/minimap/door.xpm"
 # define SKULL "./bonus/textures/minimap/skull.xpm"
-# define DESERT_EAGLE_0_4 "./bonus/textures/guns/desert_eagle/desert_eagle_0_4.xpm"
-# define DESERT_EAGLE_1_4 "./bonus/textures/guns/desert_eagle/desert_eagle_1_4.xpm"
-# define DESERT_EAGLE_2_4 "./bonus/textures/guns/desert_eagle/desert_eagle_2_4.xpm"
-# define DESERT_EAGLE_3_4 "./bonus/textures/guns/desert_eagle/desert_eagle_3_4.xpm"
-# define DESERT_EAGLE_4_4 "./bonus/textures/guns/desert_eagle/desert_eagle_4_4.xpm"
-# define DESERT_EAGLE_RUN_0_1 "./bonus/textures/guns/desert_eagle/desert_eagle_run_0_1.xpm"
-# define DESERT_EAGLE_RUN_1_1 "./bonus/textures/guns/desert_eagle/desert_eagle_run_1_1.xpm"
+# define DESERT_EAGLE_0_4 "./bonus/textures/guns/deagle/deagle_0_4.xpm"
+# define DESERT_EAGLE_1_4 "./bonus/textures/guns/deagle/deagle_1_4.xpm"
+# define DESERT_EAGLE_2_4 "./bonus/textures/guns/deagle/deagle_2_4.xpm"
+# define DESERT_EAGLE_3_4 "./bonus/textures/guns/deagle/deagle_3_4.xpm"
+# define DESERT_EAGLE_4_4 "./bonus/textures/guns/deagle/deagle_4_4.xpm"
+# define DESERT_EAGLE_RUN_0_1 "./bonus/textures/guns/deagle/deagle_run_0_1.xpm"
+# define DESERT_EAGLE_RUN_1_1 "./bonus/textures/guns/deagle/deagle_run_1_1.xpm"
 # define SHOTGUN_0_14 "./bonus/textures/guns/shotgun/shotgun_0_14.xpm"
 # define SHOTGUN_1_14 "./bonus/textures/guns/shotgun/shotgun_1_14.xpm"
 # define SHOTGUN_2_14 "./bonus/textures/guns/shotgun/shotgun_2_14.xpm"
@@ -200,24 +200,24 @@
 
 typedef struct s_minimap
 {
-	int	screen_x;
-	int	screen_y;
-	int	map_x;
-	int	map_y;
-	int	tex_x;
-	int	tex_y;
-	int	color;
+	int			screen_x;
+	int			screen_y;
+	int			map_x;
+	int			map_y;
+	int			tex_x;
+	int			tex_y;
+	int			color;
 }				t_minimap;
 
 typedef struct s_render
 {
-	int		line_height;
-	int		y_iterator;
-	int		y_end;
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	float	scale;
+	int			line_height;
+	int			y_iterator;
+	int			y_end;
+	int			tex_x;
+	int			tex_y;
+	int			color;
+	float		scale;
 }				t_render;
 
 typedef struct s_image
@@ -350,14 +350,14 @@ typedef struct s_raycaster
 	bool		found_wall;
 }				t_raycaster;
 
-typedef struct	s_animation
+typedef struct s_animation
 {
 	bool		door_are_opening;
 	bool		door_are_closing;
 	bool		hp_frame_updated;
 	bool		animation_gun;
-	
-}	t_animation;
+
+}				t_animation;
 
 typedef struct s_game
 {
@@ -391,7 +391,7 @@ typedef struct s_game
 	t_data		data;
 	t_door		door[DOOR_MAX];
 	t_enemy		enemy[ENEMY_MAX];
-	t_animation animation;
+	t_animation	animation;
 }				t_game;
 
 void			calc_dir_vectors(t_game *game);
@@ -455,55 +455,62 @@ void			render_avatar(t_game *game);
 void			animation_avatar(t_game *game);
 void			render_main_menu(t_game *game);
 void			animation_gun_running(t_game *game);
-void	animation_gun_shoot(t_game *game, int frame_duration, int frames,
-								void **gun_type);
-void	action_main_menu(t_game *game);
-void	action_game(t_game *game);
-void	animation(t_game *game);
-void	update_enemy_cast_textures(t_game *game, int j);
-void	update_hp_status(t_game *game, int enemy_frame);
-void	update_door_close_textures(t_game *game, int door_frame);
-void	update_door_open_textures(t_game *game,	int door_frame);
-void	update_avatar_textures(t_game *game, int avatar_frame);
-void	update_gun_running_textures(t_game *game, int gun_frame);
-void	update_death_textures(t_game *game, int j);
-void	change_door_state(t_game *game, int i);
-void	load_images_wall(t_game *game);
-void	load_images_minimap(t_game *game);
-void	load_images_desert_eagle(t_game *game);
-void	load_images_shotgun_1_2(t_game *game);
-void	load_images_shotgun_2_2(t_game *game);
-void	load_images_door(t_game *game);
-void	load_images_enemy_1_2(t_game *game);
-void	load_images_enemy_2_2(t_game *game);
-void	load_images_hp(t_game *game);
-void	load_images_blood_1_3(t_game *game);
-void	load_images_blood_2_3(t_game *game);
-void	load_images_blood_3_3(t_game *game);
-void	load_images_menu(t_game *game);
-void	load_images_avatar(t_game *game);
-void	reset_objects_data(t_game *game);
-void	reset_depth_data(t_game *game);
-void	render_vertical(t_game *game);
-float	fix_angle_overflow(float angle_iter);
-int		find_enemy(t_game *game);
-bool	is_ray_out_of_map(t_raycaster *raycaster, t_game *game);
-bool	is_direction_in_range(t_raycaster *raycaster, t_game *game);
-void	save_object_wall(t_raycaster *raycaster, t_game *game, float ray_angle);
-void	save_object_door(t_raycaster *raycaster, t_game *game, float ray_angle);
-void	save_object_enemy(t_raycaster *raycaster, t_game *game, float ray_angle);
-bool	is_coll_point_same(t_raycaster *raycaster);
-void	calc_enemy_data_relative_to_player(t_game *game, float ray_angle, int i);
-void	render_minimap_horizontal_pixels(t_game *game, t_minimap *minimap);
-void	render_wall_pixels_vertical(t_game *game, t_render *render);
-void	render_door_pixels_vertical(t_game *game, t_render *render);
-void	render_door_pixels_vertical(t_game *game, t_render *render);
-void	render_enemy_pixels_vertical(t_game *game, int enemy_i, int y, int y_end);
-void	render_main_menu_pixels_vertical(t_game *game, float tex_x, int x);
-void	init_mlx(t_game *game);
-void	init_utils(t_game *game);
-void	assign_door_texture(t_game *game, int x, int y, int i);
-void	init_image(t_game *game);
+void			animation_gun_shoot(t_game *game, int frame_duration,
+					int frames, void **gun_type);
+void			action_main_menu(t_game *game);
+void			action_game(t_game *game);
+void			animation(t_game *game);
+void			update_enemy_cast_textures(t_game *game, int j);
+void			update_hp_status(t_game *game, int enemy_frame);
+void			update_door_close_textures(t_game *game, int door_frame);
+void			update_door_open_textures(t_game *game, int door_frame);
+void			update_avatar_textures(t_game *game, int avatar_frame);
+void			update_gun_running_textures(t_game *game, int gun_frame);
+void			update_death_textures(t_game *game, int j);
+void			change_door_state(t_game *game, int i);
+void			load_images_wall(t_game *game);
+void			load_images_minimap(t_game *game);
+void			load_images_desert_eagle(t_game *game);
+void			load_images_shotgun_1_2(t_game *game);
+void			load_images_shotgun_2_2(t_game *game);
+void			load_images_door(t_game *game);
+void			load_images_enemy_1_2(t_game *game);
+void			load_images_enemy_2_2(t_game *game);
+void			load_images_hp(t_game *game);
+void			load_images_blood_1_3(t_game *game);
+void			load_images_blood_2_3(t_game *game);
+void			load_images_blood_3_3(t_game *game);
+void			load_images_menu(t_game *game);
+void			load_images_avatar(t_game *game);
+void			reset_objects_data(t_game *game);
+void			reset_depth_data(t_game *game);
+void			render_vertical(t_game *game);
+float			fix_angle_overflow(float angle_iter);
+int				find_enemy(t_game *game);
+bool			is_ray_out_of_map(t_raycaster *raycaster, t_game *game);
+bool			is_direction_in_range(t_raycaster *raycaster, t_game *game);
+void			save_object_wall(t_raycaster *raycaster, t_game *game,
+					float ray_angle);
+void			save_object_door(t_raycaster *raycaster, t_game *game,
+					float ray_angle);
+void			save_object_enemy(t_raycaster *raycaster, t_game *game,
+					float ray_angle);
+bool			is_coll_point_same(t_raycaster *raycaster);
+void			calc_enemy_data_relative_to_player(t_game *game,
+					float ray_angle, int i);
+void			render_minimap_horizontal_pixels(t_game *game,
+					t_minimap *minimap);
+void			render_wall_pixels_vertical(t_game *game, t_render *render);
+void			render_door_pixels_vertical(t_game *game, t_render *render);
+void			render_door_pixels_vertical(t_game *game, t_render *render);
+void			render_enemy_pixels_vertical(t_game *game, int enemy_i, int y,
+					int y_end);
+void			render_main_menu_pixels_vertical(t_game *game, float tex_x,
+					int x);
+void			init_mlx(t_game *game);
+void			init_utils(t_game *game);
+void			assign_door_texture(t_game *game, int x, int y, int i);
+void			init_image(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

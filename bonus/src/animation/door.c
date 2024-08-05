@@ -18,7 +18,7 @@ void	animation_close_door(t_game *game)
 	static long		start_time = 0;
 	long			current_time;
 	int				door_frame;
-	
+
 	if (start_time == 0)
 	{
 		gettimeofday(&tv, NULL);
@@ -27,7 +27,7 @@ void	animation_close_door(t_game *game)
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	door_frame = DOOR_FRAMES - 1 - (current_time - start_time)
-								   / (DOOR_FRAME_DURATION / DOOR_FRAMES);
+		/ (DOOR_FRAME_DURATION / DOOR_FRAMES);
 	if (door_frame >= DOOR_FRAMES)
 		door_frame = DOOR_FRAMES - 1;
 	if (door_frame <= 0)
@@ -42,7 +42,7 @@ void	animation_close_door(t_game *game)
 void	update_door_close_textures(t_game *game, int door_frame)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < DOOR_MAX)
 	{
@@ -54,7 +54,7 @@ void	update_door_close_textures(t_game *game, int door_frame)
 				game->door[i].texture = game->textures.exit[door_frame];
 			else
 				game->door[i].texture
-						= game->textures.door_texture[door_frame];
+					= game->textures.door_texture[door_frame];
 			break ;
 		}
 		++i;
@@ -67,7 +67,7 @@ void	animation_open_door(t_game *game)
 	static long		start_time = 0;
 	long			current_time;
 	int				door_frame;
-	
+
 	if (start_time == 0)
 	{
 		gettimeofday(&tv, NULL);
@@ -76,7 +76,7 @@ void	animation_open_door(t_game *game)
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	door_frame = (current_time - start_time)
-				 / (DOOR_FRAME_DURATION / DOOR_FRAMES);
+		/ (DOOR_FRAME_DURATION / DOOR_FRAMES);
 	if (door_frame < 0)
 		door_frame = 0;
 	if (door_frame >= DOOR_FRAMES)
@@ -91,7 +91,7 @@ void	animation_open_door(t_game *game)
 void	update_door_open_textures(t_game *game,	int door_frame)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < DOOR_MAX)
 	{
@@ -103,7 +103,7 @@ void	update_door_open_textures(t_game *game,	int door_frame)
 				game->door[i].texture = game->textures.exit[door_frame];
 			else
 				game->door[i].texture
-						= game->textures.door_texture[door_frame];
+					= game->textures.door_texture[door_frame];
 			break ;
 		}
 		++i;

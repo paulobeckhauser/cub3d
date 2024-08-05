@@ -35,7 +35,6 @@ void	render_game(t_game *game)
 	}
 }
 
-
 void	render_vertical(t_game *game)
 {
 	while (game->depth_lvl >= 0)

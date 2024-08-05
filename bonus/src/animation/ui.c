@@ -15,14 +15,14 @@
 void	update_hp_status(t_game *game, int enemy_frame)
 {
 	static int	i = ENEMY_FRAMES;
-	
+
 	if (enemy_frame == 0 && game->animation.hp_frame_updated)
 		game->animation.hp_frame_updated = false;
 	if (enemy_frame == 9 && !game->animation.hp_frame_updated)
 	{
 		if (i != 0)
 			game->textures.hp_current_texture
-					= game->textures.hp_texture[--i];
+				= game->textures.hp_texture[--i];
 		game->animation.hp_frame_updated = true;
 	}
 	if (game->textures.hp_current_texture == game->textures.hp_texture[0]
@@ -36,7 +36,7 @@ void	animation_avatar(t_game *game)
 	static long		start_time = 0;
 	long			current_time;
 	int				avatar_frame;
-	
+
 	if (start_time == 0)
 	{
 		gettimeofday(&tv, NULL);
@@ -45,7 +45,7 @@ void	animation_avatar(t_game *game)
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	avatar_frame = (current_time - start_time)
-				   / (AVATAR_FRAME_DURATION / AVATAR_FRAMES);
+		/ (AVATAR_FRAME_DURATION / AVATAR_FRAMES);
 	if (avatar_frame < 0)
 		avatar_frame = 0;
 	if (avatar_frame >= AVATAR_FRAMES)

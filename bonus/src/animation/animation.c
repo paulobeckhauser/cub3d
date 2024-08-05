@@ -17,9 +17,9 @@ void	animation(t_game *game)
 	if (!game->animation.animation_gun && !game->keys[MOUSE_LEFT_CLICK]
 		&& game->player == SFRANKIE)
 		game->textures.gun_current_texture
-				= game->textures.desert_eagle[0];
+			= game->textures.desert_eagle[0];
 	else if (!game->animation.animation_gun && !game->keys[MOUSE_LEFT_CLICK]
-			 && game->player == PABECKHA)
+		&& game->player == PABECKHA)
 		game->textures.gun_current_texture = game->textures.shotgun[0];
 	if (game->animation.door_are_opening)
 		animation_open_door(game);

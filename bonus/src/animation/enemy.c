@@ -15,7 +15,7 @@
 void	animation_enemy_death(t_game *game)
 {
 	int	j;
-	
+
 	j = 0;
 	while (j < ENEMY_MAX)
 	{
@@ -32,7 +32,7 @@ void	update_death_textures(t_game *game, int j)
 	long			current_time;
 	int				blood_frame;
 	struct timeval	tv;
-	
+
 	if (start_time == 0)
 	{
 		gettimeofday(&tv, NULL);
@@ -41,13 +41,13 @@ void	update_death_textures(t_game *game, int j)
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	blood_frame = (current_time - start_time)
-				  / (BLOOD_FRAME_DURATION / BLOOD_FRAMES);
+		/ (BLOOD_FRAME_DURATION / BLOOD_FRAMES);
 	if (blood_frame < 0)
 		blood_frame = 0;
 	if (blood_frame >= BLOOD_FRAMES - 1)
 	{
 		game->enemy[j].texture
-				= game->textures.dark_priest_texture[ENEMY_FRAMES - 1];
+			= game->textures.dark_priest_texture[ENEMY_FRAMES - 1];
 		game->enemy[j].dead = true;
 		start_time = 0;
 		return ;
@@ -58,7 +58,7 @@ void	update_death_textures(t_game *game, int j)
 void	animation_enemy_cast(t_game *game)
 {
 	int				j;
-	
+
 	j = 0;
 	while (j < ENEMY_MAX)
 	{
@@ -74,7 +74,7 @@ void	update_enemy_cast_textures(t_game *game, int j)
 	static long		start_time = 0;
 	long			current_time;
 	int				enemy_frame;
-	
+
 	if (start_time == 0)
 	{
 		gettimeofday(&tv, NULL);
@@ -83,7 +83,7 @@ void	update_enemy_cast_textures(t_game *game, int j)
 	gettimeofday(&tv, NULL);
 	current_time = tv.tv_sec * 1000000 + tv.tv_usec;
 	enemy_frame = (current_time - start_time)
-				  / (ENEMY_FRAME_DURATION / ENEMY_FRAMES);
+		/ (ENEMY_FRAME_DURATION / ENEMY_FRAMES);
 	if (enemy_frame > ENEMY_FRAMES - 1 || enemy_frame < 0)
 	{
 		start_time = 0;
@@ -91,7 +91,7 @@ void	update_enemy_cast_textures(t_game *game, int j)
 	}
 	if (enemy_frame != ENEMY_FRAMES - 1)
 		game->enemy[j].texture
-				= game->textures.dark_priest_texture[enemy_frame];
+			= game->textures.dark_priest_texture[enemy_frame];
 	game->enemy[j].visible = false;
 	update_hp_status(game, enemy_frame);
 }
