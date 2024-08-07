@@ -6,12 +6,16 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:08:22 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:09:34 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:57:15 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: render_wall_line
+Calculates and renders a vertical slice of a wall.
+game: A pointer to the game structure containing all game information and state.
+This function calculates the height of the wall slice to be drawn based on the distance from the player to the wall. It then determines the texture coordinates to use for the slice and calls render_wall_pixels_vertical to draw the slice on the screen. */
 void	render_wall_line(t_game *game)
 {
 	t_render	render;
@@ -34,6 +38,11 @@ void	render_wall_line(t_game *game)
 	render_wall_pixels_vertical(game, &render);
 }
 
+/* Function: render_wall_pixels_vertical
+Draws the calculated wall slice on the screen.
+game: A pointer to the game structure containing all game information and state.
+render: A structure containing rendering information such as texture coordinates and color.
+This function iterates over the calculated height of the wall slice, determining the texture's y-coordinate for each pixel and drawing it on the screen if it's not the transparent color. */
 void	render_wall_pixels_vertical(t_game *game, t_render *render)
 {
 	while (render->y_iterator < render->y_end)
@@ -60,6 +69,10 @@ void	render_wall_pixels_vertical(t_game *game, t_render *render)
 	}
 }
 
+/* Function: render_door_line
+Calculates and renders a vertical slice of a door.
+game: A pointer to the game structure containing all game information and state.
+This function calculates the height of the door slice to be drawn based on the distance from the player to the door. It then determines the texture coordinates to use for the slice and calls render_door_pixels_vertical to draw the slice on the screen. */
 void	render_door_line(t_game *game)
 {
 	t_render	render;
@@ -81,6 +94,11 @@ void	render_door_line(t_game *game)
 	render_door_pixels_vertical(game, &render);
 }
 
+/* Function: render_door_pixels_vertical
+Draws the calculated door slice on the screen.
+game: A pointer to the game structure containing all game information and state.
+render: A structure containing rendering information such as texture coordinates and color.
+This function iterates over the calculated height of the door slice, determining the texture's y-coordinate for each pixel and drawing it on the screen if it's not the transparent color. It checks each door in the game to see if it matches the current collision point and uses the appropriate texture if a match is found. */
 void	render_door_pixels_vertical(t_game *game, t_render *render)
 {
 	int			i;

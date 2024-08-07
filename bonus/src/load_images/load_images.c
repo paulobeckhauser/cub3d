@@ -6,12 +6,21 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 16:33:19 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:21:14 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:15:33 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: load_images_from_dir
+ * -------------------------------
+ * Loads all game-related images from their respective directories.
+ * 
+ * game: A pointer to the game structure containing all game information and state.
+ * 
+ * This function sequentially calls other functions responsible for loading different categories of images (walls, minimap, weapons, etc.)
+ * into the game's memory. It ensures that all visual assets are loaded before the game starts.
+ */
 void	load_images_from_dir(t_game *game)
 {
 	load_images_wall(game);

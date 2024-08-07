@@ -6,12 +6,19 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:02 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:39:07 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:51:47 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: raycaster
+   Casts rays across the field of view to detect walls, doors, and enemies.
+   game: A pointer to the game structure containing all game information and
+   state. This function iterates over each column of the screen, casting a
+   ray for each to determine what it hits first. It calculates the direction 
+   of the ray, resets necessary data before each cast, and renders the 
+   vertical slice based on the ray's intersection. */
 void	raycaster(t_game *game)
 {
 	float			angle_iter;
@@ -37,6 +44,15 @@ void	raycaster(t_game *game)
 	}
 }
 
+/* Function: cast_ray
+   Determines what a single ray intersects with first.
+   game: A pointer to the game structure containing all game information and 
+   state.
+   ray_angle: The angle of the ray being cast.
+   This function initializes raycaster data, then iterates in the direction 
+   of the ray until it hits something or goes out of bounds.
+   It checks for collisions with walls, doors, and enemies, saving the 
+   first encountered object. */
 void	cast_ray(t_game *game, float ray_angle)
 {
 	t_raycaster	raycaster;
@@ -66,6 +82,12 @@ void	cast_ray(t_game *game, float ray_angle)
 	}
 }
 
+/* Function: find_enemy_end
+   Finds the end column of an enemy on the screen.
+   game: A pointer to the game structure containing all game information and state.
+   angle_iter: The current angle iteration of the ray being cast.
+   enemy_i: The index of the enemy in the game's enemy array.
+   This function iterates rays starting from the enemy's starting column until the enemy is no longer hit, determining the end column. */
 int	find_enemy_end(t_game *game, float angle_iter, int enemy_i)
 {
 	float	dir_x;
@@ -92,6 +114,12 @@ int	find_enemy_end(t_game *game, float angle_iter, int enemy_i)
 	}
 }
 
+/* Function: find_enemy_start
+   Finds the start column of an enemy on the screen.
+   game: A pointer to the game structure containing all game information and state.
+   angle_iter: The current angle iteration of the ray being cast.
+   enemy_i: The index of the enemy in the game's enemy array.
+   This function iterates rays in reverse from the current column until the enemy is no longer hit, determining the start column. */
 int	find_enemy_start(t_game *game, float angle_iter, int enemy_i)
 {
 	float	dir_x;
@@ -115,6 +143,13 @@ int	find_enemy_start(t_game *game, float angle_iter, int enemy_i)
 	}
 }
 
+/* Function: cast_ray_till_enemy
+   Casts a ray until it hits an enemy or goes out of bounds.
+   game: A pointer to the game structure containing all game information and state.
+   ray_new_x: The x-coordinate of the ray's end point.
+   ray_new_y: The y-coordinate of the ray's end point.
+   enemy_i: The index of the enemy in the game's enemy array.
+   This function iterates in the direction of the ray, checking for collision with the specified enemy. Returns 1 if the enemy is hit, 0 otherwise. */
 int	cast_ray_till_enemy(t_game *game, float ray_new_x, float ray_new_y,
 		int enemy_i)
 {

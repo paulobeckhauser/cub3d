@@ -6,12 +6,16 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:13:31 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:27:30 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:57:52 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: render_game
+Renders the entire game scene or main menu depending on the game state.
+game: A pointer to the game structure containing all game information and state.
+This function checks the game state (main menu, player dead, or game won) and renders the main menu if any are true. Otherwise, it renders the game background, performs raycasting to determine visible walls, doors, and enemies, and then renders the crosshair, minimap, player avatar, and health points. */
 void	render_game(t_game *game)
 {
 	if (game->main_menu || game->player_dead || game->won_game)
@@ -35,6 +39,10 @@ void	render_game(t_game *game)
 	}
 }
 
+/* Function: render_vertical
+Renders vertical elements in the game scene, such as walls, doors, and enemies.
+game: A pointer to the game structure containing all game information and state.
+This function iterates through the depth levels of the game, checking the object type at each level (wall, door, or enemy) and calling the appropriate rendering function for each. */
 void	render_vertical(t_game *game)
 {
 	while (game->depth_lvl >= 0)
@@ -49,6 +57,10 @@ void	render_vertical(t_game *game)
 	}
 }
 
+/* Function: render_background
+Renders the game's background, including the sky (ceiling) and ground (floor).
+game: A pointer to the game structure containing all game information and state.
+This function divides the screen in half horizontally, rendering the top half with the ceiling color and the bottom half with the floor color. */
 void	render_background(t_game *game)
 {
 	int	x;
@@ -72,6 +84,12 @@ void	render_background(t_game *game)
 	}
 }
 
+/* Function: get_pixel_color
+Retrieves the color of a specific pixel from an image.
+img_ptr: A pointer to the image from which to retrieve the pixel color.
+x: The x-coordinate of the pixel.
+y: The y-coordinate of the pixel.
+This function accesses the image data, calculates the position of the specified pixel, and returns its color value. */
 int	get_pixel_color(void *img_ptr, int x, int y)
 {
 	char	*data;

@@ -6,12 +6,22 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 23:51:10 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/04 23:53:57 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:02:40 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: animation_close_door
+ * ------------------------------
+ * Animates the closing of doors within the game.
+ * 
+ * game: A pointer to the game structure containing all game information and state.
+ * 
+ * This function calculates the current frame of the door closing animation based on the
+ * elapsed time since the animation started. It updates the door textures accordingly.
+ * If the animation completes, it resets the animation state and timing.
+ */
 void	animation_close_door(t_game *game)
 {
 	struct timeval	tv;
@@ -39,6 +49,16 @@ void	animation_close_door(t_game *game)
 	update_door_close_textures(game, door_frame);
 }
 
+/* Function: update_door_close_textures
+ * ------------------------------------
+ * Updates the textures of doors that are currently closing.
+ * 
+ * game: A pointer to the game structure.
+ * door_frame: The current frame of the door closing animation.
+ * 
+ * Iterates through all doors and updates their textures based on the current frame
+ * of the door closing animation. It differentiates between exit doors and regular doors.
+ */
 void	update_door_close_textures(t_game *game, int door_frame)
 {
 	int	i;
@@ -61,6 +81,16 @@ void	update_door_close_textures(t_game *game, int door_frame)
 	}
 }
 
+/* Function: animation_open_door
+ * -----------------------------
+ * Animates the opening of doors within the game.
+ * 
+ * game: A pointer to the game structure containing all game information and state.
+ * 
+ * This function calculates the current frame of the door opening animation based on the
+ * elapsed time since the animation started. It updates the door textures accordingly.
+ * If the animation completes, it resets the animation state and timing.
+ */
 void	animation_open_door(t_game *game)
 {
 	struct timeval	tv;
@@ -88,6 +118,16 @@ void	animation_open_door(t_game *game)
 	update_door_open_textures(game, door_frame);
 }
 
+/* Function: update_door_open_textures
+ * -----------------------------------
+ * Updates the textures of doors that are currently opening.
+ * 
+ * game: A pointer to the game structure.
+ * door_frame: The current frame of the door opening animation.
+ * 
+ * Iterates through all doors and updates their textures based on the current frame
+ * of the door opening animation. It differentiates between exit doors and regular doors.
+ */
 void	update_door_open_textures(t_game *game,	int door_frame)
 {
 	int	i;

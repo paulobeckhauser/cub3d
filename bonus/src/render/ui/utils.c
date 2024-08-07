@@ -6,12 +6,18 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:15:33 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:15:47 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:55:14 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/cub3d.h"
 
+/* Function: render_border
+Draws a border around a specified area on the screen.
+size: The size of the area to border.
+x, y: The top-left coordinates of the area.
+game: A pointer to the game structure containing all game information and state.
+This function iterates over the specified area and draws a border of a predefined thickness by changing the color of the pixels at the edges. */
 void	render_border(t_game *game, int size, int x, int y)
 {
 	int	x_iter;

@@ -6,12 +6,25 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:30:08 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 00:30:09 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:02:45 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: animation_gun_shoot
+ * -----------------------------
+ * Animates the shooting action of the gun.
+ * 
+ * game: A pointer to the game structure containing all game information and state.
+ * frame_duration: The duration of each frame in the animation.
+ * frames: The total number of frames in the animation.
+ * gun_type: An array of textures representing different frames of the gun shooting animation.
+ * 
+ * Uses a static start_time to track the beginning of the animation. Calculates the
+ * current frame of the shooting animation based on the elapsed time. Once the animation
+ * reaches the last frame, it resets the animation state and updates the current gun texture.
+ */
 void	animation_gun_shoot(t_game *game, int frame_duration, int frames,
 							void **gun_type)
 {
@@ -38,6 +51,16 @@ void	animation_gun_shoot(t_game *game, int frame_duration, int frames,
 	game->textures.gun_current_texture = gun_type[gun_frame];
 }
 
+/* Function: animation_gun_running
+ * -------------------------------
+ * Animates the gun movement when the player is running.
+ * 
+ * game: A pointer to the game structure containing all game information and state.
+ * 
+ * Checks if the player is moving without shooting. If so, it triggers the running
+ * animation for the gun by calculating the current frame based on elapsed time and
+ * updates the gun's texture accordingly.
+ */
 void	animation_gun_running(t_game *game)
 {
 	struct timeval	tv;
@@ -66,6 +89,16 @@ void	animation_gun_running(t_game *game)
 	}
 }
 
+/* Function: update_gun_running_textures
+ * -------------------------------------
+ * Updates the gun texture based on the current frame of the running animation.
+ * 
+ * game: A pointer to the game structure.
+ * gun_frame: The current frame of the gun running animation.
+ * 
+ * Depending on the player's character, updates the current gun texture to the
+ * corresponding frame from the running animation textures.
+ */
 void	update_gun_running_textures(t_game *game, int gun_frame)
 {
 	if (game->player == PABECKHA)

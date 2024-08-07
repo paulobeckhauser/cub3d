@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   free_variables_error.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:15:56 by pabeckha          #+#    #+#             */
 /*   Updated: 2024/07/17 14:44:05 by pabeckha         ###   ########.fr       */
@@ -12,6 +12,12 @@
 
 #include "../../incl/cub3d.h"
 
+/* Function: print_arg_error
+ * --------------------------
+ * Prints an error message indicating an incorrect number of arguments.
+ * 
+ * This function uses ANSI color codes to print the error message in red, followed by resetting the text color.
+ */
 void	print_arg_error(void)
 {
 	ft_putstr_fd(RED, 2);
@@ -20,6 +26,16 @@ void	print_arg_error(void)
 	ft_putstr_fd(RESET, 2);
 }
 
+/* Function: replace_error_message
+ * -------------------------------
+ * Replaces the current error message with a new one.
+ * 
+ * data: A pointer to the game data structure.
+ * str: The new error message to be set.
+ * 
+ * If there's an existing error message, it is freed before setting the new one.
+ * If memory allocation for the new message fails, it recursively calls itself with a "Memory allocation failed" message and then frees game variables.
+ */
 void	replace_error_message(t_data *data, char *str)
 {
 	if (data->map_error_message != NULL)
@@ -32,6 +48,15 @@ void	replace_error_message(t_data *data, char *str)
 	}
 }
 
+/* Function: free_variables_error
+ * -------------------------------
+ * Frees all allocated memory in the game data structure and prints the current error message.
+ * 
+ * data: A pointer to the game data structure.
+ * 
+ * This function iterates through all pointers in the data structure, freeing any that are not NULL.
+ * After freeing the resources, it prints the current error message, sets errno if it's not already set, and exits the program.
+ */
 int	free_variables_error(t_data *data)
 {
 	if (data->player != NULL)

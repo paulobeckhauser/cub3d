@@ -6,12 +6,15 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:23:20 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:26:34 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:50:54 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: reset_objects_data
+Resets the game object data to initial states, including enemy visibility,
+ distances, and positions. */
 void	reset_objects_data(t_game *game)
 {
 	game->prev_door_distance = INFINITY;
@@ -40,6 +43,9 @@ void	reset_objects_data(t_game *game)
 	game->dist_idx = 0;
 }
 
+/* Function: reset_depth_data
+Resets the depth data for each level to initial states, including distances
+ and collision points. */
 void	reset_depth_data(t_game *game)
 {
 	game->depth_lvl = 0;
@@ -55,6 +61,9 @@ void	reset_depth_data(t_game *game)
 	game->depth_lvl = 0;
 }
 
+/* Function: init_raycaster_data
+Initializes the raycaster data with the direction and length of the ray,
+ starting from the player's position. */
 void	init_raycaster_data(t_raycaster *raycaster, t_game *game,
 		float ray_new_x, float ray_new_y)
 {

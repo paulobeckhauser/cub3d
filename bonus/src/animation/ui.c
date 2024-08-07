@@ -6,12 +6,23 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:29:18 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 00:29:20 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:02:47 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: update_hp_status
+ * --------------------------
+ * Updates the player's health point (HP) status based on the enemy's attack frame.
+ * 
+ * game: A pointer to the game structure containing all game information and state.
+ * enemy_frame: The current frame of the enemy's attack animation.
+ * 
+ * This function uses a static variable to keep track of the HP texture index. It updates
+ * the HP texture to reflect damage taken when the enemy's attack animation reaches a
+ * certain frame. It also sets the player's death state if HP drops to zero.
+ */
 void	update_hp_status(t_game *game, int enemy_frame)
 {
 	static int	i = ENEMY_FRAMES;
@@ -30,6 +41,16 @@ void	update_hp_status(t_game *game, int enemy_frame)
 		game->player_dead = true;
 }
 
+/* Function: animation_avatar
+ * --------------------------
+ * Animates the player's avatar based on time.
+ * 
+ * game: A pointer to the game structure containing all game information and state.
+ * 
+ * Uses a static start_time to track the beginning of the animation. Calculates the
+ * current frame of the avatar animation based on the elapsed time. Once the animation
+ * reaches the last frame, it resets the animation state and updates the avatar texture.
+ */
 void	animation_avatar(t_game *game)
 {
 	struct timeval	tv;
@@ -56,6 +77,16 @@ void	animation_avatar(t_game *game)
 	update_avatar_textures(game, avatar_frame);
 }
 
+/* Function: update_avatar_textures
+ * --------------------------------
+ * Updates the avatar texture based on the current frame of the avatar animation.
+ * 
+ * game: A pointer to the game structure.
+ * avatar_frame: The current frame of the avatar animation.
+ * 
+ * Depending on the player's character, updates the current avatar texture to the
+ * corresponding frame from the avatar animation textures.
+ */
 void	update_avatar_textures(t_game *game, int avatar_frame)
 {
 	if (game->player == PABECKHA)

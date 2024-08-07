@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init_vars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:45 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/01 18:17:34 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:19:14 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: init_vars
+Initializes all game-related variables in the data structure to their default values.
+data: A pointer to the game data structure.
+This function sets initial values for various game settings, including colors, map details, texture counts, and player position and direction. */
 void	init_vars(t_data *data)
 {
 	data->color_ceiling = 0;

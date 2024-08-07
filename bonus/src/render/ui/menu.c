@@ -6,12 +6,14 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:16:01 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:16:20 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:53:27 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/cub3d.h"
 
+/* Function: render_main_menu
+Renders the main menu screen, adjusting texture mapping based on screen width. */
 void	render_main_menu(t_game *game)
 {
 	int		x;
@@ -29,6 +31,8 @@ void	render_main_menu(t_game *game)
 		0);
 }
 
+/* Function: render_main_menu_pixels_vertical
+Renders vertical pixels for the main menu, displaying different textures based on game state. */
 void	render_main_menu_pixels_vertical(t_game *game, float tex_x, int x)
 {
 	int		y;

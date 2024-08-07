@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:51:44 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/15 20:05:17 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:22:54 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: check_if_map_element
+Checks if a string contains valid map elements.
+str: The string to check.
+Returns true if the string contains only valid map elements, false otherwise. */
 bool	check_if_map_element(char *str)
 {
 	int	i;
@@ -29,6 +33,10 @@ bool	check_if_map_element(char *str)
 	return (true);
 }
 
+/* Function: check_if_empty_line
+Checks if a string represents an empty line in the map.
+str: The string to check.
+Returns true if the string contains only spaces or tab characters, false otherwise. */
 bool	check_if_empty_line(char *str)
 {
 	int	i;
@@ -44,6 +52,10 @@ bool	check_if_empty_line(char *str)
 	return (true);
 }
 
+/* Function: check_map_last_element
+Verifies that all lines after the end of the map contain only spaces.
+data: A pointer to the game data structure.
+Returns true if all lines after the map are valid, false otherwise. */
 bool	check_map_last_element(t_data *data)
 {
 	int	i;
@@ -68,6 +80,10 @@ bool	check_map_last_element(t_data *data)
 	return (true);
 }
 
+/* Function: check_map_element_input
+Checks if the map contains only valid elements.
+data: A pointer to the game data structure.
+Returns true if the map contains only valid elements, false otherwise. */
 bool	check_map_element_input(t_data *data)
 {
 	int	i;
@@ -97,6 +113,10 @@ bool	check_map_element_input(t_data *data)
 	return (true);
 }
 
+/* Function: check_empty_line_map
+Verifies that there are no empty lines within the map.
+data: A pointer to the game data structure.
+Returns true if there are no empty lines within the map, false otherwise. */
 bool	check_empty_line_map(t_data *data)
 {
 	int	i;
