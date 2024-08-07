@@ -1,5 +1,6 @@
 # cub3d Project
-![cub3d](https://s10.gifyu.com/images/SDxhJ.gif)
+
+![cub3d](https://github.com/paulobeckhauser/cub3d/blob/main/bonus/textures/gif/cub3d.gif)
 
 Welcome to the cub3d project. This project is a 3D engine inspired by the classic game Wolfenstein 3D. The bonus part of this project includes additional features and enhancements over the mandatory part. This README will guide you through the steps to compile and run the bonus part of the project, including key bindings for an immersive gameplay experience.
 
