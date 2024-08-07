@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   surfaces.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:56 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/21 17:44:45 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:35:57 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: check_input_surfaces
+ * -------------------------------
+ * Validates the input for floor and ceiling colors in the configuration file.
+ * 
+ * data: A pointer to the data structure containing all parsed information.
+ * 
+ * This function checks if there is exactly one input for both floor and ceiling colors.
+ * If there are multiple inputs or no input for either, it sets an appropriate error message.
+ * Returns true if the inputs are valid, false otherwise.
+ */
 bool	check_input_surfaces(t_data *data)
 {
 	if (data->color_floor_count > 1)
@@ -39,6 +49,18 @@ bool	check_input_surfaces(t_data *data)
 	return (true);
 }
 
+/* Function: floor_ceiling_lines
+ * ------------------------------
+ * Parses and stores the floor and ceiling color values from the configuration file.
+ * 
+ * array: An array of strings containing the split line from the configuration file.
+ * data: A pointer to the data structure containing all parsed information.
+ * i: The current index of the line being processed in the configuration file.
+ * 
+ * This function checks if the first element of the array is "F" or "C" (indicating floor or ceiling),
+ * and then attempts to store the corresponding color value in hexadecimal format.
+ * Returns true if the color is successfully stored, false otherwise.
+ */
 bool	floor_ceiling_lines(char **array, t_data *data, int i)
 {
 	if (array[0])
@@ -57,6 +79,17 @@ bool	floor_ceiling_lines(char **array, t_data *data, int i)
 	return (true);
 }
 
+/* Function: store_surface_colors
+ * -------------------------------
+ * Reads the configuration file and stores the floor and ceiling color values.
+ * 
+ * data: A pointer to the data structure containing all parsed information.
+ * 
+ * This function iterates through each line of the configuration file, splits the line into an array,
+ * and processes it to store floor and ceiling colors. It checks for memory allocation failures and
+ * validates the input for floor and ceiling colors.
+ * Returns true if all colors are successfully stored and validated, false otherwise.
+ */
 bool	store_surface_colors(t_data *data)
 {
 	int		i;

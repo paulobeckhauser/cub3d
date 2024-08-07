@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:58 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/16 19:58:48 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:41:55 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: check_xpm_extension
+ * ------------------------------
+ * Checks if the provided texture file has an .xpm extension.
+ * 
+ * data: A pointer to the game's data structure.
+ * str: The filename string to check.
+ * 
+ * This function splits the filename by '.', checks the last element of the resulting array to ensure it is "xpm",
+ * and returns false with an error message if not. It returns true if the file extension is correct.
+ */
 bool	check_xpm_extension(t_data *data, char *str)
 {
 	char	**array;
@@ -34,6 +44,16 @@ bool	check_xpm_extension(t_data *data, char *str)
 	return (true);
 }
 
+/* Function: check_storage_textures
+ * ---------------------------------
+ * Checks and stores texture paths from the game's configuration file.
+ * 
+ * data: A pointer to the game's data structure.
+ * 
+ * This function iterates through each line of the game's configuration file,
+ * splits each line by spaces, and attempts to store texture paths for north, south, west, and east walls.
+ * It returns false if any texture path storage fails.
+ */
 bool	check_storage_textures(t_data *data)
 {
 	int		i;
@@ -63,6 +83,15 @@ bool	check_storage_textures(t_data *data)
 	return (true);
 }
 
+/* Function: check_open_texture_files
+ * -----------------------------------
+ * Verifies that texture files can be opened (i.e., they exist and are accessible).
+ * 
+ * data: A pointer to the game's data structure.
+ * 
+ * This function attempts to open each texture file specified in the game's data structure.
+ * It returns false and sets an error message if any file cannot be opened.
+ */
 bool	check_open_texture_files(t_data *data)
 {
 	int	fd_north;
@@ -90,6 +119,16 @@ bool	check_open_texture_files(t_data *data)
 	return (true);
 }
 
+/* Function: store_textures
+ * -------------------------
+ * Orchestrates the checking and storing of texture paths from the configuration file.
+ * 
+ * data: A pointer to the game's data structure.
+ * 
+ * This function sequentially calls other functions to check the storage of textures,
+ * validate texture file inputs, and verify that texture files can be opened.
+ * It returns false if any step fails.
+ */
 bool	store_textures(t_data *data)
 {
 	if (!check_storage_textures(data) || !check_input_texture(data)

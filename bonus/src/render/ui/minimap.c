@@ -6,12 +6,14 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:10:09 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:11:23 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:54:26 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/cub3d.h"
 
+/* Function: render_minimap
+Renders the minimap on the screen, showing the player's surroundings in a simplified form. */
 void	render_minimap(t_game *game)
 {
 	t_minimap	minimap;
@@ -41,6 +43,8 @@ void	render_minimap(t_game *game)
 	}
 }
 
+/* Function: render_minimap_horizontal_pixels
+Renders horizontal pixels for the minimap, coloring based on the map element type. */
 void	render_minimap_horizontal_pixels(t_game *game, t_minimap *minimap)
 {
 	while (minimap->tex_x < MINIMAP_SCALE)
@@ -70,6 +74,8 @@ void	render_minimap_horizontal_pixels(t_game *game, t_minimap *minimap)
 	}
 }
 
+/* Function: render_minimap_bg
+Renders the background for the minimap, typically in a single color for visibility. */
 void	render_minimap_bg(t_game *game)
 {
 	int	tex_x;
@@ -89,6 +95,8 @@ void	render_minimap_bg(t_game *game)
 	}
 }
 
+/* Function: render_minimap_player
+Renders the player's icon on the minimap, centered and scaled according to the minimap size. */
 void	render_minimap_player(t_game *game)
 {
 	int		x;

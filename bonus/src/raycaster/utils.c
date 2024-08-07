@@ -6,17 +6,21 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 22:18:01 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:40:35 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:52:48 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: to_radians
+Converts angle from degrees to radians. */
 float	to_radians(float degrees)
 {
 	return (degrees * (M_PI / (ANGLE_MAX / 2)));
 }
 
+/* Function: fix_angle_overflow
+Adjusts angle to ensure it remains within the 0 to 2π range. */
 float	fix_angle_overflow(float angle_iter)
 {
 	if (angle_iter < 0)
@@ -26,6 +30,8 @@ float	fix_angle_overflow(float angle_iter)
 	return (angle_iter);
 }
 
+/* Function: find_enemy
+Searches for an enemy at the collision point and returns its index, or -1 if not found. */
 int	find_enemy(t_game *game)
 {
 	int	i;
@@ -45,6 +51,8 @@ int	find_enemy(t_game *game)
 	return (i);
 }
 
+/* Function: calc_enemy_data_relative_to_player
+Calculates enemy data relative to the player's position, including visibility and texture mapping. */
 void	calc_enemy_data_relative_to_player(t_game *game, float ray_angle, int i)
 {
 	int	y;
@@ -65,6 +73,8 @@ void	calc_enemy_data_relative_to_player(t_game *game, float ray_angle, int i)
 	}
 }
 
+/* Function: is_direction_in_range
+Checks if the raycaster's direction is within the range to hit a target. */
 bool	is_direction_in_range(t_raycaster *raycaster, t_game *game)
 {
 	if (((raycaster->dir_x >= 0 && raycaster->x_iterator <= game->ray_new_x)

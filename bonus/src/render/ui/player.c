@@ -6,12 +6,14 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:12:16 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:12:42 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:54:51 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/cub3d.h"
 
+/* Function: render_hp
+Renders the player's current health points (HP) on the screen. */
 void	render_hp(t_game *game)
 {
 	int	x;
@@ -37,6 +39,8 @@ void	render_hp(t_game *game)
 	}
 }
 
+/* Function: render_avatar
+Renders the player's avatar on the screen, typically in a corner for constant visibility. */
 void	render_avatar(t_game *game)
 {
 	int		x;

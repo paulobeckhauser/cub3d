@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   surfaces_colors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 18:16:54 by pabeckha          #+#    #+#             */
-/*   Updated: 2024/07/17 15:30:36 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:33:24 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: count_chars_color
+ * ----------------------------
+ * Counts the number of characters in a string that are not equal to a specified character or space.
+ * 
+ * data: A pointer to the game data structure.
+ * i: The index of the string within the data structure's cub_file array.
+ * c: The character to check against in the string.
+ * 
+ * Returns the count of characters not equal to 'c' and not a space.
+ */
 int	count_chars_color(t_data *data, int i, char c)
 {
 	int	j;
@@ -28,6 +38,17 @@ int	count_chars_color(t_data *data, int i, char c)
 	return (count_chars);
 }
 
+/* Function: clean_str_color
+ * --------------------------
+ * Creates a new string from the given string, removing specified characters and spaces.
+ * 
+ * data: A pointer to the game data structure.
+ * i: The index of the string within the data structure's cub_file array.
+ * surf: The character to be removed from the string, along with spaces.
+ * 
+ * Returns a newly allocated string with 'surf' characters and spaces removed.
+ * If memory allocation fails, returns NULL after setting an error message.
+ */
 char	*clean_str_color(t_data *data, int i, char surf)
 {
 	int		count_chars;

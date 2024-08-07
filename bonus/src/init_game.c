@@ -6,12 +6,18 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:25:26 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:22:03 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:01:47 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/cub3d.h"
 
+/* Function: init_game
+Initializes the game structure with default values and setups.
+game: A pointer to the game structure to be initialized.
+This function initializes various components of the game, including the MLX library,
+image handling, utility variables, and game state variables. It also resets the states 
+of keys, doors, and enemies, and calculates directional vectors for the player's movement. */
 void	init_game(t_game *game)
 {
 	int	i;
@@ -39,6 +45,11 @@ void	init_game(t_game *game)
 	calc_dir_vectors(game);
 }
 
+/* Function: init_utils
+Initializes utility variables within the game structure based on the player's starting direction.
+game: A pointer to the game structure containing utility variables to be initialized.
+This function sets the initial main ray angle based on the player's starting direction, 
+initializes ray collision points, and sets default values for various game state flags and counters. */
 void	init_utils(t_game *game)
 {
 	if (game->data.player->direction == 'N')
@@ -66,6 +77,12 @@ void	init_utils(t_game *game)
 	game->player = PABECKHA;
 }
 
+/* Function: init_image
+Initializes the image structure within the game structure for rendering.
+game: A pointer to the game structure containing the image structure to be initialized.
+This function creates a new image using the MLX library, sets the image properties such 
+as bits per pixel, line length, and endian, and stores the address of the image
+data for later access. */
 void	init_image(t_game *game)
 {
 	game->image.img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -77,6 +94,11 @@ void	init_image(t_game *game)
 			&game->image.endian);
 }
 
+/* Function: init_mlx
+Initializes the MiniLibX library and creates a new window for the game.
+game: A pointer to the game structure containing the MLX pointers to be initialized.
+This function initializes the MLX library and creates a new window with a specified 
+width and height. It exits the program if the initialization fails. */
 void	init_mlx(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
@@ -94,6 +116,12 @@ void	init_mlx(t_game *game)
 	}
 }
 
+/* Function: calc_dir_vectors
+Calculates directional vectors for player movement based on rotation speed and the main ray angle.
+game: A pointer to the game structure containing the vectors array to be filled.
+This function calculates the directional vectors for player movement by iterating over angles
+incremented by the rotation speed, converting these angles to radians, and then calculating the 
+cosine and sine for each angle to get the x and y components of each vector. */
 void	calc_dir_vectors(t_game *game)
 {
 	float	angle_incr_radians;

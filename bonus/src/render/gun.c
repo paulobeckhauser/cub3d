@@ -6,12 +6,16 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:16:37 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:17:00 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:56:16 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: render_gun
+Renders the player's gun on the screen.
+game: A pointer to the game structure containing all game information and state.
+This function calculates the starting position for the gun rendering based on the screen size and the gun's texture size. It then iterates over the pixels of the gun's texture, mapping them to the screen while skipping the transparent color (magenta). */
 void	render_gun(t_game *game)
 {
 	int		x;
@@ -40,6 +44,10 @@ void	render_gun(t_game *game)
 	}
 }
 
+/* Function: render_crosshair
+Renders a simple crosshair in the center of the screen.
+game: A pointer to the game structure containing all game information and state.
+This function calculates the center of the screen and draws two lines (horizontal and vertical) to form a crosshair. The color of the crosshair is set to green. */
 void	render_crosshair(t_game *game)
 {
 	int	x;

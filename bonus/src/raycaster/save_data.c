@@ -6,12 +6,18 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 01:30:40 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 01:36:07 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:50:20 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/cub3d.h"
 
+/* Function: save_closest_distance
+Saves the closest distance to a door object encountered by a ray.
+raycaster: Contains the current ray's direction and collision information.
+game: A pointer to the game structure containing all game information and state.
+This function iterates through all possible door positions and updates the closest
+door distance if the current ray intersects a door. */
 void	save_closest_distance(t_raycaster *raycaster, t_game *game)
 {
 	int	i;
@@ -32,6 +38,13 @@ void	save_closest_distance(t_raycaster *raycaster, t_game *game)
 	}
 }
 
+/* Function: save_object_wall
+Saves information about a wall object encountered by a ray.
+raycaster: Contains the current ray's direction and collision information.
+game: A pointer to the game structure containing all game information and state.
+ray_angle: The angle of the current ray being cast.
+This function calculates the distance to the wall, updates the game's depth data 
+with the wall's information, and marks the wall as found. */
 void	save_object_wall(t_raycaster *raycaster, t_game *game, float ray_angle)
 {
 	set_ray_direction(raycaster, &game->wall_direction);
@@ -46,6 +59,13 @@ void	save_object_wall(t_raycaster *raycaster, t_game *game, float ray_angle)
 	raycaster->found_wall = true;
 }
 
+/* Function: save_object_door
+Saves information about a door object encountered by a ray.
+raycaster: Contains the current ray's direction and collision information.
+game: A pointer to the game structure containing all game information and state.
+ray_angle: The angle of the current ray being cast.
+This function calculates the distance to the door, updates the game's depth data 
+with the door's information, and saves the closest distance to the door. */
 void	save_object_door(t_raycaster *raycaster, t_game *game, float ray_angle)
 {
 	set_ray_direction(raycaster, &game->door_direction);
@@ -62,6 +82,14 @@ void	save_object_door(t_raycaster *raycaster, t_game *game, float ray_angle)
 	++game->depth_lvl;
 }
 
+/* Function: save_object_enemy
+Saves information about an enemy object encountered by a ray.
+raycaster: Contains the current ray's direction and collision information.
+game: A pointer to the game structure containing all game information and state.
+ray_angle: The angle of the current ray being cast.
+This function calculates the distance to the enemy, updates the game's
+depth data with the enemy's information, and calculates the enemy data 
+relative to the player. */
 void	save_object_enemy(t_raycaster *raycaster, t_game *game, float ray_angle)
 {
 	int	i;
