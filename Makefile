@@ -26,6 +26,8 @@ BONUS_SRC = ft_free.c game_loop.c init_game.c main.c \
 			controls/key_actions/door_open_close.c controls/key_actions/key_actions.c controls/key_actions/menu.c \
 			controls/key_actions/player_movement.c controls/key_actions/player_rotation.c controls/key_actions/player_shoot.c \
 			controls/key_bindings.c \
+			destroy_images/destroy_images.c destroy_images/enemy.c destroy_images/guns.c destroy_images/obstructions.c \
+			destroy_images/ui.c \
 			load_images/enemy.c load_images/guns.c load_images/load_images.c load_images/obstructions.c load_images/ui.c \
 			parser/checker_utils.c parser/cub_file.c parser/flood_fill_algo.c parser/free_variables_error.c \
 			parser/hex_color.c parser/hex_colors_utils.c parser/init_vars.c parser/map.c parser/map_utils.c parser/parser.c \

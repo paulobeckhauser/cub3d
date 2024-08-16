@@ -42,7 +42,7 @@ void	cast_ray(t_game *game, float ray_angle)
 	t_raycaster	raycaster;
 
 	init_raycaster_data(&raycaster, game, game->ray_new_x, game->ray_new_y);
-	while (is_direction_in_range(&raycaster, game))
+	while (true)
 	{
 		if (is_ray_on_square_edge(&raycaster))
 		{

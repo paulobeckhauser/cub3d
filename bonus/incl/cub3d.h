@@ -488,7 +488,6 @@ void			render_vertical(t_game *game);
 float			fix_angle_overflow(float angle_iter);
 int				find_enemy(t_game *game);
 bool			is_ray_out_of_map(t_raycaster *raycaster, t_game *game);
-bool			is_direction_in_range(t_raycaster *raycaster, t_game *game);
 void			save_object_wall(t_raycaster *raycaster, t_game *game,
 					float ray_angle);
 void			save_object_door(t_raycaster *raycaster, t_game *game,
@@ -511,6 +510,12 @@ void			init_mlx(t_game *game);
 void			init_utils(t_game *game);
 void			assign_door_texture(t_game *game, int x, int y, int i);
 void			init_image(t_game *game);
+void			destroy_images(t_game *game);
+void			destroy_images_enemy(t_game *game);
+void			destroy_images_blood(t_game *game);
+void			destroy_images_guns(t_game *game);
+void			destroy_images_obstructions(t_game *game);
+void			destroy_images_ui(t_game *game);
 
 bool			check_extension(t_data *data, char *str, char *extension);
 bool			check_if_map_element(char *str);

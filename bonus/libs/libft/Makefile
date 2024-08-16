@@ -17,7 +17,7 @@ OBJ_DIR	:=	objs/
 
 # Compiler and Flags
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -I
+CFLAGS := -Wall -Wextra -Werror -g -I
 RM := /bin/rm -f
 AR := ar rcs
 

@@ -14,8 +14,20 @@
 
 int	close_game(t_game *game)
 {
+	destroy_images(game);
+	mlx_destroy_image(game->mlx_ptr, game->image.img);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
+	game->win_ptr = NULL;
+	game->mlx_ptr = NULL;
+	free(game->data.player);
+	free(game->data.texture_north);
+	free(game->data.texture_south);
+	free(game->data.texture_west);
+	free(game->data.texture_east);
+	free_2d_array(game->data.map_element);
+	free_2d_array(game->data.cub_file);
 	exit(0);
 }
 

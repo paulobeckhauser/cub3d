@@ -64,15 +64,3 @@ void	calc_enemy_data_relative_to_player(t_game *game, float ray_angle, int i)
 		}
 	}
 }
-
-bool	is_direction_in_range(t_raycaster *raycaster, t_game *game)
-{
-	if (((raycaster->dir_x >= 0 && raycaster->x_iterator <= game->ray_new_x)
-			|| (raycaster->dir_x < 0 && raycaster->x_iterator
-				>= game->ray_new_x))
-		&& ((raycaster->dir_y >= 0 && raycaster->y_iterator <= game->ray_new_y)
-			|| (raycaster->dir_y < 0
-				&& raycaster->y_iterator >= game->ray_new_y)))
-		return (true);
-	return (false);
-}

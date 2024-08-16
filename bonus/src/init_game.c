@@ -64,6 +64,7 @@ void	init_utils(t_game *game)
 	game->enemy_count = 0;
 	game->won_game = false;
 	game->player = PABECKHA;
+	game->enemy_visible = false;
 }
 
 void	init_image(t_game *game)

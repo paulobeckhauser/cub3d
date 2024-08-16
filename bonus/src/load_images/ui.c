@@ -46,8 +46,7 @@ void	load_images_hp(t_game *game)
 			&game->img_x, &game->img_y);
 	game->textures.hp_texture[10] = mlx_xpm_file_to_image(game->mlx_ptr,
 			HP_100, &game->img_x, &game->img_y);
-	game->textures.hp_current_texture = mlx_xpm_file_to_image(game->mlx_ptr,
-			HP_100, &game->img_x, &game->img_y);
+	game->textures.hp_current_texture = game->textures.hp_texture[10];
 }
 
 void	load_images_menu(t_game *game)
@@ -56,8 +55,7 @@ void	load_images_menu(t_game *game)
 			MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);
 	game->textures.main_menu[1] = mlx_xpm_file_to_image(game->mlx_ptr,
 			MAIN_MENU_SFRANKIE, &game->img_x, &game->img_y);
-	game->textures.main_menu_current = mlx_xpm_file_to_image(game->mlx_ptr,
-			MAIN_MENU_PABECKHA, &game->img_x, &game->img_y);
+	game->textures.main_menu_current = game->textures.main_menu[0];
 	game->textures.game_over_texture = mlx_xpm_file_to_image(game->mlx_ptr,
 			GAME_OVER, &game->img_x, &game->img_y);
 	game->textures.win_screen = mlx_xpm_file_to_image(game->mlx_ptr,

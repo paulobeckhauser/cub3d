@@ -102,11 +102,7 @@ void	cast_ray(t_game *game, float ray_angle)
 	raycaster.x_iterator = (float)game->data->player->x;
 	raycaster.y_iterator = (float)game->data->player->y;
 	raycaster.speed = 1;
-	while (((raycaster.dir_x >= 0 && raycaster.x_iterator <= game->ray_new_x)
-			|| (raycaster.dir_x < 0 && raycaster.x_iterator >= game->ray_new_x))
-		&& ((raycaster.dir_y >= 0 && raycaster.y_iterator <= game->ray_new_y)
-			|| (raycaster.dir_y < 0
-				&& raycaster.y_iterator >= game->ray_new_y)))
+	while (true)
 	{
 		if (is_ray_on_square_edge(&raycaster, game))
 		{
