@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_actions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabeckha <pabeckha@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:47:25 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/07/16 12:41:28 by pabeckha         ###   ########.fr       */
+/*   Updated: 2024/08/16 13:52:48 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 
 int	close_game(t_game *game)
 {
+	mlx_destroy_image(game->mlx_ptr, game->north_texture);
+	mlx_destroy_image(game->mlx_ptr, game->south_texture);
+	mlx_destroy_image(game->mlx_ptr, game->west_texture);
+	mlx_destroy_image(game->mlx_ptr, game->east_texture);
+	mlx_destroy_image(game->mlx_ptr, game->image->img);
+	mlx_destroy_display(game->mlx_ptr);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	free(game->mlx_ptr);
+	game->win_ptr = NULL;
+	game->mlx_ptr = NULL;
 	exit(0);
 }
 

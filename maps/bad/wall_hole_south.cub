@@ -1,0 +1,21 @@
+NO ./bonus/textures/walls/wall_default_texture.xpm
+SO ./bonus/textures/walls/wall_default_texture.xpm
+WE ./bonus/textures/walls/wall_default_texture.xpm
+EA ./bonus/textures/walls/wall_default_texture.xpm
+
+F 20,20,20
+C 200,200,200
+
+11111
+10001
+10S01
+10001
+10001
+10001
+11001
+10001
+10001
+10001
+10001
+10001
+11011
