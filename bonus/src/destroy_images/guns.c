@@ -6,7 +6,7 @@
 /*   By: sfrankie <sfrankie@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:56:30 by sfrankie          #+#    #+#             */
-/*   Updated: 2024/08/05 00:58:03 by sfrankie         ###   ########.fr       */
+/*   Updated: 2024/08/17 13:45:47 by sfrankie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	destroy_images_guns(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < DESERT_EAGLE_FRAMES)

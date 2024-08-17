@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 CC = cc
 W_FLAGS = -Wall -Wextra -Werror -O3 -g
 
