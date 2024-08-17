@@ -93,7 +93,7 @@ int	main(int argc, char **argv)
 		mark_enemies(&game);
 		init_hooks(&game);
 		render_game(&game);
-		mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
+//		mlx_mouse_hide(game.mlx_ptr, game.win_ptr);
 		mlx_loop(game.mlx_ptr);
 		mlx_destroy_image(game.mlx_ptr, game.image.img);
 		game.image.img = NULL;
