@@ -5,27 +5,9 @@
 Welcome to the cub3d project. This project is a 3D engine inspired by the classic game Wolfenstein 3D. The bonus part of this project includes additional features and enhancements over the mandatory part. This README will guide you through the steps to compile and run the bonus part of the project, including key bindings for an immersive gameplay experience.
 
 ## Prerequisites (Linux only)
-Before compiling the project, you need to set up the mlx library used for rendering. Follow these steps:
+Before compiling the project, you need to set up the mlx library used for rendering. You can run prepared build script:
 
-Navigate to the mlx library directory:
-
-```cd bonus/libs/mlx_linux```
-
-Configure the mlx library:
-
-```./configure```
-
-Compile the mlx library:
-
-```make all```  
-## Compilation
-To compile the bonus part of the cub3d project, follow these steps:
-
-From the root directory of the project, run the following command to compile the bonus part:
-
-```make bonus```
-
-This command will compile all the necessary files and generate an executable named cub3d.
+```./build_cub3d.sh```
 
 ## Running the Project
 After compilation, you can run the project by executing the generated binary:
